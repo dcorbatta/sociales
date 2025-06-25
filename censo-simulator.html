@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏠 Simulador de Censo - Aventuras Sociales 🏠</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .censo-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .neighborhood {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 20px;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .house {
+            background: linear-gradient(145deg, #ffffff, #f0f0f0);
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 120px;
+        }
+        
+        .house:hover {
+            transform: scale(1.05);
+            border-color: #ff6b6b;
+            box-shadow: 0 10px 25px rgba(255,107,107,0.3);
+        }
+        
+        .house.visited {
+            background: linear-gradient(145deg, #c8e6c9, #4caf50);
+            border-color: #4caf50;
+            color: white;
+        }
+        
+        .house-icon {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .house-number {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .people-count {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .house.visited .people-count {
+            color: white;
+        }
+        
+        .census-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 3px solid #e9ecef;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.1rem;
+            color: #333;
+        }
+        
+        .progress-section {
+            background: rgba(255,255,255,0.9);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .progress-bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 10px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+        
+        .instructions {
+            background: linear-gradient(145deg, #fff3cd, #ffeaa7);
+            border: 3px solid #f39c12;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .celebration-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            text-align: center;
+            z-index: 1000;
+            display: none;
+        }
+        
+        .completion-message {
+            font-size: 1.8rem;
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        
+        .reset-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+        }
+        
+        .reset-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏠 Simulador de Censo 🏠</h1>
+            <div class="score-board">
+                <span class="score">👥 Casas Visitadas: <span id="visitedCount">0</span></span>
+                <span class="level">📊 Total Personas: <span id="totalPeople">0</span></span>
+            </div>
+        </header>
+
+        <main class="censo-container">
+            <div class="instructions">
+                <h2>¡Conviértete en un Censista! 🕵️‍♂️</h2>
+                <p>Haz clic en cada casa para contar cuántas personas viven allí. ¡Tu misión es contar a TODOS los habitantes del barrio!</p>
+                <p><strong>💡 Pista:</strong> Cada casa tiene diferente cantidad de personas. ¡Sé un detective y encuentra a todos!</p>
+            </div>
+
+            <div class="progress-section">
+                <h3>📈 Progreso del Censo</h3>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="censusProgress"></div>
+                </div>
+                <p id="progressText">0 de 12 casas visitadas</p>
+            </div>
+
+            <div class="census-stats">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalFamilies">0</div>
+                    <div class="stat-label">Familias Contadas</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="averageSize">0</div>
+                    <div class="stat-label">Promedio por Casa</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="remainingHouses">12</div>
+                    <div class="stat-label">Casas Restantes</div>
+                </div>
+            </div>
+
+            <div class="neighborhood" id="neighborhood">
+                <!-- Las casas se generarán dinámicamente -->
+            </div>
+
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="reset-btn" onclick="resetCensus()">🔄 Nuevo Censo</button>
+                <button class="reset-btn" onclick="window.location.href='index.html'">🏠 Volver al Inicio</button>
+            </div>
+        </main>
+
+        <div class="celebration-popup" id="celebrationPopup">
+            <div class="completion-message">¡🎉 Censo Completado! 🎉</div>
+            <p>¡Felicitaciones! Has contado a todas las personas del barrio.</p>
+            <p>Total de habitantes: <span id="finalCount">0</span></p>
+            <button class="reset-btn" onclick="closeCelebration()">¡Genial!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message">
+                    ¡Excelente trabajo de censista! Los censos reales son así de importantes 📊
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let censusData = {
+            houses: [],
+            visitedHouses: 0,
+            totalPeople: 0,
+            totalHouses: 12
+        };
+
+        // Generar datos aleatorios para las casas
+        function generateHouses() {
+            const houseTypes = ['🏠', '🏡', '🏘️', '🏰', '🏚️', '🏛️'];
+            const peopleRanges = [1, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5, 6]; // Distribución realista
+            
+            censusData.houses = [];
+            for (let i = 1; i <= censusData.totalHouses; i++) {
+                censusData.houses.push({
+                    id: i,
+                    icon: houseTypes[Math.floor(Math.random() * houseTypes.length)],
+                    people: peopleRanges[Math.floor(Math.random() * peopleRanges.length)],
+                    visited: false
+                });
+            }
+        }
+
+        // Renderizar el barrio
+        function renderNeighborhood() {
+            const neighborhood = document.getElementById('neighborhood');
+            neighborhood.innerHTML = '';
+
+            censusData.houses.forEach(house => {
+                const houseElement = document.createElement('div');
+                houseElement.className = `house ${house.visited ? 'visited' : ''}`;
+                houseElement.onclick = () => visitHouse(house.id);
+                
+                houseElement.innerHTML = `
+                    <div class="house-icon">${house.icon}</div>
+                    <div class="house-number">Casa ${house.id}</div>
+                    <div class="people-count">
+                        ${house.visited ? `👥 ${house.people} personas` : '❓ ¿Cuántos?'}
+                    </div>
+                `;
+                
+                neighborhood.appendChild(houseElement);
+            });
+        }
+
+        // Visitar una casa
+        function visitHouse(houseId) {
+            const house = censusData.houses.find(h => h.id === houseId);
+            
+            if (!house.visited) {
+                house.visited = true;
+                censusData.visitedHouses++;
+                censusData.totalPeople += house.people;
+                
+                // Efectos visuales
+                addFloatingReward(`+${house.people} personas`, 
+                    Math.random() * window.innerWidth, 
+                    Math.random() * 200 + 100);
+                
+                updateStats();
+                renderNeighborhood();
+                
+                // Verificar si se completó el censo
+                if (censusData.visitedHouses === censusData.totalHouses) {
+                    setTimeout(() => {
+                        completeCensus();
+                    }, 1000);
+                }
+            }
+        }
+
+        // Actualizar estadísticas
+        function updateStats() {
+            document.getElementById('visitedCount').textContent = censusData.visitedHouses;
+            document.getElementById('totalPeople').textContent = censusData.totalPeople;
+            document.getElementById('totalFamilies').textContent = censusData.visitedHouses;
+            document.getElementById('remainingHouses').textContent = censusData.totalHouses - censusData.visitedHouses;
+            
+            const average = censusData.visitedHouses > 0 ? 
+                (censusData.totalPeople / censusData.visitedHouses).toFixed(1) : 0;
+            document.getElementById('averageSize').textContent = average;
+            
+            // Actualizar barra de progreso
+            const progress = (censusData.visitedHouses / censusData.totalHouses) * 100;
+            document.getElementById('censusProgress').style.width = `${progress}%`;
+            document.getElementById('progressText').textContent = 
+                `${censusData.visitedHouses} de ${censusData.totalHouses} casas visitadas`;
+        }
+
+        // Completar censo
+        function completeCensus() {
+            document.getElementById('finalCount').textContent = censusData.totalPeople;
+            document.getElementById('celebrationPopup').style.display = 'block';
+            
+            // Efectos de celebración
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    addFloatingReward('🎉', 
+                        Math.random() * window.innerWidth, 
+                        Math.random() * window.innerHeight);
+                }, i * 150);
+            }
+        }
+
+        // Cerrar celebración
+        function closeCelebration() {
+            document.getElementById('celebrationPopup').style.display = 'none';
+        }
+
+        // Reiniciar censo
+        function resetCensus() {
+            censusData.visitedHouses = 0;
+            censusData.totalPeople = 0;
+            generateHouses();
+            renderNeighborhood();
+            updateStats();
+            closeCelebration();
+        }
+
+        // Efectos flotantes
+        function addFloatingReward(content, x, y) {
+            const rewardElement = document.createElement('div');
+            rewardElement.className = 'floating-reward';
+            rewardElement.textContent = content;
+            rewardElement.style.position = 'fixed';
+            rewardElement.style.left = `${x}px`;
+            rewardElement.style.top = `${y}px`;
+            rewardElement.style.fontSize = '1.5rem';
+            rewardElement.style.fontWeight = 'bold';
+            rewardElement.style.color = '#4caf50';
+            rewardElement.style.pointerEvents = 'none';
+            rewardElement.style.zIndex = '999';
+            rewardElement.style.animation = 'floatUp 3s ease-out forwards';
+            
+            document.body.appendChild(rewardElement);
+            
+            setTimeout(() => {
+                rewardElement.remove();
+            }, 3000);
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            generateHouses();
+            renderNeighborhood();
+            updateStats();
+        });
+    </script>
+</body>
+</html> 

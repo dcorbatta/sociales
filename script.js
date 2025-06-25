@@ -13,6 +13,47 @@ let gameState = {
 
 // Game Data - Educational Content for 10-year-olds
 const gameData = {
+    population: {
+        name: "Detective de Población",
+        icon: "👥",
+        questions: [
+            {
+                question: "¿Qué es un censo?",
+                visual: "📊",
+                answers: ["Contar a todas las personas de un país", "Contar solo a los niños", "Contar las casas", "Contar los autos"],
+                correct: 0,
+                explanation: "¡Correcto! Un censo es cuando contamos a TODAS las personas que viven en un país para saber cuántos somos."
+            },
+            {
+                question: "¿Cada cuántos años se hace el censo en Argentina?",
+                visual: "📅",
+                answers: ["Cada 5 años", "Cada 10 años", "Cada año", "Cada 20 años"],
+                correct: 1,
+                explanation: "¡Muy bien! El censo se hace cada 10 años. ¡Es como una gran fiesta de contar personas!"
+            },
+            {
+                question: "¿Qué significa 'crecimiento vegetativo'?",
+                visual: "👶",
+                answers: ["Cuántas plantas crecen", "Bebés que nacen menos personas que mueren", "Solo los bebés", "Cuánta comida hay"],
+                correct: 1,
+                explanation: "¡Excelente! Es cuando comparamos cuántos bebés nacen con cuántas personas mueren en un lugar."
+            },
+            {
+                question: "¿Quiénes son los 'censistas'?",
+                visual: "🚪",
+                answers: ["Personas que venden casas", "Personas que cuentan habitantes casa por casa", "Doctores", "Maestros"],
+                correct: 1,
+                explanation: "¡Perfecto! Los censistas van de casa en casa preguntando cuántas personas viven ahí. ¡Son como detectives de números!"
+            },
+            {
+                question: "¿Qué pasa cuando hay 'migración'?",
+                visual: "✈️",
+                answers: ["Las personas se mudan de un lugar a otro", "Solo vuelan aviones", "Cambian las estaciones", "Solo se mueven los animales"],
+                correct: 0,
+                explanation: "¡Genial! Migración es cuando las personas se mudan de un país o ciudad a otro. ¡Como una gran mudanza!"
+            }
+        ]
+    },
     geography: {
         name: "Explorador de Países",
         icon: "🗺️",
