@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Calidad de Vida - Argentina 🌟</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .calidad-vida-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .idh-explanation {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .idh-components {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .component-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .component-card.health {
+            border-color: #4caf50;
+            background: linear-gradient(145deg, #e8f5e8, #c8e6c9);
+        }
+        
+        .component-card.education {
+            border-color: #2196f3;
+            background: linear-gradient(145deg, #e3f2fd, #bbdefb);
+        }
+        
+        .component-card.economy {
+            border-color: #ff9800;
+            background: linear-gradient(145deg, #fff3e0, #ffe0b2);
+        }
+        
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.3));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .component-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .component-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .component-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .component-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .component-description {
+            font-size: 1.1rem;
+            color: #666;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .provincial-map {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .argentina-map {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            background: linear-gradient(135deg, #fff, #f5f5f5);
+            border-radius: 20px;
+            border: 3px solid #9c27b0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .province-region {
+            position: absolute;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .province-region:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .province-region.high {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+        }
+        
+        .province-region.medium {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+        }
+        
+        .province-region.low {
+            background: linear-gradient(135deg, #f44336, #c62828);
+        }
+        
+        .map-legend {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 15px;
+            background: white;
+            border-radius: 10px;
+            border: 2px solid #9c27b0;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+        
+        .health-indicators {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .indicator-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #4caf50;
+        }
+        
+        .indicator-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+        }
+        
+        .indicator-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .indicator-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .indicator-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 10px;
+        }
+        
+        .indicator-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .education-section {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .education-metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .metric-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #2196f3;
+            text-align: center;
+        }
+        
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(33,150,243,0.3);
+        }
+        
+        .metric-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .metric-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .metric-text {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .economy-indicators {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #ff9800;
+        }
+        
+        .economy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .economy-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ff9800;
+        }
+        
+        .economy-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+        }
+        
+        .economy-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+        
+        .economy-label {
+            font-size: 1rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .interactive-quiz {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #03a9f4;
+        }
+        
+        .quiz-question {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #03a9f4;
+        }
+        
+        .quiz-question:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(3,169,244,0.3);
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .question-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .option-btn:hover {
+            background: #e3f2fd;
+            border-color: #03a9f4;
+        }
+        
+        .option-btn.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        
+        .option-btn.incorrect {
+            background: #ffcdd2;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .idh-components,
+            .indicator-grid,
+            .education-metrics {
+                grid-template-columns: 1fr;
+            }
+            
+            .argentina-map {
+                height: 400px;
+            }
+            
+            .map-legend {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌟 Calidad de Vida 🌟</h1>
+            <div class="score-board">
+                <span class="score">🎯 Indicadores Explorados: <span id="indicatorsExplored">0</span>/12</span>
+                <span class="level">💡 Conceptos Aprendidos: <span id="conceptsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="calidad-vida-container">
+            <!-- Introducción -->
+            <div class="section">
+                <h2 class="section-title">🌟 ¿Qué es la Calidad de Vida?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡La calidad de vida es qué tan bien vive la gente! Se mide con el <strong>Índice de Desarrollo Humano (IDH)</strong>. ¡Descubre cómo se calcula y por qué es importante!
+                </p>
+            </div>
+
+            <!-- Componentes del IDH -->
+            <div class="section">
+                <h2 class="section-title">🧮 Los 3 Pilares del IDH</h2>
+                
+                <div class="idh-explanation">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4ecdc4;">
+                        ¡Como las patas de una mesa! Necesitas las 3 para vivir bien
+                    </h3>
+                    
+                    <div class="idh-components">
+                        <div class="component-card health" onclick="exploreComponent('health')">
+                            <div class="component-icon">🏥</div>
+                            <div class="component-title">Salud</div>
+                            <div class="component-description">¿Cuántos años vive la gente? ¿Mueren muchos bebés?</div>
+                        </div>
+                        
+                        <div class="component-card education" onclick="exploreComponent('education')">
+                            <div class="component-icon">📚</div>
+                            <div class="component-title">Educación</div>
+                            <div class="component-description">¿Saben leer y escribir? ¿Van a la escuela?</div>
+                        </div>
+                        
+                        <div class="component-card economy" onclick="exploreComponent('economy')">
+                            <div class="component-icon">💰</div>
+                            <div class="component-title">Economía</div>
+                            <div class="component-description">¿Tienen trabajo? ¿Ganan dinero para vivir bien?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa Provincial -->
+            <div class="section">
+                <h2 class="section-title">🗺️ IDH por Provincias Argentinas</h2>
+                
+                <div class="provincial-map">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #9c27b0;">
+                        ¡Descubre qué provincias tienen mejor calidad de vida!
+                    </h3>
+                    
+                    <div class="map-container">
+                        <div class="argentina-map">
+                            <!-- Regiones con diferentes niveles de IDH -->
+                            <div class="province-region high" style="top: 20%; left: 30%; width: 60px; height: 60px;" onclick="exploreProvince('caba')">
+                                CABA
+                            </div>
+                            <div class="province-region high" style="top: 35%; left: 25%; width: 80px; height: 60px;" onclick="exploreProvince('bsas')">
+                                Bs As
+                            </div>
+                            <div class="province-region high" style="top: 25%; left: 15%; width: 70px; height: 50px;" onclick="exploreProvince('cordoba')">
+                                Córdoba
+                            </div>
+                            <div class="province-region high" style="top: 15%; left: 5%; width: 60px; height: 50px;" onclick="exploreProvince('mendoza')">
+                                Mendoza
+                            </div>
+                            <div class="province-region medium" style="top: 10%; left: 35%; width: 70px; height: 40px;" onclick="exploreProvince('santafe')">
+                                Santa Fe
+                            </div>
+                            <div class="province-region medium" style="top: 5%; left: 45%; width: 60px; height: 35px;" onclick="exploreProvince('tucuman')">
+                                Tucumán
+                            </div>
+                            <div class="province-region medium" style="top: 8%; left: 55%; width: 50px; height: 30px;" onclick="exploreProvince('salta')">
+                                Salta
+                            </div>
+                            <div class="province-region low" style="top: 2%; left: 65%; width: 45px; height: 25px;" onclick="exploreProvince('jujuy')">
+                                Jujuy
+                            </div>
+                            <div class="province-region low" style="top: 15%; left: 70%; width: 50px; height: 30px;" onclick="exploreProvince('chaco')">
+                                Chaco
+                            </div>
+                            <div class="province-region medium" style="top: 60%; left: 20%; width: 90px; height: 80px;" onclick="exploreProvince('patagonia')">
+                                Patagonia
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="map-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #4caf50, #2e7d32);"></div>
+                            <span>IDH Alto (0.75+)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #ff9800, #f57c00);"></div>
+                            <span>IDH Medio (0.60-0.75)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(135deg, #f44336, #c62828);"></div>
+                            <span>IDH Bajo (menos 0.60)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicadores de Salud -->
+            <div class="section">
+                <h2 class="section-title">🏥 Salud: ¿Cómo Medimos la Salud?</h2>
+                
+                <div class="health-indicators">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4caf50;">
+                        ¡Dos indicadores súper importantes!
+                    </h3>
+                    
+                    <div class="indicator-grid">
+                        <div class="indicator-card" onclick="exploreHealthIndicator('lifeExpectancy')">
+                            <div class="indicator-icon">👴</div>
+                            <div class="indicator-title">Esperanza de Vida</div>
+                            <div class="indicator-value">76 años</div>
+                            <div class="indicator-description">¿Cuántos años vive en promedio una persona?</div>
+                        </div>
+                        
+                        <div class="indicator-card" onclick="exploreHealthIndicator('infantMortality')">
+                            <div class="indicator-icon">👶</div>
+                            <div class="indicator-title">Mortalidad Infantil</div>
+                            <div class="indicator-value">8.4‰</div>
+                            <div class="indicator-description">¿Cuántos bebés mueren antes del primer año?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicadores de Educación -->
+            <div class="section">
+                <h2 class="section-title">📚 Educación: ¿Todos Pueden Aprender?</h2>
+                
+                <div class="education-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2196f3;">
+                        ¡La educación es súper importante para el desarrollo!
+                    </h3>
+                    
+                    <div class="education-metrics">
+                        <div class="metric-card" onclick="exploreEducationMetric('literacy')">
+                            <div class="metric-icon">📖</div>
+                            <div class="metric-title">Alfabetización</div>
+                            <div class="metric-text">¿Saben leer y escribir los adultos?</div>
+                        </div>
+                        
+                        <div class="metric-card" onclick="exploreEducationMetric('enrollment')">
+                            <div class="metric-icon">🎓</div>
+                            <div class="metric-title">Matrícula Escolar</div>
+                            <div class="metric-text">¿Van los niños a la escuela primaria y secundaria?</div>
+                        </div>
+                        
+                        <div class="metric-card" onclick="exploreEducationMetric('university')">
+                            <div class="metric-icon">🏫</div>
+                            <div class="metric-title">Educación Superior</div>
+                            <div class="metric-text">¿Pueden ir a la universidad?</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Indicadores Económicos -->
+            <div class="section">
+                <h2 class="section-title">💰 Economía: ¿Tienen lo Necesario para Vivir?</h2>
+                
+                <div class="economy-indicators">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #ff9800;">
+                        ¡Dos medidas importantes de bienestar económico!
+                    </h3>
+                    
+                    <div class="economy-grid">
+                        <div class="economy-item" onclick="exploreEconomicIndicator('pbi')">
+                            <div class="economy-icon">💵</div>
+                            <div class="economy-label">PBI per cápita</div>
+                        </div>
+                        
+                        <div class="economy-item" onclick="exploreEconomicIndicator('employment')">
+                            <div class="economy-icon">👷</div>
+                            <div class="economy-label">Empleo</div>
+                        </div>
+                        
+                        <div class="economy-item" onclick="exploreEconomicIndicator('poverty')">
+                            <div class="economy-icon">🏠</div>
+                            <div class="economy-label">Pobreza</div>
+                        </div>
+                        
+                        <div class="economy-item" onclick="exploreEconomicIndicator('inequality')">
+                            <div class="economy-icon">⚖️</div>
+                            <div class="economy-label">Desigualdad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Interactivo -->
+            <div class="section">
+                <h2 class="section-title">🧠 ¡Pon a Prueba lo que Aprendiste!</h2>
+                
+                <div class="interactive-quiz">
+                    <div class="quiz-question" id="question1">
+                        <div class="question-text">¿Cuáles son los 3 componentes del IDH?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(1, 0, false)">Comida, casa, auto</button>
+                            <button class="option-btn" onclick="answerQuestion(1, 1, true)">Salud, educación, economía</button>
+                            <button class="option-btn" onclick="answerQuestion(1, 2, false)">Trabajo, familia, amigos</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" id="question2">
+                        <div class="question-text">¿Qué mide la esperanza de vida?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(2, 0, false)">Cuántos hijos tiene una familia</button>
+                            <button class="option-btn" onclick="answerQuestion(2, 1, true)">Cuántos años vive una persona</button>
+                            <button class="option-btn" onclick="answerQuestion(2, 2, false)">Cuánto dinero gana</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" id="question3">
+                        <div class="question-text">¿Qué provincia tiene mejor IDH?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(3, 0, true)">Ciudad de Buenos Aires</button>
+                            <button class="option-btn" onclick="answerQuestion(3, 1, false)">Jujuy</button>
+                            <button class="option-btn" onclick="answerQuestion(3, 2, false)">Chaco</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+                <button class="interactive-button" onclick="window.location.href='composicion-poblacion.html'">
+                    📊 Ver Composición Poblacional
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre la calidad de vida en Argentina 🌟✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredIndicators = new Set();
+        let learnedConcepts = new Set();
+        let questionsAnswered = 0;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+        
+        function exploreComponent(component) {
+            exploredIndicators.add(component);
+            learnedConcepts.add(component);
+            updateStats();
+            
+            const componentInfo = {
+                health: {
+                    title: 'Salud 🏥',
+                    content: '¡La salud es súper importante! Se mide con: 👴 Esperanza de vida (¿cuántos años vive la gente?) y 👶 Mortalidad infantil (¿mueren muchos bebés?). ¡Si la gente vive muchos años y pocos bebés mueren, el país tiene buena salud!'
+                },
+                education: {
+                    title: 'Educación 📚',
+                    content: '¡Aprender es genial! Se mide con: 📖 Alfabetización (¿saben leer y escribir los adultos?) y 🎓 Matrícula escolar (¿van los niños a la escuela?). ¡La educación ayuda a tener mejores trabajos y vida!'
+                },
+                economy: {
+                    title: 'Economía 💰',
+                    content: '¡Tener dinero para vivir bien! Se mide con: 💵 PBI per cápita (¿cuánto dinero produce cada persona?) y 👷 Empleo (¿tienen trabajo?). ¡Si hay trabajo y buenos salarios, la gente vive mejor!'
+                }
+            };
+            
+            const info = componentInfo[component];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreProvince(province) {
+            exploredIndicators.add(province);
+            learnedConcepts.add(province);
+            updateStats();
+            
+            const provinceInfo = {
+                caba: {
+                    title: 'Ciudad de Buenos Aires 🏙️',
+                    content: '¡El IDH más alto del país! Tiene los mejores hospitales, universidades y trabajos. ¡Es como el corazón económico de Argentina! Pero también es más cara para vivir.'
+                },
+                bsas: {
+                    title: 'Provincia de Buenos Aires 🏘️',
+                    content: '¡IDH alto! Es la provincia más poblada. Tiene buena educación y salud, pero algunas zonas están mejor que otras. ¡Depende de dónde vivas!'
+                },
+                cordoba: {
+                    title: 'Córdoba 🏫',
+                    content: '¡IDH alto! Famosa por su universidad. Tiene buena educación y industrias. ¡Es como la "Docta" de Argentina!'
+                },
+                mendoza: {
+                    title: 'Mendoza 🍇',
+                    content: '¡IDH alto! Famosa por el vino y turismo. Tiene buena calidad de vida y paisajes hermosos. ¡Muchos turistas van ahí!'
+                },
+                patagonia: {
+                    title: 'Patagonia 🏔️',
+                    content: '¡IDH medio-alto! Neuquén tiene petróleo y buenos salarios. Pero es difícil llegar a hospitales y escuelas por las distancias.'
+                },
+                jujuy: {
+                    title: 'Jujuy 🌄',
+                    content: '¡IDH más bajo! Es una provincia hermosa pero con menos recursos. Necesita más hospitales, escuelas y trabajos.'
+                }
+            };
+            
+            const info = provinceInfo[province] || {
+                title: 'Provincia Argentina 🇦🇷',
+                content: '¡Cada provincia tiene sus propias características! Algunas tienen mejor IDH que otras.'
+            };
+            
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreHealthIndicator(indicator) {
+            exploredIndicators.add(indicator);
+            learnedConcepts.add(indicator);
+            updateStats();
+            
+            const healthInfo = {
+                lifeExpectancy: {
+                    title: 'Esperanza de Vida 👴',
+                    content: '¡En Argentina la gente vive 76 años en promedio! Las mujeres viven un poco más que los hombres. ¡Esto significa que tenemos buena salud! Antes la gente vivía menos años.'
+                },
+                infantMortality: {
+                    title: 'Mortalidad Infantil 👶',
+                    content: '¡8.4 de cada 1000 bebés mueren antes del primer año! Esto es bajo comparado con otros países. ¡Significa que tenemos buenos hospitales para bebés!'
+                }
+            };
+            
+            const info = healthInfo[indicator];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreEducationMetric(metric) {
+            exploredIndicators.add(metric);
+            learnedConcepts.add(metric);
+            updateStats();
+            
+            const educationInfo = {
+                literacy: {
+                    title: 'Alfabetización 📖',
+                    content: '¡Casi todos los adultos saben leer y escribir en Argentina! Esto es genial porque pueden trabajar mejor, leer noticias y ayudar a sus hijos con la tarea.'
+                },
+                enrollment: {
+                    title: 'Matrícula Escolar 🎓',
+                    content: '¡Casi todos los niños van a la escuela primaria! En secundaria van un poquito menos. ¡La educación es gratis y obligatoria!'
+                },
+                university: {
+                    title: 'Educación Superior 🏫',
+                    content: '¡Argentina tiene universidades públicas gratis! Muchos jóvenes pueden estudiar carreras sin pagar. ¡Esto es súper importante para el desarrollo!'
+                }
+            };
+            
+            const info = educationInfo[metric];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreEconomicIndicator(indicator) {
+            exploredIndicators.add(indicator);
+            learnedConcepts.add(indicator);
+            updateStats();
+            
+            const economicInfo = {
+                pbi: {
+                    title: 'PBI per cápita 💵',
+                    content: '¡Es cuánto dinero produce cada argentino por año! Se divide toda la riqueza del país entre todos los habitantes. ¡Más PBI = mejor economía!'
+                },
+                employment: {
+                    title: 'Empleo 👷',
+                    content: '¡Tener trabajo es súper importante! Si hay poco desempleo, las familias pueden comprar comida, casa y mandar a los hijos a la escuela.'
+                },
+                poverty: {
+                    title: 'Pobreza 🏠',
+                    content: '¡Algunas familias no tienen suficiente dinero para vivir bien! El gobierno trata de ayudarlas con programas sociales y creando más trabajos.'
+                },
+                inequality: {
+                    title: 'Desigualdad ⚖️',
+                    content: '¡Algunas personas tienen mucho dinero y otras muy poco! Es importante que todos tengan oportunidades para progresar.'
+                }
+            };
+            
+            const info = economicInfo[indicator];
+            showPopup(info.title, info.content);
+        }
+        
+        function answerQuestion(questionNum, selectedOption, isCorrect) {
+            const question = document.getElementById(`question${questionNum}`);
+            const buttons = question.querySelectorAll('.option-btn');
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === selectedOption) {
+                    btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            });
+            
+            if (isCorrect) {
+                questionsAnswered++;
+                learnedConcepts.add(`question${questionNum}`);
+                updateStats();
+            }
+            
+            setTimeout(() => {
+                const explanations = {
+                    1: '¡Correcto! El IDH se mide con salud, educación y economía. ¡Son los 3 pilares de una buena vida!',
+                    2: '¡Exacto! La esperanza de vida es cuántos años vive una persona en promedio. ¡En Argentina son 76 años!',
+                    3: '¡Perfecto! CABA tiene el IDH más alto porque tiene los mejores hospitales, universidades y trabajos.'
+                };
+                
+                if (isCorrect) {
+                    showPopup('¡Correcto! 🎉', explanations[questionNum]);
+                } else {
+                    showPopup('¡Sigue intentando! 🤗', explanations[questionNum]);
+                }
+            }, 1000);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('indicatorsExplored').textContent = exploredIndicators.size;
+            document.getElementById('conceptsLearned').textContent = learnedConcepts.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre la calidad de vida en Argentina 🌟✨",
+            "¡Fantástico! El IDH es súper importante para entender cómo vive la gente 📊🌟",
+            "¡Genial! Cada indicador cuenta una historia sobre nuestro país 🏥📚💰",
+            "¡Excelente! Conocer estos datos ayuda a mejorar la vida de todos 🌈❤️",
+            "¡Súper! Estás aprendiendo a ser un ciudadano informado 🧠🇦🇷"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html> 

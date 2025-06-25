@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🆔 Registro Nacional de las Personas 🆔</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .registro-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .dni-showcase {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .dni-card-display {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            perspective: 1000px;
+        }
+        
+        .dni-card {
+            width: 350px;
+            height: 220px;
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .dni-card:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .dni-header {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .dni-content {
+            padding: 15px;
+            display: flex;
+            gap: 15px;
+            height: calc(100% - 40px);
+        }
+        
+        .dni-photo {
+            width: 80px;
+            height: 100px;
+            background: linear-gradient(135deg, #ff6b6b, #ffa726);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+        
+        .dni-info {
+            flex: 1;
+            color: white;
+            font-size: 0.8rem;
+        }
+        
+        .dni-field {
+            margin: 5px 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .dni-label {
+            font-weight: bold;
+        }
+        
+        .dni-number {
+            position: absolute;
+            bottom: 10px;
+            right: 15px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .identity-components {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #ff9800;
+        }
+        
+        .components-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .component-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #ff9800;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .component-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,152,0,0.1));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .component-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .component-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,152,0,0.3);
+        }
+        
+        .component-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .component-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .component-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .rights-section {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .rights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .right-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #9c27b0;
+        }
+        
+        .right-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(156,39,176,0.3);
+        }
+        
+        .right-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .right-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .right-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .dni-generator {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .generator-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .form-group {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .form-label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            display: block;
+        }
+        
+        .form-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #2196f3;
+            border-radius: 5px;
+            font-size: 1rem;
+            box-sizing: border-box;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .generated-dni {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #4caf50;
+            display: none;
+        }
+        
+        .mini-dni-card {
+            width: 200px;
+            height: 130px;
+            background: linear-gradient(135deg, #1976d2, #42a5f5);
+            border-radius: 10px;
+            margin: 0 auto 15px;
+            position: relative;
+            color: white;
+            font-size: 0.7rem;
+            padding: 10px;
+        }
+        
+        .interactive-quiz {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #03a9f4;
+        }
+        
+        .quiz-question {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #03a9f4;
+        }
+        
+        .quiz-question:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(3,169,244,0.3);
+        }
+        
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .question-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+        
+        .option-btn {
+            background: #f0f0f0;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .option-btn:hover {
+            background: #e3f2fd;
+            border-color: #03a9f4;
+        }
+        
+        .option-btn.correct {
+            background: #c8e6c9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        
+        .option-btn.incorrect {
+            background: #ffcdd2;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .facts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .fact-item {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .fact-item:hover {
+            background: white;
+            border-color: #4caf50;
+            transform: translateY(-5px);
+        }
+        
+        .fact-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .fact-text {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .dni-card {
+                width: 280px;
+                height: 180px;
+            }
+            
+            .dni-content {
+                padding: 10px;
+                gap: 10px;
+            }
+            
+            .dni-photo {
+                width: 60px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
+            
+            .components-grid,
+            .rights-grid,
+            .generator-form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🆔 Registro Nacional de las Personas 🆔</h1>
+            <div class="score-board">
+                <span class="score">🎯 Componentes Explorados: <span id="componentsExplored">0</span>/8</span>
+                <span class="level">💡 Derechos Aprendidos: <span id="rightsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="registro-container">
+            <!-- Introducción -->
+            <div class="section">
+                <h2 class="section-title">🆔 ¿Qué es el DNI?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡El DNI es tu documento más importante! Es como tu "tarjeta de presentación" oficial. Te identifica como argentino y te da derechos. ¡Descubre todo sobre tu identidad!
+                </p>
+            </div>
+
+            <!-- Showcase del DNI -->
+            <div class="section">
+                <h2 class="section-title">📄 Tu DNI: Un Documento Súper Especial</h2>
+                
+                <div class="dni-showcase">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4ecdc4;">
+                        ¡Cada DNI cuenta una historia única!
+                    </h3>
+                    
+                    <div class="dni-card-display">
+                        <div class="dni-card" onclick="exploreDNI()">
+                            <div class="dni-header">
+                                REPÚBLICA ARGENTINA - MERCOSUR<br>
+                                DOCUMENTO NACIONAL DE IDENTIDAD
+                            </div>
+                            <div class="dni-content">
+                                <div class="dni-photo">👧</div>
+                                <div class="dni-info">
+                                    <div class="dni-field">
+                                        <span class="dni-label">Apellido:</span>
+                                        <span>GONZÁLEZ</span>
+                                    </div>
+                                    <div class="dni-field">
+                                        <span class="dni-label">Nombre:</span>
+                                        <span>MARÍA VICTORIA</span>
+                                    </div>
+                                    <div class="dni-field">
+                                        <span class="dni-label">Nacionalidad:</span>
+                                        <span>ARGENTINA</span>
+                                    </div>
+                                    <div class="dni-field">
+                                        <span class="dni-label">Sexo:</span>
+                                        <span>F</span>
+                                    </div>
+                                    <div class="dni-field">
+                                        <span class="dni-label">Fecha de Nac:</span>
+                                        <span>15/MAR/2014</span>
+                                    </div>
+                                    <div class="dni-field">
+                                        <span class="dni-label">Lugar de Nac:</span>
+                                        <span>BUENOS AIRES</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dni-number">45.123.456</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Componentes de la Identidad -->
+            <div class="section">
+                <h2 class="section-title">🧩 Los 4 Componentes de tu Identidad</h2>
+                
+                <div class="identity-components">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #ff9800;">
+                        ¡Esto es lo que te hace único!
+                    </h3>
+                    
+                    <div class="components-grid">
+                        <div class="component-card" onclick="exploreComponent('nombre')">
+                            <div class="component-icon">📝</div>
+                            <div class="component-title">Nombre y Apellido</div>
+                            <div class="component-description">Te diferencia de otras personas. ¡Es tu marca personal!</div>
+                        </div>
+                        
+                        <div class="component-card" onclick="exploreComponent('padres')">
+                            <div class="component-icon">👨‍👩‍👧</div>
+                            <div class="component-title">Quiénes son tus Padres</div>
+                            <div class="component-description">Tu historia familiar. ¡De dónde vienes!</div>
+                        </div>
+                        
+                        <div class="component-card" onclick="exploreComponent('nacionalidad')">
+                            <div class="component-icon">🇦🇷</div>
+                            <div class="component-title">Nacionalidad</div>
+                            <div class="component-description">A qué país perteneces. ¡Tu cultura!</div>
+                        </div>
+                        
+                        <div class="component-card" onclick="exploreComponent('firma')">
+                            <div class="component-icon">✍️</div>
+                            <div class="component-title">Firma</div>
+                            <div class="component-description">Única e irrepetible. ¡Tu sello personal!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Derechos Ciudadanos -->
+            <div class="section">
+                <h2 class="section-title">⚖️ Tus Derechos como Ciudadano</h2>
+                
+                <div class="rights-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #9c27b0;">
+                        ¡El DNI te da estos súper poderes!
+                    </h3>
+                    
+                    <div class="rights-grid">
+                        <div class="right-card" onclick="exploreRight('education')">
+                            <div class="right-icon">🎓</div>
+                            <div class="right-title">Educación</div>
+                            <div class="right-description">Ir a la escuela gratis y aprender</div>
+                        </div>
+                        
+                        <div class="right-card" onclick="exploreRight('health')">
+                            <div class="right-icon">🏥</div>
+                            <div class="right-title">Salud</div>
+                            <div class="right-description">Atención médica cuando te enfermas</div>
+                        </div>
+                        
+                        <div class="right-card" onclick="exploreRight('vote')">
+                            <div class="right-icon">🗳️</div>
+                            <div class="right-title">Votar</div>
+                            <div class="right-description">Elegir a los gobernantes cuando seas grande</div>
+                        </div>
+                        
+                        <div class="right-card" onclick="exploreRight('travel')">
+                            <div class="right-icon">✈️</div>
+                            <div class="right-title">Viajar</div>
+                            <div class="right-description">Conocer otros países con tu pasaporte</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Generador de DNI -->
+            <div class="section">
+                <h2 class="section-title">🎨 ¡Crea tu Propio DNI!</h2>
+                
+                <div class="dni-generator">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2196f3;">
+                        Completa tus datos y genera tu DNI educativo
+                    </h3>
+                    
+                    <div class="generator-form">
+                        <div class="form-group">
+                            <label class="form-label">Nombre:</label>
+                            <input type="text" class="form-input" id="firstName" placeholder="Tu nombre">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Apellido:</label>
+                            <input type="text" class="form-input" id="lastName" placeholder="Tu apellido">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Fecha de nacimiento:</label>
+                            <input type="date" class="form-input" id="birthDate">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Lugar de nacimiento:</label>
+                            <input type="text" class="form-input" id="birthPlace" placeholder="Ciudad">
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="generate-btn" onclick="generateDNI()">
+                            🎨 Generar mi DNI
+                        </button>
+                    </div>
+                    
+                    <div class="generated-dni" id="generatedDNI">
+                        <h4>¡Tu DNI Educativo!</h4>
+                        <div class="mini-dni-card" id="miniDNI"></div>
+                        <p>¡Recuerda que este es solo para aprender! Tu DNI real lo hace el Registro Civil.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Datos Curiosos -->
+            <div class="section">
+                <h2 class="section-title">🎉 Datos Súper Curiosos</h2>
+                
+                <div class="fun-facts">
+                    <div class="facts-grid">
+                        <div class="fact-item" onclick="showFact('first')">
+                            <div class="fact-icon">1️⃣</div>
+                            <div class="fact-text">El primer DNI argentino se creó en 1968</div>
+                        </div>
+                        
+                        <div class="fact-item" onclick="showFact('unique')">
+                            <div class="fact-icon">🔢</div>
+                            <div class="fact-text">Tu número de DNI es único en todo el mundo</div>
+                        </div>
+                        
+                        <div class="fact-item" onclick="showFact('mercosur')">
+                            <div class="fact-icon">🌎</div>
+                            <div class="fact-text">El DNI argentino funciona en todo el Mercosur</div>
+                        </div>
+                        
+                        <div class="fact-item" onclick="showFact('baby')">
+                            <div class="fact-icon">👶</div>
+                            <div class="fact-text">Los bebés reciben su DNI antes de salir del hospital</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quiz Interactivo -->
+            <div class="section">
+                <h2 class="section-title">🧠 ¡Pon a Prueba lo que Aprendiste!</h2>
+                
+                <div class="interactive-quiz">
+                    <div class="quiz-question" id="question1">
+                        <div class="question-text">¿Qué organismo emite el DNI?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(1, 0, false)">La escuela</button>
+                            <button class="option-btn" onclick="answerQuestion(1, 1, true)">Registro Nacional de las Personas</button>
+                            <button class="option-btn" onclick="answerQuestion(1, 2, false)">El hospital</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" id="question2">
+                        <div class="question-text">¿Cuáles son los componentes de la identidad?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(2, 0, true)">Nombre, padres, nacionalidad, firma</button>
+                            <button class="option-btn" onclick="answerQuestion(2, 1, false)">Solo nombre y apellido</button>
+                            <button class="option-btn" onclick="answerQuestion(2, 2, false)">Foto y huella digital</button>
+                        </div>
+                    </div>
+                    
+                    <div class="quiz-question" id="question3">
+                        <div class="question-text">¿Para qué sirve el DNI?</div>
+                        <div class="question-options">
+                            <button class="option-btn" onclick="answerQuestion(3, 0, false)">Solo para viajar</button>
+                            <button class="option-btn" onclick="answerQuestion(3, 1, true)">Para ejercer derechos ciudadanos</button>
+                            <button class="option-btn" onclick="answerQuestion(3, 2, false)">Solo para ir a la escuela</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="generate-btn" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+                <button class="generate-btn" onclick="window.location.href='calidad-vida.html'">
+                    🌟 Ver Calidad de Vida
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="generate-btn" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre tu identidad y derechos ciudadanos 🆔✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredComponents = new Set();
+        let learnedRights = new Set();
+        let questionsAnswered = 0;
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+        
+        function exploreDNI() {
+            exploredComponents.add('dni-card');
+            learnedRights.add('dni-card');
+            updateStats();
+            
+            showPopup(
+                'Tu DNI: Tu Documento Más Importante 🆔',
+                '¡El DNI es como tu carnet de identidad! Tiene tu foto, nombre, fecha de nacimiento y un número único. ¡Es la prueba de que eres argentino! Lo necesitas para ir a la escuela, viajar y cuando seas grande, para votar.'
+            );
+        }
+        
+        function exploreComponent(component) {
+            exploredComponents.add(component);
+            learnedRights.add(component);
+            updateStats();
+            
+            const componentInfo = {
+                nombre: {
+                    title: 'Nombre y Apellido 📝',
+                    content: '¡Tu nombre te hace único! Te diferencia de todas las otras personas del mundo. Tu apellido viene de tu familia. ¡Juntos forman tu identidad personal!'
+                },
+                padres: {
+                    title: 'Quiénes son tus Padres 👨‍👩‍👧',
+                    content: '¡Tus padres son súper importantes! En el DNI aparecen sus nombres porque ellos te dieron la vida. ¡Es tu historia familiar! Te conecta con tu pasado y tu familia.'
+                },
+                nacionalidad: {
+                    title: 'Nacionalidad 🇦🇷',
+                    content: '¡Ser argentino es genial! Tu nacionalidad dice a qué país perteneces. Te da una cultura, un idioma, tradiciones. ¡Es como ser parte de una gran familia de 47 millones de personas!'
+                },
+                firma: {
+                    title: 'Firma ✍️',
+                    content: '¡Tu firma es única! Nadie en el mundo firma igual que tú. Es como tu huella digital pero hecha con tu mano. ¡Cuando seas grande la usarás para documentos importantes!'
+                }
+            };
+            
+            const info = componentInfo[component];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreRight(right) {
+            exploredComponents.add(right);
+            learnedRights.add(right);
+            updateStats();
+            
+            const rightInfo = {
+                education: {
+                    title: 'Derecho a la Educación 🎓',
+                    content: '¡Tienes derecho a aprender! El Estado debe darte una escuela gratis y de calidad. ¡Nadie puede impedirte ir a la escuela! Es tu derecho y también tu obligación.'
+                },
+                health: {
+                    title: 'Derecho a la Salud 🏥',
+                    content: '¡Tienes derecho a estar sano! Si te enfermas, deben atenderte en hospitales públicos. ¡También tienes derecho a vacunas gratis para no enfermarte!'
+                },
+                vote: {
+                    title: 'Derecho a Votar 🗳️',
+                    content: '¡Cuando cumplas 16 años podrás votar! Es tu derecho elegir a los gobernantes. ¡Tu voto vale igual que el de cualquier adulto! Es súper importante para la democracia.'
+                },
+                travel: {
+                    title: 'Derecho a Viajar ✈️',
+                    content: '¡Puedes conocer el mundo! Con tu DNI puedes viajar por el Mercosur. Para otros países necesitas pasaporte. ¡Es tu derecho conocer otras culturas!'
+                }
+            };
+            
+            const info = rightInfo[right];
+            showPopup(info.title, info.content);
+        }
+        
+        function generateDNI() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const birthDate = document.getElementById('birthDate').value;
+            const birthPlace = document.getElementById('birthPlace').value;
+            
+            if (!firstName || !lastName || !birthDate || !birthPlace) {
+                showPopup('¡Faltan datos! 😅', 'Necesitas completar todos los campos para generar tu DNI educativo.');
+                return;
+            }
+            
+            const randomNumber = Math.floor(Math.random() * 90000000) + 10000000;
+            
+            const miniDNI = document.getElementById('miniDNI');
+            miniDNI.innerHTML = `
+                <div style="font-size: 0.6rem; text-align: center; margin-bottom: 5px;">
+                    REPÚBLICA ARGENTINA - DNI EDUCATIVO
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <div style="width: 30px; height: 40px; background: rgba(255,255,255,0.3); border-radius: 3px; display: flex; align-items: center; justify-content: center;">
+                        😊
+                    </div>
+                    <div style="flex: 1; font-size: 0.6rem;">
+                        <div>Apellido: ${lastName.toUpperCase()}</div>
+                        <div>Nombre: ${firstName.toUpperCase()}</div>
+                        <div>Fecha: ${new Date(birthDate).toLocaleDateString()}</div>
+                        <div>Lugar: ${birthPlace.toUpperCase()}</div>
+                    </div>
+                </div>
+                <div style="position: absolute; bottom: 5px; right: 8px; font-size: 0.8rem; font-weight: bold;">
+                    ${randomNumber.toLocaleString()}
+                </div>
+            `;
+            
+            document.getElementById('generatedDNI').style.display = 'block';
+            
+            exploredComponents.add('generated');
+            learnedRights.add('generated');
+            updateStats();
+        }
+        
+        function showFact(fact) {
+            exploredComponents.add(fact);
+            learnedRights.add(fact);
+            updateStats();
+            
+            const factInfo = {
+                first: {
+                    title: 'El Primer DNI 1️⃣',
+                    content: '¡El DNI argentino nació en 1968! Antes la gente usaba la Libreta de Enrolamiento o Libreta Cívica. ¡El DNI fue una gran innovación!'
+                },
+                unique: {
+                    title: 'Número Único 🔢',
+                    content: '¡Tu número de DNI es solo tuyo! Nadie en el mundo tiene el mismo número. ¡Es como tu código personal único! Los números van en orden de nacimiento.'
+                },
+                mercosur: {
+                    title: 'DNI del Mercosur 🌎',
+                    content: '¡Tu DNI funciona en Brasil, Uruguay, Paraguay y Chile! Puedes viajar solo con el DNI a estos países. ¡Es como un pasaporte regional!'
+                },
+                baby: {
+                    title: 'DNI para Bebés 👶',
+                    content: '¡Los bebés reciben su DNI antes de irse del hospital! Es súper importante para que tengan identidad desde el primer día de vida. ¡Todos tenemos derecho a una identidad!'
+                }
+            };
+            
+            const info = factInfo[fact];
+            showPopup(info.title, info.content);
+        }
+        
+        function answerQuestion(questionNum, selectedOption, isCorrect) {
+            const question = document.getElementById(`question${questionNum}`);
+            const buttons = question.querySelectorAll('.option-btn');
+            
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === selectedOption) {
+                    btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+            });
+            
+            if (isCorrect) {
+                questionsAnswered++;
+                learnedRights.add(`question${questionNum}`);
+                updateStats();
+            }
+            
+            setTimeout(() => {
+                const explanations = {
+                    1: '¡Correcto! El Registro Nacional de las Personas es el organismo que emite el DNI. ¡Es súper importante!',
+                    2: '¡Exacto! La identidad tiene 4 componentes: nombre, padres, nacionalidad y firma. ¡Todos son importantes!',
+                    3: '¡Perfecto! El DNI te permite ejercer todos tus derechos como ciudadano argentino.'
+                };
+                
+                if (isCorrect) {
+                    showPopup('¡Correcto! 🎉', explanations[questionNum]);
+                } else {
+                    showPopup('¡Sigue intentando! 🤗', explanations[questionNum]);
+                }
+            }, 1000);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('componentsExplored').textContent = exploredComponents.size;
+            document.getElementById('rightsLearned').textContent = learnedRights.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre tu identidad y derechos ciudadanos 🆔✨",
+            "¡Fantástico! El DNI es tu documento más importante 📄🌟",
+            "¡Genial! Conocer tus derechos te hace un mejor ciudadano ⚖️💫",
+            "¡Excelente! Tu identidad es única y especial 🧩❤️",
+            "¡Súper! Estás aprendiendo a ser un ciudadano responsable 🇦🇷🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html> 

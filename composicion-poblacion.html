@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Composición de la Población - Argentina 📊</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .composicion-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .demographic-pyramid {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .pyramid-interactive {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .pyramid-chart {
+            width: 100%;
+            max-width: 600px;
+            height: 400px;
+            position: relative;
+            background: white;
+            border-radius: 15px;
+            border: 3px solid #4ecdc4;
+            overflow: hidden;
+        }
+        
+        .age-group {
+            display: flex;
+            align-items: center;
+            height: 8%;
+            margin: 1px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .age-group:hover {
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        
+        .age-label {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: #333;
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        .male-bar {
+            background: linear-gradient(to left, #64b5f6, #2196f3);
+            height: 100%;
+            border-radius: 5px 0 0 5px;
+            transition: all 0.3s ease;
+        }
+        
+        .female-bar {
+            background: linear-gradient(to right, #f48fb1, #e91e63);
+            height: 100%;
+            border-radius: 0 5px 5px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .pyramid-legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+        }
+        
+        .age-groups-section {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #ff9800;
+        }
+        
+        .age-groups-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .age-group-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #ff9800;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .age-group-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255,152,0,0.1));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .age-group-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .age-group-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,152,0,0.3);
+        }
+        
+        .age-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .age-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .age-range {
+            font-size: 1.1rem;
+            color: #ff9800;
+            font-weight: bold;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .age-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .gender-distribution {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .gender-chart {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+        }
+        
+        .gender-pie {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #2196f3 0deg 174.24deg,
+                #e91e63 174.24deg 360deg
+            );
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .gender-pie:hover {
+            transform: scale(1.05);
+        }
+        
+        .gender-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #333;
+            border: 3px solid #9c27b0;
+        }
+        
+        .gender-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .gender-stat {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #9c27b0;
+        }
+        
+        .gender-stat:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(156,39,176,0.3);
+        }
+        
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .stat-percentage {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .aging-trend {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .trend-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .comparison-card {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            text-align: center;
+        }
+        
+        .comparison-card:hover {
+            background: white;
+            border-color: #2196f3;
+            transform: translateY(-5px);
+        }
+        
+        .comparison-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .comparison-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .comparison-text {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .interactive-calculator {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #03a9f4;
+        }
+        
+        .calculator-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .control-group {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+        }
+        
+        .control-label {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .control-input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #03a9f4;
+            border-radius: 5px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .calculate-btn {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .calculate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .result-display {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #4caf50;
+            display: none;
+        }
+        
+        .result-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .result-text {
+            font-size: 1.2rem;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .pyramid-chart {
+                height: 300px;
+            }
+            
+            .gender-pie {
+                width: 200px;
+                height: 200px;
+            }
+            
+            .gender-center {
+                width: 80px;
+                height: 80px;
+                font-size: 1.5rem;
+            }
+            
+            .age-groups-grid,
+            .gender-stats,
+            .trend-comparison {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📊 Composición de la Población 📊</h1>
+            <div class="score-board">
+                <span class="score">🎯 Grupos Explorados: <span id="groupsExplored">0</span>/6</span>
+                <span class="level">💡 Conceptos Aprendidos: <span id="conceptsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="composicion-container">
+            <!-- Introducción -->
+            <div class="section">
+                <h2 class="section-title">🧮 ¿Cómo Está Formada la Población Argentina?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Descubramos juntos cómo es la población de Argentina! Vamos a ver cuántos niños, jóvenes y adultos mayores hay, y por qué es importante conocer estos datos.
+                </p>
+            </div>
+
+            <!-- Pirámide Demográfica -->
+            <div class="section">
+                <h2 class="section-title">🔺 La Pirámide de Población</h2>
+                
+                <div class="demographic-pyramid">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4ecdc4;">
+                        ¡Como una pirámide de edades! - Censo 2022
+                    </h3>
+                    
+                    <div class="pyramid-interactive">
+                        <div class="pyramid-chart" id="pyramidChart">
+                            <!-- Las barras se generarán dinámicamente -->
+                        </div>
+                    </div>
+                    
+                    <div class="pyramid-legend">
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(to right, #64b5f6, #2196f3);"></div>
+                            <span>👨 Hombres (48.4%)</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background: linear-gradient(to right, #f48fb1, #e91e63);"></div>
+                            <span>👩 Mujeres (51.6%)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Grupos Etarios -->
+            <div class="section">
+                <h2 class="section-title">👶👦👴 Los Tres Grandes Grupos</h2>
+                
+                <div class="age-groups-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #ff9800;">
+                        ¿En qué grupo estás tú?
+                    </h3>
+                    
+                    <div class="age-groups-grid">
+                        <div class="age-group-card" onclick="exploreAgeGroup('ninos')">
+                            <div class="age-icon">👶</div>
+                            <div class="age-title">Niños</div>
+                            <div class="age-range">0 a 14 años</div>
+                            <div class="age-description">¡Tú estás aquí! Los que van a la escuela primaria y secundaria</div>
+                        </div>
+                        
+                        <div class="age-group-card" onclick="exploreAgeGroup('jovenes')">
+                            <div class="age-icon">👦</div>
+                            <div class="age-title">Jóvenes y Adultos</div>
+                            <div class="age-range">15 a 64 años</div>
+                            <div class="age-description">Los que trabajan, estudian en la universidad o tienen familia</div>
+                        </div>
+                        
+                        <div class="age-group-card" onclick="exploreAgeGroup('mayores')">
+                            <div class="age-icon">👴</div>
+                            <div class="age-title">Adultos Mayores</div>
+                            <div class="age-range">Más de 65 años</div>
+                            <div class="age-description">Los abuelos, que ya se jubilaron y tienen mucha experiencia</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Distribución por Sexo -->
+            <div class="section">
+                <h2 class="section-title">👨👩 Hombres y Mujeres en Argentina</h2>
+                
+                <div class="gender-distribution">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #9c27b0;">
+                        ¿Hay más hombres o mujeres?
+                    </h3>
+                    
+                    <div class="gender-chart">
+                        <div class="gender-pie" onclick="showGenderDetails()">
+                            <div class="gender-center">👥</div>
+                        </div>
+                    </div>
+                    
+                    <div class="gender-stats">
+                        <div class="gender-stat" onclick="exploreGender('hombres')" style="border-color: #2196f3;">
+                            <div class="stat-icon">👨</div>
+                            <div class="stat-percentage" style="color: #2196f3;">48.4%</div>
+                            <div class="stat-label">Hombres</div>
+                        </div>
+                        
+                        <div class="gender-stat" onclick="exploreGender('mujeres')" style="border-color: #e91e63;">
+                            <div class="stat-icon">👩</div>
+                            <div class="stat-percentage" style="color: #e91e63;">51.6%</div>
+                            <div class="stat-label">Mujeres</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tendencia de Envejecimiento -->
+            <div class="section">
+                <h2 class="section-title">📈 Argentina se Está Envejeciendo</h2>
+                
+                <div class="aging-trend">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2196f3;">
+                        ¡Somos el 3er país más envejecido de América Latina!
+                    </h3>
+                    
+                    <div class="trend-comparison">
+                        <div class="comparison-card" onclick="showAgingTrend('before')">
+                            <div class="comparison-icon">📊</div>
+                            <div class="comparison-title">Antes (2010)</div>
+                            <div class="comparison-text">Más niños y jóvenes. La pirámide tenía base ancha</div>
+                        </div>
+                        
+                        <div class="comparison-card" onclick="showAgingTrend('now')">
+                            <div class="comparison-icon">📈</div>
+                            <div class="comparison-title">Ahora (2022)</div>
+                            <div class="comparison-text">Más adultos mayores. La pirámide se está invirtiendo</div>
+                        </div>
+                        
+                        <div class="comparison-card" onclick="showAgingTrend('future')">
+                            <div class="comparison-icon">🔮</div>
+                            <div class="comparison-title">Futuro</div>
+                            <div class="comparison-text">Necesitaremos más escuelas para mayores y menos para niños</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Calculadora Interactiva -->
+            <div class="section">
+                <h2 class="section-title">🧮 Calculadora de Población</h2>
+                
+                <div class="interactive-calculator">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #03a9f4;">
+                        ¡Calcula porcentajes de población!
+                    </h3>
+                    
+                    <div class="calculator-controls">
+                        <div class="control-group">
+                            <div class="control-label">Población Total</div>
+                            <input type="number" class="control-input" id="totalPop" placeholder="Ej: 47327407" value="47327407">
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="control-label">Niños (0-14)</div>
+                            <input type="number" class="control-input" id="childrenPop" placeholder="Ej: 10000000">
+                        </div>
+                        
+                        <div class="control-group">
+                            <div class="control-label">Adultos Mayores (+65)</div>
+                            <input type="number" class="control-input" id="elderlyPop" placeholder="Ej: 5000000">
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center;">
+                        <button class="calculate-btn" onclick="calculatePercentages()">
+                            🧮 Calcular Porcentajes
+                        </button>
+                    </div>
+                    
+                    <div class="result-display" id="resultDisplay">
+                        <div class="result-icon">📊</div>
+                        <div class="result-text" id="resultText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="calculate-btn" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+                <button class="calculate-btn" onclick="window.location.href='migraciones-internas.html'">
+                    🏃‍♂️ Ver Migraciones Internas
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="calculate-btn" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre la estructura de la población argentina 📊✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredGroups = new Set();
+        let learnedConcepts = new Set();
+        
+        // Datos de la pirámide poblacional (simplificados para niños)
+        const pyramidData = [
+            { age: '80+', male: 1.2, female: 1.8 },
+            { age: '75-79', male: 1.5, female: 2.1 },
+            { age: '70-74', male: 2.0, female: 2.5 },
+            { age: '65-69', male: 2.3, female: 2.7 },
+            { age: '60-64', male: 2.8, female: 3.1 },
+            { age: '55-59', male: 3.2, female: 3.4 },
+            { age: '50-54', male: 3.5, female: 3.6 },
+            { age: '45-49', male: 3.7, female: 3.8 },
+            { age: '40-44', male: 3.9, female: 4.0 },
+            { age: '35-39', male: 4.1, female: 4.2 },
+            { age: '30-34', male: 4.0, female: 4.1 },
+            { age: '25-29', male: 3.8, female: 3.9 },
+            { age: '20-24', male: 3.6, female: 3.7 },
+            { age: '15-19', male: 3.4, female: 3.5 },
+            { age: '10-14', male: 3.2, female: 3.3 },
+            { age: '5-9', male: 3.0, female: 3.1 },
+            { age: '0-4', male: 2.8, female: 2.9 }
+        ];
+        
+        // Inicializar al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            createPyramid();
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+        
+        function createPyramid() {
+            const pyramidChart = document.getElementById('pyramidChart');
+            pyramidChart.innerHTML = '';
+            
+            pyramidData.forEach((data, index) => {
+                const ageGroup = document.createElement('div');
+                ageGroup.className = 'age-group';
+                ageGroup.onclick = () => exploreAgeRange(data.age);
+                
+                const maleBar = document.createElement('div');
+                maleBar.className = 'male-bar';
+                maleBar.style.width = `${data.male * 10}%`;
+                
+                const femaleBar = document.createElement('div');
+                femaleBar.className = 'female-bar';
+                femaleBar.style.width = `${data.female * 10}%`;
+                
+                const ageLabel = document.createElement('div');
+                ageLabel.className = 'age-label';
+                ageLabel.textContent = data.age;
+                
+                ageGroup.appendChild(maleBar);
+                ageGroup.appendChild(ageLabel);
+                ageGroup.appendChild(femaleBar);
+                
+                pyramidChart.appendChild(ageGroup);
+            });
+        }
+        
+        function exploreAgeRange(ageRange) {
+            exploredGroups.add(ageRange);
+            learnedConcepts.add(ageRange);
+            updateStats();
+            
+            const ageInfo = {
+                '0-4': '¡Los bebés más pequeños! Necesitan pañales, leche y mucho amor.',
+                '5-9': '¡Niños como tú! Van al jardín y primaria. ¡Les encanta jugar!',
+                '10-14': '¡Pre-adolescentes! Terminan primaria y empiezan secundaria.',
+                '15-19': '¡Adolescentes! Van al secundario y piensan qué estudiar.',
+                '20-24': '¡Jóvenes adultos! Estudian en la universidad o empiezan a trabajar.',
+                '25-29': '¡Adultos jóvenes! Muchos se casan y tienen sus primeros hijos.',
+                '30-34': '¡Adultos! Trabajan, tienen familias y compran casas.',
+                '35-39': '¡Adultos en su mejor momento! Muy activos en el trabajo.',
+                '40-44': '¡Adultos experimentados! Sus hijos ya van a la escuela.',
+                '45-49': '¡Adultos maduros! Tienen mucha experiencia laboral.',
+                '50-54': '¡Pre-jubilados! Sus hijos ya son grandes.',
+                '55-59': '¡Cerca de jubilarse! Tienen mucha sabiduría.',
+                '60-64': '¡Casi jubilados! Algunos ya se retiran del trabajo.',
+                '65-69': '¡Jubilados jóvenes! Disfrutan de su tiempo libre.',
+                '70-74': '¡Abuelos activos! Cuidan a sus nietos.',
+                '75-79': '¡Abuelos sabios! Tienen muchas historias que contar.',
+                '80+': '¡Los más sabios! Han vivido muchas aventuras.'
+            };
+            
+            showPopup(`Grupo de ${ageRange} años 👥`, ageInfo[ageRange] || 'Información sobre este grupo de edad.');
+        }
+        
+        function exploreAgeGroup(group) {
+            exploredGroups.add(group);
+            learnedConcepts.add(group);
+            updateStats();
+            
+            const groupInfo = {
+                ninos: {
+                    title: 'Niños (0-14 años) 👶',
+                    content: '¡Tú estás en este grupo! Los niños van a la escuela, juegan, aprenden y crecen. En Argentina hay millones de niños como tú. ¡Son el futuro del país! Necesitan escuelas, parques, hospitales pediátricos y mucho amor.'
+                },
+                jovenes: {
+                    title: 'Jóvenes y Adultos (15-64 años) 👦',
+                    content: '¡El grupo más grande! Son los que trabajan, estudian en la universidad, tienen familias y pagan impuestos. ¡Ellos mantienen el país funcionando! Necesitan trabajos, universidades y oportunidades para crecer.'
+                },
+                mayores: {
+                    title: 'Adultos Mayores (+65 años) 👴',
+                    content: '¡Los más sabios! Ya se jubilaron y tienen mucha experiencia. En Argentina cada vez hay más adultos mayores. ¡Necesitan hospitales especializados, medicinas y cuidados especiales!'
+                }
+            };
+            
+            const info = groupInfo[group];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreGender(gender) {
+            exploredGroups.add(gender);
+            learnedConcepts.add(gender);
+            updateStats();
+            
+            const genderInfo = {
+                hombres: {
+                    title: 'Hombres en Argentina 👨',
+                    content: '¡48.4% de la población son hombres! Eso significa que de cada 100 argentinos, 48 son hombres. ¡Trabajan en muchos oficios diferentes: médicos, maestros, ingenieros, deportistas!'
+                },
+                mujeres: {
+                    title: 'Mujeres en Argentina 👩',
+                    content: '¡51.6% de la población son mujeres! Eso significa que de cada 100 argentinos, 52 son mujeres. ¡Hay un poquito más mujeres que hombres! Ellas también trabajan en todo: presidentas, científicas, artistas!'
+                }
+            };
+            
+            const info = genderInfo[gender];
+            showPopup(info.title, info.content);
+        }
+        
+        function showGenderDetails() {
+            learnedConcepts.add('gender-balance');
+            updateStats();
+            
+            showPopup(
+                'Equilibrio de Géneros ⚖️',
+                '¡En Argentina hay equilibrio! Hay un poquito más de mujeres (51.6%) que de hombres (48.4%). ¡Esto es normal en muchos países! Las mujeres suelen vivir un poco más años que los hombres.'
+            );
+        }
+        
+        function showAgingTrend(period) {
+            exploredGroups.add(period);
+            learnedConcepts.add(period);
+            updateStats();
+            
+            const trendInfo = {
+                before: {
+                    title: 'Argentina en 2010 📊',
+                    content: '¡Había más niños y jóvenes! La pirámide tenía forma de triángulo, con base ancha. Muchos bebés nacían y había menos adultos mayores. ¡Era un país más joven!'
+                },
+                now: {
+                    title: 'Argentina en 2022 📈',
+                    content: '¡Ahora hay más adultos mayores! La pirámide se está invirtiendo. Nacen menos bebés y la gente vive más años. ¡Somos el 3er país más envejecido de América Latina!'
+                },
+                future: {
+                    title: 'Argentina del Futuro 🔮',
+                    content: '¡Necesitaremos prepararnos! Habrá que construir más hospitales para adultos mayores, menos escuelas primarias, y más centros de jubilados. ¡Los jóvenes como tú tendrán que cuidar a más abuelos!'
+                }
+            };
+            
+            const info = trendInfo[period];
+            showPopup(info.title, info.content);
+        }
+        
+        function calculatePercentages() {
+            const total = parseFloat(document.getElementById('totalPop').value) || 0;
+            const children = parseFloat(document.getElementById('childrenPop').value) || 0;
+            const elderly = parseFloat(document.getElementById('elderlyPop').value) || 0;
+            
+            if (total === 0) {
+                showPopup('Error 😅', '¡Necesitas poner la población total!');
+                return;
+            }
+            
+            const childrenPercent = ((children / total) * 100).toFixed(1);
+            const elderlyPercent = ((elderly / total) * 100).toFixed(1);
+            const adultPercent = (100 - childrenPercent - elderlyPercent).toFixed(1);
+            
+            const resultText = `
+                👶 Niños: ${childrenPercent}%
+                👦 Adultos: ${adultPercent}%
+                👴 Mayores: ${elderlyPercent}%
+            `;
+            
+            document.getElementById('resultText').textContent = resultText;
+            document.getElementById('resultDisplay').style.display = 'block';
+            
+            learnedConcepts.add('calculation');
+            updateStats();
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('groupsExplored').textContent = exploredGroups.size;
+            document.getElementById('conceptsLearned').textContent = learnedConcepts.size;
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre la estructura de la población argentina 📊✨",
+            "¡Fantástico! Los datos demográficos son súper importantes 📈🌟",
+            "¡Genial! Cada grupo de edad tiene sus propias necesidades 👥💫",
+            "¡Excelente! Entender la población ayuda a planificar el futuro 🔮❤️",
+            "¡Súper! Las pirámides demográficas cuentan historias increíbles 🏛️🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        // Cerrar popup al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html> 
