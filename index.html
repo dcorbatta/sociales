@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Aventuras Sociales - ¡Aprende y Diviértete! 🌟</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌟 Aventuras Sociales 🌟</h1>
+            <div class="score-board">
+                <span class="score">⭐ Puntos: <span id="score">0</span></span>
+                <span class="level">🏆 Nivel: <span id="level">1</span></span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <div class="character">🧒</div>
+                <h2>¡Hola, Explorador!</h2>
+                <p>¿Estás listo para una increíble aventura aprendiendo sobre el mundo?</p>
+                <button class="btn-primary" onclick="startAdventure()">🚀 ¡Empezar Aventura!</button>
+            </div>
+
+            <div class="game-selection" id="gameSelection" style="display: none;">
+                <h2>🎮 Elige tu Aventura</h2>
+                <div class="games-grid">
+                    <div class="game-card" onclick="startGame('geography')">
+                        <div class="card-icon">🗺️</div>
+                        <h3>Explorador de Países</h3>
+                        <p>Descubre países y capitales</p>
+                        <div class="difficulty">⭐⭐</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="startGame('history')">
+                        <div class="card-icon">🏛️</div>
+                        <h3>Viajero del Tiempo</h3>
+                        <p>Conoce momentos históricos</p>
+                        <div class="difficulty">⭐⭐</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="startGame('culture')">
+                        <div class="card-icon">🎭</div>
+                        <h3>Detective Cultural</h3>
+                        <p>Explora tradiciones del mundo</p>
+                        <div class="difficulty">⭐⭐⭐</div>
+                    </div>
+                    
+                    <div class="game-card" onclick="startGame('puzzle')">
+                        <div class="card-icon">🧩</div>
+                        <h3>Rompecabezas Rápido</h3>
+                        <p>Arma mapas y banderas</p>
+                        <div class="difficulty">⭐</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-area" id="gameArea" style="display: none;">
+                <div class="game-header">
+                    <button class="btn-back" onclick="goBack()">⬅️ Volver</button>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="timer">⏰ <span id="timer">30</span>s</div>
+                </div>
+                
+                <div class="question-area">
+                    <div class="question-number">Pregunta <span id="questionNumber">1</span> de 5</div>
+                    <h2 id="questionText">¿Cuál es la capital de Francia?</h2>
+                    <div class="visual-hint" id="visualHint"></div>
+                </div>
+                
+                <div class="answers-area" id="answersArea">
+                    <!-- Las respuestas se generarán dinámicamente -->
+                </div>
+                
+                <div class="feedback" id="feedback" style="display: none;">
+                    <div class="feedback-content">
+                        <div class="feedback-icon" id="feedbackIcon"></div>
+                        <div class="feedback-text" id="feedbackText"></div>
+                        <button class="btn-next" onclick="nextQuestion()">➡️ Siguiente</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="celebration" id="celebration" style="display: none;">
+                <div class="celebration-content">
+                    <h2>🎉 ¡Felicitaciones! 🎉</h2>
+                    <div class="final-score">
+                        <p>Has ganado <span id="earnedPoints">0</span> puntos</p>
+                        <div class="stars" id="starsEarned"></div>
+                    </div>
+                    <p class="encouragement" id="encouragementText"></p>
+                    <div class="celebration-buttons">
+                        <button class="btn-primary" onclick="playAgain()">🔄 Jugar de Nuevo</button>
+                        <button class="btn-secondary" onclick="chooseNewGame()">🎮 Elegir Otro Juego</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Eres increíble! Sigue explorando y aprendiendo 🌟
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <div class="floating-rewards" id="floatingRewards"></div>
+    
+    <script src="script.js"></script>
+</body>
+</html> 
