@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏛️ Ciudad de La Plata 🏛️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .plata-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .foundation-section {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .design-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .design-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #9c27b0;
+        }
+        
+        .design-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(156,39,176,0.3);
+        }
+        
+        .design-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .design-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .design-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .growth-comparison {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .growth-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #2196f3;
+            text-align: center;
+        }
+        
+        .growth-card.planned {
+            border-color: #4caf50;
+        }
+        
+        .growth-card.unplanned {
+            border-color: #f44336;
+        }
+        
+        .growth-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(33,150,243,0.3);
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #9c27b0, #e1bee7);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(156,39,176,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏛️ Ciudad de La Plata 🏛️</h1>
+            <div class="score-board">
+                <span class="score">🎯 Historia: <span id="historyLearned">0</span>/6</span>
+                <span class="level">💡 Diseño: <span id="designExplored">0</span></span>
+            </div>
+        </header>
+
+        <main class="plata-container">
+            <div class="section">
+                <h2 class="section-title">🏗️ La Ciudad Planificada</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡La Plata fue fundada en 1880 con un diseño súper especial! Fue planificada desde cero con calles geométricas y espacios verdes. ¡Descubre su historia!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📅 Fundación de La Plata (1880)</h2>
+                <div class="foundation-section">
+                    <div class="design-grid">
+                        <div class="design-card" onclick="exploreFoundation('capital')">
+                            <div class="design-icon">🏛️</div>
+                            <div class="design-title">Nueva Capital</div>
+                            <div class="design-description">Buenos Aires dejó de ser capital provincial</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreFoundation('architect')">
+                            <div class="design-icon">👨‍🎨</div>
+                            <div class="design-title">Pedro Benoit</div>
+                            <div class="design-description">El arquitecto que diseñó la ciudad</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreFoundation('geometric')">
+                            <div class="design-icon">📐</div>
+                            <div class="design-title">Diseño Geométrico</div>
+                            <div class="design-description">Cuadrado perfecto con diagonales</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreFoundation('green')">
+                            <div class="design-icon">🌳</div>
+                            <div class="design-title">Espacios Verdes</div>
+                            <div class="design-description">Plaza cada 6 cuadras, parques grandes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📏 Características del Diseño</h2>
+                <div class="foundation-section">
+                    <div class="design-grid">
+                        <div class="design-card" onclick="exploreDesign('square')">
+                            <div class="design-icon">⬜</div>
+                            <div class="design-title">Cuadrado Perfecto</div>
+                            <div class="design-description">El casco urbano es un cuadrado de 5x5 km</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreDesign('diagonals')">
+                            <div class="design-icon">↗️</div>
+                            <div class="design-title">Avenidas Diagonales</div>
+                            <div class="design-description">Cruzan el centro conectando todo</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreDesign('plazas')">
+                            <div class="design-icon">🏞️</div>
+                            <div class="design-title">Sistema de Plazas</div>
+                            <div class="design-description">Una plaza cada 6 cuadras</div>
+                        </div>
+                        
+                        <div class="design-card" onclick="exploreDesign('bosque')">
+                            <div class="design-icon">🌲</div>
+                            <div class="design-title">El Bosque</div>
+                            <div class="design-description">Gran parque con lago y zoológico</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📈 Crecimiento: Planificado vs Desordenado</h2>
+                <div class="growth-comparison">
+                    <div class="comparison-grid">
+                        <div class="growth-card planned" onclick="exploreGrowth('planned')">
+                            <div class="design-icon">✅</div>
+                            <div class="design-title">Crecimiento Planificado</div>
+                            <div class="design-description">El casco urbano original mantiene su diseño perfecto</div>
+                        </div>
+                        
+                        <div class="growth-card unplanned" onclick="exploreGrowth('unplanned')">
+                            <div class="design-icon">⚠️</div>
+                            <div class="design-title">Crecimiento Desordenado</div>
+                            <div class="design-description">En la periferia creció sin planificación</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! La Plata es una ciudad súper planificada 🏛️✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let historyLearned = new Set();
+        let designExplored = new Set();
+        
+        function exploreFoundation(topic) {
+            historyLearned.add(topic);
+            updateStats();
+            
+            const foundationInfo = {
+                capital: {
+                    title: 'Nueva Capital Provincial 🏛️',
+                    content: '¡En 1880 Buenos Aires se federalizó! La provincia necesitaba una nueva capital. ¡Decidieron crear una ciudad desde cero!'
+                },
+                architect: {
+                    title: 'Pedro Benoit 👨‍🎨',
+                    content: '¡El genio que diseñó La Plata! Pensó en una ciudad perfecta con forma de cuadrado y avenidas diagonales. ¡Súper innovador!'
+                },
+                geometric: {
+                    title: 'Diseño Geométrico 📐',
+                    content: '¡Un cuadrado perfecto! El plano incluye avenidas que cruzan en diagonal y calles que forman una cuadrícula perfecta.'
+                },
+                green: {
+                    title: 'Espacios Verdes 🌳',
+                    content: '¡Una plaza cada 6 cuadras! Además del gran Bosque con lago. ¡Era súper moderno para la época!'
+                }
+            };
+            
+            const info = foundationInfo[topic];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreDesign(element) {
+            designExplored.add(element);
+            updateStats();
+            
+            const designInfo = {
+                square: {
+                    title: 'Cuadrado Perfecto ⬜',
+                    content: '¡El casco urbano es un cuadrado de 5x5 kilómetros! Con calles numeradas y perfectamente organizadas. ¡Único en el mundo!'
+                },
+                diagonals: {
+                    title: 'Avenidas Diagonales ↗️',
+                    content: '¡Las avenidas 51 y 53 cruzan en diagonal! Conectan las esquinas del cuadrado con el centro. ¡Súper práctico!'
+                },
+                plazas: {
+                    title: 'Sistema de Plazas 🏞️',
+                    content: '¡Una plaza cada 6 cuadras! Plaza Moreno en el centro, Plaza San Martín, Plaza Belgrano... ¡Espacios verdes por toda la ciudad!'
+                },
+                bosque: {
+                    title: 'El Bosque de La Plata 🌲',
+                    content: '¡Un parque gigante! Con lago, zoológico, observatorio astronómico y museo. ¡El pulmón verde de la ciudad!'
+                }
+            };
+            
+            const info = designInfo[element];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreGrowth(type) {
+            designExplored.add(type);
+            updateStats();
+            
+            const growthInfo = {
+                planned: {
+                    title: 'Crecimiento Planificado ✅',
+                    content: '¡El casco urbano mantiene su diseño original! Las calles siguen siendo perfectas, las plazas están cuidadas. ¡El plan funcionó!'
+                },
+                unplanned: {
+                    title: 'Crecimiento Desordenado ⚠️',
+                    content: '¡En la periferia creció sin control! Barrios nuevos sin la planificación original. ¡El desafío es mantener el orden!'
+                }
+            };
+            
+            const info = growthInfo[type];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('historyLearned').textContent = historyLearned.size;
+            document.getElementById('designExplored').textContent = designExplored.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! La Plata es una ciudad súper planificada 🏛️✨",
+            "¡Fantástico! Pedro Benoit fue un genio del diseño 👨‍🎨🌟",
+            "¡Genial! El cuadrado perfecto es único en el mundo 📐💫",
+            "¡Excelente! Los espacios verdes son hermosos 🌳❤️",
+            "¡Súper! La planificación urbana es súper importante 🏗️🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 

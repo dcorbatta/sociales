@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📋 Planificar los Espacios Urbanos 📋</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .planning-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .planning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .planning-card {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid #2196f3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .planning-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(33,150,243,0.3);
+        }
+        
+        .card-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .card-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .problems-section {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #f44336;
+        }
+        
+        .solutions-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📋 Planificar los Espacios Urbanos 📋</h1>
+            <div class="score-board">
+                <span class="score">🎯 Conceptos: <span id="conceptsLearned">0</span>/8</span>
+                <span class="level">💡 Soluciones: <span id="solutionsFound">0</span></span>
+            </div>
+        </header>
+
+        <main class="planning-container">
+            <div class="section">
+                <h2 class="section-title">🏗️ ¿Por qué Planificar las Ciudades?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Las ciudades crecen muy rápido! Para que crezcan de manera ordenada, necesitan planificación. ¡Descubre cómo se organizan los espacios urbanos!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🎯 Conceptos de Planificación</h2>
+                <div class="planning-grid">
+                    <div class="planning-card" onclick="exploreConcept('growth')">
+                        <div class="card-icon">📈</div>
+                        <div class="card-title">Crecimiento Urbano</div>
+                        <div class="card-description">Las ciudades crecen y necesitan organizarse</div>
+                    </div>
+                    
+                    <div class="planning-card" onclick="exploreConcept('planning')">
+                        <div class="card-icon">📋</div>
+                        <div class="card-title">Planificación</div>
+                        <div class="card-description">Decidir dónde van escuelas, hospitales, parques</div>
+                    </div>
+                    
+                    <div class="planning-card" onclick="exploreConcept('industrial')">
+                        <div class="card-icon">🏭</div>
+                        <div class="card-title">Parques Industriales</div>
+                        <div class="card-description">Zonas especiales para fábricas</div>
+                    </div>
+                    
+                    <div class="planning-card" onclick="exploreConcept('coordination')">
+                        <div class="card-icon">🤝</div>
+                        <div class="card-title">Coordinación</div>
+                        <div class="card-description">Gobiernos trabajando juntos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">⚠️ Problemas del Crecimiento</h2>
+                <div class="problems-section">
+                    <div class="planning-grid">
+                        <div class="planning-card" onclick="exploreProblem('unplanned')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="card-icon">🚫</div>
+                            <div class="card-title">Crecimiento Desordenado</div>
+                            <div class="card-description">Casas y fábricas mezcladas sin orden</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreProblem('services')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="card-icon">🚰</div>
+                            <div class="card-title">Falta de Servicios</div>
+                            <div class="card-description">Sin agua, luz o transporte público</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreProblem('environment')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="card-icon">🌫️</div>
+                            <div class="card-title">Contaminación</div>
+                            <div class="card-description">Fábricas cerca de casas contaminan</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreProblem('flooding')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="card-icon">🌊</div>
+                            <div class="card-title">Inundaciones</div>
+                            <div class="card-description">Construir donde no se debe</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">✅ Soluciones de Planificación</h2>
+                <div class="solutions-section">
+                    <div class="planning-grid">
+                        <div class="planning-card" onclick="exploreSolution('zoning')" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+                            <div class="card-icon">🗺️</div>
+                            <div class="card-title">Zonificación</div>
+                            <div class="card-description">Separar zonas: residencial, industrial, comercial</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreSolution('infrastructure')" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+                            <div class="card-icon">🛤️</div>
+                            <div class="card-title">Infraestructura</div>
+                            <div class="card-description">Calles, agua, electricidad planificadas</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreSolution('parks')" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+                            <div class="card-icon">🌳</div>
+                            <div class="card-title">Espacios Verdes</div>
+                            <div class="card-description">Parques y plazas para todos</div>
+                        </div>
+                        
+                        <div class="planning-card" onclick="exploreSolution('transport')" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+                            <div class="card-icon">🚌</div>
+                            <div class="card-title">Transporte Público</div>
+                            <div class="card-description">Conectar todas las zonas</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre planificación urbana 📋✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let conceptsLearned = new Set();
+        let solutionsFound = new Set();
+        
+        function exploreConcept(concept) {
+            conceptsLearned.add(concept);
+            updateStats();
+            
+            const conceptInfo = {
+                growth: {
+                    title: 'Crecimiento Urbano 📈',
+                    content: '¡Las ciudades crecen súper rápido! Llegan más personas, se construyen más casas y fábricas. ¡Necesitan organizarse para crecer bien!'
+                },
+                planning: {
+                    title: 'Planificación Urbana 📋',
+                    content: '¡Es como organizar tu cuarto! Decidir dónde van las escuelas, hospitales, parques y fábricas. ¡Todo tiene su lugar!'
+                },
+                industrial: {
+                    title: 'Parques Industriales 🏭',
+                    content: '¡Zonas especiales para fábricas! Están separadas de las casas, tienen servicios especiales y no molestan a los vecinos.'
+                },
+                coordination: {
+                    title: 'Coordinación 🤝',
+                    content: '¡Los gobiernos trabajan juntos! Ciudad, provincia y nación coordinan para que todo funcione bien.'
+                }
+            };
+            
+            const info = conceptInfo[concept];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreProblem(problem) {
+            conceptsLearned.add(problem);
+            updateStats();
+            
+            const problemInfo = {
+                unplanned: {
+                    title: 'Crecimiento Desordenado 🚫',
+                    content: '¡Todo mezclado sin orden! Casas al lado de fábricas, calles sin salida, barrios sin servicios. ¡Es un problema grande!'
+                },
+                services: {
+                    title: 'Falta de Servicios 🚰',
+                    content: '¡Barrios sin agua potable, electricidad o transporte! Las personas sufren cuando no hay servicios básicos.'
+                },
+                environment: {
+                    title: 'Contaminación 🌫️',
+                    content: '¡Fábricas cerca de casas contaminan el aire y agua! Los chicos no pueden jugar afuera. ¡Muy peligroso!'
+                },
+                flooding: {
+                    title: 'Inundaciones 🌊',
+                    content: '¡Construir donde no se debe! En zonas que se inundan o cerca de ríos. ¡Las casas se llenan de agua!'
+                }
+            };
+            
+            const info = problemInfo[problem];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreSolution(solution) {
+            solutionsFound.add(solution);
+            updateStats();
+            
+            const solutionInfo = {
+                zoning: {
+                    title: 'Zonificación 🗺️',
+                    content: '¡Separar las zonas! Casas en una zona, fábricas en otra, comercios en otra. ¡Cada cosa en su lugar!'
+                },
+                infrastructure: {
+                    title: 'Infraestructura 🛤️',
+                    content: '¡Planificar todo! Calles anchas, agua potable, electricidad, internet. ¡Todo conectado y funcionando!'
+                },
+                parks: {
+                    title: 'Espacios Verdes 🌳',
+                    content: '¡Parques y plazas para todos! Lugares donde los chicos pueden jugar y las familias pasear. ¡Súper importante!'
+                },
+                transport: {
+                    title: 'Transporte Público 🚌',
+                    content: '¡Conectar todas las zonas! Colectivos, trenes, subtes. ¡Que todos puedan moverse fácilmente!'
+                }
+            };
+            
+            const info = solutionInfo[solution];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('conceptsLearned').textContent = conceptsLearned.size;
+            document.getElementById('solutionsFound').textContent = solutionsFound.size;
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre planificación urbana 📋✨",
+            "¡Fantástico! Las ciudades necesitan organización 🏗️🌟",
+            "¡Genial! Cada problema tiene su solución 💡💫",
+            "¡Excelente! La planificación hace mejores ciudades 🌆❤️",
+            "¡Súper! Los espacios urbanos son súper importantes 🚀🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 

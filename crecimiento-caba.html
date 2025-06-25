@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏗️ Crecimiento de la CABA 🏗️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .caba-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .timeline-caba {
+            background: linear-gradient(135deg, #e8f5e8, #f0f8ff);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #4ecdc4;
+        }
+        
+        .growth-timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .growth-timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4, #45b7d1);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+            border-radius: 3px;
+        }
+        
+        .timeline-period {
+            padding: 10px 40px;
+            position: relative;
+            background: transparent;
+            width: 50%;
+            animation: slideIn 0.6s ease-out forwards;
+            opacity: 0;
+        }
+        
+        .timeline-period.left {
+            left: 0;
+            text-align: right;
+        }
+        
+        .timeline-period.right {
+            left: 50%;
+            text-align: left;
+        }
+        
+        .period-content {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid #ddd;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .period-content:hover {
+            transform: scale(1.05);
+            border-color: #ff6b6b;
+            box-shadow: 0 15px 35px rgba(255,107,107,0.3);
+        }
+        
+        .period-year {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ff6b6b;
+            margin-bottom: 10px;
+        }
+        
+        .period-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .period-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .period-icon {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: white;
+            border: 4px solid #ff6b6b;
+            border-radius: 50%;
+            top: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            z-index: 1;
+        }
+        
+        .timeline-period.left .period-icon {
+            right: -30px;
+        }
+        
+        .timeline-period.right .period-icon {
+            left: -30px;
+        }
+        
+        .rmba-section {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #ff9800;
+        }
+        
+        .rmba-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #ff9800;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(255,152,0,0.3);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .stat-description {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .concepts-section {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .concept-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #9c27b0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .concept-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(156,39,176,0.1));
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .concept-card:hover::before {
+            transform: translateX(0);
+        }
+        
+        .concept-card:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 35px rgba(156,39,176,0.3);
+        }
+        
+        .concept-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .concept-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .concept-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .interactive-map {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .map-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            position: relative;
+        }
+        
+        .caba-map {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background: linear-gradient(135deg, #fff, #f5f5f5);
+            border-radius: 20px;
+            border: 3px solid #2196f3;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .zone-area {
+            position: absolute;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+        
+        .zone-area:hover {
+            transform: scale(1.1);
+            z-index: 10;
+        }
+        
+        .zone-caba {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            top: 40%;
+            left: 40%;
+            width: 20%;
+            height: 20%;
+        }
+        
+        .zone-norte {
+            background: linear-gradient(135deg, #4caf50, #2e7d32);
+            top: 20%;
+            left: 30%;
+            width: 40%;
+            height: 15%;
+        }
+        
+        .zone-oeste {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            top: 35%;
+            left: 10%;
+            width: 25%;
+            height: 30%;
+        }
+        
+        .zone-sur {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            top: 65%;
+            left: 25%;
+            width: 50%;
+            height: 25%;
+        }
+        
+        .industrial-growth {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .growth-phases {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .phase-item {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        
+        .phase-item:hover {
+            background: white;
+            border-color: #4caf50;
+            transform: translateY(-5px);
+        }
+        
+        .phase-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .phase-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+        
+        .phase-text {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+            text-align: center;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .growth-timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-period {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+                text-align: left !important;
+            }
+            
+            .timeline-period.right {
+                left: 0%;
+            }
+            
+            .timeline-period.left .period-icon,
+            .timeline-period.right .period-icon {
+                left: 5px;
+            }
+            
+            .rmba-stats,
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏗️ Crecimiento de la CABA 🏗️</h1>
+            <div class="score-board">
+                <span class="score">🎯 Períodos Explorados: <span id="periodsExplored">0</span>/6</span>
+                <span class="level">💡 Conceptos Aprendidos: <span id="conceptsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="caba-container">
+            <!-- Introducción -->
+            <div class="section">
+                <h2 class="section-title">🏙️ ¿Cómo Creció Buenos Aires?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Buenos Aires tiene una historia súper larga! Durante 150 años ha ido creciendo por el desarrollo industrial y la llegada de nuevos habitantes. ¡Descubre cómo se convirtió en la gran ciudad que es hoy!
+                </p>
+            </div>
+
+            <!-- Línea de Tiempo del Crecimiento -->
+            <div class="section">
+                <h2 class="section-title">📅 Historia del Crecimiento de Buenos Aires</h2>
+                
+                <div class="timeline-caba">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4ecdc4;">
+                        ¡150 años de crecimiento continuo!
+                    </h3>
+                    
+                    <div class="growth-timeline">
+                        <div class="timeline-period left">
+                            <div class="period-content" onclick="explorePeriod('colonial')">
+                                <div class="period-year">1536-1810</div>
+                                <div class="period-title">Época Colonial</div>
+                                <div class="period-description">Buenos Aires era un puerto pequeño. Solo llegaban barcos españoles</div>
+                            </div>
+                            <div class="period-icon">⛵</div>
+                        </div>
+                        
+                        <div class="timeline-period right">
+                            <div class="period-content" onclick="explorePeriod('independence')">
+                                <div class="period-year">1810-1880</div>
+                                <div class="period-title">Después de la Independencia</div>
+                                <div class="period-description">Empezó a crecer como puerto comercial. Llegaban productos de todo el mundo</div>
+                            </div>
+                            <div class="period-icon">🏛️</div>
+                        </div>
+                        
+                        <div class="timeline-period left">
+                            <div class="period-content" onclick="explorePeriod('industrial')">
+                                <div class="period-year">1880-1930</div>
+                                <div class="period-title">Boom Industrial</div>
+                                <div class="period-description">¡Llegaron millones de inmigrantes! Se construyeron fábricas y barrios</div>
+                            </div>
+                            <div class="period-icon">🏭</div>
+                        </div>
+                        
+                        <div class="timeline-period right">
+                            <div class="period-content" onclick="explorePeriod('expansion')">
+                                <div class="period-year">1930-1970</div>
+                                <div class="period-title">Gran Expansión</div>
+                                <div class="period-description">La ciudad se extendió hacia los suburbios. Nacieron los partidos del conurbano</div>
+                            </div>
+                            <div class="period-icon">🏘️</div>
+                        </div>
+                        
+                        <div class="timeline-period left">
+                            <div class="period-content" onclick="explorePeriod('metropolitan')">
+                                <div class="period-year">1970-2000</div>
+                                <div class="period-title">Región Metropolitana</div>
+                                <div class="period-description">Se formó la RMBA: Ciudad + 39 partidos bonaerenses</div>
+                            </div>
+                            <div class="period-icon">🌆</div>
+                        </div>
+                        
+                        <div class="timeline-period right">
+                            <div class="period-content" onclick="explorePeriod('modern')">
+                                <div class="period-year">2000-Hoy</div>
+                                <div class="period-title">Buenos Aires Moderna</div>
+                                <div class="period-description">16 millones de habitantes. Una de las ciudades más grandes del mundo</div>
+                            </div>
+                            <div class="period-icon">🌟</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RMBA en Números -->
+            <div class="section">
+                <h2 class="section-title">📊 La RMBA en Números</h2>
+                
+                <div class="rmba-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #ff9800;">
+                        ¡Datos increíbles de la Región Metropolitana!
+                    </h3>
+                    
+                    <div class="rmba-stats">
+                        <div class="stat-card" onclick="exploreRMBAstat('population')">
+                            <div class="stat-number">16M</div>
+                            <div class="stat-label">Habitantes</div>
+                            <div class="stat-description">¡1 de cada 3 argentinos vive aquí!</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="exploreRMBAstat('area')">
+                            <div class="stat-number">40</div>
+                            <div class="stat-label">Municipios</div>
+                            <div class="stat-description">CABA + 39 partidos bonaerenses</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="exploreRMBAstat('extension')">
+                            <div class="stat-number">13.940</div>
+                            <div class="stat-label">Km²</div>
+                            <div class="stat-description">¡Más grande que muchos países!</div>
+                        </div>
+                        
+                        <div class="stat-card" onclick="exploreRMBAstat('density')">
+                            <div class="stat-number">1.148</div>
+                            <div class="stat-label">Hab/Km²</div>
+                            <div class="stat-description">¡Muy densamente poblada!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Conceptos Urbanos -->
+            <div class="section">
+                <h2 class="section-title">🏙️ Conceptos Urbanos Importantes</h2>
+                
+                <div class="concepts-section">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #9c27b0;">
+                        ¡Aprende estos términos súper importantes!
+                    </h3>
+                    
+                    <div class="concept-grid">
+                        <div class="concept-card" onclick="exploreConcept('aglomerado')">
+                            <div class="concept-icon">🏘️</div>
+                            <div class="concept-title">Aglomerado Urbano</div>
+                            <div class="concept-description">Cuando varias ciudades crecen tanto que se unen formando una sola gran mancha urbana</div>
+                        </div>
+                        
+                        <div class="concept-card" onclick="exploreConcept('continuo')">
+                            <div class="concept-icon">🛤️</div>
+                            <div class="concept-title">Espacio Urbano Continuo</div>
+                            <div class="concept-description">Área donde no se puede distinguir dónde termina una ciudad y empieza otra</div>
+                        </div>
+                        
+                        <div class="concept-card" onclick="exploreConcept('metropolitana')">
+                            <div class="concept-icon">🌆</div>
+                            <div class="concept-title">Región Metropolitana</div>
+                            <div class="concept-description">Ciudad principal conectada con otras ciudades por diferentes vías de transporte</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapa Interactivo -->
+            <div class="section">
+                <h2 class="section-title">🗺️ Mapa de la RMBA</h2>
+                
+                <div class="interactive-map">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #2196f3;">
+                        ¡Explora las diferentes zonas de Buenos Aires!
+                    </h3>
+                    
+                    <div class="map-container">
+                        <div class="caba-map">
+                            <div class="zone-area zone-caba" onclick="exploreZone('caba')">
+                                CABA
+                            </div>
+                            <div class="zone-area zone-norte" onclick="exploreZone('norte')">
+                                Zona Norte
+                            </div>
+                            <div class="zone-area zone-oeste" onclick="exploreZone('oeste')">
+                                Zona Oeste
+                            </div>
+                            <div class="zone-area zone-sur" onclick="exploreZone('sur')">
+                                Zona Sur
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Desarrollo Industrial -->
+            <div class="section">
+                <h2 class="section-title">🏭 El Desarrollo Industrial</h2>
+                
+                <div class="industrial-growth">
+                    <h3 style="text-align: center; margin-bottom: 20px; color: #4caf50;">
+                        ¡Cómo la industria hizo crecer a Buenos Aires!
+                    </h3>
+                    
+                    <div class="growth-phases">
+                        <div class="phase-item" onclick="showIndustrialPhase('early')">
+                            <div class="phase-icon">🏭</div>
+                            <div class="phase-title">Primeras Fábricas</div>
+                            <div class="phase-text">Alimentos y productos básicos cerca del puerto</div>
+                        </div>
+                        
+                        <div class="phase-item" onclick="showIndustrialPhase('expansion')">
+                            <div class="phase-icon">🚂</div>
+                            <div class="phase-title">Expansión con Ferrocarril</div>
+                            <div class="phase-text">Las fábricas siguieron las vías del tren</div>
+                        </div>
+                        
+                        <div class="phase-item" onclick="showIndustrialPhase('suburbs')">
+                            <div class="phase-icon">🏘️</div>
+                            <div class="phase-title">Barrios Obreros</div>
+                            <div class="phase-text">Se construyeron casas para los trabajadores</div>
+                        </div>
+                        
+                        <div class="phase-item" onclick="showIndustrialPhase('modern')">
+                            <div class="phase-icon">🏢</div>
+                            <div class="phase-title">Industria Moderna</div>
+                            <div class="phase-text">Fábricas de autos, textiles y medicamentos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre el crecimiento de Buenos Aires 🏗️✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredPeriods = new Set();
+        let learnedConcepts = new Set();
+        
+        // Animar timeline items al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            const timelinePeriods = document.querySelectorAll('.timeline-period');
+            timelinePeriods.forEach((period, index) => {
+                setTimeout(() => {
+                    period.style.animationDelay = `${index * 0.3}s`;
+                    period.style.opacity = '0';
+                    period.style.animation = 'slideIn 0.6s ease-out forwards';
+                }, index * 300);
+            });
+            
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+        
+        function explorePeriod(period) {
+            exploredPeriods.add(period);
+            learnedConcepts.add(period);
+            updateStats();
+            
+            const periodInfo = {
+                colonial: {
+                    title: 'Época Colonial (1536-1810) ⛵',
+                    content: '¡Buenos Aires era muy pequeña! Solo tenía el puerto y unas pocas cuadras alrededor. Los barcos españoles traían productos de Europa y se llevaban cuero y carne salada. ¡Era como un pueblo grande!'
+                },
+                independence: {
+                    title: 'Después de la Independencia (1810-1880) 🏛️',
+                    content: '¡Argentina se independizó y Buenos Aires creció! Se convirtió en el puerto principal del país. Llegaban barcos de todo el mundo. ¡Empezó a parecer una verdadera ciudad!'
+                },
+                industrial: {
+                    title: 'Boom Industrial (1880-1930) 🏭',
+                    content: '¡La época de mayor crecimiento! Llegaron 6 millones de inmigrantes europeos. Se construyeron fábricas, barrios, escuelas y hospitales. ¡Buenos Aires se volvió una gran ciudad!'
+                },
+                expansion: {
+                    title: 'Gran Expansión (1930-1970) 🏘️',
+                    content: '¡La ciudad se extendió hacia afuera! Nacieron los partidos del conurbano como San Martín, Lanús y Quilmes. ¡Las personas buscaban casas más baratas lejos del centro!'
+                },
+                metropolitan: {
+                    title: 'Región Metropolitana (1970-2000) 🌆',
+                    content: '¡Se formó la RMBA! Ciudad de Buenos Aires + 39 partidos bonaerenses. ¡Todas las ciudades se conectaron formando una gran mancha urbana!'
+                },
+                modern: {
+                    title: 'Buenos Aires Moderna (2000-Hoy) 🌟',
+                    content: '¡Hoy somos 16 millones de habitantes! Una de las ciudades más grandes del mundo. ¡Con subtes, autopistas, rascacielos y parques modernos!'
+                }
+            };
+            
+            const info = periodInfo[period];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreRMBAstat(stat) {
+            exploredPeriods.add(stat);
+            learnedConcepts.add(stat);
+            updateStats();
+            
+            const statInfo = {
+                population: {
+                    title: '16 Millones de Habitantes 👥',
+                    content: '¡Es increíble! 1 de cada 3 argentinos vive en la RMBA. ¡Si fuera un país, sería el 65° más poblado del mundo! Más gente que en muchos países europeos.'
+                },
+                area: {
+                    title: '40 Municipios Unidos 🏘️',
+                    content: '¡La RMBA tiene 40 municipios! La Ciudad de Buenos Aires + 39 partidos bonaerenses. ¡Todos conectados por autopistas, trenes y subtes!'
+                },
+                extension: {
+                    title: '13.940 Kilómetros Cuadrados 📏',
+                    content: '¡Es enorme! Más grande que países como Qatar, Líbano o Jamaica. ¡Podrías caminar durante días y no salir de la RMBA!'
+                },
+                density: {
+                    title: '1.148 Habitantes por Km² 🏢',
+                    content: '¡Muy densamente poblada! Significa que en cada kilómetro cuadrado viven más de 1000 personas. ¡Por eso hay tantos edificios altos!'
+                }
+            };
+            
+            const info = statInfo[stat];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreConcept(concept) {
+            exploredPeriods.add(concept);
+            learnedConcepts.add(concept);
+            updateStats();
+            
+            const conceptInfo = {
+                aglomerado: {
+                    title: 'Aglomerado Urbano 🏘️',
+                    content: '¡Es como cuando varias ciudades se "pegan"! Crecen tanto que se unen formando una sola gran mancha urbana. ¡Como Buenos Aires con San Martín, Vicente López y otros!'
+                },
+                continuo: {
+                    title: 'Espacio Urbano Continuo 🛤️',
+                    content: '¡No se puede distinguir dónde termina una ciudad y empieza otra! Todo está conectado: casas, calles, comercios. ¡Es como una ciudad gigante sin límites!'
+                },
+                metropolitana: {
+                    title: 'Región Metropolitana 🌆',
+                    content: '¡Una ciudad principal conectada con otras por transporte! Buenos Aires es el centro y los demás municipios están conectados por trenes, subtes y autopistas.'
+                }
+            };
+            
+            const info = conceptInfo[concept];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreZone(zone) {
+            exploredPeriods.add(zone);
+            learnedConcepts.add(zone);
+            updateStats();
+            
+            const zoneInfo = {
+                caba: {
+                    title: 'Ciudad Autónoma de Buenos Aires 🏙️',
+                    content: '¡El corazón de todo! 3 millones de habitantes en solo 200 km². ¡Aquí están el gobierno, los bancos, las universidades y los teatros más importantes!'
+                },
+                norte: {
+                    title: 'Zona Norte 🌳',
+                    content: '¡La zona más elegante! Vicente López, San Isidro, Tigre... ¡Muchas casas grandes, countries y el famoso Delta del Tigre!'
+                },
+                oeste: {
+                    title: 'Zona Oeste 🏭',
+                    content: '¡La zona industrial! Muchas fábricas y barrios obreros. ¡Aquí viven muchas familias trabajadoras! Morón, Merlo, La Matanza...'
+                },
+                sur: {
+                    title: 'Zona Sur 🏘️',
+                    content: '¡La zona más poblada! Lomas de Zamora, Quilmes, Avellaneda... ¡Muchos barrios, fábricas y el famoso Puente La Noria!'
+                }
+            };
+            
+            const info = zoneInfo[zone];
+            showPopup(info.title, info.content);
+        }
+        
+        function showIndustrialPhase(phase) {
+            exploredPeriods.add(phase);
+            learnedConcepts.add(phase);
+            updateStats();
+            
+            const phaseInfo = {
+                early: {
+                    title: 'Primeras Fábricas 🏭',
+                    content: '¡Todo empezó cerca del puerto! Las primeras fábricas hacían alimentos y productos básicos. ¡Necesitaban estar cerca del puerto para exportar!'
+                },
+                expansion: {
+                    title: 'Expansión con Ferrocarril 🚂',
+                    content: '¡Las fábricas siguieron las vías del tren! El ferrocarril llevaba las materias primas y se llevaba los productos terminados. ¡Muy inteligente!'
+                },
+                suburbs: {
+                    title: 'Barrios Obreros 🏘️',
+                    content: '¡Se construyeron barrios para los trabajadores! Cerca de las fábricas para que pudieran caminar al trabajo. ¡Así nacieron muchos barrios de Buenos Aires!'
+                },
+                modern: {
+                    title: 'Industria Moderna 🏢',
+                    content: '¡Hoy hay fábricas de todo! Autos, medicamentos, textiles, alimentos... ¡Buenos Aires es uno de los centros industriales más importantes de América Latina!'
+                }
+            };
+            
+            const info = phaseInfo[phase];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('periodsExplored').textContent = exploredPeriods.size;
+            document.getElementById('conceptsLearned').textContent = learnedConcepts.size;
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre el crecimiento de Buenos Aires 🏗️✨",
+            "¡Fantástico! La historia urbana es súper interesante 🏙️🌟",
+            "¡Genial! Cada período tiene su propia historia 📅💫",
+            "¡Excelente! Buenos Aires tiene 150 años de crecimiento 🚀❤️",
+            "¡Súper! La RMBA es una de las ciudades más grandes del mundo 🌍🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        // Cerrar popup al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html> 

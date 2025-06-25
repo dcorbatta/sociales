@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌳 Espacios Verdes Metropolitanos 🌳</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .green-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .parks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .park-card {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid #4caf50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .park-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+        }
+        
+        .park-icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .park-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .park-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76,175,80,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🌳 Espacios Verdes Metropolitanos 🌳</h1>
+            <div class="score-board">
+                <span class="score">🎯 Parques: <span id="parksExplored">0</span>/6</span>
+                <span class="level">💡 Proyectos: <span id="projectsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="green-container">
+            <div class="section">
+                <h2 class="section-title">🌿 ¿Por qué Necesitamos Espacios Verdes?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Los espacios verdes son súper importantes! Nos dan aire puro, lugares para jugar y descansar. ¡Descubre los proyectos verdes de Buenos Aires!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🏞️ Parques Metropolitanos</h2>
+                <div class="parks-grid">
+                    <div class="park-card" onclick="explorePark('reconquista')">
+                        <div class="park-icon">🌊</div>
+                        <div class="park-title">Corredor Reconquista</div>
+                        <div class="park-description">Parque lineal que conecta 7 municipios</div>
+                    </div>
+                    
+                    <div class="park-card" onclick="explorePark('costero')">
+                        <div class="park-icon">🏖️</div>
+                        <div class="park-title">Sector Costero</div>
+                        <div class="park-description">Recuperación de la costa del Río de la Plata</div>
+                    </div>
+                    
+                    <div class="park-card" onclick="explorePark('ecological')">
+                        <div class="park-icon">🦋</div>
+                        <div class="park-title">Reservas Ecológicas</div>
+                        <div class="park-description">Protección de fauna y flora nativa</div>
+                    </div>
+                    
+                    <div class="park-card" onclick="explorePark('urban')">
+                        <div class="park-icon">🌳</div>
+                        <div class="park-title">Parques Urbanos</div>
+                        <div class="park-description">Espacios verdes en la ciudad</div>
+                    </div>
+                    
+                    <div class="park-card" onclick="explorePark('recovery')">
+                        <div class="park-icon">♻️</div>
+                        <div class="park-title">Recuperación Ambiental</div>
+                        <div class="park-description">Transformar basurales en parques</div>
+                    </div>
+                    
+                    <div class="park-card" onclick="explorePark('coordination')">
+                        <div class="park-icon">🤝</div>
+                        <div class="park-title">Coordinación</div>
+                        <div class="park-description">Gobiernos trabajando juntos</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Los espacios verdes son súper importantes 🌳✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let parksExplored = new Set();
+        let projectsLearned = new Set();
+        
+        function explorePark(park) {
+            parksExplored.add(park);
+            projectsLearned.add(park);
+            updateStats();
+            
+            const parkInfo = {
+                reconquista: {
+                    title: 'Corredor Reconquista 🌊',
+                    content: '¡Un parque súper largo! Conecta 7 municipios a lo largo del río Reconquista. ¡17 barrios distintos unidos por un parque lineal!'
+                },
+                costero: {
+                    title: 'Sector Costero Avellaneda-Quilmes 🏖️',
+                    content: '¡Recuperación de la costa! Antes estaba ocupada por terrenos descuidados. ¡Ahora es un parque ribereño para disfrutar!'
+                },
+                ecological: {
+                    title: 'Reservas Ecológicas 🦋',
+                    content: '¡Protegen la naturaleza! Lugares donde viven animales y plantas nativas. ¡Como la Reserva Ecológica Costanera Sur!'
+                },
+                urban: {
+                    title: 'Parques Urbanos 🌳',
+                    content: '¡Espacios verdes en la ciudad! Lugares para jugar, hacer deporte y relajarse. ¡Súper importantes para la salud!'
+                },
+                recovery: {
+                    title: 'Recuperación Ambiental ♻️',
+                    content: '¡Transformar lugares contaminados! Basurales y terrenos abandonados se convierten en hermosos parques.'
+                },
+                coordination: {
+                    title: 'Coordinación entre Gobiernos 🤝',
+                    content: '¡Trabajar juntos! Municipios, provincia y nación coordinan para crear grandes proyectos verdes.'
+                }
+            };
+            
+            const info = parkInfo[park];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('parksExplored').textContent = parksExplored.size;
+            document.getElementById('projectsLearned').textContent = projectsLearned.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! Los espacios verdes son súper importantes 🌳✨",
+            "¡Fantástico! Los parques nos dan aire puro 🌿🌟",
+            "¡Genial! La naturaleza en la ciudad es hermosa 🦋💫",
+            "¡Excelente! Los proyectos verdes mejoran la vida 🌱❤️",
+            "¡Súper! Cuidar el ambiente es responsabilidad de todos 🌍🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 

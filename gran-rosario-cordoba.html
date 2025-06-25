@@ -1,0 +1,965 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏭 Gran Rosario y Gran Córdoba 🏭</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .cities-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .city-comparison {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .city-card {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 25px;
+            padding: 30px;
+            border: 3px solid #2196f3;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .city-card.rosario {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-color: #4caf50;
+        }
+        
+        .city-card.cordoba {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-color: #ff9800;
+        }
+        
+        .city-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(33,150,243,0.3);
+        }
+        
+        .city-card.rosario:hover {
+            box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+        }
+        
+        .city-card.cordoba:hover {
+            box-shadow: 0 15px 35px rgba(255,152,0,0.3);
+        }
+        
+        .city-header {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .city-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        
+        .city-name {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .city-subtitle {
+            font-size: 1.2rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .city-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.8);
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-item:hover {
+            background: white;
+            transform: translateY(-3px);
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2196f3;
+            margin-bottom: 5px;
+        }
+        
+        .rosario .stat-number {
+            color: #4caf50;
+        }
+        
+        .cordoba .stat-number {
+            color: #ff9800;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .city-features {
+            margin: 25px 0;
+        }
+        
+        .feature-list {
+            display: grid;
+            gap: 10px;
+        }
+        
+        .feature-item {
+            background: rgba(255,255,255,0.6);
+            border-radius: 10px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .feature-item:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateX(5px);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-right: 10px;
+            width: 30px;
+        }
+        
+        .feature-text {
+            font-size: 1rem;
+            color: #333;
+        }
+        
+        .growth-timeline {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #9c27b0;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #4caf50, #ff9800);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .timeline-event {
+            display: flex;
+            margin: 30px 0;
+            align-items: center;
+            position: relative;
+        }
+        
+        .timeline-event.left {
+            justify-content: flex-end;
+            text-align: right;
+        }
+        
+        .timeline-event.right {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        
+        .event-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 300px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #9c27b0;
+        }
+        
+        .event-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(156,39,176,0.3);
+        }
+        
+        .event-year {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #9c27b0;
+            margin-bottom: 8px;
+        }
+        
+        .event-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .event-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #9c27b0;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 3px solid white;
+            z-index: 1;
+        }
+        
+        .industry-section {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #e91e63;
+        }
+        
+        .industry-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .industry-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #e91e63;
+        }
+        
+        .industry-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(233,30,99,0.3);
+        }
+        
+        .industry-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .industry-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .industry-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .interactive-map {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            border: 3px solid #009688;
+        }
+        
+        .map-container {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+        
+        .city-map {
+            width: 300px;
+            height: 250px;
+            background: white;
+            border-radius: 20px;
+            border: 3px solid #009688;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .city-map:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(0,150,136,0.3);
+        }
+        
+        .map-title {
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-weight: bold;
+            color: #009688;
+            font-size: 1.2rem;
+        }
+        
+        .map-feature {
+            position: absolute;
+            border-radius: 10px;
+            padding: 5px 10px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .map-feature:hover {
+            transform: scale(1.1);
+        }
+        
+        .rosario-map .port {
+            background: #2196f3;
+            top: 30%;
+            right: 10%;
+        }
+        
+        .rosario-map .industrial {
+            background: #ff9800;
+            bottom: 30%;
+            left: 20%;
+        }
+        
+        .rosario-map .residential {
+            background: #4caf50;
+            top: 50%;
+            left: 50%;
+        }
+        
+        .cordoba-map .university {
+            background: #9c27b0;
+            top: 25%;
+            left: 30%;
+        }
+        
+        .cordoba-map .automotive {
+            background: #f44336;
+            bottom: 25%;
+            right: 20%;
+        }
+        
+        .cordoba-map .center {
+            background: #607d8b;
+            top: 45%;
+            left: 45%;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .city-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-event {
+                justify-content: flex-start !important;
+                text-align: left !important;
+                padding-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+            
+            .map-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏭 Gran Rosario y Gran Córdoba 🏭</h1>
+            <div class="score-board">
+                <span class="score">🎯 Ciudades Exploradas: <span id="citiesExplored">0</span>/2</span>
+                <span class="level">💡 Datos Descubiertos: <span id="dataDiscovered">0</span></span>
+            </div>
+        </header>
+
+        <main class="cities-container">
+            <!-- Introducción -->
+            <div class="section">
+                <h2 class="section-title">🏙️ Las Otras Grandes Ciudades de Argentina</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Después de Buenos Aires, las ciudades más importantes son Rosario y Córdoba! Cada una tiene su propia historia y características especiales. ¡Descubre qué las hace únicas!
+                </p>
+            </div>
+
+            <!-- Comparación de Ciudades -->
+            <div class="section">
+                <h2 class="section-title">⚖️ Rosario vs Córdoba</h2>
+                
+                <div class="city-comparison">
+                    <!-- Gran Rosario -->
+                    <div class="city-card rosario" onclick="exploreCity('rosario')">
+                        <div class="city-header">
+                            <div class="city-icon">🚢</div>
+                            <div class="city-name">Gran Rosario</div>
+                            <div class="city-subtitle">"La Chicago Argentina"</div>
+                        </div>
+                        
+                        <div class="city-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">1.2M</div>
+                                <div class="stat-label">Habitantes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1852</div>
+                                <div class="stat-label">Fundación</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1.890</div>
+                                <div class="stat-label">Km²</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">67</div>
+                                <div class="stat-label">Km de costa</div>
+                            </div>
+                        </div>
+                        
+                        <div class="city-features">
+                            <div class="feature-list">
+                                <div class="feature-item" onclick="exploreFeature('rosario-port')">
+                                    <div class="feature-icon">⚓</div>
+                                    <div class="feature-text">Puerto más importante del país</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('rosario-soy')">
+                                    <div class="feature-icon">🌾</div>
+                                    <div class="feature-text">Exportación de soja y granos</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('rosario-industry')">
+                                    <div class="feature-icon">🏭</div>
+                                    <div class="feature-text">Industria petroquímica</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('rosario-river')">
+                                    <div class="feature-icon">🌊</div>
+                                    <div class="feature-text">A orillas del Río Paraná</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Gran Córdoba -->
+                    <div class="city-card cordoba" onclick="exploreCity('cordoba')">
+                        <div class="city-header">
+                            <div class="city-icon">🚗</div>
+                            <div class="city-name">Gran Córdoba</div>
+                            <div class="city-subtitle">"La Docta"</div>
+                        </div>
+                        
+                        <div class="city-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">1.5M</div>
+                                <div class="stat-label">Habitantes</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1573</div>
+                                <div class="stat-label">Fundación</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">576</div>
+                                <div class="stat-label">Km²</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">1927</div>
+                                <div class="stat-label">Fábrica de aviones</div>
+                            </div>
+                        </div>
+                        
+                        <div class="city-features">
+                            <div class="feature-list">
+                                <div class="feature-item" onclick="exploreFeature('cordoba-university')">
+                                    <div class="feature-icon">🎓</div>
+                                    <div class="feature-text">Universidad más antigua del país</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('cordoba-cars')">
+                                    <div class="feature-icon">🚙</div>
+                                    <div class="feature-text">Industria automotriz</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('cordoba-planes')">
+                                    <div class="feature-icon">✈️</div>
+                                    <div class="feature-text">Fábrica de aviones desde 1927</div>
+                                </div>
+                                <div class="feature-item" onclick="exploreFeature('cordoba-mountains')">
+                                    <div class="feature-icon">⛰️</div>
+                                    <div class="feature-text">Cerca de las sierras</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historia del Crecimiento -->
+            <div class="section">
+                <h2 class="section-title">📅 Historia del Crecimiento</h2>
+                
+                <div class="growth-timeline">
+                    <h3 style="text-align: center; margin-bottom: 30px; color: #9c27b0;">
+                        ¡Cómo crecieron estas grandes ciudades!
+                    </h3>
+                    
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        
+                        <div class="timeline-event left">
+                            <div class="event-content" onclick="exploreTimelineEvent('colonial')">
+                                <div class="event-year">1573-1852</div>
+                                <div class="event-title">Época Colonial</div>
+                                <div class="event-description">Córdoba: centro administrativo. Rosario: pequeño pueblo</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event right">
+                            <div class="event-content" onclick="exploreTimelineEvent('independence')">
+                                <div class="event-year">1852-1880</div>
+                                <div class="event-title">Después de la Independencia</div>
+                                <div class="event-description">Rosario se funda oficialmente. Córdoba sigue siendo administrativa</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event left">
+                            <div class="event-content" onclick="exploreTimelineEvent('railroad')">
+                                <div class="event-year">1880-1930</div>
+                                <div class="event-title">Llegada del Ferrocarril</div>
+                                <div class="event-description">¡Boom de crecimiento! El tren conecta ambas ciudades</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event right">
+                            <div class="event-content" onclick="exploreTimelineEvent('industrial')">
+                                <div class="event-year">1930-1970</div>
+                                <div class="event-title">Industrialización</div>
+                                <div class="event-description">Córdoba: fábrica de aviones. Rosario: puerto e industria</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event left">
+                            <div class="event-content" onclick="exploreTimelineEvent('modern')">
+                                <div class="event-year">1970-Hoy</div>
+                                <div class="event-title">Ciudades Modernas</div>
+                                <div class="event-description">Grandes aglomerados urbanos con industrias diversificadas</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Industrias Principales -->
+            <div class="section">
+                <h2 class="section-title">🏭 ¿Qué se Produce en Cada Ciudad?</h2>
+                
+                <div class="industry-section">
+                    <h3 style="text-align: center; margin-bottom: 25px; color: #e91e63;">
+                        ¡Descubre las industrias más importantes!
+                    </h3>
+                    
+                    <div class="industry-grid">
+                        <div class="industry-card" onclick="exploreIndustry('port')">
+                            <div class="industry-icon">⚓</div>
+                            <div class="industry-title">Puerto de Rosario</div>
+                            <div class="industry-description">¡El más importante! Exporta soja, trigo y girasol a todo el mundo</div>
+                        </div>
+                        
+                        <div class="industry-card" onclick="exploreIndustry('petrochemical')">
+                            <div class="industry-icon">🧪</div>
+                            <div class="industry-title">Industria Petroquímica</div>
+                            <div class="industry-description">Fábricas químicas en Rosario que procesan petróleo</div>
+                        </div>
+                        
+                        <div class="industry-card" onclick="exploreIndustry('automotive')">
+                            <div class="industry-icon">🚗</div>
+                            <div class="industry-title">Autos en Córdoba</div>
+                            <div class="industry-description">¡Se fabrican autos desde 1950! Renault, Volkswagen, Fiat</div>
+                        </div>
+                        
+                        <div class="industry-card" onclick="exploreIndustry('aerospace')">
+                            <div class="industry-icon">✈️</div>
+                            <div class="industry-title">Aviones Argentinos</div>
+                            <div class="industry-description">¡Córdoba fabrica aviones desde 1927! Fábrica Argentina de Aviones</div>
+                        </div>
+                        
+                        <div class="industry-card" onclick="exploreIndustry('food')">
+                            <div class="industry-icon">🥛</div>
+                            <div class="industry-title">Industria Alimentaria</div>
+                            <div class="industry-description">Lácteos, carnes y productos agrícolas en ambas ciudades</div>
+                        </div>
+                        
+                        <div class="industry-card" onclick="exploreIndustry('education')">
+                            <div class="industry-icon">🎓</div>
+                            <div class="industry-title">Educación Superior</div>
+                            <div class="industry-description">Córdoba: "La Docta" - muchas universidades importantes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mapas Interactivos -->
+            <div class="section">
+                <h2 class="section-title">🗺️ Mapas de las Ciudades</h2>
+                
+                <div class="interactive-map">
+                    <h3 style="text-align: center; margin-bottom: 25px; color: #009688;">
+                        ¡Explora las zonas más importantes!
+                    </h3>
+                    
+                    <div class="map-container">
+                        <div class="city-map rosario-map" onclick="exploreMap('rosario')">
+                            <div class="map-title">Gran Rosario</div>
+                            <div class="map-feature port" onclick="exploreMapFeature('rosario-port')">Puerto</div>
+                            <div class="map-feature industrial" onclick="exploreMapFeature('rosario-industrial')">Industria</div>
+                            <div class="map-feature residential" onclick="exploreMapFeature('rosario-residential')">Barrios</div>
+                        </div>
+                        
+                        <div class="city-map cordoba-map" onclick="exploreMap('cordoba')">
+                            <div class="map-title">Gran Córdoba</div>
+                            <div class="map-feature university" onclick="exploreMapFeature('cordoba-university')">Universidad</div>
+                            <div class="map-feature automotive" onclick="exploreMapFeature('cordoba-automotive')">Autos</div>
+                            <div class="map-feature center" onclick="exploreMapFeature('cordoba-center')">Centro</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás conociendo las grandes ciudades de Argentina 🏭✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredCities = new Set();
+        let discoveredData = new Set();
+        
+        // Animar elementos al cargar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+        
+        function exploreCity(city) {
+            exploredCities.add(city);
+            discoveredData.add(city);
+            updateStats();
+            
+            const cityInfo = {
+                rosario: {
+                    title: 'Gran Rosario 🚢',
+                    content: '¡La segunda ciudad más importante de Argentina! Con 1.2 millones de habitantes, es famosa por su puerto sobre el Río Paraná. ¡Exporta granos a todo el mundo y tiene industrias petroquímicas súper importantes!'
+                },
+                cordoba: {
+                    title: 'Gran Córdoba 🚗',
+                    content: '¡La tercera ciudad más grande! Con 1.5 millones de habitantes, es conocida como "La Docta" por sus universidades. ¡Fabrica autos y aviones desde hace casi 100 años!'
+                }
+            };
+            
+            const info = cityInfo[city];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreFeature(feature) {
+            discoveredData.add(feature);
+            updateStats();
+            
+            const featureInfo = {
+                'rosario-port': {
+                    title: 'Puerto de Rosario ⚓',
+                    content: '¡El puerto más importante de Argentina! Por aquí salen barcos gigantes cargados de soja, trigo y girasol hacia Europa, Asia y otros continentes. ¡Es súper moderno!'
+                },
+                'rosario-soy': {
+                    title: 'Exportación de Granos 🌾',
+                    content: '¡Rosario es la capital mundial de la soja! Desde aquí se exportan millones de toneladas de granos que se cultivan en la pampa húmeda. ¡Alimenta a medio mundo!'
+                },
+                'rosario-industry': {
+                    title: 'Industria Petroquímica 🏭',
+                    content: '¡Fábricas súper modernas! Procesan petróleo para hacer plásticos, fertilizantes y productos químicos. ¡Es una industria muy importante para Argentina!'
+                },
+                'rosario-river': {
+                    title: 'Río Paraná 🌊',
+                    content: '¡Rosario está a orillas del río más importante! El Paraná le permite tener un puerto de aguas profundas donde pueden entrar barcos enormes desde el océano.'
+                },
+                'cordoba-university': {
+                    title: 'Universidad de Córdoba 🎓',
+                    content: '¡La universidad más antigua de Argentina! Fundada en 1613, por eso Córdoba se llama "La Docta". ¡Tiene más de 400 años de historia!'
+                },
+                'cordoba-cars': {
+                    title: 'Industria Automotriz 🚙',
+                    content: '¡En Córdoba se fabrican autos desde 1950! Renault, Volkswagen, Fiat... ¡Muchos de los autos que ves en las calles se hicieron ahí!'
+                },
+                'cordoba-planes': {
+                    title: 'Fábrica de Aviones ✈️',
+                    content: '¡Increíble! Desde 1927 se fabrican aviones en Córdoba. La Fábrica Argentina de Aviones hizo aviones militares y civiles. ¡Una industria súper avanzada!'
+                },
+                'cordoba-mountains': {
+                    title: 'Sierras de Córdoba ⛰️',
+                    content: '¡Córdoba está cerca de las montañas! Las Sierras de Córdoba son perfectas para el turismo. ¡Muchas personas van de vacaciones ahí!'
+                }
+            };
+            
+            const info = featureInfo[feature];
+            if (info) {
+                showPopup(info.title, info.content);
+            }
+        }
+        
+        function exploreTimelineEvent(event) {
+            discoveredData.add(event);
+            updateStats();
+            
+            const eventInfo = {
+                colonial: {
+                    title: 'Época Colonial (1573-1852) 🏛️',
+                    content: '¡Córdoba era súper importante! Era un centro administrativo y tenía la primera universidad. Rosario era solo un pueblito a orillas del río.'
+                },
+                independence: {
+                    title: 'Después de la Independencia (1852-1880) 🇦🇷',
+                    content: '¡Rosario se fundó oficialmente en 1852! Empezó a crecer como puerto comercial. Córdoba siguió siendo un centro administrativo importante.'
+                },
+                railroad: {
+                    title: 'Llegada del Ferrocarril (1880-1930) 🚂',
+                    content: '¡El tren cambió todo! Conectó ambas ciudades con Buenos Aires y el resto del país. ¡Las ciudades crecieron súper rápido!'
+                },
+                industrial: {
+                    title: 'Industrialización (1930-1970) 🏭',
+                    content: '¡Época de grandes fábricas! En Córdoba se instaló la fábrica de aviones (1927) y después las automotrices. Rosario desarrolló su puerto e industrias.'
+                },
+                modern: {
+                    title: 'Ciudades Modernas (1970-Hoy) 🌟',
+                    content: '¡Hoy son grandes aglomerados urbanos! Rosario: 1.2 millones. Córdoba: 1.5 millones. ¡Con industrias diversificadas y universidades importantes!'
+                }
+            };
+            
+            const info = eventInfo[event];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreIndustry(industry) {
+            discoveredData.add(industry);
+            updateStats();
+            
+            const industryInfo = {
+                port: {
+                    title: 'Puerto de Rosario ⚓',
+                    content: '¡El corazón económico de Argentina! Por este puerto sale el 80% de las exportaciones agrícolas del país. ¡Barcos de 200 metros de largo cargan soja para China, Europa y otros países!'
+                },
+                petrochemical: {
+                    title: 'Industria Petroquímica 🧪',
+                    content: '¡Fábricas súper modernas! Procesan petróleo para hacer plásticos, fertilizantes, pinturas y productos químicos. ¡Es una industria de alta tecnología!'
+                },
+                automotive: {
+                    title: 'Autos en Córdoba 🚗',
+                    content: '¡Córdoba es la Detroit argentina! Se fabrican autos desde 1950. Renault Clio, Volkswagen Amarok, Fiat Cronos... ¡Muchos se exportan a otros países!'
+                },
+                aerospace: {
+                    title: 'Aviones Argentinos ✈️',
+                    content: '¡Increíble historia! La Fábrica Argentina de Aviones funcionó desde 1927. Hizo aviones militares como el Pulqui y aviones civiles. ¡Una industria súper avanzada para la época!'
+                },
+                food: {
+                    title: 'Industria Alimentaria 🥛',
+                    content: '¡Ambas ciudades procesan alimentos! Lácteos, carnes, aceites, harinas... ¡Aprovechan que están en la zona agrícola más rica de Argentina!'
+                },
+                education: {
+                    title: 'Educación Superior 🎓',
+                    content: '¡Córdoba es "La Docta"! Tiene la Universidad Nacional de Córdoba (1613), la Universidad Tecnológica Nacional y muchas más. ¡Es un centro educativo súper importante!'
+                }
+            };
+            
+            const info = industryInfo[industry];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreMap(city) {
+            discoveredData.add('map-' + city);
+            updateStats();
+            
+            const mapInfo = {
+                rosario: {
+                    title: 'Mapa de Gran Rosario 🗺️',
+                    content: '¡Rosario se extiende a lo largo del Río Paraná! La zona del puerto es súper importante, las industrias están en la periferia y los barrios residenciales en el centro y norte.'
+                },
+                cordoba: {
+                    title: 'Mapa de Gran Córdoba 🗺️',
+                    content: '¡Córdoba creció en forma radial! El centro histórico está en el medio, la universidad al noroeste, las fábricas de autos al sur y los barrios se extienden hacia las sierras.'
+                }
+            };
+            
+            const info = mapInfo[city];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreMapFeature(feature) {
+            discoveredData.add(feature);
+            updateStats();
+            
+            const featureInfo = {
+                'rosario-port': {
+                    title: 'Zona Portuaria de Rosario ⚓',
+                    content: '¡La zona más activa! Aquí están los elevadores de granos, las terminales portuarias y las empresas exportadoras. ¡Funciona las 24 horas!'
+                },
+                'rosario-industrial': {
+                    title: 'Zona Industrial 🏭',
+                    content: '¡Fábricas petroquímicas y metalúrgicas! Están ubicadas en la periferia para no contaminar el centro de la ciudad. ¡Muy bien planificado!'
+                },
+                'rosario-residential': {
+                    title: 'Barrios Residenciales 🏘️',
+                    content: '¡Donde vive la gente! Los barrios más antiguos están cerca del centro, y los más nuevos se extienden hacia el norte y oeste.'
+                },
+                'cordoba-university': {
+                    title: 'Ciudad Universitaria 🎓',
+                    content: '¡El barrio de los estudiantes! Aquí está la Universidad Nacional de Córdoba y muchas facultades. ¡Miles de estudiantes de todo el país!'
+                },
+                'cordoba-automotive': {
+                    title: 'Zona Automotriz 🚗',
+                    content: '¡Las fábricas de autos! Renault, Volkswagen, Fiat tienen sus plantas aquí. ¡También están las empresas de autopartes!'
+                },
+                'cordoba-center': {
+                    title: 'Centro Histórico 🏛️',
+                    content: '¡El corazón de Córdoba! Aquí está la Catedral, el Cabildo, la Manzana Jesuítica y los edificios gubernamentales. ¡Mucha historia!'
+                }
+            };
+            
+            const info = featureInfo[feature];
+            if (info) {
+                showPopup(info.title, info.content);
+            }
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('citiesExplored').textContent = exploredCities.size;
+            document.getElementById('dataDiscovered').textContent = discoveredData.size;
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Increíble! Estás conociendo las grandes ciudades de Argentina 🏭✨",
+            "¡Fantástico! Rosario y Córdoba tienen historias súper interesantes 🚢🚗",
+            "¡Genial! Cada ciudad tiene sus industrias especiales 🏭💫",
+            "¡Excelente! Argentina tiene ciudades muy importantes 🌟❤️",
+            "¡Súper! Las industrias hacen crecer las ciudades 🚀🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        // Cerrar popup al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html> 

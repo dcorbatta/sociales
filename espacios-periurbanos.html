@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏘️ Espacios Urbanos y Periurbanos 🏘️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .periurban-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .comparison-section {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #2196f3;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin: 25px 0;
+        }
+        
+        .space-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #2196f3;
+            text-align: center;
+        }
+        
+        .space-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(33,150,243,0.3);
+        }
+        
+        .space-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .space-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .space-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .activities-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .activity-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #4caf50;
+        }
+        
+        .activity-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+        }
+        
+        .activity-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .activity-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .activity-text {
+            font-size: 0.95rem;
+            color: #666;
+        }
+        
+        .problems-section {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #f44336;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏘️ Espacios Urbanos y Periurbanos 🏘️</h1>
+            <div class="score-board">
+                <span class="score">🎯 Conceptos: <span id="conceptsLearned">0</span>/8</span>
+                <span class="level">💡 Actividades: <span id="activitiesExplored">0</span></span>
+            </div>
+        </header>
+
+        <main class="periurban-container">
+            <div class="section">
+                <h2 class="section-title">🌆 ¿Qué son los Espacios Periurbanos?</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Los espacios periurbanos están entre la ciudad y el campo! Son súper importantes para producir alimentos frescos. ¡Descubre sus características!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">⚖️ Urbano vs Periurbano</h2>
+                <div class="comparison-section">
+                    <div class="comparison-grid">
+                        <div class="space-card" onclick="exploreSpace('urban')">
+                            <div class="space-icon">🏙️</div>
+                            <div class="space-title">Espacios Urbanos</div>
+                            <div class="space-description">Edificios, calles, comercios, mucha gente viviendo junta</div>
+                        </div>
+                        
+                        <div class="space-card" onclick="exploreSpace('periurban')">
+                            <div class="space-icon">🌾</div>
+                            <div class="space-title">Espacios Periurbanos</div>
+                            <div class="space-description">Entre ciudad y campo, huertas, quintas, menos población</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🥬 Actividades en Espacios Periurbanos</h2>
+                <div class="activities-section">
+                    <div class="activities-grid">
+                        <div class="activity-card" onclick="exploreActivity('huertas')">
+                            <div class="activity-icon">🥕</div>
+                            <div class="activity-title">Huertas</div>
+                            <div class="activity-text">Cultivan verduras frescas para la ciudad</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreActivity('quintas')">
+                            <div class="activity-icon">🍅</div>
+                            <div class="activity-title">Quintas</div>
+                            <div class="activity-text">Producen frutas y hortalizas</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreActivity('flowers')">
+                            <div class="activity-icon">🌺</div>
+                            <div class="activity-title">Floricultura</div>
+                            <div class="activity-text">Cultivan flores para vender</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreActivity('livestock')">
+                            <div class="activity-icon">🐄</div>
+                            <div class="activity-title">Ganadería</div>
+                            <div class="activity-text">Crían animales para alimentos</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreActivity('recreation')">
+                            <div class="activity-icon">🏞️</div>
+                            <div class="activity-title">Recreación</div>
+                            <div class="activity-text">Lugares para pasear y descansar</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreActivity('industries')">
+                            <div class="activity-icon">🏭</div>
+                            <div class="activity-title">Industrias</div>
+                            <div class="activity-text">Algunas fábricas se instalan aquí</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">⚠️ Conflictos y Presiones</h2>
+                <div class="problems-section">
+                    <div class="activities-grid">
+                        <div class="activity-card" onclick="exploreProblem('urban-growth')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="activity-icon">🏘️</div>
+                            <div class="activity-title">Crecimiento Urbano</div>
+                            <div class="activity-text">La ciudad avanza sobre el campo</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreProblem('land-value')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-title">Valor del Suelo</div>
+                            <div class="activity-text">Los terrenos se vuelven más caros</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreProblem('displacement')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="activity-icon">📦</div>
+                            <div class="activity-title">Desplazamiento</div>
+                            <div class="activity-text">Los productores deben mudarse</div>
+                        </div>
+                        
+                        <div class="activity-card" onclick="exploreProblem('food-distance')" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border-color: #f44336;">
+                            <div class="activity-icon">🚛</div>
+                            <div class="activity-title">Alimentos Lejanos</div>
+                            <div class="activity-text">Los alimentos vienen de más lejos</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Los espacios periurbanos son súper importantes 🌾✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let conceptsLearned = new Set();
+        let activitiesExplored = new Set();
+        
+        function exploreSpace(space) {
+            conceptsLearned.add(space);
+            updateStats();
+            
+            const spaceInfo = {
+                urban: {
+                    title: 'Espacios Urbanos 🏙️',
+                    content: '¡La ciudad propiamente dicha! Edificios altos, calles con mucho tráfico, comercios, oficinas. ¡Mucha gente viviendo en poco espacio!'
+                },
+                periurban: {
+                    title: 'Espacios Periurbanos 🌾',
+                    content: '¡Entre la ciudad y el campo! Tienen características de ambos. ¡Súper importantes para producir alimentos frescos para la ciudad!'
+                }
+            };
+            
+            const info = spaceInfo[space];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreActivity(activity) {
+            activitiesExplored.add(activity);
+            updateStats();
+            
+            const activityInfo = {
+                huertas: {
+                    title: 'Huertas Periurbanas 🥕',
+                    content: '¡Cultivan verduras súper frescas! Lechuga, acelga, tomate... ¡Llegan a la ciudad el mismo día que se cosechan!'
+                },
+                quintas: {
+                    title: 'Quintas y Hortalizas 🍅',
+                    content: '¡Producen frutas y verduras! Las quintas son como huertas más grandes. ¡Abastecen el Mercado Central!'
+                },
+                flowers: {
+                    title: 'Floricultura 🌺',
+                    content: '¡Cultivan flores hermosas! Para decorar casas, eventos y regalos. ¡Una actividad muy importante!'
+                },
+                livestock: {
+                    title: 'Ganadería Periurbana 🐄',
+                    content: '¡Crían animales cerca de la ciudad! Vacas para leche, gallinas para huevos. ¡Alimentos frescos!'
+                },
+                recreation: {
+                    title: 'Espacios Recreativos 🏞️',
+                    content: '¡Lugares para relajarse! Parques, clubes, espacios para hacer picnic. ¡Escapar del ruido de la ciudad!'
+                },
+                industries: {
+                    title: 'Industrias Periurbanas 🏭',
+                    content: '¡Algunas fábricas se instalan aquí! Buscan terrenos más baratos y menos problemas con los vecinos.'
+                }
+            };
+            
+            const info = activityInfo[activity];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreProblem(problem) {
+            conceptsLearned.add(problem);
+            updateStats();
+            
+            const problemInfo = {
+                'urban-growth': {
+                    title: 'Crecimiento Urbano 🏘️',
+                    content: '¡La ciudad crece y avanza! Se construyen barrios donde antes había huertas. ¡Es un desafío muy grande!'
+                },
+                'land-value': {
+                    title: 'Aumento del Valor del Suelo 💰',
+                    content: '¡Los terrenos se vuelven más caros! Los productores no pueden pagar y deben vender sus tierras.'
+                },
+                'displacement': {
+                    title: 'Desplazamiento de Actividades 📦',
+                    content: '¡Los productores se mudan más lejos! Buscan tierras más baratas alejadas de la ciudad.'
+                },
+                'food-distance': {
+                    title: 'Alimentos más Lejanos 🚛',
+                    content: '¡Los alimentos vienen de más lejos! Esto los hace más caros y menos frescos. ¡Un problema serio!'
+                }
+            };
+            
+            const info = problemInfo[problem];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('conceptsLearned').textContent = conceptsLearned.size;
+            document.getElementById('activitiesExplored').textContent = activitiesExplored.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! Los espacios periurbanos son súper importantes 🌾✨",
+            "¡Fantástico! Las huertas nos dan alimentos frescos 🥕🌟",
+            "¡Genial! Entre ciudad y campo hay mucha actividad 🏘️💫",
+            "¡Excelente! Los productores alimentan la ciudad 🍅❤️",
+            "¡Súper! Cuidar estos espacios es muy importante 🌱🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 

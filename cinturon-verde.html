@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🥬 Cinturón Verde Platense 🥬</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .green-belt-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .production-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4caf50;
+        }
+        
+        .production-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .production-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #4caf50;
+        }
+        
+        .production-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(76,175,80,0.3);
+        }
+        
+        .production-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+        }
+        
+        .production-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .production-description {
+            font-size: 1rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .changes-section {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #ff9800;
+        }
+        
+        .timeline-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #4caf50, #ff9800);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+        
+        .timeline-event {
+            display: flex;
+            margin: 30px 0;
+            align-items: center;
+            position: relative;
+        }
+        
+        .timeline-event.left {
+            justify-content: flex-end;
+            text-align: right;
+        }
+        
+        .timeline-event.right {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        
+        .event-content {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            max-width: 300px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #ff9800;
+        }
+        
+        .event-content:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+        }
+        
+        .event-year {
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #ff9800;
+            margin-bottom: 8px;
+        }
+        
+        .event-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .event-description {
+            font-size: 0.95rem;
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            background: #ff9800;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            border: 3px solid white;
+            z-index: 1;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(76,175,80,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 30px;
+            }
+            
+            .timeline-event {
+                justify-content: flex-start !important;
+                text-align: left !important;
+                padding-left: 60px;
+            }
+            
+            .timeline-dot {
+                left: 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🥬 Cinturón Verde Platense 🥬</h1>
+            <div class="score-board">
+                <span class="score">🎯 Productos: <span id="productsLearned">0</span>/6</span>
+                <span class="level">💡 Cambios: <span id="changesExplored">0</span></span>
+            </div>
+        </header>
+
+        <main class="green-belt-container">
+            <div class="section">
+                <h2 class="section-title">🌱 El Cinturón Verde de La Plata</h2>
+                <p style="font-size: 1.3rem; text-align: center; color: #333; line-height: 1.6;">
+                    ¡Alrededor de La Plata hay una zona súper importante que produce frutas y verduras! Es el cinturón verde que alimenta la ciudad. ¡Descubre cómo ha cambiado!
+                </p>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">🥕 ¿Qué se Produce en el Cinturón Verde?</h2>
+                <div class="production-section">
+                    <div class="production-grid">
+                        <div class="production-card" onclick="exploreProduction('vegetables')">
+                            <div class="production-icon">🥕</div>
+                            <div class="production-title">Hortalizas</div>
+                            <div class="production-description">Lechuga, acelga, espinaca, apio</div>
+                        </div>
+                        
+                        <div class="production-card" onclick="exploreProduction('fruits')">
+                            <div class="production-icon">🍅</div>
+                            <div class="production-title">Frutas y Verduras</div>
+                            <div class="production-description">Tomate, pimiento, berenjena</div>
+                        </div>
+                        
+                        <div class="production-card" onclick="exploreProduction('flowers')">
+                            <div class="production-icon">🌺</div>
+                            <div class="production-title">Flores</div>
+                            <div class="production-description">Claveles, rosas, plantas ornamentales</div>
+                        </div>
+                        
+                        <div class="production-card" onclick="exploreProduction('greenhouses')">
+                            <div class="production-icon">🏠</div>
+                            <div class="production-title">Invernaderos</div>
+                            <div class="production-description">Cultivos protegidos todo el año</div>
+                        </div>
+                        
+                        <div class="production-card" onclick="exploreProduction('market')">
+                            <div class="production-icon">🛒</div>
+                            <div class="production-title">Mercado Central</div>
+                            <div class="production-description">Distribución a Buenos Aires</div>
+                        </div>
+                        
+                        <div class="production-card" onclick="exploreProduction('fresh')">
+                            <div class="production-icon">⚡</div>
+                            <div class="production-title">Productos Frescos</div>
+                            <div class="production-description">Del campo a la mesa el mismo día</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">📅 Cambios en el Tiempo</h2>
+                <div class="changes-section">
+                    <h3 style="text-align: center; margin-bottom: 30px; color: #ff9800;">
+                        ¡Cómo ha cambiado el cinturón verde!
+                    </h3>
+                    
+                    <div class="timeline-container">
+                        <div class="timeline-line"></div>
+                        
+                        <div class="timeline-event left">
+                            <div class="event-content" onclick="exploreChange('traditional')">
+                                <div class="event-year">1880-1950</div>
+                                <div class="event-title">Agricultura Tradicional</div>
+                                <div class="event-description">Cultivos al aire libre, métodos tradicionales</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event right">
+                            <div class="event-content" onclick="exploreChange('modernization')">
+                                <div class="event-year">1950-1980</div>
+                                <div class="event-title">Modernización</div>
+                                <div class="event-description">Nuevas técnicas, mejores herramientas</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event left">
+                            <div class="event-content" onclick="exploreChange('greenhouses')">
+                                <div class="event-year">1980-2000</div>
+                                <div class="event-title">Era de Invernaderos</div>
+                                <div class="event-description">Cultivos protegidos, mayor productividad</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                        
+                        <div class="timeline-event right">
+                            <div class="event-content" onclick="exploreChange('urban-pressure')">
+                                <div class="event-year">2000-Hoy</div>
+                                <div class="event-title">Presión Urbana</div>
+                                <div class="event-description">La ciudad avanza, algunos productores se mudan</div>
+                            </div>
+                            <div class="timeline-dot"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="interactive-button" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! El cinturón verde alimenta la ciudad 🥬✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let productsLearned = new Set();
+        let changesExplored = new Set();
+        
+        function exploreProduction(product) {
+            productsLearned.add(product);
+            updateStats();
+            
+            const productionInfo = {
+                vegetables: {
+                    title: 'Hortalizas Frescas 🥕',
+                    content: '¡Verduras súper frescas! Lechuga, acelga, espinaca, apio, radicheta... ¡Se cosechan y llegan a la ciudad el mismo día!'
+                },
+                fruits: {
+                    title: 'Frutas y Verduras 🍅',
+                    content: '¡Tomates, pimientos, berenjenas! También frutillas y otras frutas de estación. ¡Todo cultivado cerca de La Plata!'
+                },
+                flowers: {
+                    title: 'Floricultura 🌺',
+                    content: '¡Flores hermosas! Claveles, rosas, plantas para jardín. ¡La Plata es famosa por sus flores en todo el país!'
+                },
+                greenhouses: {
+                    title: 'Invernaderos Modernos 🏠',
+                    content: '¡Cultivos protegidos! Los invernaderos permiten producir todo el año, sin importar el clima. ¡Súper tecnológicos!'
+                },
+                market: {
+                    title: 'Mercado Central 🛒',
+                    content: '¡El gran distribuidor! Los productos del cinturón verde llegan al Mercado Central y de ahí se distribuyen a toda Buenos Aires.'
+                },
+                fresh: {
+                    title: 'Productos Súper Frescos ⚡',
+                    content: '¡Del campo a la mesa! Como están cerca de la ciudad, los productos llegan súper frescos. ¡Se cosechan y se venden el mismo día!'
+                }
+            };
+            
+            const info = productionInfo[product];
+            showPopup(info.title, info.content);
+        }
+        
+        function exploreChange(change) {
+            changesExplored.add(change);
+            updateStats();
+            
+            const changeInfo = {
+                traditional: {
+                    title: 'Agricultura Tradicional (1880-1950) 🌾',
+                    content: '¡Todo al aire libre! Los productores usaban métodos tradicionales, herramientas simples y dependían mucho del clima.'
+                },
+                modernization: {
+                    title: 'Modernización (1950-1980) 🚜',
+                    content: '¡Llegaron nuevas técnicas! Mejores herramientas, fertilizantes, sistemas de riego. ¡La producción aumentó mucho!'
+                },
+                greenhouses: {
+                    title: 'Era de Invernaderos (1980-2000) 🏠',
+                    content: '¡Revolución de los invernaderos! Cultivos protegidos del clima, mayor productividad, productos todo el año. ¡Súper moderno!'
+                },
+                'urban-pressure': {
+                    title: 'Presión Urbana (2000-Hoy) 🏘️',
+                    content: '¡La ciudad crece! Algunos terrenos se convierten en barrios. Los productores buscan tierras más baratas más lejos.'
+                }
+            };
+            
+            const info = changeInfo[change];
+            showPopup(info.title, info.content);
+        }
+        
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        function updateStats() {
+            document.getElementById('productsLearned').textContent = productsLearned.size;
+            document.getElementById('changesExplored').textContent = changesExplored.size;
+        }
+        
+        const motivationalMessages = [
+            "¡Increíble! El cinturón verde alimenta la ciudad 🥬✨",
+            "¡Fantástico! Los productores son súper importantes 🌱🌟",
+            "¡Genial! Los invernaderos son súper modernos 🏠💫",
+            "¡Excelente! Los alimentos frescos son los mejores 🍅❤️",
+            "¡Súper! La agricultura periurbana es fascinante 🚜🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 
