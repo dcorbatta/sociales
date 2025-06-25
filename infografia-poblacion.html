@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📊 Aprende sobre la Población - Infografía Interactiva 📊</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .infografia-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .section {
+            background: rgba(255,255,255,0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+        
+        .section:hover::before {
+            opacity: 0.05;
+        }
+        
+        .section:hover {
+            transform: translateY(-5px);
+            border-color: #ff6b6b;
+        }
+        
+        .section-title {
+            font-size: 2.2rem;
+            color: #ff6b6b;
+            text-align: center;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            animation: bounce 2s ease-in-out infinite;
+        }
+        
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .concept-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border: 3px solid #e9ecef;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .concept-card:hover {
+            transform: scale(1.05);
+            border-color: #4ecdc4;
+            box-shadow: 0 15px 35px rgba(78,205,196,0.3);
+        }
+        
+        .concept-card.active {
+            background: linear-gradient(145deg, #c8e6c9, #4caf50);
+            border-color: #4caf50;
+            color: white;
+        }
+        
+        .concept-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .concept-title {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .concept-card.active .concept-title {
+            color: white;
+        }
+        
+        .concept-description {
+            font-size: 1rem;
+            line-height: 1.4;
+            color: #666;
+        }
+        
+        .concept-card.active .concept-description {
+            color: white;
+        }
+        
+        .interactive-chart {
+            background: linear-gradient(135deg, #e8f4f8, #f0f8ff);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #4ecdc4;
+            text-align: center;
+        }
+        
+        .chart-title {
+            font-size: 1.8rem;
+            color: #4ecdc4;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        
+        .population-bar {
+            background: #e0e0e0;
+            border-radius: 15px;
+            height: 30px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .population-bar:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .population-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #4ecdc4);
+            border-radius: 15px;
+            transition: width 2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .census-timeline {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+            border-radius: 20px;
+            border: 3px solid #f39c12;
+            flex-wrap: wrap;
+        }
+        
+        .timeline-item {
+            text-align: center;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 15px;
+            margin: 10px;
+            min-width: 120px;
+        }
+        
+        .timeline-item:hover {
+            background: rgba(255,255,255,0.5);
+            transform: scale(1.1);
+        }
+        
+        .timeline-year {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #e67e22;
+            margin-bottom: 5px;
+        }
+        
+        .timeline-population {
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+        
+        .migration-demo {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            gap: 20px;
+            margin: 25px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 20px;
+            border: 3px solid #6c757d;
+            align-items: center;
+        }
+        
+        .country-box {
+            text-align: center;
+            padding: 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .origin-country {
+            background: linear-gradient(145deg, #ffcdd2, #f44336);
+            color: white;
+        }
+        
+        .destination-country {
+            background: linear-gradient(145deg, #c8e6c9, #4caf50);
+            color: white;
+        }
+        
+        .country-box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+        
+        .migration-arrow {
+            text-align: center;
+            font-size: 3rem;
+            color: #ff6b6b;
+            animation: slideRight 2s ease-in-out infinite;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .info-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            max-width: 500px;
+            text-align: center;
+        }
+        
+        .popup-title {
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+        
+        .popup-content {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .close-popup {
+            background: linear-gradient(45deg, #4caf50, #45b7d1);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #03a9f4;
+        }
+        
+        .fact-item {
+            display: flex;
+            align-items: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255,255,255,0.7);
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .fact-item:hover {
+            background: rgba(255,255,255,0.9);
+            transform: translateX(10px);
+        }
+        
+        .fact-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+        }
+        
+        .fact-text {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.4;
+        }
+        
+        .progress-indicator {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50px;
+            padding: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+        
+        .progress-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 4px solid #e0e0e0;
+            border-top: 4px solid #4ecdc4;
+            margin: 0 auto 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #333;
+            font-weight: bold;
+        }
+        
+        @keyframes slideRight {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 768px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .migration-demo {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .census-timeline {
+                flex-direction: column;
+            }
+            
+            .progress-indicator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📊 Aprendiendo sobre la Población 📊</h1>
+            <div class="score-board">
+                <span class="score">🎯 Secciones Exploradas: <span id="sectionsExplored">0</span>/5</span>
+                <span class="level">💡 Conceptos Aprendidos: <span id="conceptsLearned">0</span></span>
+            </div>
+        </header>
+
+        <main class="infografia-container">
+            <!-- Sección 1: ¿Qué es la Población? -->
+            <div class="section" id="section1">
+                <h2 class="section-title">🌍 ¿Qué es la Población?</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card" onclick="activateConcept(this, 'population')">
+                        <div class="concept-icon">👥</div>
+                        <div class="concept-title">Población</div>
+                        <div class="concept-description">Son TODAS las personas que viven en un lugar: tu ciudad, tu país, ¡todo el mundo!</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'importance')">
+                        <div class="concept-icon">🤔</div>
+                        <div class="concept-title">¿Por qué es importante?</div>
+                        <div class="concept-description">Los gobiernos necesitan saber cuántas personas viven en su país para planificar escuelas, hospitales y servicios.</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'tools')">
+                        <div class="concept-icon">🔍</div>
+                        <div class="concept-title">Herramientas para estudiarla</div>
+                        <div class="concept-description">El CENSO es como una gran encuesta donde se cuenta a todas las personas del país.</div>
+                    </div>
+                </div>
+                
+                <div class="fun-facts">
+                    <h3 style="text-align: center; color: #03a9f4; margin-bottom: 20px;">🎉 Datos Curiosos</h3>
+                    <div class="fact-item" onclick="showPopup('¡Imagínate!', 'Si pusiéramos a todas las personas de Argentina en una fila, ¡la fila daría la vuelta al mundo más de una vez!')">
+                        <span class="fact-icon">🌎</span>
+                        <span class="fact-text">Argentina tiene más de 46 millones de habitantes</span>
+                    </div>
+                    <div class="fact-item" onclick="showPopup('¡Increíble!', 'Cada 10 años, miles de personas van casa por casa para contar a todos. ¡Es como un ejército de contadores!')">
+                        <span class="fact-icon">🏠</span>
+                        <span class="fact-text">El censo se hace cada 10 años</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 2: Los Censistas -->
+            <div class="section" id="section2">
+                <h2 class="section-title">🕵️‍♂️ Los Censistas: Detectives de Números</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card" onclick="activateConcept(this, 'censistas')">
+                        <div class="concept-icon">🚪</div>
+                        <div class="concept-title">¿Qué hacen?</div>
+                        <div class="concept-description">Van de casa en casa con una tablet o formulario preguntando: "¿Cuántas personas viven aquí?"</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'questions')">
+                        <div class="concept-icon">❓</div>
+                        <div class="concept-title">¿Qué preguntan?</div>
+                        <div class="concept-description">Edad, sexo, educación, trabajo... ¡Todo para conocer mejor a las familias!</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'challenge')">
+                        <div class="concept-icon">🏃‍♂️</div>
+                        <div class="concept-title">¡Es un desafío!</div>
+                        <div class="concept-description">Deben encontrar a TODAS las personas, ¡incluso las que no están en casa!</div>
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="startCensusSimulation()">
+                    🎮 ¡Quiero ser Censista!
+                </button>
+            </div>
+
+            <!-- Sección 3: Crecimiento de la Población -->
+            <div class="section" id="section3">
+                <h2 class="section-title">📈 ¿Por qué cambia la población?</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card" onclick="activateConcept(this, 'growth')">
+                        <div class="concept-icon">👶</div>
+                        <div class="concept-title">Crecimiento Vegetativo</div>
+                        <div class="concept-description">Cuando nacen más bebés de los que mueren personas, la población crece.</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'migration')">
+                        <div class="concept-icon">✈️</div>
+                        <div class="concept-title">Migración</div>
+                        <div class="concept-description">Cuando las personas se mudan de un lugar a otro, como una gran mudanza.</div>
+                    </div>
+                </div>
+                
+                <div class="migration-demo">
+                    <div class="country-box origin-country" onclick="showPopup('País de Origen', 'Las personas deciden irse por trabajo, estudios o una vida mejor.')">
+                        <div style="font-size: 3rem;">🏠</div>
+                        <div>País de Origen</div>
+                        <div>(-) Personas</div>
+                    </div>
+                    
+                    <div class="migration-arrow">➡️</div>
+                    
+                    <div class="country-box destination-country" onclick="showPopup('País de Destino', 'Recibe nuevas personas que buscan oportunidades. ¡Como Argentina recibió muchos inmigrantes!')">
+                        <div style="font-size: 3rem;">🌟</div>
+                        <div>País de Destino</div>
+                        <div>(+) Personas</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 4: Evolución de Argentina -->
+            <div class="section" id="section4">
+                <h2 class="section-title">🇦🇷 La Población de Argentina en el Tiempo</h2>
+                
+                <div class="interactive-chart">
+                    <div class="chart-title">Evolución Poblacional Argentina</div>
+                    <div class="census-timeline">
+                        <div class="timeline-item" onclick="showPopulationBar(1869, 1.8)">
+                            <div class="timeline-year">1869</div>
+                            <div class="timeline-population">1.8M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(1895, 4.0)">
+                            <div class="timeline-year">1895</div>
+                            <div class="timeline-population">4.0M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(1914, 7.9)">
+                            <div class="timeline-year">1914</div>
+                            <div class="timeline-population">7.9M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(1947, 15.9)">
+                            <div class="timeline-year">1947</div>
+                            <div class="timeline-population">15.9M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(1980, 27.9)">
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-population">27.9M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(2010, 40.1)">
+                            <div class="timeline-year">2010</div>
+                            <div class="timeline-population">40.1M</div>
+                        </div>
+                        <div class="timeline-item" onclick="showPopulationBar(2022, 46.2)">
+                            <div class="timeline-year">2022</div>
+                            <div class="timeline-population">46.2M</div>
+                        </div>
+                    </div>
+                    
+                    <div class="population-bar">
+                        <div class="population-fill" id="populationBar" style="width: 0%">
+                            <span id="populationText">Haz clic en un año</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sección 5: Importancia de los Datos -->
+            <div class="section" id="section5">
+                <h2 class="section-title">🎯 ¿Para qué sirven estos datos?</h2>
+                
+                <div class="concept-grid">
+                    <div class="concept-card" onclick="activateConcept(this, 'schools')">
+                        <div class="concept-icon">🏫</div>
+                        <div class="concept-title">Planificar Escuelas</div>
+                        <div class="concept-description">Si hay muchos niños en una zona, ¡necesitamos más escuelas!</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'hospitals')">
+                        <div class="concept-icon">🏥</div>
+                        <div class="concept-title">Construir Hospitales</div>
+                        <div class="concept-description">Más personas = más hospitales y doctores necesarios.</div>
+                    </div>
+                    
+                    <div class="concept-card" onclick="activateConcept(this, 'services')">
+                        <div class="concept-icon">🚌</div>
+                        <div class="concept-title">Mejorar Servicios</div>
+                        <div class="concept-description">Transporte, agua, electricidad... ¡todo debe alcanzar para todos!</div>
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="showPopup('¡Eres un Experto!', '¡Felicitaciones! Ahora sabes por qué es tan importante conocer la población. ¡Cada persona cuenta!')">
+                    🎉 ¡Ya soy un Experto en Población!
+                </button>
+            </div>
+
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+                <button class="interactive-button" onclick="window.location.href='censo-simulator.html'">
+                    🎮 Practicar con el Simulador
+                </button>
+            </div>
+        </main>
+
+        <!-- Indicador de Progreso -->
+        <div class="progress-indicator" id="progressIndicator">
+            <div class="progress-circle" id="progressCircle"></div>
+            <div class="progress-text" id="progressText">0%</div>
+        </div>
+
+        <!-- Popup de Información -->
+        <div class="info-popup" id="infoPopup">
+            <div class="popup-title" id="popupTitle"></div>
+            <div class="popup-content" id="popupContent"></div>
+            <button class="close-popup" onclick="closePopup()">¡Entendido!</button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Increíble! Estás aprendiendo sobre población como un verdadero experto 📊✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let exploredSections = new Set();
+        let learnedConcepts = new Set();
+        
+        // Activar concepto
+        function activateConcept(element, conceptId) {
+            // Remover active de otros elementos del mismo contenedor
+            const parent = element.parentElement;
+            parent.querySelectorAll('.concept-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Activar el concepto seleccionado
+            element.classList.add('active');
+            learnedConcepts.add(conceptId);
+            
+            // Actualizar estadísticas
+            updateStats();
+            
+            // Efectos visuales
+            addFloatingReward('💡', 
+                element.offsetLeft + element.offsetWidth/2, 
+                element.offsetTop + element.offsetHeight/2);
+        }
+        
+        // Mostrar barra de población
+        function showPopulationBar(year, population) {
+            const maxPopulation = 46.2; // Máximo para el cálculo porcentual
+            const percentage = (population / maxPopulation) * 100;
+            
+            const bar = document.getElementById('populationBar');
+            const text = document.getElementById('populationText');
+            
+            bar.style.width = percentage + '%';
+            text.textContent = `${year}: ${population}M habitantes`;
+            
+            // Agregar sección explorada
+            exploredSections.add('timeline');
+            updateStats();
+            
+            // Mostrar información adicional
+            setTimeout(() => {
+                showPopup(`Argentina en ${year}`, 
+                    `En ${year}, Argentina tenía ${population} millones de habitantes. ${getYearContext(year)}`);
+            }, 1000);
+        }
+        
+        // Contexto histórico por año
+        function getYearContext(year) {
+            const contexts = {
+                1869: "¡El primer censo oficial de Argentina!",
+                1895: "Llegada masiva de inmigrantes europeos.",
+                1914: "Época de gran crecimiento económico.",
+                1947: "Después de la Segunda Guerra Mundial.",
+                1980: "Argentina se estaba modernizando.",
+                2010: "Era de la tecnología digital.",
+                2022: "¡El censo más reciente con tablets!"
+            };
+            return contexts[year] || "Una época importante en la historia argentina.";
+        }
+        
+        // Iniciar simulación de censo
+        function startCensusSimulation() {
+            showPopup('¡Excelente decisión!', 
+                'Ve al Simulador de Censo para vivir la experiencia completa de ser un censista. ¡Te divertirás mucho!');
+            
+            setTimeout(() => {
+                window.location.href = 'censo-simulator.html';
+            }, 3000);
+        }
+        
+        // Mostrar popup
+        function showPopup(title, content) {
+            document.getElementById('popupTitle').textContent = title;
+            document.getElementById('popupContent').textContent = content;
+            document.getElementById('infoPopup').style.display = 'block';
+        }
+        
+        // Cerrar popup
+        function closePopup() {
+            document.getElementById('infoPopup').style.display = 'none';
+        }
+        
+        // Actualizar estadísticas
+        function updateStats() {
+            document.getElementById('sectionsExplored').textContent = exploredSections.size;
+            document.getElementById('conceptsLearned').textContent = learnedConcepts.size;
+            
+            // Actualizar progreso
+            const totalSections = 5;
+            const progress = (exploredSections.size / totalSections) * 100;
+            document.getElementById('progressText').textContent = Math.round(progress) + '%';
+            
+            const circle = document.getElementById('progressCircle');
+            circle.style.transform = `rotate(${progress * 3.6}deg)`;
+        }
+        
+        // Efectos flotantes
+        function addFloatingReward(content, x, y) {
+            const rewardElement = document.createElement('div');
+            rewardElement.textContent = content;
+            rewardElement.style.position = 'fixed';
+            rewardElement.style.left = `${x}px`;
+            rewardElement.style.top = `${y}px`;
+            rewardElement.style.fontSize = '2rem';
+            rewardElement.style.fontWeight = 'bold';
+            rewardElement.style.color = '#4caf50';
+            rewardElement.style.pointerEvents = 'none';
+            rewardElement.style.zIndex = '999';
+            rewardElement.style.animation = 'floatUp 2s ease-out forwards';
+            
+            document.body.appendChild(rewardElement);
+            
+            setTimeout(() => {
+                rewardElement.remove();
+            }, 2000);
+        }
+        
+        // Detectar secciones visitadas
+        function observeSections() {
+            const sections = document.querySelectorAll('.section');
+            
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionId = entry.target.id;
+                        exploredSections.add(sectionId);
+                        updateStats();
+                    }
+                });
+            }, { threshold: 0.5 });
+            
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Increíble! Estás aprendiendo sobre población como un verdadero experto 📊✨",
+            "¡Qué inteligente! Los censos son fascinantes cuando los entiendes 🧠💡",
+            "¡Sigue así! Cada concepto te hace más sabio sobre el mundo 🌍📚",
+            "¡Genial! Ahora sabes por qué es importante contar a las personas 👥🔢",
+            "¡Excelente! Los datos poblacionales no tienen secretos para ti 🎯📈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            observeSections();
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+            
+            // Animación inicial
+            setTimeout(() => {
+                document.querySelector('.section-title').style.animation = 'bounce 2s ease-in-out infinite';
+            }, 1000);
+        });
+        
+        // Cerrar popup al hacer clic fuera
+        document.addEventListener('click', function(event) {
+            const popup = document.getElementById('infoPopup');
+            if (event.target === popup) {
+                closePopup();
+            }
+        });
+    </script>
+</body>
+</html>
