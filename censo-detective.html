@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🕵️ Censo Detective - ¡Resuelve el Misterio! 🕵️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .detective-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .detective-intro {
+            background: linear-gradient(135deg, #2c3e50, #34495e);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #f39c12;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .detective-intro::before {
+            content: '🔍';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .case-board {
+            background: linear-gradient(135deg, #8b4513, #a0522d);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #d2691e;
+            color: white;
+            position: relative;
+        }
+        
+        .case-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        
+        .evidence-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 25px 0;
+        }
+        
+        .evidence-card {
+            background: #fff;
+            color: #333;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #f39c12;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            transform: rotate(-2deg);
+        }
+        
+        .evidence-card:nth-child(even) {
+            transform: rotate(2deg);
+        }
+        
+        .evidence-card:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 35px rgba(243,156,18,0.4);
+            z-index: 10;
+        }
+        
+        .evidence-card.found {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+        
+        .evidence-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        .evidence-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+        }
+        
+        .evidence-description {
+            font-size: 0.95rem;
+            color: #666;
+            text-align: center;
+        }
+        
+        .mystery-container {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 3px solid #e74c3c;
+            display: none;
+        }
+        
+        .mystery-text {
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .clue-revealer {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .clue-revealer:hover {
+            background: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(231,76,60,0.4);
+        }
+        
+        .mini-game {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 25px 0;
+            border: 3px solid #9b59b6;
+            color: white;
+            display: none;
+        }
+        
+        .population-map {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+            height: 400px;
+            overflow: hidden;
+        }
+        
+        .province-bubble {
+            position: absolute;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+            font-size: 0.9rem;
+        }
+        
+        .province-bubble:hover {
+            transform: scale(1.2);
+            z-index: 10;
+        }
+        
+        .buenos-aires {
+            background: #e74c3c;
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            left: 40%;
+        }
+        
+        .cordoba {
+            background: #3498db;
+            width: 80px;
+            height: 80px;
+            top: 45%;
+            left: 35%;
+        }
+        
+        .santa-fe {
+            background: #2ecc71;
+            width: 70px;
+            height: 70px;
+            top: 40%;
+            left: 42%;
+        }
+        
+        .mendoza {
+            background: #f39c12;
+            width: 60px;
+            height: 60px;
+            top: 65%;
+            left: 20%;
+        }
+        
+        .tucuman {
+            background: #9b59b6;
+            width: 50px;
+            height: 50px;
+            top: 25%;
+            left: 38%;
+        }
+        
+        .memory-game {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+        
+        .memory-card {
+            aspect-ratio: 1;
+            background: #3498db;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: transparent;
+        }
+        
+        .memory-card.flipped {
+            background: #2ecc71;
+            color: white;
+        }
+        
+        .memory-card.matched {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .detective-tools {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+            border: 3px solid #95a5a6;
+        }
+        
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .tool-item {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid #95a5a6;
+        }
+        
+        .tool-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(149,165,166,0.3);
+        }
+        
+        .tool-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .tool-name {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .progress-tracker {
+            background: linear-gradient(135deg, #16a085, #27ae60);
+            border-radius: 20px;
+            padding: 20px;
+            margin: 20px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+        }
+        
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+        }
+        
+        .step-circle {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .step-circle.completed {
+            background: #f39c12;
+            color: white;
+        }
+        
+        .step-label {
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        
+        .celebration-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            color: white;
+            max-width: 500px;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+        }
+        
+        @media (max-width: 768px) {
+            .evidence-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .tools-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .progress-steps {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🕵️ Censo Detective 🕵️</h1>
+            <div class="score-board">
+                <span class="score">🔍 Pistas: <span id="cluesFound">0</span>/6</span>
+                <span class="level">🏆 Casos: <span id="casesResolved">0</span>/3</span>
+            </div>
+        </header>
+
+        <main class="detective-container">
+            <!-- Introducción Detective -->
+            <div class="detective-intro" id="detectiveIntro">
+                <h2>🕵️‍♂️ ¡Bienvenido, Detective! 🕵️‍♀️</h2>
+                <p style="font-size: 1.3rem; margin: 20px 0;">
+                    ¡Hay misterios poblacionales que necesitan ser resueltos! Usa tus conocimientos sobre censos, migración y demografía para encontrar las pistas y resolver los casos.
+                </p>
+                
+                <div class="progress-tracker">
+                    <h3>📋 Progreso de la Investigación</h3>
+                    <div class="progress-steps">
+                        <div class="progress-step">
+                            <div class="step-circle" id="step1">1</div>
+                            <div class="step-label">Recolectar Pistas</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle" id="step2">2</div>
+                            <div class="step-label">Resolver Misterios</div>
+                        </div>
+                        <div class="progress-step">
+                            <div class="step-circle" id="step3">3</div>
+                            <div class="step-label">Completar Casos</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="startInvestigation()">
+                    🔍 ¡Empezar Investigación!
+                </button>
+            </div>
+
+            <!-- Herramientas del Detective -->
+            <div class="detective-tools" id="detectiveTools" style="display: none;">
+                <h3 style="color: white; text-align: center; margin-bottom: 20px;">🧰 Kit del Detective</h3>
+                <div class="tools-grid">
+                    <div class="tool-item" onclick="useTool('magnifier')">
+                        <div class="tool-icon">🔍</div>
+                        <div class="tool-name">Lupa</div>
+                    </div>
+                    <div class="tool-item" onclick="useTool('map')">
+                        <div class="tool-icon">🗺️</div>
+                        <div class="tool-name">Mapa</div>
+                    </div>
+                    <div class="tool-item" onclick="useTool('calculator')">
+                        <div class="tool-icon">🧮</div>
+                        <div class="tool-name">Calculadora</div>
+                    </div>
+                    <div class="tool-item" onclick="useTool('notebook')">
+                        <div class="tool-icon">📔</div>
+                        <div class="tool-name">Libreta</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tablero de Evidencias -->
+            <div class="case-board" id="evidenceBoard" style="display: none;">
+                <div class="case-title">📋 Caso #1: El Misterio del Censo Perdido</div>
+                <p style="text-align: center; margin-bottom: 20px;">
+                    ¡Los datos del censo han desaparecido! Encuentra las 6 pistas para resolver el misterio.
+                </p>
+                
+                <div class="evidence-grid">
+                    <div class="evidence-card" onclick="findEvidence('census-frequency')">
+                        <div class="evidence-icon">📅</div>
+                        <div class="evidence-title">Pista #1</div>
+                        <div class="evidence-description">¿Cada cuántos años se hace el censo?</div>
+                    </div>
+                    
+                    <div class="evidence-card" onclick="findEvidence('population-total')">
+                        <div class="evidence-icon">👥</div>
+                        <div class="evidence-title">Pista #2</div>
+                        <div class="evidence-description">¿Cuántos argentinos somos en 2022?</div>
+                    </div>
+                    
+                    <div class="evidence-card" onclick="findEvidence('rmba-size')">
+                        <div class="evidence-icon">🌆</div>
+                        <div class="evidence-title">Pista #3</div>
+                        <div class="evidence-description">¿Cuánta gente vive en la RMBA?</div>
+                    </div>
+                    
+                    <div class="evidence-card" onclick="findEvidence('migration-origin')">
+                        <div class="evidence-icon">🚢</div>
+                        <div class="evidence-title">Pista #4</div>
+                        <div class="evidence-description">¿De dónde vinieron los inmigrantes?</div>
+                    </div>
+                    
+                    <div class="evidence-card" onclick="findEvidence('life-expectancy')">
+                        <div class="evidence-icon">💖</div>
+                        <div class="evidence-title">Pista #5</div>
+                        <div class="evidence-description">¿Cuál es la esperanza de vida?</div>
+                    </div>
+                    
+                    <div class="evidence-card" onclick="findEvidence('document-type')">
+                        <div class="evidence-icon">🆔</div>
+                        <div class="evidence-title">Pista #6</div>
+                        <div class="evidence-description">¿Qué documento nos identifica?</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mini-juego: Mapa Poblacional -->
+            <div class="mini-game" id="populationMapGame">
+                <h3 style="text-align: center; margin-bottom: 20px;">🗺️ Mini-juego: Mapa Poblacional</h3>
+                <p style="text-align: center; margin-bottom: 20px;">
+                    ¡Haz clic en las provincias para descubrir datos poblacionales!
+                </p>
+                
+                <div class="population-map">
+                    <div class="province-bubble buenos-aires" onclick="exploreProvince('buenos-aires')">
+                        Buenos Aires<br>17M hab
+                    </div>
+                    <div class="province-bubble cordoba" onclick="exploreProvince('cordoba')">
+                        Córdoba<br>3.8M hab
+                    </div>
+                    <div class="province-bubble santa-fe" onclick="exploreProvince('santa-fe')">
+                        Santa Fe<br>3.4M hab
+                    </div>
+                    <div class="province-bubble mendoza" onclick="exploreProvince('mendoza')">
+                        Mendoza<br>2M hab
+                    </div>
+                    <div class="province-bubble tucuman" onclick="exploreProvince('tucuman')">
+                        Tucumán<br>1.7M hab
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="nextMiniGame()">
+                    ➡️ Siguiente Mini-juego
+                </button>
+            </div>
+
+            <!-- Mini-juego: Memoria Demográfica -->
+            <div class="mini-game" id="memoryGame">
+                <h3 style="text-align: center; margin-bottom: 20px;">🧠 Mini-juego: Memoria Demográfica</h3>
+                <p style="text-align: center; margin-bottom: 20px;">
+                    ¡Encuentra las parejas de conceptos demográficos!
+                </p>
+                
+                <div class="memory-game" id="memoryCards">
+                    <!-- Las cartas se generarán dinámicamente -->
+                </div>
+                
+                <button class="interactive-button" onclick="solveCase()" style="display: none;" id="solveCaseBtn">
+                    🎯 ¡Resolver Caso!
+                </button>
+            </div>
+
+            <!-- Contenedor de Misterio -->
+            <div class="mystery-container" id="mysteryContainer">
+                <h3 style="text-align: center; margin-bottom: 20px;">🔍 ¡Momento de la Verdad!</h3>
+                <div class="mystery-text" id="mysteryText">
+                    Con todas las pistas reunidas, ¿puedes resolver el misterio del censo perdido?
+                </div>
+                
+                <button class="clue-revealer" onclick="revealSolution()">
+                    💡 ¡Revelar Solución!
+                </button>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <!-- Popup de Celebración -->
+        <div class="celebration-popup" id="celebrationPopup">
+            <h2>🎉 ¡Caso Resuelto! 🎉</h2>
+            <p style="font-size: 1.3rem; margin: 20px 0;">
+                ¡Felicitaciones, Detective! Has resuelto el misterio usando tus conocimientos sobre población argentina.
+            </p>
+            <div style="font-size: 3rem; margin: 20px 0;">🏆🕵️‍♂️🏆</div>
+            <button class="interactive-button" onclick="closePopup()">
+                ✨ ¡Genial!
+            </button>
+        </div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Eres un detective increíble! Usa tus conocimientos para resolver misterios 🕵️✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let cluesFound = 0;
+        let casesResolved = 0;
+        let currentMiniGame = 0;
+        let foundEvidence = new Set();
+        let memoryCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        
+        const evidenceData = {
+            'census-frequency': {
+                title: '📅 Frecuencia del Censo',
+                solution: 'El censo se realiza cada 10 años en Argentina. ¡El último fue en 2022!'
+            },
+            'population-total': {
+                title: '👥 Población Total',
+                solution: 'Argentina tiene aproximadamente 47 millones de habitantes según el censo 2022.'
+            },
+            'rmba-size': {
+                title: '🌆 Población RMBA',
+                solution: 'La RMBA tiene 16 millones de habitantes, ¡1 de cada 3 argentinos!'
+            },
+            'migration-origin': {
+                title: '🚢 Origen de Inmigrantes',
+                solution: 'Entre 1880-1930 llegaron principalmente europeos: italianos, españoles, alemanes.'
+            },
+            'life-expectancy': {
+                title: '💖 Esperanza de Vida',
+                solution: 'La esperanza de vida en Argentina es de aproximadamente 76 años.'
+            },
+            'document-type': {
+                title: '🆔 Documento de Identidad',
+                solution: 'Los argentinos usamos el DNI (Documento Nacional de Identidad).'
+            }
+        };
+        
+        function startInvestigation() {
+            document.getElementById('detectiveIntro').style.display = 'none';
+            document.getElementById('detectiveTools').style.display = 'block';
+            document.getElementById('evidenceBoard').style.display = 'block';
+            document.getElementById('step1').classList.add('completed');
+        }
+        
+        function useTool(tool) {
+            const messages = {
+                magnifier: '🔍 ¡Lupa activada! Ahora puedes examinar las pistas más de cerca.',
+                map: '🗺️ ¡Mapa desplegado! Puedes ver la distribución poblacional de Argentina.',
+                calculator: '🧮 ¡Calculadora lista! Para hacer cálculos demográficos.',
+                notebook: '📔 ¡Libreta abierta! Para anotar todas tus observaciones.'
+            };
+            
+            alert(messages[tool]);
+        }
+        
+        function findEvidence(evidenceId) {
+            if (foundEvidence.has(evidenceId)) return;
+            
+            foundEvidence.add(evidenceId);
+            cluesFound++;
+            
+            const card = event.target.closest('.evidence-card');
+            card.classList.add('found');
+            
+            const evidence = evidenceData[evidenceId];
+            alert(`🔍 ¡Pista encontrada!\n\n${evidence.title}\n\n${evidence.solution}`);
+            
+            document.getElementById('cluesFound').textContent = cluesFound;
+            
+            if (cluesFound >= 3) {
+                document.getElementById('step2').classList.add('completed');
+                setTimeout(() => {
+                    document.getElementById('populationMapGame').style.display = 'block';
+                }, 1000);
+            }
+            
+            if (cluesFound === 6) {
+                setTimeout(() => {
+                    document.getElementById('mysteryContainer').style.display = 'block';
+                }, 1500);
+            }
+        }
+        
+        function exploreProvince(province) {
+            const provinceData = {
+                'buenos-aires': 'Buenos Aires es la provincia más poblada con 17 millones de habitantes. ¡Incluye la RMBA!',
+                'cordoba': 'Córdoba tiene 3.8 millones de habitantes y es famosa por sus universidades.',
+                'santa-fe': 'Santa Fe tiene 3.4 millones de habitantes. ¡Rosario es su ciudad más importante!',
+                'mendoza': 'Mendoza tiene 2 millones de habitantes y es famosa por sus vinos.',
+                'tucuman': 'Tucumán tiene 1.7 millones de habitantes y es la provincia más pequeña.'
+            };
+            
+            alert(`📊 Datos Poblacionales:\n\n${provinceData[province]}`);
+        }
+        
+        function nextMiniGame() {
+            document.getElementById('populationMapGame').style.display = 'none';
+            document.getElementById('memoryGame').style.display = 'block';
+            initMemoryGame();
+        }
+        
+        function initMemoryGame() {
+            const concepts = [
+                { id: 1, text: '📊', pair: 'Censo' },
+                { id: 2, text: 'Censo', pair: '📊' },
+                { id: 3, text: '👥', pair: 'Población' },
+                { id: 4, text: 'Población', pair: '👥' },
+                { id: 5, text: '🌆', pair: 'RMBA' },
+                { id: 6, text: 'RMBA', pair: '🌆' },
+                { id: 7, text: '🆔', pair: 'DNI' },
+                { id: 8, text: 'DNI', pair: '🆔' }
+            ];
+            
+            memoryCards = shuffleArray(concepts);
+            const memoryContainer = document.getElementById('memoryCards');
+            memoryContainer.innerHTML = '';
+            
+            memoryCards.forEach((card, index) => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'memory-card';
+                cardElement.textContent = '?';
+                cardElement.onclick = () => flipCard(index);
+                memoryContainer.appendChild(cardElement);
+            });
+        }
+        
+        function flipCard(index) {
+            const cardElement = document.querySelectorAll('.memory-card')[index];
+            
+            if (cardElement.classList.contains('flipped') || flippedCards.length === 2) return;
+            
+            cardElement.classList.add('flipped');
+            cardElement.textContent = memoryCards[index].text;
+            flippedCards.push(index);
+            
+            if (flippedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+        
+        function checkMatch() {
+            const [first, second] = flippedCards;
+            const firstCard = memoryCards[first];
+            const secondCard = memoryCards[second];
+            const cardElements = document.querySelectorAll('.memory-card');
+            
+            if (firstCard.pair === secondCard.text) {
+                cardElements[first].classList.add('matched');
+                cardElements[second].classList.add('matched');
+                matchedPairs++;
+                
+                if (matchedPairs === 4) {
+                    document.getElementById('solveCaseBtn').style.display = 'block';
+                }
+            } else {
+                cardElements[first].classList.remove('flipped');
+                cardElements[second].classList.remove('flipped');
+                cardElements[first].textContent = '?';
+                cardElements[second].textContent = '?';
+            }
+            
+            flippedCards = [];
+        }
+        
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+        
+        function solveCase() {
+            document.getElementById('step3').classList.add('completed');
+            casesResolved++;
+            document.getElementById('casesResolved').textContent = casesResolved;
+            
+            document.getElementById('memoryGame').style.display = 'none';
+            document.getElementById('mysteryContainer').style.display = 'block';
+        }
+        
+        function revealSolution() {
+            document.getElementById('celebrationPopup').style.display = 'block';
+        }
+        
+        function closePopup() {
+            document.getElementById('celebrationPopup').style.display = 'none';
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Eres un detective increíble! Usa tus conocimientos para resolver misterios 🕵️✨",
+            "¡Cada pista te acerca más a la solución! 🔍🌟",
+            "¡Tu conocimiento sobre población es tu mejor herramienta! 📊💫",
+            "¡Los misterios demográficos no tienen secretos para ti! 👥❤️",
+            "¡Sigue investigando, Detective! La verdad está ahí afuera 🌍🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html>

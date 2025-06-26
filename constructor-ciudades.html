@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏗️ Constructor de Ciudades - ¡Planifica tu Ciudad! 🏗️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .city-builder-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .builder-intro {
+            background: linear-gradient(135deg, #2980b9, #3498db);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #f39c12;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .builder-intro::before {
+            content: '🏗️';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 8rem;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        .game-dashboard {
+            display: grid;
+            grid-template-columns: 250px 1fr 250px;
+            gap: 20px;
+            margin: 20px 0;
+            min-height: 600px;
+        }
+        
+        .building-palette {
+            background: linear-gradient(135deg, #34495e, #2c3e50);
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid #95a5a6;
+            color: white;
+        }
+        
+        .palette-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #f39c12;
+        }
+        
+        .building-category {
+            margin-bottom: 20px;
+        }
+        
+        .category-title {
+            font-size: 1rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #ecf0f1;
+            border-bottom: 2px solid #f39c12;
+            padding-bottom: 5px;
+        }
+        
+        .building-item {
+            background: #fff;
+            color: #333;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 8px 0;
+            cursor: grab;
+            transition: all 0.3s ease;
+            border: 2px solid #bdc3c7;
+            text-align: center;
+            user-select: none;
+        }
+        
+        .building-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(52,152,219,0.3);
+            border-color: #3498db;
+        }
+        
+        .building-item:active {
+            cursor: grabbing;
+        }
+        
+        .building-icon {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+        
+        .building-name {
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .building-cost {
+            font-size: 0.75rem;
+            color: #27ae60;
+            margin-top: 3px;
+        }
+        
+        .city-grid {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid #229954;
+            position: relative;
+            min-height: 560px;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(10, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            gap: 2px;
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            padding: 10px;
+        }
+        
+        .grid-cell {
+            background: #f8f9fa;
+            border: 1px dashed #bdc3c7;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            min-height: 50px;
+        }
+        
+        .grid-cell:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+        }
+        
+        .grid-cell.occupied {
+            border: 2px solid #4caf50;
+            background: #e8f5e8;
+        }
+        
+        .placed-building {
+            font-size: 2.5rem;
+            animation: buildingPlace 0.5s ease;
+        }
+        
+        @keyframes buildingPlace {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .city-stats {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid #7d3c98;
+            color: white;
+        }
+        
+        .stats-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            text-align: center;
+            color: #f39c12;
+        }
+        
+        .stat-item {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            color: #ecf0f1;
+        }
+        
+        .stat-value {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #f39c12;
+        }
+        
+        .progress-bar {
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            height: 8px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(90deg, #f39c12, #e67e22);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .objectives-panel {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            color: white;
+        }
+        
+        .objective-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+        
+        .objective-icon {
+            font-size: 1.2rem;
+            margin-right: 8px;
+        }
+        
+        .objective-completed {
+            color: #2ecc71;
+        }
+        
+        .city-level {
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            color: white;
+            text-align: center;
+        }
+        
+        .level-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        .level-progress {
+            background: rgba(255,255,255,0.3);
+            border-radius: 10px;
+            height: 12px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        
+        .level-fill {
+            background: linear-gradient(90deg, #f39c12, #e67e22);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .disaster-alert {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            max-width: 500px;
+            animation: alertPulse 2s infinite;
+        }
+        
+        @keyframes alertPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.05); }
+        }
+        
+        .celebration-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(135deg, #f093fb, #f5576c);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: none;
+            text-align: center;
+            color: white;
+            max-width: 600px;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #f39c12, #e67e22);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(243,156,18,0.4);
+        }
+        
+        .game-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        
+        .control-button {
+            background: linear-gradient(45deg, #3498db, #2980b9);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 20px;
+            font-size: 1rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+        
+        .control-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(52,152,219,0.3);
+        }
+        
+        .tooltip {
+            position: absolute;
+            background: #2c3e50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            z-index: 100;
+            display: none;
+            max-width: 200px;
+            text-align: center;
+        }
+        
+        @media (max-width: 1200px) {
+            .game-dashboard {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+            }
+            
+            .building-palette,
+            .city-stats {
+                order: 2;
+            }
+            
+            .city-grid {
+                order: 1;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .grid-container {
+                grid-template-columns: repeat(8, 1fr);
+                grid-template-rows: repeat(6, 1fr);
+            }
+            
+            .building-item {
+                padding: 8px;
+            }
+            
+            .building-icon {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏗️ Constructor de Ciudades 🏗️</h1>
+            <div class="score-board">
+                <span class="score">💰 Presupuesto: $<span id="budget">10000</span></span>
+                <span class="level">🏆 Nivel: <span id="cityLevel">1</span></span>
+                <span class="score">👥 Población: <span id="population">0</span></span>
+            </div>
+        </header>
+
+        <main class="city-builder-container">
+            <!-- Introducción del Constructor -->
+            <div class="builder-intro" id="builderIntro">
+                <h2>🏗️ ¡Bienvenido, Arquitecto! 🏗️</h2>
+                <p style="font-size: 1.3rem; margin: 20px 0;">
+                    ¡Es hora de construir la ciudad de tus sueños! Planifica cuidadosamente: necesitas viviendas, servicios, espacios verdes y mucho más.
+                </p>
+                
+                <div class="objectives-panel">
+                    <h3 style="margin: 0 0 15px 0;">🎯 Objetivos del Nivel 1:</h3>
+                    <div class="objective-item" id="obj1">
+                        <span class="objective-icon">🏠</span>
+                        Construir 5 casas (0/5)
+                    </div>
+                    <div class="objective-item" id="obj2">
+                        <span class="objective-icon">🏫</span>
+                        Construir 1 escuela (0/1)
+                    </div>
+                    <div class="objective-item" id="obj3">
+                        <span class="objective-icon">🌳</span>
+                        Crear 3 espacios verdes (0/3)
+                    </div>
+                    <div class="objective-item" id="obj4">
+                        <span class="objective-icon">🚗</span>
+                        Construir 5 calles (0/5)
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="startBuilding()">
+                    🏗️ ¡Empezar a Construir!
+                </button>
+            </div>
+
+            <!-- Dashboard Principal del Juego -->
+            <div class="game-dashboard" id="gameDashboard" style="display: none;">
+                <!-- Paleta de Construcción -->
+                <div class="building-palette">
+                    <div class="palette-title">🧰 Herramientas</div>
+                    
+                    <div class="building-category">
+                        <div class="category-title">🏠 Viviendas</div>
+                        <div class="building-item" draggable="true" data-type="house" data-cost="500" data-population="4">
+                            <div class="building-icon">🏠</div>
+                            <div class="building-name">Casa</div>
+                            <div class="building-cost">$500</div>
+                        </div>
+                        <div class="building-item" draggable="true" data-type="apartment" data-cost="1200" data-population="12">
+                            <div class="building-icon">🏢</div>
+                            <div class="building-name">Edificio</div>
+                            <div class="building-cost">$1,200</div>
+                        </div>
+                    </div>
+                    
+                    <div class="building-category">
+                        <div class="category-title">🏛️ Servicios</div>
+                        <div class="building-item" draggable="true" data-type="school" data-cost="2000" data-population="0">
+                            <div class="building-icon">🏫</div>
+                            <div class="building-name">Escuela</div>
+                            <div class="building-cost">$2,000</div>
+                        </div>
+                        <div class="building-item" draggable="true" data-type="hospital" data-cost="3000" data-population="0">
+                            <div class="building-icon">🏥</div>
+                            <div class="building-name">Hospital</div>
+                            <div class="building-cost">$3,000</div>
+                        </div>
+                        <div class="building-item" draggable="true" data-type="store" data-cost="800" data-population="0">
+                            <div class="building-icon">🏪</div>
+                            <div class="building-name">Tienda</div>
+                            <div class="building-cost">$800</div>
+                        </div>
+                    </div>
+                    
+                    <div class="building-category">
+                        <div class="category-title">🌿 Espacios</div>
+                        <div class="building-item" draggable="true" data-type="park" data-cost="300" data-population="0">
+                            <div class="building-icon">🌳</div>
+                            <div class="building-name">Parque</div>
+                            <div class="building-cost">$300</div>
+                        </div>
+                        <div class="building-item" draggable="true" data-type="road" data-cost="100" data-population="0">
+                            <div class="building-icon">🛣️</div>
+                            <div class="building-name">Calle</div>
+                            <div class="building-cost">$100</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cuadrícula de la Ciudad -->
+                <div class="city-grid">
+                    <div class="grid-container" id="cityGrid">
+                        <!-- Las celdas se generarán dinámicamente -->
+                    </div>
+                </div>
+
+                <!-- Panel de Estadísticas -->
+                <div class="city-stats">
+                    <div class="stats-title">📊 Estadísticas</div>
+                    
+                    <div class="city-level">
+                        <div class="level-title">Nivel <span id="currentLevel">1</span></div>
+                        <div class="level-progress">
+                            <div class="level-fill" id="levelProgress" style="width: 0%"></div>
+                        </div>
+                        <div style="font-size: 0.9rem; margin-top: 5px;">
+                            <span id="levelExp">0</span> / <span id="levelExpMax">100</span> EXP
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">💰 Presupuesto</div>
+                        <div class="stat-value">$<span id="budgetDisplay">10000</span></div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">👥 Población</div>
+                        <div class="stat-value"><span id="populationDisplay">0</span> habitantes</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="populationProgress" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">😊 Felicidad</div>
+                        <div class="stat-value"><span id="happiness">50</span>%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="happinessProgress" style="width: 50%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-item">
+                        <div class="stat-label">🌱 Ecología</div>
+                        <div class="stat-value"><span id="ecology">30</span>%</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="ecologyProgress" style="width: 30%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="objectives-panel">
+                        <h4 style="margin: 0 0 10px 0;">🎯 Objetivos</h4>
+                        <div class="objective-item" id="objHouses">
+                            <span class="objective-icon">🏠</span>
+                            Casas: <span id="houseCount">0</span>/5
+                        </div>
+                        <div class="objective-item" id="objSchools">
+                            <span class="objective-icon">🏫</span>
+                            Escuelas: <span id="schoolCount">0</span>/1
+                        </div>
+                        <div class="objective-item" id="objParks">
+                            <span class="objective-icon">🌳</span>
+                            Parques: <span id="parkCount">0</span>/3
+                        </div>
+                        <div class="objective-item" id="objRoads">
+                            <span class="objective-icon">🛣️</span>
+                            Calles: <span id="roadCount">0</span>/5
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Controles del Juego -->
+            <div class="game-controls" id="gameControls" style="display: none;">
+                <button class="control-button" onclick="saveCity()">💾 Guardar Ciudad</button>
+                <button class="control-button" onclick="clearCity()">🗑️ Limpiar Todo</button>
+                <button class="control-button" onclick="addMoney()">💰 Bono (+$2000)</button>
+                <button class="control-button" onclick="showCityInfo()">📊 Info Ciudad</button>
+                <button class="control-button" onclick="nextLevel()">⬆️ Siguiente Nivel</button>
+            </div>
+
+            <!-- Navegación -->
+            <div style="text-align: center; margin: 40px 0;">
+                <button class="interactive-button" onclick="window.location.href='index.html'">
+                    🏠 Volver a Aventuras Sociales
+                </button>
+            </div>
+        </main>
+
+        <!-- Modal de Celebración -->
+        <div class="celebration-modal" id="celebrationModal">
+            <h2>🎉 ¡Nivel Completado! 🎉</h2>
+            <p style="font-size: 1.3rem; margin: 20px 0;">
+                ¡Felicitaciones! Has construido una ciudad exitosa y has aprendido sobre planificación urbana.
+            </p>
+            <div style="font-size: 3rem; margin: 20px 0;">🏆🏗️🏆</div>
+            <button class="interactive-button" onclick="closeModal()">
+                ✨ ¡Continuar!
+            </button>
+        </div>
+
+        <!-- Alerta de Desastre -->
+        <div class="disaster-alert" id="disasterAlert">
+            <h3>⚠️ ¡Problema en la Ciudad! ⚠️</h3>
+            <p id="disasterMessage">Tu ciudad necesita más servicios para mantener felices a los habitantes.</p>
+            <button class="interactive-button" onclick="closeAlert()">
+                🔧 ¡Entendido!
+            </button>
+        </div>
+
+        <!-- Tooltip -->
+        <div class="tooltip" id="tooltip"></div>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Eres un arquitecto increíble! Construye la ciudad de tus sueños 🏗️✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        let budget = 10000;
+        let population = 0;
+        let happiness = 50;
+        let ecology = 30;
+        let level = 1;
+        let experience = 0;
+        let experienceMax = 100;
+        
+        let buildings = {
+            houses: 0,
+            schools: 0,
+            parks: 0,
+            roads: 0,
+            apartments: 0,
+            hospitals: 0,
+            stores: 0
+        };
+        
+        const buildingEmojis = {
+            house: '🏠',
+            apartment: '🏢',
+            school: '🏫',
+            hospital: '🏥',
+            store: '🏪',
+            park: '🌳',
+            road: '🛣️'
+        };
+        
+        function startBuilding() {
+            document.getElementById('builderIntro').style.display = 'none';
+            document.getElementById('gameDashboard').style.display = 'grid';
+            document.getElementById('gameControls').style.display = 'flex';
+            initializeGrid();
+            setupDragAndDrop();
+        }
+        
+        function initializeGrid() {
+            const grid = document.getElementById('cityGrid');
+            grid.innerHTML = '';
+            
+            for (let i = 0; i < 80; i++) {
+                const cell = document.createElement('div');
+                cell.className = 'grid-cell';
+                cell.dataset.index = i;
+                cell.addEventListener('dragover', handleDragOver);
+                cell.addEventListener('drop', handleDrop);
+                cell.addEventListener('click', handleCellClick);
+                grid.appendChild(cell);
+            }
+        }
+        
+        function setupDragAndDrop() {
+            const buildingItems = document.querySelectorAll('.building-item');
+            buildingItems.forEach(item => {
+                item.addEventListener('dragstart', handleDragStart);
+                item.addEventListener('mouseenter', showTooltip);
+                item.addEventListener('mouseleave', hideTooltip);
+            });
+        }
+        
+        let draggedBuilding = null;
+        
+        function handleDragStart(e) {
+            draggedBuilding = {
+                type: e.target.dataset.type,
+                cost: parseInt(e.target.dataset.cost),
+                population: parseInt(e.target.dataset.population)
+            };
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.target.style.background = '#bbdefb';
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.target.style.background = '';
+            
+            if (draggedBuilding && !e.target.classList.contains('occupied')) {
+                placeBuilding(e.target, draggedBuilding);
+            }
+        }
+        
+        function handleCellClick(e) {
+            if (e.target.classList.contains('occupied')) {
+                // Mostrar información del edificio
+                const buildingType = e.target.dataset.buildingType;
+                showBuildingInfo(buildingType);
+            }
+        }
+        
+        function placeBuilding(cell, building) {
+            if (budget < building.cost) {
+                showAlert('💰 ¡No tienes suficiente dinero!');
+                return;
+            }
+            
+            budget -= building.cost;
+            population += building.population;
+            
+            cell.classList.add('occupied');
+            cell.dataset.buildingType = building.type;
+            cell.innerHTML = `<div class="placed-building">${buildingEmojis[building.type]}</div>`;
+            
+            buildings[building.type + 's'] = (buildings[building.type + 's'] || 0) + 1;
+            
+            // Efectos en las estadísticas
+            updateStats(building.type);
+            updateDisplay();
+            checkObjectives();
+            
+            // Sonido de construcción (simulado)
+            playConstructionSound();
+        }
+        
+        function updateStats(buildingType) {
+            switch(buildingType) {
+                case 'park':
+                    ecology = Math.min(100, ecology + 10);
+                    happiness = Math.min(100, happiness + 5);
+                    break;
+                case 'school':
+                case 'hospital':
+                    happiness = Math.min(100, happiness + 15);
+                    break;
+                case 'house':
+                case 'apartment':
+                    if (buildings.parks > 0) happiness = Math.min(100, happiness + 3);
+                    break;
+                case 'store':
+                    happiness = Math.min(100, happiness + 8);
+                    break;
+                case 'road':
+                    happiness = Math.min(100, happiness + 2);
+                    break;
+            }
+            
+            // Penalización por falta de servicios
+            if (population > 20 && buildings.schools === 0) {
+                happiness = Math.max(0, happiness - 5);
+            }
+            
+            experience += 10;
+            if (experience >= experienceMax) {
+                levelUp();
+            }
+        }
+        
+        function updateDisplay() {
+            document.getElementById('budget').textContent = budget;
+            document.getElementById('budgetDisplay').textContent = budget;
+            document.getElementById('population').textContent = population;
+            document.getElementById('populationDisplay').textContent = population;
+            document.getElementById('happiness').textContent = happiness;
+            document.getElementById('ecology').textContent = ecology;
+            document.getElementById('levelExp').textContent = experience;
+            document.getElementById('levelExpMax').textContent = experienceMax;
+            
+            // Actualizar barras de progreso
+            document.getElementById('populationProgress').style.width = Math.min(100, (population / 50) * 100) + '%';
+            document.getElementById('happinessProgress').style.width = happiness + '%';
+            document.getElementById('ecologyProgress').style.width = ecology + '%';
+            document.getElementById('levelProgress').style.width = (experience / experienceMax) * 100 + '%';
+            
+            // Actualizar contadores de objetivos
+            document.getElementById('houseCount').textContent = buildings.houses + buildings.apartments;
+            document.getElementById('schoolCount').textContent = buildings.schools;
+            document.getElementById('parkCount').textContent = buildings.parks;
+            document.getElementById('roadCount').textContent = buildings.roads;
+        }
+        
+        function checkObjectives() {
+            const objectives = [
+                { id: 'objHouses', condition: (buildings.houses + buildings.apartments) >= 5 },
+                { id: 'objSchools', condition: buildings.schools >= 1 },
+                { id: 'objParks', condition: buildings.parks >= 3 },
+                { id: 'objRoads', condition: buildings.roads >= 5 }
+            ];
+            
+            let completed = 0;
+            objectives.forEach(obj => {
+                const element = document.getElementById(obj.id);
+                if (obj.condition) {
+                    element.classList.add('objective-completed');
+                    completed++;
+                }
+            });
+            
+            if (completed === objectives.length) {
+                setTimeout(() => {
+                    document.getElementById('celebrationModal').style.display = 'block';
+                }, 1000);
+            }
+        }
+        
+        function levelUp() {
+            level++;
+            experience = 0;
+            experienceMax += 50;
+            budget += 5000;
+            
+            document.getElementById('cityLevel').textContent = level;
+            document.getElementById('currentLevel').textContent = level;
+            
+            showAlert(`🎉 ¡Nivel ${level} alcanzado! +$5000 de bono`);
+        }
+        
+        function showAlert(message) {
+            document.getElementById('disasterMessage').textContent = message;
+            document.getElementById('disasterAlert').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('disasterAlert').style.display = 'none';
+            }, 3000);
+        }
+        
+        function closeAlert() {
+            document.getElementById('disasterAlert').style.display = 'none';
+        }
+        
+        function closeModal() {
+            document.getElementById('celebrationModal').style.display = 'none';
+        }
+        
+        function saveCity() {
+            const cityData = {
+                budget, population, happiness, ecology, level, experience, buildings
+            };
+            localStorage.setItem('aventurasSociales_ciudad', JSON.stringify(cityData));
+            showAlert('💾 ¡Ciudad guardada exitosamente!');
+        }
+        
+        function clearCity() {
+            if (confirm('¿Estás seguro de que quieres limpiar toda la ciudad?')) {
+                location.reload();
+            }
+        }
+        
+        function addMoney() {
+            budget += 2000;
+            updateDisplay();
+            showAlert('💰 ¡Has recibido $2000 de bono!');
+        }
+        
+        function showCityInfo() {
+            const info = `🏗️ INFO DE TU CIUDAD 🏗️\n\n` +
+                        `👥 Población: ${population} habitantes\n` +
+                        `😊 Felicidad: ${happiness}%\n` +
+                        `🌱 Ecología: ${ecology}%\n` +
+                        `🏠 Viviendas: ${buildings.houses + buildings.apartments}\n` +
+                        `🏫 Escuelas: ${buildings.schools}\n` +
+                        `🌳 Parques: ${buildings.parks}\n` +
+                        `🛣️ Calles: ${buildings.roads}`;
+            alert(info);
+        }
+        
+        function nextLevel() {
+            if (level < 3) {
+                levelUp();
+            } else {
+                showAlert('🏆 ¡Has completado todos los niveles! ¡Eres un maestro constructor!');
+            }
+        }
+        
+        function showTooltip(e) {
+            const tooltip = document.getElementById('tooltip');
+            const building = e.target.closest('.building-item');
+            const type = building.dataset.type;
+            const cost = building.dataset.cost;
+            const population = building.dataset.population;
+            
+            let info = `Costo: $${cost}`;
+            if (parseInt(population) > 0) {
+                info += `\nPoblación: +${population}`;
+            }
+            
+            tooltip.textContent = info;
+            tooltip.style.display = 'block';
+            tooltip.style.left = e.pageX + 10 + 'px';
+            tooltip.style.top = e.pageY - 40 + 'px';
+        }
+        
+        function hideTooltip() {
+            document.getElementById('tooltip').style.display = 'none';
+        }
+        
+        function showBuildingInfo(buildingType) {
+            const names = {
+                house: 'Casa Familiar',
+                apartment: 'Edificio de Apartamentos',
+                school: 'Escuela',
+                hospital: 'Hospital',
+                store: 'Tienda',
+                park: 'Parque',
+                road: 'Calle'
+            };
+            
+            alert(`🏗️ ${names[buildingType]}\n\nEste edificio contribuye al desarrollo de tu ciudad.`);
+        }
+        
+        function playConstructionSound() {
+            // Simulación de sonido de construcción
+            console.log('🔨 ¡Sonido de construcción!');
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Eres un arquitecto increíble! Construye la ciudad de tus sueños 🏗️✨",
+            "¡Cada edificio hace tu ciudad más especial! 🏠💫",
+            "¡La planificación urbana es tu superpoder! 🌆🌟",
+            "¡Crea espacios verdes para una ciudad feliz! 🌳❤️",
+            "¡Tu ciudad está creciendo de manera fantástica! 🏗️🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 10000);
+        });
+    </script>
+</body>
+</html>
+</rewritten_file>
