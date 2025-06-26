@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🏙️ Quiz: Crecimiento de Ciudades 🏙️</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .quiz-intro {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+            text-align: center;
+        }
+        
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #4caf50;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .question-container {
+            background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #ff9800;
+            display: none;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .question-timer {
+            background: #f44336;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #333;
+            text-align: center;
+        }
+        
+        .question-image {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 4rem;
+        }
+        
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .answer-option {
+            background: white;
+            border: 3px solid #ff9800;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .answer-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,152,0,0.3);
+        }
+        
+        .answer-option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+        
+        .answer-option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .answer-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .feedback-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+            display: none;
+        }
+        
+        .feedback-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-text {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feedback-explanation {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .results-container {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #2196f3;
+            text-align: center;
+            display: none;
+        }
+        
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2196f3;
+            margin: 20px 0;
+        }
+        
+        .performance-level {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        
+        .performance-excellent {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .performance-good {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .performance-needs-practice {
+            background: #f44336;
+            color: white;
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .achievement-badge {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #ffd700;
+            text-align: center;
+        }
+        
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff9800, #ffc107);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,152,0,0.4);
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #ff9800, #ffc107);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🏙️ Quiz: Crecimiento de Ciudades 🏙️</h1>
+            <div class="score-board">
+                <span class="score">🎯 Puntos: <span id="currentScore">0</span></span>
+                <span class="level">🏗️ Pregunta: <span id="currentQuestion">0</span>/12</span>
+            </div>
+        </header>
+
+        <main class="quiz-container">
+            <!-- Introducción del Quiz -->
+            <div class="quiz-intro" id="quizIntro">
+                <h2>🎮 ¡Demuestra tu Conocimiento Urbano!</h2>
+                <p style="font-size: 1.2rem; margin: 20px 0;">
+                    ¿Cuánto sabes sobre el crecimiento de las ciudades argentinas? ¡Responde 12 preguntas y conviértete en un experto urbano!
+                </p>
+                
+                <div class="quiz-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Preguntas</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">30s</div>
+                        <div class="stat-label">Por pregunta</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">120</div>
+                        <div class="stat-label">Puntos máx.</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">🏆</div>
+                        <div class="stat-label">Logros</div>
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="startQuiz()">
+                    🚀 ¡Empezar Quiz Urbano!
+                </button>
+            </div>
+
+            <!-- Contenedor de Preguntas -->
+            <div class="question-container" id="questionContainer">
+                <div class="question-header">
+                    <div class="question-number" id="questionNumberDisplay">
+                        Pregunta 1 de 12
+                    </div>
+                    <div class="question-timer" id="questionTimer">
+                        ⏰ 30s
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                
+                <div class="question-image" id="questionImage">🏗️</div>
+                
+                <div class="question-text" id="questionText">
+                    ¿Cuál es la pregunta?
+                </div>
+                
+                <div class="answers-grid" id="answersGrid">
+                    <!-- Las respuestas se generarán dinámicamente -->
+                </div>
+                
+                <div class="feedback-section" id="feedbackSection">
+                    <div class="feedback-icon" id="feedbackIcon">✅</div>
+                    <div class="feedback-text" id="feedbackText">¡Correcto!</div>
+                    <div class="feedback-explanation" id="feedbackExplanation">
+                        Explicación de la respuesta...
+                    </div>
+                    <button class="interactive-button" onclick="nextQuestion()">
+                        ➡️ Siguiente Pregunta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultados Finales -->
+            <div class="results-container" id="resultsContainer">
+                <h2>🎉 ¡Quiz Urbano Completado! 🎉</h2>
+                
+                <div class="final-score" id="finalScore">95/120</div>
+                
+                <div class="performance-level" id="performanceLevel">
+                    ¡Experto en Urbanismo!
+                </div>
+                
+                <div class="achievements" id="achievementsContainer">
+                    <!-- Los logros se generarán dinámicamente -->
+                </div>
+                
+                <div style="margin: 30px 0;">
+                    <button class="interactive-button" onclick="restartQuiz()">
+                        🔄 Jugar de Nuevo
+                    </button>
+                    <button class="interactive-button" onclick="window.location.href='index.html'">
+                        🏠 Volver al Menú
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Demuestra todo lo que sabes sobre ciudades! 🏙️✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Preguntas del Quiz sobre Crecimiento de Ciudades
+        const quizQuestions = [
+            {
+                question: "¿Cuántos años ha crecido Buenos Aires de manera continua?",
+                image: "🏗️",
+                options: ["100 años", "150 años", "200 años", "250 años"],
+                correct: 1,
+                explanation: "Buenos Aires ha crecido de manera continua durante 150 años por el desarrollo industrial y la llegada de nuevos habitantes."
+            },
+            {
+                question: "¿Cuántos municipios forman la RMBA?",
+                image: "🌆",
+                options: ["30 municipios", "35 municipios", "40 municipios", "45 municipios"],
+                correct: 2,
+                explanation: "La RMBA está formada por 40 municipios: la Ciudad de Buenos Aires más 39 partidos bonaerenses."
+            },
+            {
+                question: "¿Cuál es la segunda ciudad más importante de Argentina?",
+                image: "🚢",
+                options: ["Córdoba", "Rosario", "Mendoza", "La Plata"],
+                correct: 1,
+                explanation: "Rosario es la segunda ciudad más importante de Argentina, famosa por su puerto y industria."
+            },
+            {
+                question: "¿Por qué Córdoba se llama 'La Docta'?",
+                image: "🎓",
+                options: ["Por sus médicos", "Por sus universidades", "Por sus abogados", "Por sus ingenieros"],
+                correct: 1,
+                explanation: "Córdoba se llama 'La Docta' porque tiene la universidad más antigua de Argentina (1613) y muchas instituciones educativas."
+            },
+            {
+                question: "¿Qué se fabrica en Córdoba desde 1927?",
+                image: "✈️",
+                options: ["Autos", "Aviones", "Barcos", "Trenes"],
+                correct: 1,
+                explanation: "En Córdoba se fabrican aviones desde 1927 en la Fábrica Argentina de Aviones, siendo pionera en América Latina."
+            },
+            {
+                question: "¿Qué es un aglomerado urbano?",
+                image: "🏘️",
+                options: ["Una sola ciudad", "Varias ciudades unidas", "Un barrio grande", "Una provincia"],
+                correct: 1,
+                explanation: "Un aglomerado urbano es cuando varias ciudades crecen tanto que se unen formando una sola gran mancha urbana."
+            },
+            {
+                question: "¿Quién diseñó la ciudad de La Plata?",
+                image: "👨‍🎨",
+                options: ["Carlos Pellegrini", "Pedro Benoit", "Julio A. Roca", "Bartolomé Mitre"],
+                correct: 1,
+                explanation: "Pedro Benoit fue el arquitecto que diseñó La Plata en 1880 con su famoso plano geométrico en forma de cuadrado."
+            },
+            {
+                question: "¿Qué forma tiene el casco urbano de La Plata?",
+                image: "⬜",
+                options: ["Círculo", "Triángulo", "Cuadrado", "Rectángulo"],
+                correct: 2,
+                explanation: "El casco urbano de La Plata tiene forma de cuadrado perfecto de 5x5 kilómetros, único en el mundo."
+            },
+            {
+                question: "¿Qué son los espacios periurbanos?",
+                image: "🌾",
+                options: ["El centro de la ciudad", "Entre ciudad y campo", "Solo el campo", "Solo la ciudad"],
+                correct: 1,
+                explanation: "Los espacios periurbanos están entre la ciudad y el campo, donde se mezclan características de ambos."
+            },
+            {
+                question: "¿Qué se cultiva principalmente en el cinturón verde platense?",
+                image: "🥬",
+                options: ["Trigo", "Hortalizas", "Maíz", "Soja"],
+                correct: 1,
+                explanation: "En el cinturón verde platense se cultivan principalmente hortalizas frescas como lechuga, acelga y tomate."
+            },
+            {
+                question: "¿Qué permite cultivar todo el año en el cinturón verde?",
+                image: "🏠",
+                options: ["Tractores", "Invernaderos", "Fertilizantes", "Riego"],
+                correct: 1,
+                explanation: "Los invernaderos permiten cultivar todo el año protegiendo los cultivos del clima y aumentando la productividad."
+            },
+            {
+                question: "¿Qué es el Corredor Reconquista?",
+                image: "🌊",
+                options: ["Una autopista", "Un río", "Un parque lineal", "Un barrio"],
+                correct: 2,
+                explanation: "El Corredor Reconquista es un parque lineal que conecta 7 municipios a lo largo del río Reconquista."
+            }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
+        let answeredQuestions = 0;
+        let correctAnswers = 0;
+        
+        function startQuiz() {
+            document.getElementById('quizIntro').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            correctAnswers = 0;
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            
+            document.getElementById('questionNumberDisplay').textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizQuestions.length}`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionImage').textContent = question.image;
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Actualizar barra de progreso
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Generar opciones de respuesta
+            const answersGrid = document.getElementById('answersGrid');
+            answersGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option';
+                answerDiv.textContent = option;
+                answerDiv.onclick = () => selectAnswer(index);
+                answersGrid.appendChild(answerDiv);
+            });
+            
+            // Reiniciar timer
+            timeLeft = 30;
+            startTimer();
+            
+            // Ocultar feedback
+            document.getElementById('feedbackSection').style.display = 'none';
+        }
+        
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('questionTimer').textContent = `⏰ ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    selectAnswer(-1); // Tiempo agotado
+                }
+            }, 1000);
+        }
+        
+        function selectAnswer(selectedIndex) {
+            clearInterval(timer);
+            
+            const question = quizQuestions[currentQuestionIndex];
+            const answerOptions = document.querySelectorAll('.answer-option');
+            
+            // Deshabilitar todas las opciones
+            answerOptions.forEach(option => option.classList.add('disabled'));
+            
+            // Marcar respuesta correcta e incorrecta
+            answerOptions.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Calcular puntos
+            let pointsEarned = 0;
+            if (selectedIndex === question.correct) {
+                correctAnswers++;
+                pointsEarned = Math.max(1, Math.floor((timeLeft / 30) * 10)); // Más puntos si responde rápido
+                score += pointsEarned;
+            }
+            
+            answeredQuestions++;
+            
+            // Mostrar feedback
+            showFeedback(selectedIndex === question.correct, pointsEarned, question.explanation);
+            
+            // Actualizar puntuación
+            document.getElementById('currentScore').textContent = score;
+        }
+        
+        function showFeedback(isCorrect, pointsEarned, explanation) {
+            const feedbackSection = document.getElementById('feedbackSection');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackText = document.getElementById('feedbackText');
+            const feedbackExplanation = document.getElementById('feedbackExplanation');
+            
+            if (isCorrect) {
+                feedbackIcon.textContent = '✅';
+                feedbackText.textContent = `¡Correcto! +${pointsEarned} puntos`;
+                feedbackSection.style.borderColor = '#4caf50';
+            } else {
+                feedbackIcon.textContent = '❌';
+                feedbackText.textContent = '¡Incorrecto! +0 puntos';
+                feedbackSection.style.borderColor = '#f44336';
+            }
+            
+            feedbackExplanation.textContent = explanation;
+            feedbackSection.style.display = 'block';
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+        
+        function showResults() {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const percentage = Math.round((correctAnswers / quizQuestions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/120`;
+            
+            const performanceLevel = document.getElementById('performanceLevel');
+            if (percentage >= 80) {
+                performanceLevel.textContent = '🏆 ¡Experto en Urbanismo!';
+                performanceLevel.className = 'performance-level performance-excellent';
+            } else if (percentage >= 60) {
+                performanceLevel.textContent = '🏗️ ¡Buen Conocimiento Urbano!';
+                performanceLevel.className = 'performance-level performance-good';
+            } else {
+                performanceLevel.textContent = '📚 ¡Sigue Explorando Ciudades!';
+                performanceLevel.className = 'performance-level performance-needs-practice';
+            }
+            
+            // Generar logros
+            generateAchievements();
+        }
+        
+        function generateAchievements() {
+            const achievementsContainer = document.getElementById('achievementsContainer');
+            achievementsContainer.innerHTML = '';
+            
+            const achievements = [];
+            
+            if (correctAnswers >= 10) {
+                achievements.push({ icon: '🏙️', title: 'Experto Urbano' });
+            }
+            if (correctAnswers >= 8) {
+                achievements.push({ icon: '🏗️', title: 'Conocedor de Ciudades' });
+            }
+            if (score >= 80) {
+                achievements.push({ icon: '⚡', title: 'Planificador Rápido' });
+            }
+            if (correctAnswers === quizQuestions.length) {
+                achievements.push({ icon: '🏆', title: '¡Urbanista Perfecto!' });
+            }
+            
+            achievements.forEach(achievement => {
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = 'achievement-badge';
+                badgeDiv.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-title">${achievement.title}</div>
+                `;
+                achievementsContainer.appendChild(badgeDiv);
+            });
+        }
+        
+        function restartQuiz() {
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('quizIntro').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            correctAnswers = 0;
+            document.getElementById('currentScore').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '0';
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Demuestra todo lo que sabes sobre ciudades! 🏙️✨",
+            "¡Tu conocimiento urbano es increíble! 🏗️🌟",
+            "¡Las ciudades argentinas no tienen secretos para ti! 🇦🇷💫",
+            "¡Eres un experto en planificación urbana! 📋❤️",
+            "¡El crecimiento de las ciudades es fascinante! 🌆🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 

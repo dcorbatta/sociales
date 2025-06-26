@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Quiz: Población de Argentina 🧠</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .quiz-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .quiz-intro {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #2196f3;
+            text-align: center;
+        }
+        
+        .quiz-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .stat-box {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #2196f3;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2196f3;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+        }
+        
+        .question-container {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #9c27b0;
+            display: none;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .question-number {
+            background: #9c27b0;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .question-timer {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+        }
+        
+        .question-text {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin: 20px 0;
+            color: #333;
+            text-align: center;
+        }
+        
+        .question-image {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 4rem;
+        }
+        
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .answer-option {
+            background: white;
+            border: 3px solid #9c27b0;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+        
+        .answer-option:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(156,39,176,0.3);
+        }
+        
+        .answer-option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+        
+        .answer-option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+        
+        .answer-option.disabled {
+            pointer-events: none;
+            opacity: 0.7;
+        }
+        
+        .feedback-section {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+            display: none;
+        }
+        
+        .feedback-icon {
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-text {
+            font-size: 1.2rem;
+            text-align: center;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .feedback-explanation {
+            font-size: 1rem;
+            color: #666;
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .results-container {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+            text-align: center;
+            display: none;
+        }
+        
+        .final-score {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+        
+        .performance-level {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 15px 0;
+            padding: 15px;
+            border-radius: 15px;
+        }
+        
+        .performance-excellent {
+            background: #4caf50;
+            color: white;
+        }
+        
+        .performance-good {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .performance-needs-practice {
+            background: #f44336;
+            color: white;
+        }
+        
+        .achievements {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 25px 0;
+        }
+        
+        .achievement-badge {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #ffd700;
+            text-align: center;
+        }
+        
+        .achievement-icon {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .interactive-button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            font-family: 'Comic Neue', cursive;
+            transition: all 0.3s ease;
+            margin: 10px;
+            font-weight: bold;
+        }
+        
+        .interactive-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255,107,107,0.4);
+        }
+        
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #4caf50, #8bc34a);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-stats {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧠 Quiz: Población de Argentina 🧠</h1>
+            <div class="score-board">
+                <span class="score">🎯 Puntos: <span id="currentScore">0</span></span>
+                <span class="level">📊 Pregunta: <span id="currentQuestion">0</span>/15</span>
+            </div>
+        </header>
+
+        <main class="quiz-container">
+            <!-- Introducción del Quiz -->
+            <div class="quiz-intro" id="quizIntro">
+                <h2>🎮 ¡Pon a Prueba tus Conocimientos!</h2>
+                <p style="font-size: 1.2rem; margin: 20px 0;">
+                    ¿Cuánto aprendiste sobre la población de Argentina? ¡Responde 15 preguntas y descúbrelo!
+                </p>
+                
+                <div class="quiz-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">15</div>
+                        <div class="stat-label">Preguntas</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">30s</div>
+                        <div class="stat-label">Por pregunta</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">100</div>
+                        <div class="stat-label">Puntos máx.</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">🏆</div>
+                        <div class="stat-label">Logros</div>
+                    </div>
+                </div>
+                
+                <button class="interactive-button" onclick="startQuiz()">
+                    🚀 ¡Empezar Quiz!
+                </button>
+            </div>
+
+            <!-- Contenedor de Preguntas -->
+            <div class="question-container" id="questionContainer">
+                <div class="question-header">
+                    <div class="question-number" id="questionNumberDisplay">
+                        Pregunta 1 de 15
+                    </div>
+                    <div class="question-timer" id="questionTimer">
+                        ⏰ 30s
+                    </div>
+                </div>
+                
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                </div>
+                
+                <div class="question-image" id="questionImage">📊</div>
+                
+                <div class="question-text" id="questionText">
+                    ¿Cuál es la pregunta?
+                </div>
+                
+                <div class="answers-grid" id="answersGrid">
+                    <!-- Las respuestas se generarán dinámicamente -->
+                </div>
+                
+                <div class="feedback-section" id="feedbackSection">
+                    <div class="feedback-icon" id="feedbackIcon">✅</div>
+                    <div class="feedback-text" id="feedbackText">¡Correcto!</div>
+                    <div class="feedback-explanation" id="feedbackExplanation">
+                        Explicación de la respuesta...
+                    </div>
+                    <button class="interactive-button" onclick="nextQuestion()">
+                        ➡️ Siguiente Pregunta
+                    </button>
+                </div>
+            </div>
+
+            <!-- Resultados Finales -->
+            <div class="results-container" id="resultsContainer">
+                <h2>🎉 ¡Quiz Completado! 🎉</h2>
+                
+                <div class="final-score" id="finalScore">85/100</div>
+                
+                <div class="performance-level" id="performanceLevel">
+                    ¡Excelente Conocimiento!
+                </div>
+                
+                <div class="achievements" id="achievementsContainer">
+                    <!-- Los logros se generarán dinámicamente -->
+                </div>
+                
+                <div style="margin: 30px 0;">
+                    <button class="interactive-button" onclick="restartQuiz()">
+                        🔄 Jugar de Nuevo
+                    </button>
+                    <button class="interactive-button" onclick="window.location.href='index.html'">
+                        🏠 Volver al Menú
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div class="motivation-bar">
+                <div class="motivation-message" id="motivationMessage">
+                    ¡Demuestra todo lo que aprendiste sobre población! 🧠✨
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Preguntas del Quiz sobre Población de Argentina
+        const quizQuestions = [
+            {
+                question: "¿Cada cuántos años se realiza el censo en Argentina?",
+                image: "📊",
+                options: ["Cada 5 años", "Cada 10 años", "Cada 15 años", "Cada 20 años"],
+                correct: 1,
+                explanation: "El censo nacional se realiza cada 10 años en Argentina. El último fue en 2022."
+            },
+            {
+                question: "¿Cuántos habitantes tiene aproximadamente Argentina según el censo 2022?",
+                image: "👥",
+                options: ["40 millones", "47 millones", "52 millones", "60 millones"],
+                correct: 1,
+                explanation: "Argentina tiene aproximadamente 47 millones de habitantes según el censo 2022."
+            },
+            {
+                question: "¿Qué significa RMBA?",
+                image: "🏙️",
+                options: ["Región Metropolitana de Buenos Aires", "Red Municipal de Buenos Aires", "Registro Municipal Básico Argentino", "Región Migratoria de Buenos Aires"],
+                correct: 0,
+                explanation: "RMBA significa Región Metropolitana de Buenos Aires, que incluye CABA y 39 partidos bonaerenses."
+            },
+            {
+                question: "¿Cuántos habitantes tiene aproximadamente la RMBA?",
+                image: "🌆",
+                options: ["12 millones", "16 millones", "20 millones", "25 millones"],
+                correct: 1,
+                explanation: "La RMBA tiene aproximadamente 16 millones de habitantes, 1 de cada 3 argentinos."
+            },
+            {
+                question: "¿Cuál es la provincia más poblada de Argentina?",
+                image: "🗺️",
+                options: ["Córdoba", "Santa Fe", "Buenos Aires", "Mendoza"],
+                correct: 2,
+                explanation: "Buenos Aires es la provincia más poblada con más de 17 millones de habitantes."
+            },
+            {
+                question: "¿Qué es el crecimiento vegetativo?",
+                image: "📈",
+                options: ["Migración interna", "Nacimientos menos defunciones", "Llegada de extranjeros", "Crecimiento de plantas"],
+                correct: 1,
+                explanation: "El crecimiento vegetativo es la diferencia entre nacimientos y defunciones en una población."
+            },
+            {
+                question: "¿De qué países llegaron más inmigrantes a Argentina entre 1880-1930?",
+                image: "🚢",
+                options: ["Asia", "África", "Europa", "América del Norte"],
+                correct: 2,
+                explanation: "Entre 1880-1930 llegaron principalmente inmigrantes europeos: italianos, españoles, alemanes, etc."
+            },
+            {
+                question: "¿Qué es una pirámide demográfica?",
+                image: "📊",
+                options: ["Un edificio egipcio", "Un gráfico de población por edades", "Una montaña argentina", "Un tipo de censo"],
+                correct: 1,
+                explanation: "Una pirámide demográfica es un gráfico que muestra la población dividida por grupos de edad y sexo."
+            },
+            {
+                question: "¿Qué significa IDH?",
+                image: "🌟",
+                options: ["Índice de Desarrollo Humano", "Instituto de Demografía Histórica", "Indicador de Densidad Habitacional", "Informe Demográfico Histórico"],
+                correct: 0,
+                explanation: "IDH significa Índice de Desarrollo Humano, que mide salud, educación y economía."
+            },
+            {
+                question: "¿Cuántos años de esperanza de vida tiene Argentina?",
+                image: "💖",
+                options: ["70 años", "76 años", "80 años", "85 años"],
+                correct: 1,
+                explanation: "Argentina tiene una esperanza de vida de aproximadamente 76 años."
+            },
+            {
+                question: "¿Qué documento de identidad usan los argentinos?",
+                image: "🆔",
+                options: ["Pasaporte", "DNI", "Cédula", "Carnet"],
+                correct: 1,
+                explanation: "Los argentinos usan el DNI (Documento Nacional de Identidad) como documento principal."
+            },
+            {
+                question: "¿Cuál es la densidad de población de la RMBA (hab/km²)?",
+                image: "🏢",
+                options: ["500 hab/km²", "800 hab/km²", "1.148 hab/km²", "2.000 hab/km²"],
+                correct: 2,
+                explanation: "La RMBA tiene una densidad de 1.148 habitantes por kilómetro cuadrado."
+            },
+            {
+                question: "¿Qué porcentaje de la población argentina vive en la RMBA?",
+                image: "🥧",
+                options: ["25%", "33%", "40%", "50%"],
+                correct: 1,
+                explanation: "Aproximadamente el 33% de los argentinos (1 de cada 3) vive en la RMBA."
+            },
+            {
+                question: "¿Cuál es la tasa de mortalidad infantil de Argentina?",
+                image: "👶",
+                options: ["5.2‰", "8.4‰", "12.1‰", "15.3‰"],
+                correct: 1,
+                explanation: "Argentina tiene una tasa de mortalidad infantil de 8.4 por mil nacidos vivos."
+            },
+            {
+                question: "¿Cuántos extranjeros viven en Argentina según el censo 2022?",
+                image: "🌍",
+                options: ["1.5 millones", "2.1 millones", "3.0 millones", "4.2 millones"],
+                correct: 2,
+                explanation: "Según el censo 2022, aproximadamente 3 millones de extranjeros viven en Argentina."
+            }
+        ];
+        
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let timeLeft = 30;
+        let timer;
+        let answeredQuestions = 0;
+        let correctAnswers = 0;
+        
+        function startQuiz() {
+            document.getElementById('quizIntro').style.display = 'none';
+            document.getElementById('questionContainer').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            correctAnswers = 0;
+            showQuestion();
+        }
+        
+        function showQuestion() {
+            const question = quizQuestions[currentQuestionIndex];
+            
+            document.getElementById('questionNumberDisplay').textContent = `Pregunta ${currentQuestionIndex + 1} de ${quizQuestions.length}`;
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionImage').textContent = question.image;
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Actualizar barra de progreso
+            const progress = ((currentQuestionIndex + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Generar opciones de respuesta
+            const answersGrid = document.getElementById('answersGrid');
+            answersGrid.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option';
+                answerDiv.textContent = option;
+                answerDiv.onclick = () => selectAnswer(index);
+                answersGrid.appendChild(answerDiv);
+            });
+            
+            // Reiniciar timer
+            timeLeft = 30;
+            startTimer();
+            
+            // Ocultar feedback
+            document.getElementById('feedbackSection').style.display = 'none';
+        }
+        
+        function startTimer() {
+            timer = setInterval(() => {
+                timeLeft--;
+                document.getElementById('questionTimer').textContent = `⏰ ${timeLeft}s`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    selectAnswer(-1); // Tiempo agotado
+                }
+            }, 1000);
+        }
+        
+        function selectAnswer(selectedIndex) {
+            clearInterval(timer);
+            
+            const question = quizQuestions[currentQuestionIndex];
+            const answerOptions = document.querySelectorAll('.answer-option');
+            
+            // Deshabilitar todas las opciones
+            answerOptions.forEach(option => option.classList.add('disabled'));
+            
+            // Marcar respuesta correcta e incorrecta
+            answerOptions.forEach((option, index) => {
+                if (index === question.correct) {
+                    option.classList.add('correct');
+                } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                    option.classList.add('incorrect');
+                }
+            });
+            
+            // Calcular puntos
+            let pointsEarned = 0;
+            if (selectedIndex === question.correct) {
+                correctAnswers++;
+                pointsEarned = Math.max(1, Math.floor((timeLeft / 30) * 10)); // Más puntos si responde rápido
+                score += pointsEarned;
+            }
+            
+            answeredQuestions++;
+            
+            // Mostrar feedback
+            showFeedback(selectedIndex === question.correct, pointsEarned, question.explanation);
+            
+            // Actualizar puntuación
+            document.getElementById('currentScore').textContent = score;
+        }
+        
+        function showFeedback(isCorrect, pointsEarned, explanation) {
+            const feedbackSection = document.getElementById('feedbackSection');
+            const feedbackIcon = document.getElementById('feedbackIcon');
+            const feedbackText = document.getElementById('feedbackText');
+            const feedbackExplanation = document.getElementById('feedbackExplanation');
+            
+            if (isCorrect) {
+                feedbackIcon.textContent = '✅';
+                feedbackText.textContent = `¡Correcto! +${pointsEarned} puntos`;
+                feedbackSection.style.borderColor = '#4caf50';
+            } else {
+                feedbackIcon.textContent = '❌';
+                feedbackText.textContent = '¡Incorrecto! +0 puntos';
+                feedbackSection.style.borderColor = '#f44336';
+            }
+            
+            feedbackExplanation.textContent = explanation;
+            feedbackSection.style.display = 'block';
+        }
+        
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showResults();
+            } else {
+                showQuestion();
+            }
+        }
+        
+        function showResults() {
+            document.getElementById('questionContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            const percentage = Math.round((correctAnswers / quizQuestions.length) * 100);
+            document.getElementById('finalScore').textContent = `${score}/150`;
+            
+            const performanceLevel = document.getElementById('performanceLevel');
+            if (percentage >= 80) {
+                performanceLevel.textContent = '🏆 ¡Excelente Conocimiento!';
+                performanceLevel.className = 'performance-level performance-excellent';
+            } else if (percentage >= 60) {
+                performanceLevel.textContent = '👍 ¡Buen Trabajo!';
+                performanceLevel.className = 'performance-level performance-good';
+            } else {
+                performanceLevel.textContent = '📚 ¡Sigue Practicando!';
+                performanceLevel.className = 'performance-level performance-needs-practice';
+            }
+            
+            // Generar logros
+            generateAchievements();
+        }
+        
+        function generateAchievements() {
+            const achievementsContainer = document.getElementById('achievementsContainer');
+            achievementsContainer.innerHTML = '';
+            
+            const achievements = [];
+            
+            if (correctAnswers >= 12) {
+                achievements.push({ icon: '🧠', title: 'Experto en Población' });
+            }
+            if (correctAnswers >= 8) {
+                achievements.push({ icon: '📊', title: 'Conocedor de Censos' });
+            }
+            if (score >= 100) {
+                achievements.push({ icon: '⚡', title: 'Respuestas Rápidas' });
+            }
+            if (correctAnswers === quizQuestions.length) {
+                achievements.push({ icon: '🏆', title: '¡Perfecto!' });
+            }
+            
+            achievements.forEach(achievement => {
+                const badgeDiv = document.createElement('div');
+                badgeDiv.className = 'achievement-badge';
+                badgeDiv.innerHTML = `
+                    <div class="achievement-icon">${achievement.icon}</div>
+                    <div class="achievement-title">${achievement.title}</div>
+                `;
+                achievementsContainer.appendChild(badgeDiv);
+            });
+        }
+        
+        function restartQuiz() {
+            document.getElementById('resultsContainer').style.display = 'none';
+            document.getElementById('quizIntro').style.display = 'block';
+            currentQuestionIndex = 0;
+            score = 0;
+            answeredQuestions = 0;
+            correctAnswers = 0;
+            document.getElementById('currentScore').textContent = '0';
+            document.getElementById('currentQuestion').textContent = '0';
+        }
+        
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Demuestra todo lo que aprendiste sobre población! 🧠✨",
+            "¡Cada pregunta es una oportunidad de brillar! 📊🌟",
+            "¡Tu conocimiento sobre Argentina es increíble! 🇦🇷💫",
+            "¡Sigue así, eres un experto en demografía! 👥❤️",
+            "¡Los censos y la población no tienen secretos para ti! 📈🌈"
+        ];
+        
+        function updateMotivationalMessage() {
+            const messageElement = document.getElementById('motivationMessage');
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            messageElement.textContent = randomMessage;
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+    </script>
+</body>
+</html> 
