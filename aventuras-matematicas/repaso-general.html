@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📚 Repaso General - Aventuras Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .review-container {
+            background: linear-gradient(135deg, #ffebee 0%, #ffcdd2 100%);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #f44336;
+        }
+
+        .exam-countdown {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #ff9800;
+        }
+
+        .countdown-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #f44336;
+            margin: 15px 0;
+        }
+
+        .topic-sections {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .topic-card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .topic-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .topic-card.representacion {
+            border-color: #ff9800;
+            background: linear-gradient(135deg, #fff3e0, #ffcc80);
+        }
+
+        .topic-card.equivalentes {
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+        }
+
+        .topic-card.mixtos {
+            border-color: #2196f3;
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+        }
+
+        .topic-card.operaciones {
+            border-color: #9c27b0;
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+        }
+
+        .topic-icon {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .topic-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .topic-progress {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 15px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-fill.representacion { background: linear-gradient(90deg, #ff9800, #ffb74d); }
+        .progress-fill.equivalentes { background: linear-gradient(90deg, #4caf50, #81c784); }
+        .progress-fill.mixtos { background: linear-gradient(90deg, #2196f3, #64b5f6); }
+        .progress-fill.operaciones { background: linear-gradient(90deg, #9c27b0, #ba68c8); }
+
+        .quick-review {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .concept-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 15px;
+            padding: 20px;
+            border: 2px solid #4facfe;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.3);
+        }
+
+        .concept-visual {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .concept-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .concept-example {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .practice-session {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+        }
+
+        .exercise-type {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #4caf50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-type:hover {
+            background: #4caf50;
+            color: white;
+            transform: scale(1.02);
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .exercise-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .exercise-count {
+            background: #4caf50;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+        }
+
+        .tips-section {
+            background: linear-gradient(135deg, #fff9c4 0%, #f4e4ba 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #ffc107;
+        }
+
+        .tip-item {
+            display: flex;
+            align-items: flex-start;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .tip-item:hover {
+            background: rgba(255, 255, 255, 1);
+            transform: translateX(10px);
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .tip-content {
+            flex: 1;
+        }
+
+        .tip-title {
+            font-weight: bold;
+            color: #f57c00;
+            margin-bottom: 5px;
+        }
+
+        .tip-text {
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .study-plan {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #2196f3;
+        }
+
+        .day-plan {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border-left: 5px solid #2196f3;
+            transition: all 0.3s ease;
+        }
+
+        .day-plan:hover {
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px rgba(33, 150, 243, 0.3);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .day-title {
+            font-weight: bold;
+            color: #1976d2;
+            font-size: 1.1rem;
+        }
+
+        .day-status {
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .day-status.pending {
+            background: #ffecb3;
+            color: #f57c00;
+        }
+
+        .day-status.completed {
+            background: #c8e6c9;
+            color: #388e3c;
+        }
+
+        .activity-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            padding: 8px;
+            background: rgba(33, 150, 243, 0.1);
+            border-radius: 8px;
+        }
+
+        .activity-checkbox {
+            margin-right: 10px;
+            transform: scale(1.2);
+        }
+
+        .mock-exam {
+            background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #9c27b0;
+            text-align: center;
+        }
+
+        .exam-simulator {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 2px solid #9c27b0;
+        }
+
+        .exam-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stat-card {
+            background: #9c27b0;
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .confidence-meter {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            border: 2px solid #4caf50;
+        }
+
+        .confidence-bar {
+            background: #e0e0e0;
+            border-radius: 25px;
+            height: 30px;
+            margin: 15px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .confidence-fill {
+            background: linear-gradient(90deg, #f44336, #ff9800, #4caf50);
+            height: 100%;
+            border-radius: 25px;
+            transition: width 0.5s ease;
+        }
+
+        .confidence-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        @media (max-width: 768px) {
+            .topic-sections {
+                grid-template-columns: 1fr;
+            }
+            
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .exam-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📚 Repaso General</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="points">0</span></span>
+                <span class="level">📊 Progreso: <span id="overallProgress">75</span>%</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Cuenta Regresiva -->
+            <section class="exam-countdown">
+                <h2>⏰ Evaluación: 27 de Junio</h2>
+                <div class="countdown-display" id="countdownDisplay">3 días</div>
+                <p>¡Es hora de repasar todo lo que has aprendido!</p>
+            </section>
+
+            <!-- Progreso por Temas -->
+            <section class="review-container">
+                <h3>📊 Tu Progreso por Temas</h3>
+                <div class="topic-sections">
+                    <div class="topic-card representacion" onclick="reviewTopic('representacion')">
+                        <div class="topic-icon">🍕</div>
+                        <div class="topic-title">Representación Gráfica</div>
+                        <div class="topic-progress">
+                            <div class="progress-fill representacion" style="width: 90%"></div>
+                        </div>
+                        <p>90% Completado</p>
+                    </div>
+                    
+                    <div class="topic-card equivalentes" onclick="reviewTopic('equivalentes')">
+                        <div class="topic-icon">⚖️</div>
+                        <div class="topic-title">Fracciones Equivalentes</div>
+                        <div class="topic-progress">
+                            <div class="progress-fill equivalentes" style="width: 85%"></div>
+                        </div>
+                        <p>85% Completado</p>
+                    </div>
+                    
+                    <div class="topic-card mixtos" onclick="reviewTopic('mixtos')">
+                        <div class="topic-icon">🔢</div>
+                        <div class="topic-title">Números Mixtos</div>
+                        <div class="topic-progress">
+                            <div class="progress-fill mixtos" style="width: 75%"></div>
+                        </div>
+                        <p>75% Completado</p>
+                    </div>
+                    
+                    <div class="topic-card operaciones" onclick="reviewTopic('operaciones')">
+                        <div class="topic-icon">➕</div>
+                        <div class="topic-title">Operaciones</div>
+                        <div class="topic-progress">
+                            <div class="progress-fill operaciones" style="width: 70%"></div>
+                        </div>
+                        <p>70% Completado</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Repaso Rápido de Conceptos -->
+            <section class="quick-review">
+                <h3>⚡ Repaso Rápido de Conceptos Clave</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <div class="concept-visual">📊</div>
+                        <div class="concept-title">¿Qué es una fracción?</div>
+                        <div class="concept-example">Parte de un todo: 3/4 = 3 de 4 partes</div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-visual">⚖️</div>
+                        <div class="concept-title">Fracciones Equivalentes</div>
+                        <div class="concept-example">1/2 = 2/4 = 3/6 (mismo valor)</div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-visual">🔢</div>
+                        <div class="concept-title">Número Mixto</div>
+                        <div class="concept-example">5/3 = 1 2/3 (entero + fracción)</div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-visual">🧩</div>
+                        <div class="concept-title">Simplificar</div>
+                        <div class="concept-example">6/8 = 3/4 (dividir por MCD)</div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-visual">➕</div>
+                        <div class="concept-title">Sumar Fracciones</div>
+                        <div class="concept-example">1/4 + 2/4 = 3/4 (mismo denominador)</div>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <div class="concept-visual">📏</div>
+                        <div class="concept-title">Recta Numérica</div>
+                        <div class="concept-example">Ubicar fracciones entre 0 y 1</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sesiones de Práctica -->
+            <section class="practice-session">
+                <h3>🎯 Sesiones de Práctica Dirigida</h3>
+                
+                <div class="exercise-type" onclick="startPractice('mixed')">
+                    <div class="exercise-header">
+                        <div class="exercise-title">🔄 Práctica Mixta</div>
+                        <div class="exercise-count">20 ejercicios</div>
+                    </div>
+                    <p>Ejercicios variados de todos los temas</p>
+                </div>
+                
+                <div class="exercise-type" onclick="startPractice('weak')">
+                    <div class="exercise-header">
+                        <div class="exercise-title">💪 Refuerzo de Debilidades</div>
+                        <div class="exercise-count">15 ejercicios</div>
+                    </div>
+                    <p>Enfoque en tus temas más difíciles</p>
+                </div>
+                
+                <div class="exercise-type" onclick="startPractice('speed')">
+                    <div class="exercise-header">
+                        <div class="exercise-title">⚡ Práctica de Velocidad</div>
+                        <div class="exercise-count">10 ejercicios</div>
+                    </div>
+                    <p>Ejercicios rápidos para ganar confianza</p>
+                </div>
+                
+                <div class="exercise-type" onclick="startPractice('problems')">
+                    <div class="exercise-header">
+                        <div class="exercise-title">🧠 Problemas de Aplicación</div>
+                        <div class="exercise-count">12 ejercicios</div>
+                    </div>
+                    <p>Problemas de la vida real</p>
+                </div>
+            </section>
+
+            <!-- Consejos para el Examen -->
+            <section class="tips-section">
+                <h3>💡 Consejos para la Evaluación</h3>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">📖</div>
+                    <div class="tip-content">
+                        <div class="tip-title">Lee Cuidadosamente</div>
+                        <div class="tip-text">Tómate tiempo para entender bien cada problema antes de resolverlo.</div>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">✏️</div>
+                    <div class="tip-content">
+                        <div class="tip-title">Dibuja si es Necesario</div>
+                        <div class="tip-text">Hacer dibujos te ayuda a visualizar las fracciones.</div>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">🔍</div>
+                    <div class="tip-content">
+                        <div class="tip-title">Verifica tus Respuestas</div>
+                        <div class="tip-text">Siempre revisa si tu respuesta tiene sentido.</div>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">⏰</div>
+                    <div class="tip-content">
+                        <div class="tip-title">Administra tu Tiempo</div>
+                        <div class="tip-text">No te quedes demasiado tiempo en un solo problema.</div>
+                    </div>
+                </div>
+                
+                <div class="tip-item">
+                    <div class="tip-icon">🧘</div>
+                    <div class="tip-content">
+                        <div class="tip-title">Mantén la Calma</div>
+                        <div class="tip-text">Respira profundo si te sientes nervioso.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Plan de Estudio -->
+            <section class="study-plan">
+                <h3>📅 Plan de Estudio para los Próximos Días</h3>
+                
+                <div class="day-plan">
+                    <div class="day-header">
+                        <div class="day-title">📅 Hoy - Día 1</div>
+                        <div class="day-status pending">Pendiente</div>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Repaso de representación gráfica (30 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Práctica de fracciones equivalentes (20 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Ejercicios de números mixtos (25 min)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="day-plan">
+                    <div class="day-header">
+                        <div class="day-title">📅 Día 2</div>
+                        <div class="day-status pending">Pendiente</div>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Operaciones con fracciones (40 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Problemas de aplicación (30 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Simulacro de examen (45 min)</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="day-plan">
+                    <div class="day-header">
+                        <div class="day-title">📅 Día 3 - Día del Examen</div>
+                        <div class="day-status pending">Pendiente</div>
+                    </div>
+                    <ul class="activity-list">
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Repaso ligero de conceptos (15 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>Descanso y relajación (30 min)</span>
+                        </li>
+                        <li class="activity-item">
+                            <input type="checkbox" class="activity-checkbox">
+                            <span>¡Presentar la evaluación! 🎯</span>
+                        </li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Simulacro de Examen -->
+            <section class="mock-exam">
+                <h3>📋 Simulacro de Examen</h3>
+                <p>Practica con un examen similar al real</p>
+                
+                <div class="exam-simulator">
+                    <div class="exam-stats">
+                        <div class="stat-card">
+                            <div class="stat-number">15</div>
+                            <div class="stat-label">Preguntas</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">45</div>
+                            <div class="stat-label">Minutos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">85%</div>
+                            <div class="stat-label">Meta</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">3</div>
+                            <div class="stat-label">Intentos</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn-primary" onclick="startMockExam()" style="font-size: 1.2rem; padding: 20px 40px;">
+                        🎯 Comenzar Simulacro
+                    </button>
+                </div>
+            </section>
+
+            <!-- Medidor de Confianza -->
+            <section class="confidence-meter">
+                <h3>💪 Tu Nivel de Confianza</h3>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" id="confidenceLevel" style="width: 75%"></div>
+                    <div class="confidence-text">75% Preparado</div>
+                </div>
+                <p>¡Estás muy bien preparado! Sigue practicando para llegar al 100%</p>
+                
+                <div class="quiz-controls" style="margin-top: 20px;">
+                    <button class="btn-secondary" onclick="updateConfidence(-10)">😰 Me siento menos seguro</button>
+                    <button class="btn-primary" onclick="updateConfidence(10)">😊 Me siento más seguro</button>
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="index.html" class="btn-secondary">🏠 Volver al Menú</a>
+                <a href="examen-practica.html" class="btn-primary">➡️ Siguiente: Examen de Práctica</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let points = 0;
+        let overallProgress = 75;
+        let confidenceLevel = 75;
+        
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+        function updateDisplay() {
+            document.getElementById('points').textContent = points;
+            document.getElementById('overallProgress').textContent = overallProgress;
+        }
+
+        function addPoints(amount) {
+            points += amount;
+            updateDisplay();
+            showFloatingPoints(amount);
+        }
+
+        function showFloatingPoints(points) {
+            const pointsEl = document.createElement('div');
+            pointsEl.textContent = `+${points}`;
+            pointsEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #4caf50;
+                font-size: 2rem;
+                font-weight: bold;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatUp 2s ease-out forwards;
+            `;
+            document.body.appendChild(pointsEl);
+            setTimeout(() => pointsEl.remove(), 2000);
+        }
+
+        function updateCountdown() {
+            const examDate = new Date('2024-06-27');
+            const now = new Date();
+            const timeDiff = examDate - now;
+            
+            if (timeDiff > 0) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                
+                let countdownText = '';
+                if (days > 0) {
+                    countdownText = `${days} día${days > 1 ? 's' : ''}`;
+                } else if (hours > 0) {
+                    countdownText = `${hours} hora${hours > 1 ? 's' : ''}`;
+                } else {
+                    countdownText = `${minutes} minuto${minutes > 1 ? 's' : ''}`;
+                }
+                
+                document.getElementById('countdownDisplay').textContent = countdownText;
+            } else {
+                document.getElementById('countdownDisplay').textContent = '¡Hoy es el día!';
+            }
+        }
+
+        function reviewTopic(topic) {
+            const topics = {
+                'representacion': 'representacion-grafica.html',
+                'equivalentes': 'fracciones-equivalentes.html',
+                'mixtos': 'numeros-mixtos.html',
+                'operaciones': 'suma-resta-fracciones.html'
+            };
+            
+            addPoints(10);
+            alert(`¡Excelente! Revisando ${topic}. Te redirigiremos al módulo correspondiente.`);
+            
+            if (topics[topic]) {
+                window.location.href = topics[topic];
+            }
+        }
+
+        function startPractice(type) {
+            const practiceTypes = {
+                'mixed': {
+                    title: 'Práctica Mixta',
+                    description: 'Ejercicios variados de todos los temas',
+                    points: 50
+                },
+                'weak': {
+                    title: 'Refuerzo de Debilidades',
+                    description: 'Enfoque en tus temas más difíciles',
+                    points: 40
+                },
+                'speed': {
+                    title: 'Práctica de Velocidad',
+                    description: 'Ejercicios rápidos para ganar confianza',
+                    points: 30
+                },
+                'problems': {
+                    title: 'Problemas de Aplicación',
+                    description: 'Problemas de la vida real',
+                    points: 45
+                }
+            };
+            
+            const practice = practiceTypes[type];
+            addPoints(practice.points);
+            
+            alert(`🎯 Iniciando: ${practice.title}\n\n${practice.description}\n\n¡Has ganado ${practice.points} puntos por practicar!`);
+            
+            // Simular progreso
+            setTimeout(() => {
+                overallProgress = Math.min(100, overallProgress + 5);
+                updateDisplay();
+                alert('¡Sesión de práctica completada! Tu progreso ha aumentado.');
+            }, 2000);
+        }
+
+        function startMockExam() {
+            addPoints(100);
+            alert(`🎯 Iniciando Simulacro de Examen\n\n• 15 preguntas\n• 45 minutos\n• Todas las temáticas\n\n¡Buena suerte! Has ganado 100 puntos por intentarlo.`);
+            
+            // Simular examen
+            setTimeout(() => {
+                const score = Math.floor(Math.random() * 30) + 70; // Score entre 70-100
+                confidenceLevel = Math.min(100, confidenceLevel + 10);
+                updateConfidenceDisplay();
+                
+                alert(`📊 Resultado del Simulacro:\n\nPuntuación: ${score}%\n\n${score >= 85 ? '¡Excelente! Estás muy bien preparado.' : 'Buen trabajo. Sigue practicando para mejorar.'}`);
+            }, 3000);
+        }
+
+        function updateConfidence(change) {
+            confidenceLevel = Math.max(0, Math.min(100, confidenceLevel + change));
+            updateConfidenceDisplay();
+            
+            if (change > 0) {
+                addPoints(5);
+            }
+        }
+
+        function updateConfidenceDisplay() {
+            const fill = document.getElementById('confidenceLevel');
+            const text = document.querySelector('.confidence-text');
+            
+            fill.style.width = confidenceLevel + '%';
+            text.textContent = `${confidenceLevel}% Preparado`;
+            
+            // Cambiar color según el nivel
+            if (confidenceLevel >= 80) {
+                fill.style.background = 'linear-gradient(90deg, #4caf50, #8bc34a)';
+                text.textContent += ' 🎉';
+            } else if (confidenceLevel >= 60) {
+                fill.style.background = 'linear-gradient(90deg, #ff9800, #ffb74d)';
+                text.textContent += ' 👍';
+            } else {
+                fill.style.background = 'linear-gradient(90deg, #f44336, #ef5350)';
+                text.textContent += ' 💪';
+            }
+        }
+
+        // Manejar checkboxes del plan de estudio
+        document.addEventListener('change', function(e) {
+            if (e.target.classList.contains('activity-checkbox')) {
+                if (e.target.checked) {
+                    addPoints(15);
+                    e.target.parentElement.style.textDecoration = 'line-through';
+                    e.target.parentElement.style.opacity = '0.7';
+                    
+                    // Verificar si todas las actividades del día están completadas
+                    const dayPlan = e.target.closest('.day-plan');
+                    const checkboxes = dayPlan.querySelectorAll('.activity-checkbox');
+                    const checkedBoxes = dayPlan.querySelectorAll('.activity-checkbox:checked');
+                    
+                    if (checkboxes.length === checkedBoxes.length) {
+                        const statusEl = dayPlan.querySelector('.day-status');
+                        statusEl.textContent = 'Completado';
+                        statusEl.className = 'day-status completed';
+                        addPoints(25); // Bonus por completar el día
+                    }
+                } else {
+                    e.target.parentElement.style.textDecoration = 'none';
+                    e.target.parentElement.style.opacity = '1';
+                }
+            }
+        });
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -150%) scale(1.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

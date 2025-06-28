@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📏 Recta Numérica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .score {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
+        .lesson-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-title {
+            font-size: 2rem;
+            color: #4facfe;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .number-line-demo {
+            margin: 30px 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 15px;
+            border: 3px solid #4facfe;
+        }
+
+        .number-line {
+            position: relative;
+            height: 80px;
+            margin: 40px 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .line {
+            width: 100%;
+            height: 4px;
+            background: #2c3e50;
+            position: relative;
+            border-radius: 2px;
+        }
+
+        .tick {
+            position: absolute;
+            width: 2px;
+            height: 20px;
+            background: #2c3e50;
+            top: -8px;
+        }
+
+        .tick.major {
+            height: 30px;
+            width: 3px;
+            top: -13px;
+            background: #e74c3c;
+        }
+
+        .tick-label {
+            position: absolute;
+            top: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #2c3e50;
+            transform: translateX(-50%);
+        }
+
+        .fraction-point {
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+            border: 3px solid #2c3e50;
+            top: -10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .fraction-point:hover {
+            transform: scale(1.3);
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.5);
+        }
+
+        .fraction-label {
+            position: absolute;
+            top: -45px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 255, 255, 0.95);
+            padding: 5px 10px;
+            border-radius: 10px;
+            border: 2px solid #4facfe;
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #2c3e50;
+            white-space: nowrap;
+        }
+
+        .interactive-section {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .interactive-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .fraction-placer {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .fraction-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .fraction-input input {
+            width: 80px;
+            height: 60px;
+            font-size: 2rem;
+            text-align: center;
+            border: 3px solid #4facfe;
+            border-radius: 10px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .fraction-line {
+            width: 80px;
+            height: 4px;
+            background: #2c3e50;
+            margin: 0 10px;
+        }
+
+        .place-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .place-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .interactive-number-line {
+            width: 100%;
+            max-width: 800px;
+            margin: 20px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            border: 3px solid #4facfe;
+        }
+
+        .game-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .positioning-game {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .fraction-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .draggable-fraction {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 3px solid #2196f3;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: grab;
+            transition: all 0.3s ease;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .draggable-fraction:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .draggable-fraction.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+
+        .game-number-line {
+            position: relative;
+            height: 120px;
+            margin: 40px 20px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            border: 3px solid #4facfe;
+        }
+
+        .drop-zone {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border: 2px dashed #ccc;
+            border-radius: 50%;
+            top: 40px;
+            transform: translateX(-50%);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .drop-zone.drag-over {
+            border-color: #4facfe;
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateX(-50%) scale(1.2);
+        }
+
+        .drop-zone.filled {
+            border-color: #27ae60;
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+        }
+
+        .drop-zone.incorrect {
+            border-color: #e74c3c;
+            background: linear-gradient(135deg, #ff6b6b, #ffa8a8);
+        }
+
+        .dropped-fraction {
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        .quiz-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .question-card {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #4caf50;
+        }
+
+        .question {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: 3px solid #4facfe;
+            border-radius: 15px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            border-color: #27ae60;
+        }
+
+        .option.incorrect {
+            background: linear-gradient(135deg, #ff6b6b, #ffa8a8);
+            border-color: #e74c3c;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animated-icon {
+            animation: bounce 2s infinite;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .navigation { flex-direction: column; }
+            .options { grid-template-columns: 1fr; }
+            .fraction-cards { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📏 Recta Numérica</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="totalPoints">0</span></span>
+                <span class="score">🎯 Ubicadas: <span id="placedCount">0</span> de 6</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Lección Teórica -->
+            <section class="lesson-section">
+                <h2 class="lesson-title">Ubicando Fracciones en la Recta <span class="animated-icon">📏</span></h2>
+                <p class="explanation">
+                    La recta numérica nos ayuda a visualizar dónde se ubican las fracciones. 
+                    ¡Es como un mapa que nos muestra la posición exacta de cada fracción entre los números enteros! 🗺️✨
+                </p>
+
+                <div class="number-line-demo">
+                    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 20px;">
+                        Ejemplo: Fracciones entre 0 y 2
+                    </h3>
+                    <div class="number-line" id="demoNumberLine">
+                        <div class="line">
+                            <!-- Marcas principales -->
+                            <div class="tick major" style="left: 0%;">
+                                <div class="tick-label">0</div>
+                            </div>
+                            <div class="tick major" style="left: 50%;">
+                                <div class="tick-label">1</div>
+                            </div>
+                            <div class="tick major" style="left: 100%;">
+                                <div class="tick-label">2</div>
+                            </div>
+                            
+                            <!-- Marcas menores (cuartos) -->
+                            <div class="tick" style="left: 12.5%;"></div>
+                            <div class="tick" style="left: 25%;"></div>
+                            <div class="tick" style="left: 37.5%;"></div>
+                            <div class="tick" style="left: 62.5%;"></div>
+                            <div class="tick" style="left: 75%;"></div>
+                            <div class="tick" style="left: 87.5%;"></div>
+                            
+                            <!-- Puntos de fracciones -->
+                            <div class="fraction-point" style="left: 25%;">
+                                <div class="fraction-label">1/2</div>
+                            </div>
+                            <div class="fraction-point" style="left: 37.5%;">
+                                <div class="fraction-label">3/4</div>
+                            </div>
+                            <div class="fraction-point" style="left: 62.5%;">
+                                <div class="fraction-label">1 1/4</div>
+                            </div>
+                            <div class="fraction-point" style="left: 87.5%;">
+                                <div class="fraction-label">1 3/4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Colocador Interactivo -->
+            <section class="interactive-section">
+                <h2 class="interactive-title">🎯 Colocador de Fracciones</h2>
+                <div class="fraction-placer">
+                    <p style="font-size: 1.2rem; text-align: center; margin-bottom: 20px;">
+                        Ingresa una fracción para ubicarla en la recta numérica:
+                    </p>
+                    
+                    <div class="fraction-input">
+                        <input type="number" id="numeratorInput" min="1" max="20" placeholder="3">
+                        <div class="fraction-line"></div>
+                        <input type="number" id="denominatorInput" min="1" max="20" placeholder="4">
+                    </div>
+                    
+                    <button class="place-btn" onclick="placeFraction()">📍 Ubicar en la Recta</button>
+                    
+                    <div class="interactive-number-line">
+                        <div class="number-line" id="interactiveNumberLine">
+                            <div class="line">
+                                <!-- Se generará dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <button class="place-btn" onclick="clearNumberLine()" style="background: linear-gradient(45deg, #ff9a9e, #fecfef);">
+                        🧹 Limpiar Recta
+                    </button>
+                </div>
+            </section>
+
+            <!-- Juego de Posicionamiento -->
+            <section class="game-section">
+                <h2 class="lesson-title">🎮 Juego: Arrastra y Ubica</h2>
+                <p class="explanation">
+                    ¡Arrastra cada fracción a su posición correcta en la recta numérica!
+                </p>
+                
+                <div class="positioning-game">
+                    <div class="fraction-cards" id="fractionCards">
+                        <!-- Las tarjetas se generarán dinámicamente -->
+                    </div>
+                    
+                    <div class="game-number-line" id="gameNumberLine">
+                        <div class="number-line">
+                            <div class="line">
+                                <!-- Marcas y zonas de drop se generarán dinámicamente -->
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 20px 0;">
+                        <button class="place-btn" onclick="resetGame()">🔄 Reiniciar Juego</button>
+                        <button class="place-btn" onclick="checkGameResults()" style="background: linear-gradient(45deg, #27ae60, #2ecc71);">✅ Verificar Posiciones</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quiz de Práctica -->
+            <section class="quiz-section">
+                <h2 class="lesson-title">🧠 Quiz: Posiciones en la Recta</h2>
+                
+                <div class="question-card" id="questionCard">
+                    <div class="question" id="questionText">
+                        ¿Entre qué números enteros se encuentra la fracción 5/3?
+                    </div>
+                    
+                    <div class="options" id="optionsContainer">
+                        <!-- Las opciones se generarán dinámicamente -->
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="place-btn" onclick="nextQuestion()">➡️ Siguiente Pregunta</button>
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="mayor-menor-entero.html" class="nav-btn">⬅️ Anterior: Mayor/Menor que 1</a>
+                <a href="fraccion-irreductible.html" class="nav-btn">Siguiente: Fracciones Irreductibles ➡️</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Variables globales
+        let totalPoints = parseInt(localStorage.getItem('mathPoints') || '0');
+        let placedCount = 0;
+        let currentQuestionIndex = 0;
+        let gameData = [];
+
+        // Fracciones para el juego de posicionamiento
+        const gameFractions = [
+            { fraction: '1/4', position: 12.5, correct: true },
+            { fraction: '1/2', position: 25, correct: true },
+            { fraction: '3/4', position: 37.5, correct: true },
+            { fraction: '5/4', position: 62.5, correct: true },
+            { fraction: '3/2', position: 75, correct: true },
+            { fraction: '7/4', position: 87.5, correct: true }
+        ];
+
+        // Preguntas del quiz
+        const quizQuestions = [
+            {
+                question: "¿Entre qué números enteros se encuentra la fracción 5/3?",
+                options: ["Entre 0 y 1", "Entre 1 y 2", "Entre 2 y 3", "Entre 3 y 4"],
+                correct: 1,
+                explanation: "5/3 = 1.67, por lo tanto está entre 1 y 2"
+            },
+            {
+                question: "¿Qué fracción está más cerca de 1 en la recta numérica?",
+                options: ["2/3", "4/5", "7/8", "1/2"],
+                correct: 2,
+                explanation: "7/8 = 0.875, es la más cercana a 1"
+            },
+            {
+                question: "¿Cuál es la posición de 3/2 en la recta numérica?",
+                options: ["Entre 0 y 1", "Entre 1 y 2", "Entre 2 y 3", "Exactamente en 2"],
+                correct: 1,
+                explanation: "3/2 = 1.5, está exactamente en el medio entre 1 y 2"
+            },
+            {
+                question: "¿Qué fracción corresponde al punto medio entre 0 y 1?",
+                options: ["1/4", "1/3", "1/2", "2/3"],
+                correct: 2,
+                explanation: "1/2 = 0.5, es exactamente el punto medio entre 0 y 1"
+            },
+            {
+                question: "¿Entre qué números enteros se encuentra 11/4?",
+                options: ["Entre 1 y 2", "Entre 2 y 3", "Entre 3 y 4", "Entre 4 y 5"],
+                correct: 1,
+                explanation: "11/4 = 2.75, por lo tanto está entre 2 y 3"
+            }
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            setupInteractiveNumberLine();
+            initializeGame();
+            loadQuestion();
+        });
+
+        function updateDisplay() {
+            document.getElementById('totalPoints').textContent = totalPoints;
+            document.getElementById('placedCount').textContent = placedCount;
+        }
+
+        // Funciones del colocador interactivo
+        function setupInteractiveNumberLine() {
+            const numberLine = document.getElementById('interactiveNumberLine');
+            const line = numberLine.querySelector('.line');
+            
+            // Limpiar contenido existente
+            line.innerHTML = '';
+            
+            // Agregar marcas principales (0, 1, 2, 3)
+            for (let i = 0; i <= 3; i++) {
+                const tick = document.createElement('div');
+                tick.className = 'tick major';
+                tick.style.left = (i * 33.33) + '%';
+                
+                const label = document.createElement('div');
+                label.className = 'tick-label';
+                label.textContent = i;
+                tick.appendChild(label);
+                
+                line.appendChild(tick);
+            }
+            
+            // Agregar marcas menores (cuartos)
+            for (let i = 1; i < 12; i++) {
+                if (i % 4 !== 0) { // Evitar duplicar las marcas principales
+                    const tick = document.createElement('div');
+                    tick.className = 'tick';
+                    tick.style.left = (i * 8.33) + '%';
+                    line.appendChild(tick);
+                }
+            }
+        }
+
+        function placeFraction() {
+            const numerator = parseInt(document.getElementById('numeratorInput').value);
+            const denominator = parseInt(document.getElementById('denominatorInput').value);
+
+            if (!numerator || !denominator) {
+                alert('⚠️ Por favor, ingresa ambos números');
+                return;
+            }
+
+            if (numerator / denominator > 3) {
+                alert('⚠️ Por favor, ingresa una fracción menor o igual a 3 para visualizarla mejor');
+                return;
+            }
+
+            const fractionValue = numerator / denominator;
+            const position = (fractionValue / 3) * 100; // Posición en porcentaje (0-3 en la recta)
+            
+            const numberLine = document.getElementById('interactiveNumberLine');
+            const line = numberLine.querySelector('.line');
+            
+            // Crear punto de fracción
+            const point = document.createElement('div');
+            point.className = 'fraction-point';
+            point.style.left = position + '%';
+            
+            const label = document.createElement('div');
+            label.className = 'fraction-label';
+            label.textContent = `${numerator}/${denominator}`;
+            point.appendChild(label);
+            
+            line.appendChild(point);
+            
+            addPoints(10);
+            showFloatingPoints(10);
+        }
+
+        function clearNumberLine() {
+            setupInteractiveNumberLine();
+        }
+
+        // Funciones del juego de posicionamiento
+        function initializeGame() {
+            gameData = [];
+            placedCount = 0;
+            
+            const cardsContainer = document.getElementById('fractionCards');
+            cardsContainer.innerHTML = '';
+            
+            // Crear tarjetas arrastrables
+            const shuffledFractions = [...gameFractions].sort(() => Math.random() - 0.5);
+            
+            shuffledFractions.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'draggable-fraction';
+                card.textContent = item.fraction;
+                card.draggable = true;
+                card.id = `fraction-${index}`;
+                card.dataset.fraction = item.fraction;
+                card.dataset.position = item.position;
+                
+                card.ondragstart = (e) => {
+                    e.dataTransfer.setData('text/plain', card.id);
+                    card.classList.add('dragging');
+                };
+                
+                card.ondragend = () => {
+                    card.classList.remove('dragging');
+                };
+                
+                cardsContainer.appendChild(card);
+            });
+            
+            setupGameNumberLine();
+            updateDisplay();
+        }
+
+        function setupGameNumberLine() {
+            const gameNumberLine = document.getElementById('gameNumberLine');
+            const line = gameNumberLine.querySelector('.line');
+            line.innerHTML = '';
+            
+            // Agregar marcas principales
+            for (let i = 0; i <= 2; i++) {
+                const tick = document.createElement('div');
+                tick.className = 'tick major';
+                tick.style.left = (i * 50) + '%';
+                
+                const label = document.createElement('div');
+                label.className = 'tick-label';
+                label.textContent = i;
+                tick.appendChild(label);
+                
+                line.appendChild(tick);
+            }
+            
+            // Crear zonas de drop para cada fracción del juego
+            gameFractions.forEach((item, index) => {
+                const dropZone = document.createElement('div');
+                dropZone.className = 'drop-zone';
+                dropZone.id = `drop-${index}`;
+                dropZone.style.left = item.position + '%';
+                dropZone.dataset.expectedFraction = item.fraction;
+                
+                dropZone.ondragover = (e) => {
+                    e.preventDefault();
+                    dropZone.classList.add('drag-over');
+                };
+                
+                dropZone.ondragleave = () => {
+                    dropZone.classList.remove('drag-over');
+                };
+                
+                dropZone.ondrop = (e) => {
+                    e.preventDefault();
+                    handleDrop(e, dropZone);
+                };
+                
+                line.appendChild(dropZone);
+            });
+        }
+
+        function handleDrop(e, dropZone) {
+            const cardId = e.dataTransfer.getData('text/plain');
+            const card = document.getElementById(cardId);
+            
+            dropZone.classList.remove('drag-over');
+            
+            if (!card || dropZone.classList.contains('filled')) return;
+            
+            const droppedFraction = card.dataset.fraction;
+            const expectedFraction = dropZone.dataset.expectedFraction;
+            const isCorrect = droppedFraction === expectedFraction;
+            
+            // Marcar zona como llena
+            dropZone.classList.add('filled');
+            if (isCorrect) {
+                dropZone.classList.add('correct');
+                addPoints(20);
+                showFloatingPoints(20);
+            } else {
+                dropZone.classList.add('incorrect');
+                addPoints(5); // Puntos de consolación
+            }
+            
+            // Mostrar fracción en la zona
+            dropZone.innerHTML = `<div class="dropped-fraction">${droppedFraction}</div>`;
+            
+            // Remover tarjeta original
+            card.remove();
+            
+            // Guardar resultado
+            gameData.push({
+                fraction: droppedFraction,
+                expected: expectedFraction,
+                correct: isCorrect
+            });
+            
+            placedCount++;
+            updateDisplay();
+            
+            // Verificar si se completó el juego
+            if (placedCount === gameFractions.length) {
+                setTimeout(() => {
+                    const correctCount = gameData.filter(item => item.correct).length;
+                    const percentage = Math.round((correctCount / gameFractions.length) * 100);
+                    
+                    alert(`🎉 ¡Juego Completado! 🎉\n\nResultado: ${correctCount}/${gameFractions.length} correctas (${percentage}%)\n\n¡Has ganado puntos bonus!`);
+                    
+                    if (percentage >= 80) addPoints(50);
+                    else if (percentage >= 60) addPoints(30);
+                    else addPoints(10);
+                }, 500);
+            }
+        }
+
+        function checkGameResults() {
+            if (gameData.length === 0) {
+                alert('🎯 ¡Primero arrastra algunas fracciones a la recta numérica!');
+                return;
+            }
+            
+            let message = "📊 Resultados del Juego:\n\n";
+            let correctCount = 0;
+            
+            gameData.forEach((item, index) => {
+                const status = item.correct ? "✅" : "❌";
+                message += `${status} ${item.fraction} ${item.correct ? "correcto" : `(esperado: ${item.expected})`}\n`;
+                if (item.correct) correctCount++;
+            });
+            
+            const percentage = Math.round((correctCount / gameData.length) * 100);
+            message += `\nTotal: ${correctCount}/${gameData.length} (${percentage}%)`;
+            
+            alert(message);
+        }
+
+        function resetGame() {
+            initializeGame();
+        }
+
+        // Funciones del quiz
+        function loadQuestion() {
+            if (currentQuestionIndex >= quizQuestions.length) {
+                showQuizCompletion();
+                return;
+            }
+
+            const question = quizQuestions[currentQuestionIndex];
+            document.getElementById('questionText').textContent = question.question;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(optionElement);
+            });
+        }
+
+        function selectAnswer(selectedIndex) {
+            const question = quizQuestions[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+
+            // Deshabilitar opciones
+            options.forEach(option => option.style.pointerEvents = 'none');
+
+            if (selectedIndex === question.correct) {
+                options[selectedIndex].classList.add('correct');
+                addPoints(25);
+                showFloatingPoints(25);
+                alert(`🎉 ¡Correcto! ${question.explanation}`);
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[question.correct].classList.add('correct');
+                addPoints(8);
+                alert(`💪 ¡Sigue intentando! ${question.explanation}`);
+            }
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function showQuizCompletion() {
+            document.getElementById('questionCard').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h2 style="color: #4facfe; font-size: 2.5rem; margin-bottom: 20px;">
+                        🎉 ¡Quiz Completado! 🎉
+                    </h2>
+                    <p style="font-size: 1.5rem; color: #666; margin-bottom: 20px;">
+                        Has dominado las posiciones en la recta numérica
+                    </p>
+                    <p style="font-size: 1.2rem; color: #555;">
+                        ¡Ahora puedes ubicar cualquier fracción con precisión!
+                    </p>
+                    <div style="margin: 30px 0; font-size: 3rem;">🏆📏🎯</div>
+                </div>
+            `;
+        }
+
+        function addPoints(points) {
+            totalPoints += points;
+            localStorage.setItem('mathPoints', totalPoints.toString());
+            updateDisplay();
+        }
+
+        function showFloatingPoints(points) {
+            const pointsElement = document.createElement('div');
+            pointsElement.textContent = `+${points}`;
+            pointsElement.style.position = 'fixed';
+            pointsElement.style.top = '100px';
+            pointsElement.style.right = '50px';
+            pointsElement.style.color = '#4facfe';
+            pointsElement.style.fontSize = '2rem';
+            pointsElement.style.fontWeight = 'bold';
+            pointsElement.style.zIndex = '9999';
+            pointsElement.style.animation = 'floatUp 2s ease-out forwards';
+            
+            document.body.appendChild(pointsElement);
+            
+            setTimeout(() => pointsElement.remove(), 2000);
+        }
+
+        // Prevenir drop en zonas no válidas
+        document.addEventListener('dragover', (e) => {
+            if (!e.target.closest('.drop-zone')) {
+                e.preventDefault();
+            }
+        });
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100px) scale(1.2);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

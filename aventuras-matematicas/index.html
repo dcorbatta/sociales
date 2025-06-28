@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧮 Aventuras Matemáticas - ¡Explorando Fracciones! 🧮</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 15px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .score, .level {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .character {
+            font-size: 8rem;
+            margin-bottom: 20px;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .welcome-screen h2 {
+            font-size: 2.2rem;
+            color: #4facfe;
+            margin-bottom: 15px;
+        }
+
+        .welcome-screen p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .math-preview {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 25px 0;
+        }
+
+        .topics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .topic-item {
+            background: rgba(255, 255, 255, 0.8);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            font-weight: bold;
+            color: #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .topic-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(76, 172, 254, 0.3);
+        }
+
+        .unit-section {
+            margin: 30px 0;
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 25px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .unit-title {
+            text-align: center;
+            font-size: 2rem;
+            color: white;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            padding: 0 20px;
+        }
+
+        .game-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            text-align: center;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(79, 172, 254, 0.3);
+            border-color: #4facfe;
+        }
+
+        .card-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .game-card h3 {
+            font-size: 1.4rem;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .game-card p {
+            color: #666;
+            font-size: 1rem;
+            line-height: 1.4;
+            margin-bottom: 15px;
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 5px 15px;
+            background: linear-gradient(45deg, #ff9a9e, #fecfef);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .btn-start {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        .btn-start:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .footer {
+            margin-top: auto;
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+            border-radius: 25px 25px 0 0;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(79, 172, 254, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(79, 172, 254, 0.6); }
+        }
+
+        .super-fun {
+            animation: glow 2s infinite alternate;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .games-grid { grid-template-columns: 1fr; padding: 0 10px; }
+            .topics-grid { grid-template-columns: 1fr; }
+            .character { font-size: 6rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🧮 Aventuras Matemáticas 🧮</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="totalPoints">0</span></span>
+                <span class="level">🏆 Nivel: <span id="currentLevel">1</span></span>
+                <span class="score">🔥 Racha: <span id="streak">0</span></span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="welcome-screen">
+                <div class="character">🧮</div>
+                <h2>¡Bienvenido a las Aventuras Matemáticas!</h2>
+                <p>¡Prepárate para explorar el fascinante mundo de las <strong>FRACCIONES</strong>! 🍕✨</p>
+                <p>Aquí aprenderás jugando, resolviendo problemas y descubriendo los secretos de los números fraccionarios.</p>
+                
+                <div class="math-preview">
+                    <h3>🎯 ¿Qué vas a aprender?</h3>
+                    <div class="topics-grid">
+                        <div class="topic-item">📊 Representación Gráfica</div>
+                        <div class="topic-item">⚖️ Fracciones Equivalentes</div>
+                        <div class="topic-item">🔢 Números Mixtos</div>
+                        <div class="topic-item">📏 Recta Numérica</div>
+                        <div class="topic-item">🧩 Simplificación</div>
+                        <div class="topic-item">➕➖ Operaciones</div>
+                    </div>
+                </div>
+
+                <button class="btn-start" onclick="showGames()">🎮 ¡Empezar a Aprender!</button>
+            </div>
+
+            <div id="gameSelection" style="display: none;">
+                <h2 style="text-align: center; color: white; font-size: 2rem; margin-bottom: 30px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">🎮 Elige tu Aventura Matemática</h2>
+                
+                <!-- Unidad 1: Conceptos Básicos de Fracciones -->
+                <div class="unit-section">
+                    <h3 class="unit-title">📚 Unidad 1: Conceptos Básicos de Fracciones</h3>
+                    <div class="games-grid">
+                        <div class="game-card" onclick="showActivity('representacion')">
+                            <div class="card-icon">🍕</div>
+                            <h3>Representación Gráfica</h3>
+                            <p>Aprende a ver fracciones con pizzas, pasteles y figuras</p>
+                            <div class="difficulty">⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('equivalentes')">
+                            <div class="card-icon">⚖️</div>
+                            <h3>Fracciones Equivalentes</h3>
+                            <p>Descubre fracciones que representan lo mismo</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('mixtos')">
+                            <div class="card-icon">🔢</div>
+                            <h3>Números Mixtos</h3>
+                            <p>Combina enteros y fracciones de forma divertida</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('mayor-menor')">
+                            <div class="card-icon">🎯</div>
+                            <h3>Mayor/Menor que 1</h3>
+                            <p>Identifica si las fracciones son mayores o menores que la unidad</p>
+                            <div class="difficulty">⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('recta')">
+                            <div class="card-icon">📏</div>
+                            <h3>Recta Numérica</h3>
+                            <p>Ubica fracciones en la recta numérica</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="window.location.href='dibujar-unidad.html'">
+                            <div class="card-icon">✏️</div>
+                            <h3>Dibujar la Unidad</h3>
+                            <p>Representa gráficamente la unidad completa</p>
+                            <div class="difficulty">⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Unidad 2: Operaciones con Fracciones -->
+                <div class="unit-section">
+                    <h3 class="unit-title">🔧 Unidad 2: Operaciones con Fracciones</h3>
+                    <div class="games-grid">
+                        <div class="game-card" onclick="window.location.href='simplificar-fracciones.html'">
+                            <div class="card-icon">🧩</div>
+                            <h3>Simplificar Fracciones</h3>
+                            <p>Reduce fracciones a su forma más simple</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('comparar')">
+                            <div class="card-icon">⚖️</div>
+                            <h3>Comparar Fracciones</h3>
+                            <p>Descubre cuál fracción es mayor o menor</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('suma')">
+                            <div class="card-icon">➕</div>
+                            <h3>Suma de Fracciones</h3>
+                            <p>Aprende a sumar fracciones paso a paso</p>
+                            <div class="difficulty">⭐⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('resta')">
+                            <div class="card-icon">➖</div>
+                            <h3>Resta de Fracciones</h3>
+                            <p>Domina la sustracción de fracciones</p>
+                            <div class="difficulty">⭐⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="window.location.href='problemas-fracciones.html'">
+                            <div class="card-icon">🧠</div>
+                            <h3>Problemas con Fracciones</h3>
+                            <p>Resuelve situaciones de la vida real</p>
+                            <div class="difficulty">⭐⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="window.location.href='fraccion-irreductible.html'">
+                            <div class="card-icon">🔒</div>
+                            <h3>Fracción Irreductible</h3>
+                            <p>Encuentra la forma más reducida</p>
+                            <div class="difficulty">⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Juegos Especiales -->
+                <div class="unit-section">
+                    <h3 class="unit-title">🎮 Juegos Súper Divertidos</h3>
+                    <div class="games-grid">
+                        <div class="game-card super-fun" onclick="window.location.href='pizzeria-fracciones.html'" style="background: linear-gradient(135deg, #fff3e0, #ffcc80); border: 3px solid #ff9800;">
+                            <div class="card-icon">🍕</div>
+                            <h3>🎮 Pizzería de Fracciones</h3>
+                            <p>¡Administra tu pizzería y aprende fracciones sirviendo clientes!</p>
+                            <div class="difficulty">🔥 ¡SÚPER DIVERTIDO!</div>
+                        </div>
+                        
+                        <div class="game-card super-fun" onclick="showActivity('constructor')" style="background: linear-gradient(135deg, #f3e5f5, #e1bee7); border: 3px solid #9c27b0;">
+                            <div class="card-icon">🏗️</div>
+                            <h3>🎮 Constructor de Fracciones</h3>
+                            <p>¡Construye edificios usando fracciones como planos!</p>
+                            <div class="difficulty">🔥 ¡SÚPER DIVERTIDO!</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="window.location.href='quiz-fracciones.html'" style="background: linear-gradient(135deg, #e3f2fd, #bbdefb); border: 3px solid #2196f3;">
+                            <div class="card-icon">🧠</div>
+                            <h3>🎮 Quiz: Fracciones</h3>
+                            <p>¡Pon a prueba todo lo que aprendiste sobre fracciones!</p>
+                            <div class="difficulty">⭐⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card super-fun" onclick="showActivity('detective')" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border: 3px solid #4caf50;">
+                            <div class="card-icon">🕵️</div>
+                            <h3>🎮 Detective de Fracciones</h3>
+                            <p>¡Resuelve misterios matemáticos usando fracciones!</p>
+                            <div class="difficulty">🔥 ¡SÚPER DIVERTIDO!</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Preparación para Evaluación -->
+                <div class="unit-section">
+                    <h3 class="unit-title">📝 Preparación para la Evaluación (27 de Junio)</h3>
+                    <div class="games-grid">
+                        <div class="game-card" onclick="window.location.href='repaso-general.html'" style="background: linear-gradient(135deg, #ffebee, #ffcdd2); border: 3px solid #f44336;">
+                            <div class="card-icon">📚</div>
+                            <h3>Repaso General</h3>
+                            <p>Repasa todos los conceptos para la evaluación</p>
+                            <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                        </div>
+                        
+                        <div class="game-card" onclick="showActivity('examen')" style="background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 3px solid #ffc107;">
+                            <div class="card-icon">📋</div>
+                            <h3>Examen de Práctica</h3>
+                            <p>Simula la evaluación real con tiempo límite</p>
+                            <div class="difficulty">⭐⭐⭐⭐⭐</div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn-start" onclick="showWelcome()">⬅️ Volver al Inicio</button>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <div id="motivationMessage">
+                ¡Las matemáticas son divertidas! Sigue practicando fracciones 🧮✨
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Variables globales
+        let totalPoints = parseInt(localStorage.getItem('mathPoints') || '0');
+        let currentLevel = parseInt(localStorage.getItem('mathLevel') || '1');
+        let streak = parseInt(localStorage.getItem('mathStreak') || '0');
+
+        // Mensajes motivacionales
+        const motivationalMessages = [
+            "¡Las matemáticas son divertidas! Sigue practicando fracciones 🧮✨",
+            "¡Cada fracción que aprendes te hace más inteligente! 🍕💫",
+            "¡Eres increíble resolviendo problemas matemáticos! 📊🌟",
+            "¡Las fracciones son como piezas de un rompecabezas! 🧩❤️",
+            "¡Sigue sumando conocimientos, eres genial! ➕🌈",
+            "¡Tu mente matemática es súper poderosa! 🧠⚡",
+            "¡Cada ejercicio te acerca más a ser un experto! 🎯✨"
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            updateMotivationalMessage();
+            setInterval(updateMotivationalMessage, 8000);
+        });
+
+        function updateDisplay() {
+            document.getElementById('totalPoints').textContent = totalPoints;
+            document.getElementById('currentLevel').textContent = currentLevel;
+            document.getElementById('streak').textContent = streak;
+        }
+
+        function updateMotivationalMessage() {
+            const randomMessage = motivationalMessages[Math.floor(Math.random() * motivationalMessages.length)];
+            document.getElementById('motivationMessage').textContent = randomMessage;
+        }
+
+        function showGames() {
+            document.querySelector('.welcome-screen').style.display = 'none';
+            document.getElementById('gameSelection').style.display = 'block';
+        }
+
+        function showWelcome() {
+            document.querySelector('.welcome-screen').style.display = 'block';
+            document.getElementById('gameSelection').style.display = 'none';
+        }
+
+        function showActivity(activity) {
+            // Agregar puntos por explorar
+            totalPoints += 5;
+            updateProgress();
+            
+            // Mostrar mensaje de actividad
+            const messages = {
+                'representacion': '🍕 ¡Excelente! Aprenderás sobre representación gráfica de fracciones',
+                'equivalentes': '⚖️ ¡Genial! Descubrirás fracciones equivalentes',
+                'mixtos': '🔢 ¡Fantástico! Explorarás números mixtos',
+                'mayor-menor': '🎯 ¡Perfecto! Compararás fracciones con la unidad',
+                'recta': '📏 ¡Increíble! Ubicarás fracciones en la recta numérica',
+                'dibujar': '✏️ ¡Excelente! Aprenderás a dibujar la unidad',
+                'simplificar': '🧩 ¡Genial! Simplificarás fracciones',
+                'comparar': '⚖️ ¡Fantástico! Compararás fracciones',
+                'suma': '➕ ¡Perfecto! Sumarás fracciones',
+                'resta': '➖ ¡Increíble! Restarás fracciones',
+                'problemas': '🧠 ¡Excelente! Resolverás problemas con fracciones',
+                'irreductible': '🔒 ¡Genial! Encontrarás fracciones irreductibles',
+                'pizzeria': '🍕 ¡SÚPER DIVERTIDO! Administrarás tu pizzería',
+                'constructor': '🏗️ ¡SÚPER DIVERTIDO! Construirás con fracciones',
+                'quiz': '🧠 ¡Pon a prueba tus conocimientos!',
+                'detective': '🕵️ ¡SÚPER DIVERTIDO! Resuelve misterios matemáticos',
+                'repaso': '📚 ¡Perfecto para preparar el examen!',
+                'examen': '📋 ¡Practica para la evaluación del 27 de junio!'
+            };
+
+            alert(messages[activity] + '\n\n¡Has ganado 5 puntos por explorar! 🌟\n\nEsta actividad estará disponible próximamente. ¡Sigue practicando!');
+        }
+
+        function updateProgress() {
+            // Verificar subida de nivel
+            if (totalPoints >= currentLevel * 100) {
+                currentLevel++;
+                streak++;
+                alert(`🎉 ¡Felicitaciones! Has alcanzado el nivel ${currentLevel}! 🎉\n\n¡Sigues mejorando en matemáticas!`);
+            }
+            
+            // Guardar progreso
+            localStorage.setItem('mathPoints', totalPoints.toString());
+            localStorage.setItem('mathLevel', currentLevel.toString());
+            localStorage.setItem('mathStreak', streak.toString());
+            
+            updateDisplay();
+        }
+
+        // Efectos especiales
+        document.addEventListener('click', function(e) {
+            if (e.target.closest('.game-card')) {
+                createParticles(e.clientX, e.clientY);
+            }
+        });
+
+        function createParticles(x, y) {
+            const particles = ['✨', '⭐', '🌟', '💫'];
+            for (let i = 0; i < 3; i++) {
+                setTimeout(() => {
+                    const particle = document.createElement('div');
+                    particle.textContent = particles[Math.floor(Math.random() * particles.length)];
+                    particle.style.position = 'fixed';
+                    particle.style.left = x + (Math.random() - 0.5) * 100 + 'px';
+                    particle.style.top = y + (Math.random() - 0.5) * 100 + 'px';
+                    particle.style.fontSize = '2rem';
+                    particle.style.pointerEvents = 'none';
+                    particle.style.zIndex = '9999';
+                    particle.style.animation = 'floatUp 2s ease-out forwards';
+                    
+                    document.body.appendChild(particle);
+                    
+                    setTimeout(() => particle.remove(), 2000);
+                }, i * 100);
+            }
+        }
+
+        // Agregar animación CSS para partículas
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-200px) scale(1.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

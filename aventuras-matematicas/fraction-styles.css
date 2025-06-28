@@ -1,0 +1,172 @@
+/* Proper fraction display styles - Common CSS for all pages */
+
+/* Standard fraction display */
+.fraction-proper {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 8px;
+    font-family: 'Courier New', monospace;
+}
+
+.fraction-proper .numerator {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin-bottom: 2px;
+    text-align: center;
+}
+
+.fraction-proper .fraction-line {
+    width: 100%;
+    min-width: 40px;
+    height: 3px;
+    background: #2c3e50;
+    margin: 2px 0;
+    border-radius: 1px;
+}
+
+.fraction-proper .denominator {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin-top: 2px;
+    text-align: center;
+}
+
+/* Large fraction display for results and emphasis */
+.fraction-large {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 15px;
+    font-family: 'Courier New', monospace;
+}
+
+.fraction-large .numerator {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #27ae60;
+    line-height: 1;
+    margin-bottom: 5px;
+    text-align: center;
+}
+
+.fraction-large .fraction-line {
+    width: 100%;
+    min-width: 60px;
+    height: 4px;
+    background: #27ae60;
+    margin: 3px 0;
+    border-radius: 2px;
+}
+
+.fraction-large .denominator {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #27ae60;
+    line-height: 1;
+    margin-top: 5px;
+    text-align: center;
+}
+
+/* Small fraction display for inline text */
+.fraction-small {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    vertical-align: middle;
+    margin: 0 5px;
+    font-family: 'Courier New', monospace;
+}
+
+.fraction-small .numerator {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin-bottom: 1px;
+    text-align: center;
+}
+
+.fraction-small .fraction-line {
+    width: 100%;
+    min-width: 25px;
+    height: 2px;
+    background: #2c3e50;
+    margin: 1px 0;
+    border-radius: 1px;
+}
+
+.fraction-small .denominator {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2c3e50;
+    line-height: 1;
+    margin-top: 1px;
+    text-align: center;
+}
+
+/* Colored fraction variants */
+.fraction-red .numerator,
+.fraction-red .denominator {
+    color: #e74c3c;
+}
+
+.fraction-red .fraction-line {
+    background: #e74c3c;
+}
+
+.fraction-blue .numerator,
+.fraction-blue .denominator {
+    color: #4facfe;
+}
+
+.fraction-blue .fraction-line {
+    background: #4facfe;
+}
+
+.fraction-green .numerator,
+.fraction-green .denominator {
+    color: #27ae60;
+}
+
+.fraction-green .fraction-line {
+    background: #27ae60;
+}
+
+.fraction-orange .numerator,
+.fraction-orange .denominator {
+    color: #f39c12;
+}
+
+.fraction-orange .fraction-line {
+    background: #f39c12;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .fraction-proper .numerator,
+    .fraction-proper .denominator {
+        font-size: 1.2rem;
+    }
+    
+    .fraction-proper .fraction-line {
+        min-width: 30px;
+        height: 2px;
+    }
+    
+    .fraction-large .numerator,
+    .fraction-large .denominator {
+        font-size: 2rem;
+    }
+    
+    .fraction-large .fraction-line {
+        min-width: 50px;
+        height: 3px;
+    }
+} 

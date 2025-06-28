@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍕 Pizzería de Fracciones - Aventuras Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .pizzeria-game {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffcc80 100%);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 20px 0;
+            border: 3px solid #ff9800;
+            min-height: 600px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .restaurant-stats {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .pizza-workspace {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .pizza-maker {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 3px solid #ff9800;
+        }
+
+        .pizza-canvas {
+            width: 300px;
+            height: 300px;
+            border: 3px solid #333;
+            border-radius: 50%;
+            margin: 20px auto;
+            background: #ffd54f;
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .pizza-slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            border: 1px solid #333;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .pizza-slice:hover {
+            filter: brightness(1.2);
+            transform: scale(1.05);
+            z-index: 10;
+        }
+
+        .pizza-slice.selected {
+            background: #ff9800 !important;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .orders-panel {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            border: 3px solid #4caf50;
+        }
+
+        .order-card {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 15px 0;
+            border: 2px solid #4caf50;
+            transition: all 0.3s ease;
+        }
+
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(76, 175, 80, 0.3);
+        }
+
+        .order-card.urgent {
+            border-color: #f44336;
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        .customer-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .customer-avatar {
+            font-size: 3rem;
+            width: 60px;
+            height: 60px;
+            background: #ff9800;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .customer-details h4 {
+            margin: 0;
+            color: #2e7d32;
+        }
+
+        .customer-details p {
+            margin: 5px 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-details {
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+        }
+
+        .fraction-display {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #ff9800;
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .pizza-controls {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .control-btn {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .control-btn:hover {
+            background: #388e3c;
+            transform: scale(1.05);
+        }
+
+        .control-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toppings-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .topping-btn {
+            background: white;
+            border: 2px solid #ff9800;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+
+        .topping-btn:hover {
+            background: #ff9800;
+            transform: scale(1.1);
+        }
+
+        .topping-btn.selected {
+            background: #ff9800;
+            color: white;
+        }
+
+        .timer-display {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            border-radius: 15px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            border: 2px solid #f44336;
+        }
+
+        .timer-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: conic-gradient(#f44336 0deg, #e0e0e0 0deg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .feedback-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            border: 3px solid #4caf50;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback-popup.show {
+            display: block;
+            animation: popIn 0.5s ease-out;
+        }
+
+        @keyframes popIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+
+        .day-summary {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+            border: 3px solid #2196f3;
+        }
+
+        .achievement-badge {
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            border: 3px solid #ff9800;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 20px auto;
+            animation: spin 3s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .level-progress {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .level-fill {
+            background: linear-gradient(90deg, #4caf50, #8bc34a);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .pizza-workspace {
+                grid-template-columns: 1fr;
+            }
+            
+            .pizza-canvas {
+                width: 250px;
+                height: 250px;
+            }
+            
+            .game-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🍕 Pizzería de Fracciones</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="points">0</span></span>
+                <span class="level">👨‍🍳 Nivel: <span id="chefLevel">1</span></span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Introducción -->
+            <section class="lesson-section">
+                <div class="lesson-card">
+                    <h2>🍕 ¡Bienvenido a tu Pizzería!</h2>
+                    <p>Eres el chef de una pizzería muy especial donde todo se maneja con fracciones. Los clientes ordenan porciones específicas y tú debes prepararlas correctamente.</p>
+                    
+                    <div class="example-container">
+                        <h3>📋 Tu misión:</h3>
+                        <ul>
+                            <li>🍕 Preparar pizzas según las órdenes de los clientes</li>
+                            <li>📏 Dividir las pizzas en las fracciones correctas</li>
+                            <li>🍅 Agregar los ingredientes solicitados</li>
+                            <li>⏰ Servir a tiempo para ganar más puntos</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Juego Principal -->
+            <section class="pizzeria-game">
+                <div class="game-header">
+                    <div class="restaurant-stats">
+                        <div class="stat-item">
+                            <span>💰</span>
+                            <span>$<span id="money">100</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <span>😊</span>
+                            <span>Satisfacción: <span id="satisfaction">100</span>%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span>📦</span>
+                            <span>Órdenes: <span id="ordersCompleted">0</span></span>
+                        </div>
+                        <div class="stat-item">
+                            <span>⏰</span>
+                            <span>Día: <span id="gameDay">1</span></span>
+                        </div>
+                    </div>
+                    
+                    <div class="level-progress">
+                        <div class="level-fill" id="levelProgress" style="width: 0%"></div>
+                    </div>
+                    <p>Progreso al siguiente nivel</p>
+                </div>
+
+                <div class="pizza-workspace">
+                    <div class="pizza-maker">
+                        <h3>🍕 Estación de Preparación</h3>
+                        
+                        <div class="pizza-canvas" id="pizzaCanvas">
+                            <!-- Se generarán las rebanadas dinámicamente -->
+                        </div>
+                        
+                        <div class="pizza-controls">
+                            <button class="control-btn" onclick="dividePizza(4)">
+                                🔪 Dividir en 4
+                            </button>
+                            <button class="control-btn" onclick="dividePizza(6)">
+                                🔪 Dividir en 6
+                            </button>
+                            <button class="control-btn" onclick="dividePizza(8)">
+                                🔪 Dividir en 8
+                            </button>
+                        </div>
+                        
+                        <div class="toppings-selector">
+                            <div class="topping-btn" onclick="selectTopping('🍅')" data-topping="🍅">🍅</div>
+                            <div class="topping-btn" onclick="selectTopping('🧀')" data-topping="🧀">🧀</div>
+                            <div class="topping-btn" onclick="selectTopping('🍄')" data-topping="🍄">🍄</div>
+                            <div class="topping-btn" onclick="selectTopping('🥓')" data-topping="🥓">🥓</div>
+                            <div class="topping-btn" onclick="selectTopping('🌶️')" data-topping="🌶️">🌶️</div>
+                            <div class="topping-btn" onclick="selectTopping('🫒')" data-topping="🫒">🫒</div>
+                        </div>
+                        
+                        <div class="pizza-controls">
+                            <button class="control-btn" onclick="servePizza()" id="serveBtn" disabled>
+                                🍽️ Servir Pizza
+                            </button>
+                            <button class="control-btn" onclick="resetPizza()">
+                                🗑️ Empezar de Nuevo
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="orders-panel">
+                        <h3>📋 Órdenes Pendientes</h3>
+                        <div id="ordersList">
+                            <!-- Se generarán dinámicamente -->
+                        </div>
+                        
+                        <div class="timer-display">
+                            <div class="timer-circle" id="timerCircle">30</div>
+                            <p>Tiempo restante</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Popup de Feedback -->
+            <div class="feedback-popup" id="feedbackPopup">
+                <div id="feedbackContent">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <button class="btn-primary" onclick="closeFeedback()">Continuar</button>
+            </div>
+
+            <!-- Resumen del Día -->
+            <section class="day-summary" id="daySummary" style="display: none;">
+                <h3>📊 Resumen del Día <span id="summaryDay">1</span></h3>
+                <div class="achievement-badge">🏆</div>
+                <div id="summaryStats">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+                <button class="btn-primary" onclick="nextDay()">➡️ Siguiente Día</button>
+            </section>
+
+            <div class="navigation">
+                <a href="index.html" class="btn-secondary">🏠 Volver al Menú</a>
+                <a href="constructor-fracciones.html" class="btn-primary">➡️ Siguiente: Constructor de Fracciones</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let points = 0;
+        let money = 100;
+        let satisfaction = 100;
+        let ordersCompleted = 0;
+        let gameDay = 1;
+        let chefLevel = 1;
+        let currentOrders = [];
+        let pizzaSlices = 8;
+        let selectedSlices = [];
+        let currentTopping = null;
+        let gameTimer = 30;
+        let timerInterval;
+        
+        const orders = [
+            {
+                id: 1,
+                customer: {name: 'Ana', avatar: '👧', mood: '😊'},
+                fraction: {num: 1, den: 4},
+                topping: '🍅',
+                payment: 15,
+                time: 30,
+                difficulty: 1
+            },
+            {
+                id: 2,
+                customer: {name: 'Carlos', avatar: '👦', mood: '😊'},
+                fraction: {num: 3, den: 8},
+                topping: '🧀',
+                payment: 25,
+                time: 25,
+                difficulty: 2
+            },
+            {
+                id: 3,
+                customer: {name: 'María', avatar: '👩', mood: '😊'},
+                fraction: {num: 2, den: 6},
+                topping: '🍄',
+                payment: 20,
+                time: 35,
+                difficulty: 2
+            },
+            {
+                id: 4,
+                customer: {name: 'Pedro', avatar: '👨', mood: '😊'},
+                fraction: {num: 5, den: 8},
+                topping: '🥓',
+                payment: 30,
+                time: 20,
+                difficulty: 3
+            }
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            generateOrders();
+            dividePizza(8);
+            startTimer();
+        });
+
+        function updateDisplay() {
+            document.getElementById('points').textContent = points;
+            document.getElementById('money').textContent = money;
+            document.getElementById('satisfaction').textContent = satisfaction;
+            document.getElementById('ordersCompleted').textContent = ordersCompleted;
+            document.getElementById('gameDay').textContent = gameDay;
+            document.getElementById('chefLevel').textContent = chefLevel;
+            
+            // Actualizar progreso de nivel
+            const levelProgress = ((ordersCompleted % 5) / 5) * 100;
+            document.getElementById('levelProgress').style.width = levelProgress + '%';
+        }
+
+        function addPoints(amount) {
+            points += amount;
+            updateDisplay();
+            showFloatingPoints(amount);
+        }
+
+        function showFloatingPoints(points) {
+            const pointsEl = document.createElement('div');
+            pointsEl.textContent = `+${points}`;
+            pointsEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #4caf50;
+                font-size: 2rem;
+                font-weight: bold;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatUp 2s ease-out forwards;
+            `;
+            document.body.appendChild(pointsEl);
+            setTimeout(() => pointsEl.remove(), 2000);
+        }
+
+        function generateOrders() {
+            const container = document.getElementById('ordersList');
+            const dayOrders = orders.slice(0, Math.min(2 + gameDay, orders.length));
+            currentOrders = dayOrders.map(order => ({...order, timeLeft: order.time}));
+            
+            container.innerHTML = currentOrders.map(order => `
+                <div class="order-card" id="order-${order.id}">
+                    <div class="customer-info">
+                        <div class="customer-avatar">${order.customer.avatar}</div>
+                        <div class="customer-details">
+                            <h4>${order.customer.name}</h4>
+                            <p>Estado: ${order.customer.mood}</p>
+                        </div>
+                    </div>
+                    <div class="order-details">
+                        <div class="fraction-display">${order.fraction.num}/${order.fraction.den}</div>
+                        <p>Con ${order.topping}</p>
+                        <p>💰 Pago: $${order.payment}</p>
+                        <p>⏰ Tiempo: <span id="time-${order.id}">${order.timeLeft}</span>s</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                gameTimer--;
+                document.getElementById('timerCircle').textContent = gameTimer;
+                
+                // Actualizar timer visual
+                const progress = (gameTimer / 30) * 360;
+                document.getElementById('timerCircle').style.background = 
+                    `conic-gradient(#f44336 ${progress}deg, #e0e0e0 ${progress}deg)`;
+                
+                // Actualizar timers de órdenes
+                currentOrders.forEach(order => {
+                    order.timeLeft--;
+                    const timeEl = document.getElementById(`time-${order.id}`);
+                    if (timeEl) {
+                        timeEl.textContent = Math.max(0, order.timeLeft);
+                        
+                        if (order.timeLeft <= 5) {
+                            document.getElementById(`order-${order.id}`).classList.add('urgent');
+                        }
+                        
+                        if (order.timeLeft <= 0) {
+                            // Cliente se va insatisfecho
+                            satisfaction -= 20;
+                            updateDisplay();
+                            removeOrder(order.id);
+                        }
+                    }
+                });
+                
+                if (gameTimer <= 0) {
+                    endDay();
+                }
+            }, 1000);
+        }
+
+        function dividePizza(slices) {
+            pizzaSlices = slices;
+            selectedSlices = [];
+            const canvas = document.getElementById('pizzaCanvas');
+            canvas.innerHTML = '';
+            
+            const anglePerSlice = 360 / slices;
+            
+            for (let i = 0; i < slices; i++) {
+                const slice = document.createElement('div');
+                slice.className = 'pizza-slice';
+                slice.dataset.index = i;
+                slice.style.transform = `rotate(${i * anglePerSlice}deg)`;
+                slice.style.background = '#ffd54f';
+                slice.onclick = () => selectSlice(i);
+                canvas.appendChild(slice);
+            }
+            
+            updateServeButton();
+        }
+
+        function selectSlice(index) {
+            const slice = document.querySelector(`[data-index="${index}"]`);
+            
+            if (selectedSlices.includes(index)) {
+                selectedSlices = selectedSlices.filter(i => i !== index);
+                slice.classList.remove('selected');
+                slice.style.background = '#ffd54f';
+            } else {
+                selectedSlices.push(index);
+                slice.classList.add('selected');
+                
+                if (currentTopping) {
+                    slice.style.background = '#ff9800';
+                    slice.textContent = currentTopping;
+                }
+            }
+            
+            updateServeButton();
+        }
+
+        function selectTopping(topping) {
+            currentTopping = topping;
+            
+            // Actualizar UI de toppings
+            document.querySelectorAll('.topping-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            document.querySelector(`[data-topping="${topping}"]`).classList.add('selected');
+            
+            // Aplicar topping a rebanadas seleccionadas
+            selectedSlices.forEach(index => {
+                const slice = document.querySelector(`[data-index="${index}"]`);
+                slice.textContent = topping;
+                slice.style.background = '#ff9800';
+            });
+        }
+
+        function updateServeButton() {
+            const serveBtn = document.getElementById('serveBtn');
+            serveBtn.disabled = selectedSlices.length === 0 || !currentTopping;
+        }
+
+        function servePizza() {
+            const currentFraction = {
+                num: selectedSlices.length,
+                den: pizzaSlices
+            };
+            
+            // Buscar orden que coincida
+            const matchingOrder = currentOrders.find(order => 
+                order.fraction.num === currentFraction.num && 
+                order.fraction.den === currentFraction.den &&
+                order.topping === currentTopping
+            );
+            
+            if (matchingOrder) {
+                // Orden correcta
+                const bonus = Math.max(0, matchingOrder.timeLeft * 2);
+                const totalPayment = matchingOrder.payment + bonus;
+                
+                money += totalPayment;
+                addPoints(totalPayment);
+                ordersCompleted++;
+                satisfaction = Math.min(100, satisfaction + 10);
+                
+                showFeedback(`
+                    <h3>🎉 ¡Orden Completada!</h3>
+                    <p>Cliente: ${matchingOrder.customer.name}</p>
+                    <p>Fracción: ${currentFraction.num}/${currentFraction.den}</p>
+                    <p>Pago base: $${matchingOrder.payment}</p>
+                    <p>Bonus por velocidad: $${bonus}</p>
+                    <p><strong>Total: $${totalPayment}</strong></p>
+                `, 'success');
+                
+                removeOrder(matchingOrder.id);
+                
+                // Verificar subida de nivel
+                if (ordersCompleted % 5 === 0) {
+                    chefLevel++;
+                    showFeedback(`
+                        <h3>🏆 ¡Subiste de Nivel!</h3>
+                        <p>Ahora eres Chef Nivel ${chefLevel}</p>
+                        <p>Bonus: +50 puntos</p>
+                    `, 'success');
+                    addPoints(50);
+                }
+            } else {
+                // Orden incorrecta
+                satisfaction -= 15;
+                showFeedback(`
+                    <h3>❌ Orden Incorrecta</h3>
+                    <p>El cliente no pidió ${currentFraction.num}/${currentFraction.den} con ${currentTopping}</p>
+                    <p>Revisa las órdenes pendientes</p>
+                `, 'error');
+            }
+            
+            resetPizza();
+            updateDisplay();
+        }
+
+        function removeOrder(orderId) {
+            currentOrders = currentOrders.filter(order => order.id !== orderId);
+            const orderEl = document.getElementById(`order-${orderId}`);
+            if (orderEl) {
+                orderEl.remove();
+            }
+            
+            // Generar nueva orden si es necesario
+            if (currentOrders.length < 2 && gameTimer > 10) {
+                generateNewOrder();
+            }
+        }
+
+        function generateNewOrder() {
+            const newOrder = {
+                id: Date.now(),
+                customer: {
+                    name: ['Luis', 'Sofia', 'Diego', 'Carmen'][Math.floor(Math.random() * 4)],
+                    avatar: ['👨', '👩', '👦', '👧'][Math.floor(Math.random() * 4)],
+                    mood: '😊'
+                },
+                fraction: {
+                    num: Math.floor(Math.random() * 4) + 1,
+                    den: [4, 6, 8][Math.floor(Math.random() * 3)]
+                },
+                topping: ['🍅', '🧀', '🍄', '🥓'][Math.floor(Math.random() * 4)],
+                payment: Math.floor(Math.random() * 20) + 15,
+                time: Math.floor(Math.random() * 15) + 20,
+                timeLeft: Math.floor(Math.random() * 15) + 20
+            };
+            
+            currentOrders.push(newOrder);
+            
+            const container = document.getElementById('ordersList');
+            const orderHTML = `
+                <div class="order-card" id="order-${newOrder.id}">
+                    <div class="customer-info">
+                        <div class="customer-avatar">${newOrder.customer.avatar}</div>
+                        <div class="customer-details">
+                            <h4>${newOrder.customer.name}</h4>
+                            <p>Estado: ${newOrder.customer.mood}</p>
+                        </div>
+                    </div>
+                    <div class="order-details">
+                        <div class="fraction-display">${newOrder.fraction.num}/${newOrder.fraction.den}</div>
+                        <p>Con ${newOrder.topping}</p>
+                        <p>💰 Pago: $${newOrder.payment}</p>
+                        <p>⏰ Tiempo: <span id="time-${newOrder.id}">${newOrder.timeLeft}</span>s</p>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', orderHTML);
+        }
+
+        function resetPizza() {
+            selectedSlices = [];
+            currentTopping = null;
+            
+            // Limpiar selecciones
+            document.querySelectorAll('.pizza-slice').forEach(slice => {
+                slice.classList.remove('selected');
+                slice.style.background = '#ffd54f';
+                slice.textContent = '';
+            });
+            
+            document.querySelectorAll('.topping-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            
+            updateServeButton();
+        }
+
+        function showFeedback(content, type) {
+            const popup = document.getElementById('feedbackPopup');
+            const contentEl = document.getElementById('feedbackContent');
+            
+            contentEl.innerHTML = content;
+            popup.style.borderColor = type === 'success' ? '#4caf50' : '#f44336';
+            popup.classList.add('show');
+        }
+
+        function closeFeedback() {
+            document.getElementById('feedbackPopup').classList.remove('show');
+        }
+
+        function endDay() {
+            clearInterval(timerInterval);
+            
+            const summary = document.getElementById('daySummary');
+            const summaryStats = document.getElementById('summaryStats');
+            document.getElementById('summaryDay').textContent = gameDay;
+            
+            summaryStats.innerHTML = `
+                <div class="stat-item">💰 Dinero ganado: $${money - 100}</div>
+                <div class="stat-item">📦 Órdenes completadas: ${ordersCompleted}</div>
+                <div class="stat-item">😊 Satisfacción final: ${satisfaction}%</div>
+                <div class="stat-item">⭐ Puntos ganados: ${points}</div>
+            `;
+            
+            summary.style.display = 'block';
+        }
+
+        function nextDay() {
+            gameDay++;
+            gameTimer = 30;
+            currentOrders = [];
+            
+            document.getElementById('daySummary').style.display = 'none';
+            generateOrders();
+            resetPizza();
+            startTimer();
+            updateDisplay();
+        }
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -150%) scale(1.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

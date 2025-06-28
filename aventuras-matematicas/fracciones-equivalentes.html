@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ Fracciones Equivalentes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .score {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
+        .lesson-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-title {
+            font-size: 2rem;
+            color: #4facfe;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .equivalence-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .equivalence-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 25px;
+            text-align: center;
+            border: 3px solid #4facfe;
+            transition: all 0.3s ease;
+        }
+
+        .equivalence-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .fraction-pair {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .fraction {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            font-family: 'Courier New', monospace;
+        }
+
+        .equals-sign {
+            font-size: 3rem;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .visual-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .bar-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar {
+            height: 40px;
+            border: 3px solid #2c3e50;
+            border-radius: 10px;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .bar-segment {
+            flex: 1;
+            border-right: 2px solid #2c3e50;
+            transition: all 0.3s ease;
+        }
+
+        .bar-segment:last-child {
+            border-right: none;
+        }
+
+        .bar-segment.filled {
+            background: linear-gradient(135deg, #4facfe, #00f2fe);
+        }
+
+        .bar-segment.empty {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        .interactive-section {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .interactive-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .fraction-builder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .fraction-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .fraction-input input {
+            width: 80px;
+            height: 60px;
+            font-size: 2rem;
+            text-align: center;
+            border: 3px solid #4facfe;
+            border-radius: 10px;
+            font-weight: bold;
+            font-family: 'Courier New', monospace;
+        }
+
+        .fraction-line {
+            width: 80px;
+            height: 4px;
+            background: #2c3e50;
+            margin: 0 10px;
+        }
+
+        .check-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 20px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .check-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .result-display {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .game-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .matching-game {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .fraction-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: 3px solid #4facfe;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+            font-weight: bold;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fraction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .fraction-card.selected {
+            background: linear-gradient(135deg, #fff3e0, #ffcc80);
+            border-color: #ff9800;
+        }
+
+        .fraction-card.matched {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            border-color: #27ae60;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animated-icon {
+            animation: bounce 2s infinite;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .equivalence-demo { grid-template-columns: 1fr; }
+            .fraction-pair { flex-direction: column; gap: 10px; }
+            .navigation { flex-direction: column; }
+            .matching-game { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>⚖️ Fracciones Equivalentes</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="totalPoints">0</span></span>
+                <span class="score">🎯 Parejas: <span id="matchedPairs">0</span> de 6</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Lección Teórica -->
+            <section class="lesson-section">
+                <h2 class="lesson-title">¿Qué son las Fracciones Equivalentes? <span class="animated-icon">⚖️</span></h2>
+                <p class="explanation">
+                    Las fracciones equivalentes representan la misma cantidad, pero están escritas de forma diferente. 
+                    ¡Es como tener el mismo trozo de pastel cortado en pedazos más pequeños! 🍰✨
+                </p>
+
+                <div class="equivalence-demo">
+                    <div class="equivalence-card">
+                        <div class="fraction-pair">
+                            <span class="fraction">1/2</span>
+                            <span class="equals-sign">=</span>
+                            <span class="fraction">2/4</span>
+                        </div>
+                        <div class="visual-bars">
+                            <div class="bar-container">
+                                <div class="bar" style="width: 200px;">
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment empty"></div>
+                                </div>
+                                <span>1/2</span>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 200px;">
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment empty"></div>
+                                    <div class="bar-segment empty"></div>
+                                </div>
+                                <span>2/4</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="equivalence-card">
+                        <div class="fraction-pair">
+                            <span class="fraction">2/3</span>
+                            <span class="equals-sign">=</span>
+                            <span class="fraction">4/6</span>
+                        </div>
+                        <div class="visual-bars">
+                            <div class="bar-container">
+                                <div class="bar" style="width: 200px;">
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment empty"></div>
+                                </div>
+                                <span>2/3</span>
+                            </div>
+                            <div class="bar-container">
+                                <div class="bar" style="width: 200px;">
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment filled"></div>
+                                    <div class="bar-segment empty"></div>
+                                    <div class="bar-segment empty"></div>
+                                </div>
+                                <span>4/6</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Constructor de Fracciones Equivalentes -->
+            <section class="interactive-section">
+                <h2 class="interactive-title">🔧 ¡Encuentra Fracciones Equivalentes!</h2>
+                <div class="fraction-builder">
+                    <p style="font-size: 1.2rem; text-align: center; margin-bottom: 20px;">
+                        Ingresa una fracción equivalente a: <strong id="targetFraction">1/2</strong>
+                    </p>
+                    
+                    <div class="fraction-input">
+                        <input type="number" id="numeratorInput" min="1" max="20" placeholder="?">
+                        <div class="fraction-line"></div>
+                        <input type="number" id="denominatorInput" min="1" max="20" placeholder="?">
+                    </div>
+                    
+                    <button class="check-btn" onclick="checkEquivalence()">🔍 Verificar</button>
+                    
+                    <div class="result-display" id="resultDisplay">
+                        Ingresa una fracción para verificar si es equivalente
+                    </div>
+                    
+                    <button class="check-btn" onclick="generateNewTarget()" style="background: linear-gradient(45deg, #ff9a9e, #fecfef);">
+                        🎲 Nueva Fracción
+                    </button>
+                </div>
+            </section>
+
+            <!-- Juego de Memoria -->
+            <section class="game-section">
+                <h2 class="lesson-title">🧠 Juego de Memoria: Encuentra las Parejas</h2>
+                <p class="explanation">
+                    ¡Encuentra las fracciones equivalentes! Haz clic en dos tarjetas para ver si forman una pareja.
+                </p>
+                
+                <div class="matching-game" id="matchingGame">
+                    <!-- Las tarjetas se generarán dinámicamente -->
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="check-btn" onclick="resetGame()">🔄 Reiniciar Juego</button>
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="representacion-grafica.html" class="nav-btn">⬅️ Anterior: Representación Gráfica</a>
+                <a href="numeros-mixtos.html" class="nav-btn">Siguiente: Números Mixtos ➡️</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Variables globales
+        let totalPoints = parseInt(localStorage.getItem('mathPoints') || '0');
+        let matchedPairs = 0;
+        let selectedCards = [];
+        let gameCards = [];
+        let currentTarget = { num: 1, den: 2 };
+
+        // Datos para el juego de memoria
+        const equivalentPairs = [
+            ['1/2', '2/4'],
+            ['1/3', '2/6'],
+            ['2/3', '4/6'],
+            ['1/4', '2/8'],
+            ['3/4', '6/8'],
+            ['2/5', '4/10']
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            generateNewTarget();
+            initializeMatchingGame();
+        });
+
+        function updateDisplay() {
+            document.getElementById('totalPoints').textContent = totalPoints;
+            document.getElementById('matchedPairs').textContent = matchedPairs;
+        }
+
+        // Funciones del constructor de fracciones equivalentes
+        function generateNewTarget() {
+            const targets = [
+                { num: 1, den: 2 },
+                { num: 1, den: 3 },
+                { num: 2, den: 3 },
+                { num: 1, den: 4 },
+                { num: 3, den: 4 },
+                { num: 2, den: 5 },
+                { num: 3, den: 5 }
+            ];
+            
+            currentTarget = targets[Math.floor(Math.random() * targets.length)];
+            document.getElementById('targetFraction').textContent = `${currentTarget.num}/${currentTarget.den}`;
+            document.getElementById('resultDisplay').textContent = 'Ingresa una fracción para verificar si es equivalente';
+            document.getElementById('numeratorInput').value = '';
+            document.getElementById('denominatorInput').value = '';
+        }
+
+        function checkEquivalence() {
+            const numerator = parseInt(document.getElementById('numeratorInput').value);
+            const denominator = parseInt(document.getElementById('denominatorInput').value);
+            const resultDisplay = document.getElementById('resultDisplay');
+
+            if (!numerator || !denominator) {
+                resultDisplay.innerHTML = '⚠️ Por favor, ingresa ambos números';
+                resultDisplay.style.color = '#e74c3c';
+                return;
+            }
+
+            // Verificar si las fracciones son equivalentes
+            const targetDecimal = currentTarget.num / currentTarget.den;
+            const inputDecimal = numerator / denominator;
+
+            if (Math.abs(targetDecimal - inputDecimal) < 0.001) {
+                resultDisplay.innerHTML = `🎉 ¡Correcto! ${numerator}/${denominator} = ${currentTarget.num}/${currentTarget.den}`;
+                resultDisplay.style.color = '#27ae60';
+                addPoints(15);
+                showFloatingPoints(15);
+            } else {
+                resultDisplay.innerHTML = `❌ No es equivalente. ${numerator}/${denominator} ≠ ${currentTarget.num}/${currentTarget.den}`;
+                resultDisplay.style.color = '#e74c3c';
+                addPoints(2); // Puntos de consolación
+            }
+        }
+
+        // Funciones del juego de memoria
+        function initializeMatchingGame() {
+            gameCards = [];
+            selectedCards = [];
+            matchedPairs = 0;
+            
+            // Crear array de todas las fracciones
+            equivalentPairs.forEach(pair => {
+                gameCards.push(pair[0], pair[1]);
+            });
+            
+            // Mezclar las cartas
+            gameCards = shuffleArray(gameCards);
+            
+            renderMatchingGame();
+            updateDisplay();
+        }
+
+        function shuffleArray(array) {
+            const shuffled = [...array];
+            for (let i = shuffled.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+            }
+            return shuffled;
+        }
+
+        function renderMatchingGame() {
+            const gameContainer = document.getElementById('matchingGame');
+            gameContainer.innerHTML = '';
+            
+            gameCards.forEach((fraction, index) => {
+                const card = document.createElement('div');
+                card.className = 'fraction-card';
+                card.textContent = fraction;
+                card.onclick = () => selectCard(index);
+                card.id = `card-${index}`;
+                gameContainer.appendChild(card);
+            });
+        }
+
+        function selectCard(index) {
+            const card = document.getElementById(`card-${index}`);
+            
+            // No permitir seleccionar cartas ya emparejadas o ya seleccionadas
+            if (card.classList.contains('matched') || card.classList.contains('selected')) {
+                return;
+            }
+            
+            card.classList.add('selected');
+            selectedCards.push(index);
+            
+            if (selectedCards.length === 2) {
+                setTimeout(checkMatch, 1000);
+            }
+        }
+
+        function checkMatch() {
+            const [index1, index2] = selectedCards;
+            const card1 = document.getElementById(`card-${index1}`);
+            const card2 = document.getElementById(`card-${index2}`);
+            const fraction1 = gameCards[index1];
+            const fraction2 = gameCards[index2];
+            
+            // Verificar si las fracciones son equivalentes
+            if (areEquivalent(fraction1, fraction2)) {
+                card1.classList.remove('selected');
+                card2.classList.remove('selected');
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                addPoints(25);
+                showFloatingPoints(25);
+                
+                if (matchedPairs === 6) {
+                    setTimeout(() => {
+                        alert('🎉 ¡Felicitaciones! Has encontrado todas las parejas equivalentes! 🎉');
+                        addPoints(50); // Bonus por completar
+                    }, 500);
+                }
+            } else {
+                card1.classList.remove('selected');
+                card2.classList.remove('selected');
+                addPoints(1); // Punto de consolación
+            }
+            
+            selectedCards = [];
+            updateDisplay();
+        }
+
+        function areEquivalent(fraction1, fraction2) {
+            const [num1, den1] = fraction1.split('/').map(Number);
+            const [num2, den2] = fraction2.split('/').map(Number);
+            
+            return Math.abs((num1 / den1) - (num2 / den2)) < 0.001;
+        }
+
+        function resetGame() {
+            initializeMatchingGame();
+        }
+
+        function addPoints(points) {
+            totalPoints += points;
+            localStorage.setItem('mathPoints', totalPoints.toString());
+            updateDisplay();
+        }
+
+        function showFloatingPoints(points) {
+            const pointsElement = document.createElement('div');
+            pointsElement.textContent = `+${points}`;
+            pointsElement.style.position = 'fixed';
+            pointsElement.style.top = '100px';
+            pointsElement.style.right = '50px';
+            pointsElement.style.color = '#4facfe';
+            pointsElement.style.fontSize = '2rem';
+            pointsElement.style.fontWeight = 'bold';
+            pointsElement.style.zIndex = '9999';
+            pointsElement.style.animation = 'floatUp 2s ease-out forwards';
+            
+            document.body.appendChild(pointsElement);
+            
+            setTimeout(() => pointsElement.remove(), 2000);
+        }
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100px) scale(1.2);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

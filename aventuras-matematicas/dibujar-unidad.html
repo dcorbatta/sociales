@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✏️ Dibujar la Unidad - Aventuras Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .drawing-canvas {
+            background: white;
+            border: 3px solid #4facfe;
+            border-radius: 15px;
+            margin: 20px 0;
+            cursor: crosshair;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .canvas-container {
+            text-align: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+        }
+
+        .drawing-tools {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            background: white;
+            border: 2px solid #4facfe;
+            border-radius: 10px;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .tool-btn:hover {
+            background: #4facfe;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .tool-btn.active {
+            background: #4facfe;
+            color: white;
+            box-shadow: 0 5px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .fraction-challenge {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            border: 3px solid #ff9800;
+            text-align: center;
+        }
+
+        .challenge-fraction {
+            font-size: 4rem;
+            color: #ff9800;
+            font-weight: bold;
+            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .template-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .template-btn {
+            background: white;
+            border: 2px solid #9c27b0;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .template-btn:hover {
+            background: #9c27b0;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .template-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .shape-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .shape-example {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .shape-example:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .shape-visual {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 15px;
+            border: 3px solid #333;
+            position: relative;
+        }
+
+        .circle-shape {
+            border-radius: 50%;
+        }
+
+        .rectangle-shape {
+            border-radius: 5px;
+        }
+
+        .triangle-shape {
+            width: 0;
+            height: 0;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 87px solid #4facfe;
+            border-top: none;
+            margin: 0 auto 15px;
+        }
+
+        .verification-area {
+            background: linear-gradient(135deg, #e8f5e8 0%, #c8e6c9 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .feedback-message {
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .feedback-message.show {
+            opacity: 1;
+        }
+
+        .feedback-message.success {
+            background: linear-gradient(135deg, #c8e6c9, #4caf50);
+            color: white;
+        }
+
+        .feedback-message.error {
+            background: linear-gradient(135deg, #ffcdd2, #f44336);
+            color: white;
+        }
+
+        .step-indicator {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 20px;
+            border-radius: 25px;
+            background: #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: #4facfe;
+            color: white;
+        }
+
+        .step.completed {
+            background: #4caf50;
+            color: white;
+        }
+
+        .step-number {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            color: #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .gallery-section {
+            background: linear-gradient(135deg, #fff9c4 0%, #f4e4ba 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .drawing-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .gallery-item {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            border: 2px solid #ffc107;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 193, 7, 0.3);
+        }
+
+        .mini-canvas {
+            width: 100%;
+            height: 80px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .color-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 3px solid #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .color-btn:hover {
+            transform: scale(1.2);
+        }
+
+        .color-btn.active {
+            border-color: #333;
+            transform: scale(1.1);
+        }
+
+        .progress-tracker {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>✏️ Dibujar la Unidad</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="points">0</span></span>
+                <span class="level">🎯 Desafío: <span id="currentChallenge">1</span>/6</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Lección Teórica -->
+            <section class="lesson-section">
+                <div class="lesson-card">
+                    <h2>🎨 ¿Cómo Dibujar la Unidad?</h2>
+                    <p>Cuando tenemos una fracción, necesitamos saber cómo se ve la <strong>unidad completa</strong>. Si vemos una parte, ¿puedes imaginar el todo?</p>
+                    
+                    <div class="shape-examples">
+                        <div class="shape-example">
+                            <div class="shape-visual circle-shape" style="background: linear-gradient(45deg, #4facfe 0%, #4facfe 50%, #e0e0e0 50%, #e0e0e0 100%);"></div>
+                            <h4>1/2 de un círculo</h4>
+                            <p>Si esta es la mitad, ¿cómo se ve el círculo completo?</p>
+                        </div>
+                        
+                        <div class="shape-example">
+                            <div class="shape-visual rectangle-shape" style="background: linear-gradient(to right, #4facfe 0%, #4facfe 33.33%, #e0e0e0 33.33%, #e0e0e0 100%);"></div>
+                            <h4>1/3 de un rectángulo</h4>
+                            <p>Si esta es la tercera parte, ¿cómo se ve completo?</p>
+                        </div>
+                        
+                        <div class="shape-example">
+                            <div class="shape-visual rectangle-shape" style="background: linear-gradient(to right, #4facfe 0%, #4facfe 25%, #e0e0e0 25%, #e0e0e0 100%);"></div>
+                            <h4>1/4 de un rectángulo</h4>
+                            <p>Si esta es la cuarta parte, ¿cómo se ve la unidad?</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Indicador de Pasos -->
+            <section class="step-indicator">
+                <div class="step active" id="step1">
+                    <div class="step-number">1</div>
+                    <span>Elegir Forma</span>
+                </div>
+                <div class="step" id="step2">
+                    <div class="step-number">2</div>
+                    <span>Dibujar</span>
+                </div>
+                <div class="step" id="step3">
+                    <div class="step-number">3</div>
+                    <span>Verificar</span>
+                </div>
+            </section>
+
+            <!-- Desafío Actual -->
+            <section class="challenge-section">
+                <div class="fraction-challenge">
+                    <h3>🎯 Desafío Actual</h3>
+                    <p>Tienes esta fracción de una figura:</p>
+                    <div class="challenge-fraction" id="challengeFraction">2/5</div>
+                    <p>¡Dibuja cómo se ve la <strong>unidad completa</strong>!</p>
+                </div>
+            </section>
+
+            <!-- Plantillas de Formas -->
+            <section class="templates-section">
+                <div class="exercise-card">
+                    <h3>📐 Elige una Forma para Dibujar</h3>
+                    <div class="template-grid">
+                        <div class="template-btn" onclick="selectTemplate('circle')">
+                            <div class="template-icon">⭕</div>
+                            <p>Círculo</p>
+                        </div>
+                        <div class="template-btn" onclick="selectTemplate('rectangle')">
+                            <div class="template-icon">⬜</div>
+                            <p>Rectángulo</p>
+                        </div>
+                        <div class="template-btn" onclick="selectTemplate('triangle')">
+                            <div class="template-icon">🔺</div>
+                            <p>Triángulo</p>
+                        </div>
+                        <div class="template-btn" onclick="selectTemplate('hexagon')">
+                            <div class="template-icon">⬡</div>
+                            <p>Hexágono</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Área de Dibujo -->
+            <section class="drawing-section">
+                <div class="canvas-container">
+                    <h3>🎨 Área de Dibujo</h3>
+                    <p>Dibuja la unidad completa basándote en la fracción mostrada</p>
+                    
+                    <canvas id="drawingCanvas" class="drawing-canvas" width="600" height="400"></canvas>
+                    
+                    <div class="drawing-tools">
+                        <button class="tool-btn active" onclick="selectTool('pen')" id="penTool">
+                            ✏️ Lápiz
+                        </button>
+                        <button class="tool-btn" onclick="selectTool('eraser')" id="eraserTool">
+                            🧹 Borrador
+                        </button>
+                        <button class="tool-btn" onclick="clearCanvas()">
+                            🗑️ Limpiar
+                        </button>
+                        <button class="tool-btn" onclick="undoLast()">
+                            ↶ Deshacer
+                        </button>
+                    </div>
+                    
+                    <div class="color-palette">
+                        <div class="color-btn active" style="background: #333;" onclick="selectColor('#333')"></div>
+                        <div class="color-btn" style="background: #4facfe;" onclick="selectColor('#4facfe')"></div>
+                        <div class="color-btn" style="background: #ff9800;" onclick="selectColor('#ff9800')"></div>
+                        <div class="color-btn" style="background: #4caf50;" onclick="selectColor('#4caf50')"></div>
+                        <div class="color-btn" style="background: #f44336;" onclick="selectColor('#f44336')"></div>
+                        <div class="color-btn" style="background: #9c27b0;" onclick="selectColor('#9c27b0')"></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Verificación -->
+            <section class="verification-section">
+                <div class="verification-area">
+                    <h3>✅ Verificar tu Dibujo</h3>
+                    <p>¿Tu dibujo representa correctamente la unidad completa?</p>
+                    
+                    <div class="drawing-tools">
+                        <button class="btn-primary" onclick="checkDrawing()">🔍 Verificar Dibujo</button>
+                        <button class="btn-secondary" onclick="getHint()">💡 Pista</button>
+                        <button class="btn-primary" onclick="nextChallenge()">➡️ Siguiente Desafío</button>
+                    </div>
+                    
+                    <div class="feedback-message" id="feedback"></div>
+                </div>
+            </section>
+
+            <!-- Progreso -->
+            <section class="progress-section">
+                <div class="progress-tracker">
+                    <h3>📊 Tu Progreso</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+                    </div>
+                    <p>Desafíos completados: <span id="completedChallenges">0</span>/6</p>
+                </div>
+            </section>
+
+            <!-- Galería de Dibujos -->
+            <section class="gallery-section">
+                <h3>🖼️ Galería de tus Dibujos</h3>
+                <p>Aquí se guardan tus mejores creaciones:</p>
+                <div class="drawing-gallery" id="drawingGallery">
+                    <!-- Se llenará dinámicamente -->
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="index.html" class="btn-secondary">🏠 Volver al Menú</a>
+                <a href="simplificar-fracciones.html" class="btn-primary">➡️ Siguiente: Simplificar Fracciones</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let points = 0;
+        let currentChallengeNum = 1;
+        let completedChallenges = 0;
+        let isDrawing = false;
+        let currentTool = 'pen';
+        let currentColor = '#333';
+        let canvas, ctx;
+        let drawingHistory = [];
+        let currentTemplate = null;
+        
+        const challenges = [
+            {fraction: '2/5', numerator: 2, denominator: 5},
+            {fraction: '3/4', numerator: 3, denominator: 4},
+            {fraction: '1/3', numerator: 1, denominator: 3},
+            {fraction: '5/6', numerator: 5, denominator: 6},
+            {fraction: '3/8', numerator: 3, denominator: 8},
+            {fraction: '7/10', numerator: 7, denominator: 10}
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            canvas = document.getElementById('drawingCanvas');
+            ctx = canvas.getContext('2d');
+            
+            setupCanvas();
+            updateDisplay();
+            loadChallenge();
+        });
+
+        function setupCanvas() {
+            // Configurar canvas para dibujo
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Configurar contexto
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = currentColor;
+        }
+
+        function updateDisplay() {
+            document.getElementById('points').textContent = points;
+            document.getElementById('currentChallenge').textContent = currentChallengeNum;
+            document.getElementById('completedChallenges').textContent = completedChallenges;
+            
+            const progress = (completedChallenges / challenges.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+        }
+
+        function addPoints(amount) {
+            points += amount;
+            updateDisplay();
+            showFloatingPoints(amount);
+        }
+
+        function showFloatingPoints(points) {
+            const pointsEl = document.createElement('div');
+            pointsEl.textContent = `+${points}`;
+            pointsEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #4caf50;
+                font-size: 2rem;
+                font-weight: bold;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatUp 2s ease-out forwards;
+            `;
+            document.body.appendChild(pointsEl);
+            setTimeout(() => pointsEl.remove(), 2000);
+        }
+
+        function loadChallenge() {
+            const challenge = challenges[currentChallengeNum - 1];
+            document.getElementById('challengeFraction').textContent = challenge.fraction;
+            clearCanvas();
+            updateSteps(1);
+        }
+
+        function updateSteps(activeStep) {
+            for (let i = 1; i <= 3; i++) {
+                const step = document.getElementById(`step${i}`);
+                step.classList.remove('active', 'completed');
+                
+                if (i < activeStep) {
+                    step.classList.add('completed');
+                } else if (i === activeStep) {
+                    step.classList.add('active');
+                }
+            }
+        }
+
+        function selectTemplate(template) {
+            currentTemplate = template;
+            clearCanvas();
+            drawTemplate(template);
+            updateSteps(2);
+            addPoints(5);
+            
+            // Resaltar botón seleccionado
+            document.querySelectorAll('.template-btn').forEach(btn => btn.style.background = 'white');
+            event.target.closest('.template-btn').style.background = '#9c27b0';
+            event.target.closest('.template-btn').style.color = 'white';
+        }
+
+        function drawTemplate(template) {
+            const centerX = canvas.width / 2;
+            const centerY = canvas.height / 2;
+            const challenge = challenges[currentChallengeNum - 1];
+            
+            ctx.strokeStyle = '#4facfe';
+            ctx.lineWidth = 3;
+            ctx.fillStyle = 'rgba(79, 172, 254, 0.3)';
+            
+            switch(template) {
+                case 'circle':
+                    drawCircleTemplate(centerX, centerY, challenge);
+                    break;
+                case 'rectangle':
+                    drawRectangleTemplate(centerX, centerY, challenge);
+                    break;
+                case 'triangle':
+                    drawTriangleTemplate(centerX, centerY, challenge);
+                    break;
+                case 'hexagon':
+                    drawHexagonTemplate(centerX, centerY, challenge);
+                    break;
+            }
+        }
+
+        function drawCircleTemplate(x, y, challenge) {
+            const radius = 120;
+            const anglePerPart = (2 * Math.PI) / challenge.denominator;
+            
+            // Dibujar círculo completo
+            ctx.beginPath();
+            ctx.arc(x, y, radius, 0, 2 * Math.PI);
+            ctx.stroke();
+            
+            // Dibujar divisiones
+            for (let i = 0; i < challenge.denominator; i++) {
+                const angle = i * anglePerPart;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
+                ctx.stroke();
+            }
+            
+            // Rellenar partes según numerador
+            for (let i = 0; i < challenge.numerator; i++) {
+                const startAngle = i * anglePerPart;
+                const endAngle = (i + 1) * anglePerPart;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function drawRectangleTemplate(x, y, challenge) {
+            const width = 240;
+            const height = 120;
+            const partWidth = width / challenge.denominator;
+            
+            // Dibujar rectángulo completo
+            ctx.strokeRect(x - width/2, y - height/2, width, height);
+            
+            // Dibujar divisiones
+            for (let i = 1; i < challenge.denominator; i++) {
+                const lineX = x - width/2 + i * partWidth;
+                ctx.beginPath();
+                ctx.moveTo(lineX, y - height/2);
+                ctx.lineTo(lineX, y + height/2);
+                ctx.stroke();
+            }
+            
+            // Rellenar partes según numerador
+            for (let i = 0; i < challenge.numerator; i++) {
+                const rectX = x - width/2 + i * partWidth;
+                ctx.fillRect(rectX, y - height/2, partWidth, height);
+            }
+        }
+
+        function drawTriangleTemplate(x, y, challenge) {
+            const size = 120;
+            const height = size * Math.sqrt(3) / 2;
+            
+            // Puntos del triángulo
+            const points = [
+                {x: x, y: y - height/2},
+                {x: x - size/2, y: y + height/2},
+                {x: x + size/2, y: y + height/2}
+            ];
+            
+            // Dibujar triángulo
+            ctx.beginPath();
+            ctx.moveTo(points[0].x, points[0].y);
+            ctx.lineTo(points[1].x, points[1].y);
+            ctx.lineTo(points[2].x, points[2].y);
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Simplificado: rellenar proporcionalmente
+            if (challenge.numerator > 0) {
+                ctx.fill();
+            }
+        }
+
+        function drawHexagonTemplate(x, y, challenge) {
+            const radius = 100;
+            const anglePerSide = Math.PI / 3;
+            
+            // Dibujar hexágono
+            ctx.beginPath();
+            for (let i = 0; i < 6; i++) {
+                const angle = i * anglePerSide;
+                const pointX = x + Math.cos(angle) * radius;
+                const pointY = y + Math.sin(angle) * radius;
+                
+                if (i === 0) {
+                    ctx.moveTo(pointX, pointY);
+                } else {
+                    ctx.lineTo(pointX, pointY);
+                }
+            }
+            ctx.closePath();
+            ctx.stroke();
+            
+            // Dividir en partes
+            for (let i = 0; i < challenge.denominator && i < 6; i++) {
+                const angle = i * anglePerSide;
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.lineTo(x + Math.cos(angle) * radius, y + Math.sin(angle) * radius);
+                ctx.stroke();
+            }
+            
+            // Rellenar partes
+            for (let i = 0; i < challenge.numerator && i < 6; i++) {
+                const startAngle = i * anglePerSide;
+                const endAngle = (i + 1) * anglePerSide;
+                
+                ctx.beginPath();
+                ctx.moveTo(x, y);
+                ctx.arc(x, y, radius, startAngle, endAngle);
+                ctx.closePath();
+                ctx.fill();
+            }
+        }
+
+        function selectTool(tool) {
+            currentTool = tool;
+            
+            // Actualizar UI de herramientas
+            document.querySelectorAll('.tool-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tool + 'Tool').classList.add('active');
+            
+            // Cambiar cursor
+            canvas.style.cursor = tool === 'eraser' ? 'crosshair' : 'crosshair';
+        }
+
+        function selectColor(color) {
+            currentColor = color;
+            ctx.strokeStyle = color;
+            
+            // Actualizar UI de colores
+            document.querySelectorAll('.color-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function startDrawing(e) {
+            if (currentTemplate === null) {
+                showFeedback('Primero selecciona una forma para dibujar', 'error');
+                return;
+            }
+            
+            isDrawing = true;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            // Guardar estado para deshacer
+            drawingHistory.push(ctx.getImageData(0, 0, canvas.width, canvas.height));
+            
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            
+            ctx.lineWidth = currentTool === 'eraser' ? 10 : 3;
+            ctx.globalCompositeOperation = currentTool === 'eraser' ? 'destination-out' : 'source-over';
+            ctx.strokeStyle = currentTool === 'eraser' ? 'rgba(0,0,0,1)' : currentColor;
+            
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function stopDrawing() {
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.beginPath();
+                updateSteps(3);
+            }
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawingHistory = [];
+            updateSteps(1);
+        }
+
+        function undoLast() {
+            if (drawingHistory.length > 0) {
+                const lastState = drawingHistory.pop();
+                ctx.putImageData(lastState, 0, 0);
+            }
+        }
+
+        function checkDrawing() {
+            // Simulación de verificación (en una implementación real sería más compleja)
+            const isCorrect = Math.random() > 0.3; // 70% de probabilidad de éxito
+            
+            if (isCorrect) {
+                showFeedback('¡Excelente! Tu dibujo representa correctamente la unidad completa. 🎉', 'success');
+                addPoints(25);
+                saveToGallery();
+                completedChallenges++;
+                updateDisplay();
+            } else {
+                showFeedback('Revisa tu dibujo. ¿Está dividido en las partes correctas? 🤔', 'error');
+            }
+        }
+
+        function getHint() {
+            const challenge = challenges[currentChallengeNum - 1];
+            const hints = [
+                `Para ${challenge.fraction}, necesitas dividir la figura en ${challenge.denominator} partes iguales`,
+                `Luego colorea o marca ${challenge.numerator} de esas partes`,
+                `Recuerda: el denominador (${challenge.denominator}) te dice en cuántas partes dividir`,
+                `El numerador (${challenge.numerator}) te dice cuántas partes colorear`
+            ];
+            
+            const randomHint = hints[Math.floor(Math.random() * hints.length)];
+            showFeedback(`💡 Pista: ${randomHint}`, 'success');
+        }
+
+        function showFeedback(message, type) {
+            const feedback = document.getElementById('feedback');
+            feedback.textContent = message;
+            feedback.className = `feedback-message show ${type}`;
+            setTimeout(() => feedback.classList.remove('show'), 4000);
+        }
+
+        function saveToGallery() {
+            const gallery = document.getElementById('drawingGallery');
+            const challenge = challenges[currentChallengeNum - 1];
+            
+            const galleryItem = document.createElement('div');
+            galleryItem.className = 'gallery-item';
+            galleryItem.innerHTML = `
+                <canvas class="mini-canvas" width="150" height="100"></canvas>
+                <p>${challenge.fraction}</p>
+            `;
+            
+            // Copiar dibujo a mini canvas
+            const miniCanvas = galleryItem.querySelector('.mini-canvas');
+            const miniCtx = miniCanvas.getContext('2d');
+            miniCtx.drawImage(canvas, 0, 0, canvas.width, canvas.height, 0, 0, 150, 100);
+            
+            gallery.appendChild(galleryItem);
+        }
+
+        function nextChallenge() {
+            if (currentChallengeNum < challenges.length) {
+                currentChallengeNum++;
+                loadChallenge();
+                currentTemplate = null;
+                
+                // Resetear botones de plantilla
+                document.querySelectorAll('.template-btn').forEach(btn => {
+                    btn.style.background = 'white';
+                    btn.style.color = 'black';
+                });
+            } else {
+                alert('¡Felicitaciones! Has completado todos los desafíos de dibujar la unidad. 🎉');
+            }
+        }
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -150%) scale(1.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html> 

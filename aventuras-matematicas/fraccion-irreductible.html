@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔒 Fracción Irreductible - Aventuras Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .fraction-display {
+            font-size: 3rem;
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .reduction-steps {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            border-left: 5px solid #4facfe;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background: rgba(79, 172, 254, 0.1);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .step:hover {
+            background: rgba(79, 172, 254, 0.2);
+            transform: translateX(10px);
+        }
+
+        .step-number {
+            background: #4facfe;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-weight: bold;
+        }
+
+        .divisor-finder {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .divisor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .divisor-btn {
+            background: white;
+            border: 2px solid #4facfe;
+            border-radius: 10px;
+            padding: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .divisor-btn:hover {
+            background: #4facfe;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .divisor-btn.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+        }
+
+        .divisor-btn.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #f44336;
+        }
+
+        .exercise-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .exercise-card:hover {
+            border-color: #4facfe;
+            transform: translateY(-5px);
+        }
+
+        .fraction-input {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .fraction-input input {
+            width: 80px;
+            padding: 15px;
+            font-size: 1.5rem;
+            text-align: center;
+            border: 2px solid #4facfe;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .fraction-line {
+            width: 60px;
+            height: 3px;
+            background: #333;
+            margin: 0 10px;
+        }
+
+        .gcd-visualizer {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .number-factors {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0;
+        }
+
+        .factor {
+            background: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            border: 2px solid #ff9800;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .factor.common {
+            background: #4caf50;
+            color: white;
+            border-color: #4caf50;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .game-area {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .fraction-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .fraction-card {
+            background: white;
+            border: 3px solid #2196f3;
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .fraction-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(33, 150, 243, 0.3);
+        }
+
+        .fraction-card.reducible {
+            border-color: #ff9800;
+            background: linear-gradient(135deg, #fff3e0, #ffcc80);
+        }
+
+        .fraction-card.irreducible {
+            border-color: #4caf50;
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+        }
+
+        .fraction-card.selected {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(33, 150, 243, 0.4);
+        }
+
+        .result-message {
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            opacity: 0;
+            transition: all 0.5s ease;
+        }
+
+        .result-message.show {
+            opacity: 1;
+        }
+
+        .result-message.correct {
+            background: linear-gradient(135deg, #c8e6c9, #4caf50);
+            color: white;
+        }
+
+        .result-message.incorrect {
+            background: linear-gradient(135deg, #ffcdd2, #f44336);
+            color: white;
+        }
+
+        .progress-tracker {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .progress-bar {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, #4facfe, #00f2fe);
+            height: 100%;
+            transition: width 0.5s ease;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🔒 Fracción Irreductible</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="points">0</span></span>
+                <span class="level">🏆 Ejercicio: <span id="currentExercise">1</span>/8</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Lección Teórica -->
+            <section class="lesson-section">
+                <div class="lesson-card">
+                    <h2>🔍 ¿Qué es una Fracción Irreductible?</h2>
+                    <p>Una fracción es <strong>irreductible</strong> cuando no se puede simplificar más. Esto ocurre cuando el numerador y denominador no tienen divisores comunes (excepto el 1).</p>
+                    
+                    <div class="example-container">
+                        <h3>📊 Ejemplos:</h3>
+                        <div class="examples-grid">
+                            <div class="example-item">
+                                <div class="fraction-display">
+                                    <span class="numerator">3</span>
+                                    <div class="fraction-line"></div>
+                                    <span class="denominator">4</span>
+                                </div>
+                                <p>✅ <strong>Irreductible</strong><br>3 y 4 no tienen divisores comunes</p>
+                            </div>
+                            <div class="example-item">
+                                <div class="fraction-display">
+                                    <span class="numerator">6</span>
+                                    <div class="fraction-line"></div>
+                                    <span class="denominator">9</span>
+                                    <span style="margin: 0 20px; font-size: 2rem;">→</span>
+                                    <span class="numerator">2</span>
+                                    <div class="fraction-line"></div>
+                                    <span class="denominator">3</span>
+                                </div>
+                                <p>❌ <strong>Reducible</strong><br>6 y 9 se dividen entre 3</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visualizador de MCD -->
+            <section class="gcd-section">
+                <div class="exercise-card">
+                    <h3>🔢 Encuentra el Máximo Común Divisor (MCD)</h3>
+                    <p>Para saber si una fracción es irreductible, debemos encontrar el MCD del numerador y denominador.</p>
+                    
+                    <div class="gcd-visualizer">
+                        <div class="fraction-input">
+                            <input type="number" id="gcdNum" placeholder="12" min="1" max="100">
+                            <div class="fraction-line"></div>
+                            <input type="number" id="gcdDen" placeholder="18" min="1" max="100">
+                            <button class="btn-primary" onclick="findGCD()">🔍 Encontrar MCD</button>
+                        </div>
+                        
+                        <div id="gcdResult" style="display: none;">
+                            <h4>Factores:</h4>
+                            <div id="numFactors"></div>
+                            <div id="denFactors"></div>
+                            <div id="commonFactors"></div>
+                            <div id="gcdValue"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Simplificador Interactivo -->
+            <section class="simplifier-section">
+                <div class="exercise-card">
+                    <h3>🧩 Simplificador de Fracciones</h3>
+                    <p>Reduce las siguientes fracciones a su forma irreductible:</p>
+                    
+                    <div class="divisor-finder">
+                        <div class="fraction-display" id="currentFraction">
+                            <span id="currentNum">8</span>
+                            <div class="fraction-line"></div>
+                            <span id="currentDen">12</span>
+                        </div>
+                        
+                        <p>¿Por cuál número puedes dividir tanto el numerador como el denominador?</p>
+                        
+                        <div class="divisor-grid" id="divisorGrid">
+                            <!-- Se generará dinámicamente -->
+                        </div>
+                        
+                        <div class="reduction-steps" id="reductionSteps" style="display: none;">
+                            <!-- Pasos de reducción -->
+                        </div>
+                        
+                        <button class="btn-primary" onclick="nextSimplification()" id="nextBtn" style="display: none;">➡️ Siguiente Fracción</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Juego de Clasificación -->
+            <section class="game-section">
+                <div class="game-area">
+                    <h3>🎮 Clasifica las Fracciones</h3>
+                    <p>Identifica cuáles fracciones son <strong>irreductibles</strong> y cuáles se pueden <strong>reducir</strong>:</p>
+                    
+                    <div class="progress-tracker">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="gameProgress" style="width: 0%"></div>
+                        </div>
+                        <p>Progreso: <span id="gameScore">0</span>/10 correctas</p>
+                    </div>
+                    
+                    <div class="fraction-cards" id="fractionCards">
+                        <!-- Se generará dinámicamente -->
+                    </div>
+                    
+                    <div class="result-message" id="gameMessage"></div>
+                    
+                    <button class="btn-primary" onclick="startClassificationGame()" id="startGameBtn">🎮 Comenzar Juego</button>
+                    <button class="btn-primary" onclick="nextGameRound()" id="nextGameBtn" style="display: none;">➡️ Siguiente Ronda</button>
+                </div>
+            </section>
+
+            <!-- Ejercicios de Práctica -->
+            <section class="practice-section">
+                <div class="exercise-card">
+                    <h3>📝 Ejercicios de Práctica</h3>
+                    <div id="practiceExercise">
+                        <p id="exerciseQuestion">Reduce la fracción a su forma irreductible:</p>
+                        <div class="fraction-display" id="exerciseFraction">
+                            <span id="exerciseNum">15</span>
+                            <div class="fraction-line"></div>
+                            <span id="exerciseDen">25</span>
+                        </div>
+                        
+                        <div class="fraction-input">
+                            <input type="number" id="answerNum" placeholder="?" min="1" max="100">
+                            <div class="fraction-line"></div>
+                            <input type="number" id="answerDen" placeholder="?" min="1" max="100">
+                            <button class="btn-primary" onclick="checkAnswer()">✓ Verificar</button>
+                        </div>
+                        
+                        <div class="result-message" id="exerciseResult"></div>
+                        <button class="btn-primary" onclick="nextExercise()" id="nextExerciseBtn" style="display: none;">➡️ Siguiente Ejercicio</button>
+                    </div>
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="index.html" class="btn-secondary">🏠 Volver al Menú</a>
+                <a href="comparar-fracciones.html" class="btn-primary">➡️ Siguiente: Comparar Fracciones</a>
+            </div>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        let points = 0;
+        let currentExerciseNum = 1;
+        let gameScore = 0;
+        let gameTotal = 10;
+        let currentGameRound = 0;
+        
+        const exercises = [
+            {num: 8, den: 12, ansNum: 2, ansDen: 3},
+            {num: 15, den: 25, ansNum: 3, ansDen: 5},
+            {num: 18, den: 24, ansNum: 3, ansDen: 4},
+            {num: 20, den: 30, ansNum: 2, ansDen: 3},
+            {num: 14, den: 21, ansNum: 2, ansDen: 3},
+            {num: 16, den: 28, ansNum: 4, ansDen: 7},
+            {num: 27, den: 36, ansNum: 3, ansDen: 4},
+            {num: 35, den: 42, ansNum: 5, ansDen: 6}
+        ];
+        
+        const simplificationFractions = [
+            {num: 8, den: 12}, {num: 10, den: 15}, {num: 6, den: 9}, 
+            {num: 12, den: 16}, {num: 14, den: 21}, {num: 18, den: 24}
+        ];
+        
+        let currentSimplificationIndex = 0;
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            generateDivisorGrid();
+            generateGameCards();
+        });
+
+        function updateDisplay() {
+            document.getElementById('points').textContent = points;
+            document.getElementById('currentExercise').textContent = currentExerciseNum;
+        }
+
+        function addPoints(amount) {
+            points += amount;
+            updateDisplay();
+            showFloatingPoints(amount);
+        }
+
+        function showFloatingPoints(points) {
+            const pointsEl = document.createElement('div');
+            pointsEl.textContent = `+${points}`;
+            pointsEl.style.cssText = `
+                position: fixed;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                color: #4caf50;
+                font-size: 2rem;
+                font-weight: bold;
+                pointer-events: none;
+                z-index: 1000;
+                animation: floatUp 2s ease-out forwards;
+            `;
+            document.body.appendChild(pointsEl);
+            setTimeout(() => pointsEl.remove(), 2000);
+        }
+
+        // Función para encontrar MCD
+        function gcd(a, b) {
+            while (b !== 0) {
+                let temp = b;
+                b = a % b;
+                a = temp;
+            }
+            return a;
+        }
+
+        function getFactors(n) {
+            const factors = [];
+            for (let i = 1; i <= n; i++) {
+                if (n % i === 0) {
+                    factors.push(i);
+                }
+            }
+            return factors;
+        }
+
+        function findGCD() {
+            const num = parseInt(document.getElementById('gcdNum').value);
+            const den = parseInt(document.getElementById('gcdDen').value);
+            
+            if (!num || !den) {
+                alert('Por favor ingresa ambos números');
+                return;
+            }
+            
+            const numFactors = getFactors(num);
+            const denFactors = getFactors(den);
+            const commonFactors = numFactors.filter(f => denFactors.includes(f));
+            const mcd = Math.max(...commonFactors);
+            
+            document.getElementById('numFactors').innerHTML = `
+                <p><strong>Factores de ${num}:</strong></p>
+                <div class="number-factors">
+                    ${numFactors.map(f => `<span class="factor ${commonFactors.includes(f) ? 'common' : ''}">${f}</span>`).join('')}
+                </div>
+            `;
+            
+            document.getElementById('denFactors').innerHTML = `
+                <p><strong>Factores de ${den}:</strong></p>
+                <div class="number-factors">
+                    ${denFactors.map(f => `<span class="factor ${commonFactors.includes(f) ? 'common' : ''}">${f}</span>`).join('')}
+                </div>
+            `;
+            
+            document.getElementById('commonFactors').innerHTML = `
+                <p><strong>Factores comunes:</strong> ${commonFactors.join(', ')}</p>
+            `;
+            
+            document.getElementById('gcdValue').innerHTML = `
+                <p style="font-size: 1.5rem; color: #4caf50; font-weight: bold;">
+                    🎯 MCD = ${mcd}
+                </p>
+                <p>
+                    ${mcd === 1 ? 
+                        `✅ La fracción ${num}/${den} es IRREDUCTIBLE` : 
+                        `❌ La fracción ${num}/${den} se puede reducir dividiendo entre ${mcd}: ${num/mcd}/${den/mcd}`
+                    }
+                </p>
+            `;
+            
+            document.getElementById('gcdResult').style.display = 'block';
+            addPoints(10);
+        }
+
+        function generateDivisorGrid() {
+            const fraction = simplificationFractions[currentSimplificationIndex];
+            document.getElementById('currentNum').textContent = fraction.num;
+            document.getElementById('currentDen').textContent = fraction.den;
+            
+            const possibleDivisors = [];
+            const maxDiv = Math.min(fraction.num, fraction.den);
+            
+            for (let i = 2; i <= maxDiv; i++) {
+                possibleDivisors.push(i);
+            }
+            
+            // Agregar algunos divisores incorrectos
+            const incorrectDivisors = [1, maxDiv + 1, maxDiv + 2, maxDiv + 3].filter(d => d <= 20);
+            const allDivisors = [...new Set([...possibleDivisors, ...incorrectDivisors])].sort((a, b) => a - b);
+            
+            const grid = document.getElementById('divisorGrid');
+            grid.innerHTML = allDivisors.map(d => 
+                `<button class="divisor-btn" onclick="checkDivisor(${d})">${d}</button>`
+            ).join('');
+        }
+
+        function checkDivisor(divisor) {
+            const fraction = simplificationFractions[currentSimplificationIndex];
+            const isCorrect = fraction.num % divisor === 0 && fraction.den % divisor === 0 && divisor > 1;
+            
+            const btn = event.target;
+            
+            if (isCorrect) {
+                btn.classList.add('correct');
+                const newNum = fraction.num / divisor;
+                const newDen = fraction.den / divisor;
+                
+                const steps = document.getElementById('reductionSteps');
+                steps.innerHTML = `
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>Dividir numerador y denominador entre ${divisor}</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>${fraction.num} ÷ ${divisor} = ${newNum}</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>${fraction.den} ÷ ${divisor} = ${newDen}</div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">✓</div>
+                        <div style="font-size: 1.5rem; color: #4caf50;">
+                            <strong>${fraction.num}/${fraction.den} = ${newNum}/${newDen}</strong>
+                        </div>
+                    </div>
+                `;
+                steps.style.display = 'block';
+                document.getElementById('nextBtn').style.display = 'inline-block';
+                addPoints(15);
+                
+                // Deshabilitar otros botones
+                document.querySelectorAll('.divisor-btn').forEach(b => b.disabled = true);
+            } else {
+                btn.classList.add('incorrect');
+                setTimeout(() => btn.classList.remove('incorrect'), 1000);
+            }
+        }
+
+        function nextSimplification() {
+            currentSimplificationIndex = (currentSimplificationIndex + 1) % simplificationFractions.length;
+            generateDivisorGrid();
+            document.getElementById('reductionSteps').style.display = 'none';
+            document.getElementById('nextBtn').style.display = 'none';
+            document.querySelectorAll('.divisor-btn').forEach(b => {
+                b.disabled = false;
+                b.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        function generateGameCards() {
+            const fractions = [
+                {num: 3, den: 4, irreducible: true},
+                {num: 6, den: 8, irreducible: false},
+                {num: 5, den: 7, irreducible: true},
+                {num: 10, den: 15, irreducible: false},
+                {num: 2, den: 3, irreducible: true},
+                {num: 12, den: 18, irreducible: false},
+                {num: 7, den: 9, irreducible: true},
+                {num: 14, den: 21, irreducible: false},
+                {num: 11, den: 13, irreducible: true},
+                {num: 16, den: 24, irreducible: false}
+            ];
+            
+            const cards = document.getElementById('fractionCards');
+            cards.innerHTML = fractions.map((f, i) => `
+                <div class="fraction-card" onclick="classifyFraction(${i}, ${f.irreducible})" data-index="${i}">
+                    <div style="font-size: 1.5rem; margin-bottom: 10px;">
+                        ${f.num}/${f.den}
+                    </div>
+                    <p style="font-size: 0.9rem; margin: 0;">¿Irreductible?</p>
+                </div>
+            `).join('');
+        }
+
+        function startClassificationGame() {
+            document.getElementById('startGameBtn').style.display = 'none';
+            document.querySelectorAll('.fraction-card').forEach(card => {
+                card.classList.remove('irreducible', 'reducible', 'selected');
+                card.style.pointerEvents = 'auto';
+            });
+            gameScore = 0;
+            updateGameProgress();
+        }
+
+        function classifyFraction(index, isIrreducible) {
+            const card = document.querySelector(`[data-index="${index}"]`);
+            card.style.pointerEvents = 'none';
+            
+            const userThinks = confirm('¿Crees que esta fracción es IRREDUCTIBLE?\n\nOK = Sí, es irreductible\nCancelar = No, se puede reducir');
+            
+            if (userThinks === isIrreducible) {
+                card.classList.add(isIrreducible ? 'irreducible' : 'reducible');
+                gameScore++;
+                addPoints(10);
+                showMessage(`¡Correcto! ${isIrreducible ? 'Es irreductible' : 'Se puede reducir'}`, 'correct');
+            } else {
+                card.classList.add('incorrect');
+                showMessage(`Incorrecto. ${isIrreducible ? 'Es irreductible' : 'Se puede reducir'}`, 'incorrect');
+            }
+            
+            updateGameProgress();
+            
+            if (gameScore + (10 - gameScore) === 10) {
+                setTimeout(() => {
+                    alert(`¡Juego completado!\nPuntuación: ${gameScore}/10\n${gameScore >= 7 ? '¡Excelente trabajo!' : 'Sigue practicando'}`);
+                    document.getElementById('nextGameBtn').style.display = 'inline-block';
+                }, 1000);
+            }
+        }
+
+        function updateGameProgress() {
+            const progress = (gameScore / gameTotal) * 100;
+            document.getElementById('gameProgress').style.width = progress + '%';
+            document.getElementById('gameScore').textContent = gameScore;
+        }
+
+        function nextGameRound() {
+            generateGameCards();
+            document.getElementById('nextGameBtn').style.display = 'none';
+            document.getElementById('startGameBtn').style.display = 'inline-block';
+            document.getElementById('gameMessage').classList.remove('show');
+        }
+
+        function showMessage(text, type) {
+            const message = document.getElementById('gameMessage');
+            message.textContent = text;
+            message.className = `result-message show ${type}`;
+            setTimeout(() => message.classList.remove('show'), 3000);
+        }
+
+        function checkAnswer() {
+            const exercise = exercises[currentExerciseNum - 1];
+            const userNum = parseInt(document.getElementById('answerNum').value);
+            const userDen = parseInt(document.getElementById('answerDen').value);
+            
+            if (!userNum || !userDen) {
+                alert('Por favor completa ambos campos');
+                return;
+            }
+            
+            const result = document.getElementById('exerciseResult');
+            
+            if (userNum === exercise.ansNum && userDen === exercise.ansDen) {
+                result.textContent = '¡Correcto! 🎉 Has reducido la fracción correctamente.';
+                result.className = 'result-message show correct';
+                addPoints(20);
+                document.getElementById('nextExerciseBtn').style.display = 'inline-block';
+            } else {
+                result.textContent = `Incorrecto. La respuesta correcta es ${exercise.ansNum}/${exercise.ansDen}`;
+                result.className = 'result-message show incorrect';
+            }
+        }
+
+        function nextExercise() {
+            if (currentExerciseNum < exercises.length) {
+                currentExerciseNum++;
+                const exercise = exercises[currentExerciseNum - 1];
+                
+                document.getElementById('exerciseNum').textContent = exercise.num;
+                document.getElementById('exerciseDen').textContent = exercise.den;
+                document.getElementById('answerNum').value = '';
+                document.getElementById('answerDen').value = '';
+                document.getElementById('exerciseResult').classList.remove('show');
+                document.getElementById('nextExerciseBtn').style.display = 'none';
+                
+                updateDisplay();
+            } else {
+                alert('¡Felicitaciones! Has completado todos los ejercicios de fracciones irreductibles. 🎉');
+            }
+        }
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translate(-50%, -50%) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translate(-50%, -150%) scale(1.5);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

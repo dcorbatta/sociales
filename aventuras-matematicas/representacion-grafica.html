@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍕 Representación Gráfica de Fracciones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="fraction-styles.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Neue', cursive;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            padding: 20px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .score {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px 20px;
+        }
+
+        .lesson-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .lesson-title {
+            font-size: 2rem;
+            color: #4facfe;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .explanation {
+            font-size: 1.2rem;
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .visual-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .fraction-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            border: 3px solid #4facfe;
+            transition: all 0.3s ease;
+        }
+
+        .fraction-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(79, 172, 254, 0.3);
+        }
+
+        .fraction-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .visual-representation {
+            font-size: 3rem;
+            margin: 15px 0;
+            line-height: 1.2;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            color: #555;
+            font-weight: bold;
+        }
+
+        .interactive-section {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .interactive-title {
+            font-size: 1.8rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .pizza-builder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .pizza-controls {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .control-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 20px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.4);
+        }
+
+        .pizza-display {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            border: 5px solid #8B4513;
+            background: #FFD700;
+            position: relative;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .pizza-slice {
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            top: 50%;
+            left: 50%;
+            transform-origin: 0 0;
+            background: #FF6347;
+            transition: all 0.3s ease;
+        }
+
+        .slice-1 { transform: rotate(0deg); }
+        .slice-2 { transform: rotate(45deg); }
+        .slice-3 { transform: rotate(90deg); }
+        .slice-4 { transform: rotate(135deg); }
+        .slice-5 { transform: rotate(180deg); }
+        .slice-6 { transform: rotate(225deg); }
+        .slice-7 { transform: rotate(270deg); }
+        .slice-8 { transform: rotate(315deg); }
+
+        .current-fraction {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin: 20px 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .exercise-section {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 25px;
+            padding: 30px;
+            margin: 30px 0;
+        }
+
+        .question {
+            font-size: 1.5rem;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .option {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            border: 3px solid #4facfe;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .option:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(79, 172, 254, 0.3);
+        }
+
+        .option.correct {
+            background: linear-gradient(135deg, #56ab2f, #a8e6cf);
+            border-color: #27ae60;
+        }
+
+        .option.incorrect {
+            background: linear-gradient(135deg, #ff6b6b, #ffa8a8);
+            border-color: #e74c3c;
+        }
+
+        .feedback {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: linear-gradient(45deg, #4facfe, #00f2fe);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(79, 172, 254, 0.4);
+        }
+
+        .progress-indicator {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+
+        .animated-icon {
+            animation: bounce 2s infinite;
+            display: inline-block;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2rem; }
+            .visual-demo { grid-template-columns: 1fr; }
+            .pizza-controls { flex-direction: column; align-items: center; }
+            .navigation { flex-direction: column; }
+            .options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🍕 Representación Gráfica de Fracciones</h1>
+            <div class="score-board">
+                <span class="score">🌟 Puntos: <span id="totalPoints">0</span></span>
+                <span class="score">🎯 Ejercicio: <span id="currentExercise">1</span> de 5</span>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Lección Teórica -->
+            <section class="lesson-section">
+                <h2 class="lesson-title">¿Qué son las Fracciones? <span class="animated-icon">🧮</span></h2>
+                <p class="explanation">
+                    Las fracciones representan partes de un todo. Imagina una pizza dividida en partes iguales. 
+                    Si comes algunas rebanadas, ¡estás trabajando con fracciones! 🍕✨
+                </p>
+
+                <div class="visual-demo">
+                    <div class="fraction-card">
+                        <div class="fraction-text">1/2</div>
+                        <div class="visual-representation" id="visual1-2"></div>
+                        <div class="description">Una mitad<br>1 de 2 partes</div>
+                    </div>
+                    
+                    <div class="fraction-card">
+                        <div class="fraction-text">2/3</div>
+                        <div class="visual-representation" id="visual2-3"></div>
+                        <div class="description">Dos tercios<br>2 de 3 partes</div>
+                    </div>
+                    
+                    <div class="fraction-card">
+                        <div class="fraction-text">3/4</div>
+                        <div class="visual-representation" id="visual3-4"></div>
+                        <div class="description">Tres cuartos<br>3 de 4 partes</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Constructor de Pizza Interactivo -->
+            <section class="interactive-section">
+                <h2 class="interactive-title">🍕 ¡Construye tu Pizza de Fracciones!</h2>
+                <div class="pizza-builder">
+                    <div class="pizza-controls">
+                        <button class="control-btn" onclick="setPizzaSlices(2)">2 rebanadas</button>
+                        <button class="control-btn" onclick="setPizzaSlices(3)">3 rebanadas</button>
+                        <button class="control-btn" onclick="setPizzaSlices(4)">4 rebanadas</button>
+                        <button class="control-btn" onclick="setPizzaSlices(6)">6 rebanadas</button>
+                        <button class="control-btn" onclick="setPizzaSlices(8)">8 rebanadas</button>
+                    </div>
+                    
+                    <div class="pizza-display" id="pizzaDisplay">
+                        <!-- Las rebanadas se generarán dinámicamente -->
+                    </div>
+                    
+                    <div class="current-fraction" id="currentFraction">0/0</div>
+                    
+                    <div class="pizza-controls">
+                        <button class="control-btn" onclick="addSlice()">➕ Agregar rebanada</button>
+                        <button class="control-btn" onclick="removeSlice()">➖ Quitar rebanada</button>
+                        <button class="control-btn" onclick="resetPizza()">🔄 Reiniciar</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Ejercicios Interactivos -->
+            <section class="exercise-section" id="exerciseSection">
+                <h2 class="lesson-title">🎯 ¡Practica lo que Aprendiste!</h2>
+                <div class="progress-indicator">
+                    Ejercicio <span id="exerciseNumber">1</span> de 5 - ¡Vas muy bien! 🌟
+                </div>
+                
+                <div class="question" id="questionText">
+                    ¿Qué fracción representa la parte sombreada?
+                </div>
+                
+                <div class="visual-representation" id="questionVisual">
+                    🟦🟦🟦⬜
+                </div>
+                
+                <div class="options" id="optionsContainer">
+                    <!-- Las opciones se generarán dinámicamente -->
+                </div>
+                
+                <div class="feedback" id="feedbackMessage">
+                    <!-- Mensaje de retroalimentación -->
+                </div>
+            </section>
+
+            <div class="navigation">
+                <a href="index.html" class="nav-btn">⬅️ Volver al Menú</a>
+                <a href="fracciones-equivalentes.html" class="nav-btn">Siguiente: Fracciones Equivalentes ➡️</a>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Variables globales
+        let totalPoints = parseInt(localStorage.getItem('mathPoints') || '0');
+        let currentExercise = 1;
+        let totalSlices = 4;
+        let filledSlices = 0;
+        let exerciseData = [];
+        let currentQuestionIndex = 0;
+
+        // Datos de ejercicios
+        const exercises = [
+            {
+                question: "¿Qué fracción representa la parte sombreada?",
+                visual: "🟦🟦🟦⬜",
+                options: ["3/4", "1/4", "4/3", "3/3"],
+                correct: 0,
+                explanation: "3 partes sombreadas de 4 partes totales = 3/4"
+            },
+            {
+                question: "¿Cuántas partes están coloreadas?",
+                visual: "🔴🔴⬜⬜⬜",
+                options: ["2/5", "3/5", "2/3", "5/2"],
+                correct: 0,
+                explanation: "2 partes rojas de 5 partes totales = 2/5"
+            },
+            {
+                question: "¿Qué fracción muestra esta representación?",
+                visual: "🍕🍕🍕🍕🍕🍕⬜⬜",
+                options: ["6/8", "8/6", "6/2", "2/8"],
+                correct: 0,
+                explanation: "6 rebanadas de pizza de 8 totales = 6/8"
+            },
+            {
+                question: "¿Cuál es la fracción correcta?",
+                visual: "🟢🟢🟢🟢🟢⬜⬜⬜⬜⬜",
+                options: ["5/10", "10/5", "5/5", "1/2"],
+                correct: 0,
+                explanation: "5 partes verdes de 10 partes totales = 5/10"
+            },
+            {
+                question: "¿Qué fracción representa esta imagen?",
+                visual: "🧀🧀🧀🧀🧀🧀",
+                options: ["6/6", "6/1", "1/6", "0/6"],
+                correct: 0,
+                explanation: "6 partes de queso de 6 partes totales = 6/6 (entero completo)"
+            }
+        ];
+
+        // Inicialización
+        document.addEventListener('DOMContentLoaded', function() {
+            updateDisplay();
+            setPizzaSlices(4);
+            loadExercise();
+            initializeSVGVisuals();
+        });
+
+        function initializeSVGVisuals() {
+            // Initialize the demonstration visuals with SVG
+            document.getElementById('visual1-2').appendChild(
+                createSVGPizza(1, 2, {
+                    size: 100,
+                    strokeColor: '#8B4513',
+                    filledColor: '#FF6347',
+                    emptyColor: '#FFD700',
+                    showLabel: false
+                })
+            );
+            
+            document.getElementById('visual2-3').appendChild(
+                createSVGPizza(2, 3, {
+                    size: 100,
+                    strokeColor: '#8B4513',
+                    filledColor: '#FF6347',
+                    emptyColor: '#FFD700',
+                    showLabel: false
+                })
+            );
+            
+            document.getElementById('visual3-4').appendChild(
+                createSVGPizza(3, 4, {
+                    size: 100,
+                    strokeColor: '#8B4513',
+                    filledColor: '#FF6347',
+                    emptyColor: '#FFD700',
+                    showLabel: false
+                })
+            );
+        }
+
+        function updateDisplay() {
+            document.getElementById('totalPoints').textContent = totalPoints;
+            document.getElementById('currentExercise').textContent = currentExercise;
+        }
+
+        // Funciones de la pizza
+        function setPizzaSlices(slices) {
+            totalSlices = slices;
+            filledSlices = 0;
+            renderPizza();
+            updateFraction();
+        }
+
+        function renderPizza() {
+            const pizzaDisplay = document.getElementById('pizzaDisplay');
+            pizzaDisplay.innerHTML = '';
+            
+            // Create SVG pizza with precise divisions
+            const pizzaSVG = createSVGPizza(filledSlices, totalSlices, {
+                size: 200,
+                strokeWidth: 4,
+                strokeColor: '#8B4513',
+                filledColor: '#FF6347',
+                emptyColor: '#FFD700',
+                showLabel: false
+            });
+            
+            // Make it interactive
+            pizzaSVG.style.cursor = 'pointer';
+            pizzaSVG.addEventListener('click', (e) => {
+                // Calculate which slice was clicked based on mouse position
+                const rect = pizzaSVG.getBoundingClientRect();
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - centerY, e.clientX - centerX);
+                let normalizedAngle = (angle + Math.PI / 2) % (2 * Math.PI);
+                if (normalizedAngle < 0) normalizedAngle += 2 * Math.PI;
+                
+                const sliceIndex = Math.floor(normalizedAngle / (2 * Math.PI / totalSlices));
+                toggleSlice(sliceIndex);
+            });
+            
+            pizzaDisplay.appendChild(pizzaSVG);
+        }
+
+        function toggleSlice(index) {
+            if (index < filledSlices) {
+                filledSlices = index;
+            } else if (index === filledSlices) {
+                filledSlices++;
+            }
+            renderPizza();
+            updateFraction();
+            addPoints(2);
+        }
+
+        function addSlice() {
+            if (filledSlices < totalSlices) {
+                filledSlices++;
+                renderPizza();
+                updateFraction();
+                addPoints(1);
+            }
+        }
+
+        function removeSlice() {
+            if (filledSlices > 0) {
+                filledSlices--;
+                renderPizza();
+                updateFraction();
+            }
+        }
+
+        function resetPizza() {
+            filledSlices = 0;
+            renderPizza();
+            updateFraction();
+        }
+
+        function updateFraction() {
+            document.getElementById('currentFraction').textContent = `${filledSlices}/${totalSlices}`;
+        }
+
+        // Funciones de ejercicios
+        function loadExercise() {
+            if (currentQuestionIndex >= exercises.length) {
+                showCompletion();
+                return;
+            }
+
+            const exercise = exercises[currentQuestionIndex];
+            document.getElementById('questionText').textContent = exercise.question;
+            document.getElementById('questionVisual').textContent = exercise.visual;
+            document.getElementById('exerciseNumber').textContent = currentQuestionIndex + 1;
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            exercise.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'option';
+                optionElement.textContent = option;
+                optionElement.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(optionElement);
+            });
+
+            document.getElementById('feedbackMessage').style.display = 'none';
+        }
+
+        function selectAnswer(selectedIndex) {
+            const exercise = exercises[currentQuestionIndex];
+            const options = document.querySelectorAll('.option');
+            const feedback = document.getElementById('feedbackMessage');
+
+            // Deshabilitar opciones
+            options.forEach(option => option.style.pointerEvents = 'none');
+
+            if (selectedIndex === exercise.correct) {
+                options[selectedIndex].classList.add('correct');
+                feedback.innerHTML = `🎉 ¡Correcto! ${exercise.explanation}`;
+                feedback.style.background = 'linear-gradient(135deg, #56ab2f, #a8e6cf)';
+                addPoints(20);
+            } else {
+                options[selectedIndex].classList.add('incorrect');
+                options[exercise.correct].classList.add('correct');
+                feedback.innerHTML = `💪 ¡Sigue intentando! ${exercise.explanation}`;
+                feedback.style.background = 'linear-gradient(135deg, #ff6b6b, #ffa8a8)';
+                addPoints(5);
+            }
+
+            feedback.style.display = 'block';
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                currentExercise++;
+                updateDisplay();
+                loadExercise();
+            }, 3000);
+        }
+
+        function addPoints(points) {
+            totalPoints += points;
+            localStorage.setItem('mathPoints', totalPoints.toString());
+            updateDisplay();
+            
+            // Efecto visual de puntos
+            showFloatingPoints(points);
+        }
+
+        function showFloatingPoints(points) {
+            const pointsElement = document.createElement('div');
+            pointsElement.textContent = `+${points}`;
+            pointsElement.style.position = 'fixed';
+            pointsElement.style.top = '100px';
+            pointsElement.style.right = '50px';
+            pointsElement.style.color = '#4facfe';
+            pointsElement.style.fontSize = '2rem';
+            pointsElement.style.fontWeight = 'bold';
+            pointsElement.style.zIndex = '9999';
+            pointsElement.style.animation = 'floatUp 2s ease-out forwards';
+            
+            document.body.appendChild(pointsElement);
+            
+            setTimeout(() => pointsElement.remove(), 2000);
+        }
+
+        function showCompletion() {
+            document.getElementById('exerciseSection').innerHTML = `
+                <div style="text-align: center; padding: 40px;">
+                    <h2 style="color: #4facfe; font-size: 2.5rem; margin-bottom: 20px;">
+                        🎉 ¡Felicitaciones! 🎉
+                    </h2>
+                    <p style="font-size: 1.5rem; color: #666; margin-bottom: 20px;">
+                        Has completado todos los ejercicios de Representación Gráfica
+                    </p>
+                    <p style="font-size: 1.2rem; color: #555;">
+                        ¡Ahora entiendes cómo las fracciones representan partes de un todo!
+                    </p>
+                    <div style="margin: 30px 0; font-size: 3rem;">🏆⭐🎯</div>
+                </div>
+            `;
+        }
+
+        // Agregar animación CSS
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes floatUp {
+                0% {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+                100% {
+                    opacity: 0;
+                    transform: translateY(-100px) scale(1.2);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+    <script src="fraction-utils.js"></script>
+    <script src="svg-graphics.js"></script>
+</body>
+</html> 
