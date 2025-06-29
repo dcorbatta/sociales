@@ -87,6 +87,21 @@ const chapters = [
       'the leader of a country',
       'a group of soldiers',
       'a way to do something',
+    ],
+    meaningsEs: [
+      'antiguo',
+      'padre/madre',
+      'mercado',
+      'tela',
+      'vender',
+      'seguir',
+      'gritar',
+      'multitud',
+      'enemigo',
+      'pelear',
+      'emperador',
+      'ejército',
+      'plan',
     ]
   },
   {
@@ -114,6 +129,18 @@ const chapters = [
       'a seat for a rider on a horse',
       'smart or intelligent',
       'to speak very quietly',
+    ],
+    meaningsEs: [
+      'castigar',
+      'noticia',
+      'fuerte',
+      'soldado',
+      'ropa',
+      'salvar',
+      'valiente',
+      'silla de montar',
+      'inteligente',
+      'susurrar',
     ]
   },
   {
@@ -147,6 +174,21 @@ const chapters = [
       'beside; at the side of',
       'to be the best in a competition',
       'a very brave person',
+    ],
+    meaningsEs: [
+      'río',
+      'nieve',
+      'carpa/tienda',
+      'luz',
+      'despierto',
+      'bien',
+      'batalla',
+      'general',
+      'bienvenida',
+      'hacia',
+      'al lado de',
+      'ganar',
+      'héroe',
     ]
   },
   {
@@ -174,6 +216,18 @@ const chapters = [
       'protected from danger',
       'an important government official',
       'something that burns and gives heat and light',
+    ],
+    meaningsEs: [
+      'guiar',
+      'convertirse',
+      'famoso',
+      'perseguir',
+      'lugar',
+      'mensaje',
+      'arco',
+      'seguro',
+      'ministro',
+      'fuego',
     ]
   },
   {
@@ -193,6 +247,14 @@ const chapters = [
       'a large meal for a celebration',
       'a small explosive used for celebrations',
       'a door in a wall or fence',
+    ],
+    meaningsEs: [
+      'viaje',
+      'animar/aplaudir',
+      'viajero',
+      'banquete',
+      'petardo',
+      'puerta/portón',
     ]
   },
   {
@@ -212,6 +274,14 @@ const chapters = [
       'to become someone\'s wife or husband',
       'a married man',
       'a marriage ceremony',
+    ],
+    meaningsEs: [
+      'cepillar',
+      'aventura',
+      'explicar',
+      'casarse',
+      'esposo',
+      'boda',
     ]
   },
 ];
@@ -393,11 +463,12 @@ function renderVocab() {
     <div class="word-title">${w.word}</div>
     <div class="hint">Pista para dibujar: ${w.hint}</div>
     <div class="meaning-select">
-      <label for="meaningSel">¿Cuál es el significado?</label><br>
+      <label for="meaningSel">¿Cuál es la traducción en español?</label><br>
       <select id="meaningSel">
         <option value="">Selecciona...</option>
-        ${ch.meanings.map((m, i) => `<option value="${i}">${m}</option>`).join('')}
+        ${ch.meaningsEs.map((m, i) => `<option value="${i}">${m}</option>`).join('')}
       </select>
+      <div id="vocabFeedback" style="margin-top:8px; min-height:22px;"></div>
     </div>
     <div class="canvas-container">
       <canvas id="drawCanvas" width="400" height="180"></canvas>
@@ -411,6 +482,17 @@ function renderVocab() {
   setTimeout(() => {
     const canvas = document.getElementById('drawCanvas');
     signaturePad = new SignaturePad(canvas, { minWidth: 1, maxWidth: 2 });
+    const sel = document.getElementById('meaningSel');
+    sel.onchange = () => {
+      const feedback = document.getElementById('vocabFeedback');
+      if (sel.value === "") {
+        feedback.textContent = '';
+      } else if (parseInt(sel.value) === currentWord) {
+        feedback.innerHTML = '<span style="color:green; font-weight:bold;">¡Correcto!</span>';
+      } else {
+        feedback.innerHTML = '<span style="color:#d32f2f; font-weight:bold;">Incorrecto. Intenta de nuevo.</span>';
+      }
+    };
   }, 100);
 }
 
