@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inglés - Vocabulario Interactivo</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body { font-family: Arial, sans-serif; background: #f7f7f7; margin: 0; padding: 0; }
+    .container { max-width: 700px; margin: 30px auto; background: #fff; border-radius: 10px; box-shadow: 0 2px 8px #ccc; padding: 30px; }
+    h1, h2 { text-align: center; }
+    .chapter-nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap; }
+    .chapter-btn { background: #e0e0e0; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-weight: bold; }
+    .chapter-btn.active { background: #4caf50; color: #fff; }
+    .vocab-section { margin: 20px 0; }
+    .word-title { font-size: 1.3em; font-weight: bold; margin-bottom: 5px; }
+    .hint { color: #888; font-size: 0.95em; margin-bottom: 10px; }
+    .meaning-select { margin-bottom: 10px; }
+    .canvas-container { border: 1px solid #bbb; border-radius: 8px; background: #fafafa; margin-bottom: 10px; }
+    .canvas-actions { margin-bottom: 15px; }
+    .next-btn { background: #2196f3; color: #fff; border: none; border-radius: 5px; padding: 8px 18px; cursor: pointer; font-size: 1em; }
+    .study-box { background: #e3f2fd; border-radius: 8px; padding: 10px 15px; margin-bottom: 15px; }
+    .hidden { display: none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Inglés - Vocabulario Interactivo</h1>
+    <div class="chapter-nav" id="chapterNav"></div>
+    <div id="studyMode" class="study-box hidden"></div>
+    <div class="vocab-section" id="vocabSection"></div>
+    <div style="text-align:center; margin-top:30px; color:#aaa; font-size:0.9em;">Hecho con ❤️ para aprender inglés</div>
+  </div>
+  <!-- Signature Pad -->
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+  <script>
+// --- Datos de vocabulario y pistas ---
+const chapters = [
+  {
+    name: 'Chapter 1',
+    words: [
+      { word: 'ancient', hint: 'Dibuja algo muy viejo, como una pirámide o un castillo.' },
+      { word: 'parent', hint: 'Dibuja una mamá o un papá.' },
+      { word: 'market', hint: 'Dibuja un lugar donde la gente compra y vende cosas.' },
+      { word: 'cloth', hint: 'Dibuja una tela o ropa.' },
+      { word: 'sell', hint: 'Dibuja a alguien vendiendo algo.' },
+      { word: 'follow', hint: 'Dibuja a una persona siguiendo a otra.' },
+      { word: 'shout', hint: 'Dibuja a alguien gritando.' },
+      { word: 'crowd', hint: 'Dibuja un grupo grande de personas.' },
+      { word: 'enemy', hint: 'Dibuja dos personas peleando o enojadas.' },
+      { word: 'fight', hint: 'Dibuja una pelea.' },
+      { word: 'emperor', hint: 'Dibuja un rey o emperador.' },
+      { word: 'army', hint: 'Dibuja muchos soldados juntos.' },
+      { word: 'plan', hint: 'Dibuja un mapa o una idea.' },
+    ],
+    meanings: [
+      'very old',
+      'a mother or father',
+      'a place where you buy and sell things',
+      'a piece of material for making clothes',
+      'to give something for money',
+      'to go after someone',
+      'to make a loud noise with your voice',
+      'a group of people together',
+      'a person who is against you',
+      'to use force against someone',
+      'the leader of a country',
+      'a group of soldiers',
+      'a way to do something',
+    ]
+  },
+  // ... Agregar los otros capítulos aquí ...
+];
+
+let currentChapter = 0;
+let currentWord = 0;
+let signaturePad;
+
+function renderChapterNav() {
+  const nav = document.getElementById('chapterNav');
+  nav.innerHTML = '';
+  chapters.forEach((ch, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'chapter-btn' + (idx === currentChapter ? ' active' : '');
+    btn.textContent = ch.name;
+    btn.onclick = () => { currentChapter = idx; currentWord = 0; renderVocab(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderStudyBox() {
+  const box = document.getElementById('studyMode');
+  const ch = chapters[currentChapter];
+  let html = '<b>Study these words:</b><ul>';
+  ch.words.forEach((w, i) => {
+    html += `<li><b>${w.word}</b>: <i>${ch.meanings[i]}</i></li>`;
+  });
+  html += '</ul>';
+  box.innerHTML = html;
+  box.classList.remove('hidden');
+}
+
+function renderVocab() {
+  renderChapterNav();
+  renderStudyBox();
+  const section = document.getElementById('vocabSection');
+  const ch = chapters[currentChapter];
+  const w = ch.words[currentWord];
+  section.innerHTML = `
+    <div class="word-title">${w.word}</div>
+    <div class="hint">Pista para dibujar: ${w.hint}</div>
+    <div class="meaning-select">
+      <label for="meaningSel">¿Cuál es el significado?</label><br>
+      <select id="meaningSel">
+        <option value="">Selecciona...</option>
+        ${ch.meanings.map((m, i) => `<option value="${i}">${m}</option>`).join('')}
+      </select>
+    </div>
+    <div class="canvas-container">
+      <canvas id="drawCanvas" width="400" height="180"></canvas>
+      <div class="canvas-actions">
+        <button onclick="signaturePad.clear()"><i class="fa fa-eraser"></i> Borrar dibujo</button>
+      </div>
+    </div>
+    <button class="next-btn" onclick="nextWord()">${currentWord < ch.words.length - 1 ? 'Siguiente palabra' : 'Terminar capítulo'}</button>
+    <div style="margin-top:10px; text-align:right; color:#888;">Palabra ${currentWord+1} de ${ch.words.length}</div>
+  `;
+  setTimeout(() => {
+    const canvas = document.getElementById('drawCanvas');
+    signaturePad = new SignaturePad(canvas, { minWidth: 1, maxWidth: 2 });
+  }, 100);
+}
+
+function nextWord() {
+  const ch = chapters[currentChapter];
+  if (currentWord < ch.words.length - 1) {
+    currentWord++;
+    renderVocab();
+  } else {
+    alert('¡Terminaste el capítulo! Puedes repasar o cambiar de capítulo.');
+    currentWord = 0;
+    renderVocab();
+  }
+}
+
+window.onload = () => {
+  renderVocab();
+};
+  </script>
+</body>
+</html> 
