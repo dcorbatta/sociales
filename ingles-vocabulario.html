@@ -544,24 +544,16 @@ function renderVocab() {
     <div class="hint">Pista para dibujar: ${w.hint}</div>
     <div class="meaning-select">
       <label for="meaningSel">¿Cuál es la traducción en español?</label><br>
-      <select id="meaningSel">
+      <select id="meaningSel" style="font-size:1.2em; padding:10px; border-radius:7px; min-width:220px; margin:10px 0;">
         <option value="">Selecciona...</option>
         ${ch.meaningsEs.map((m, i) => `<option value="${i}">${m}</option>`).join('')}
       </select>
       <div id="vocabFeedback" style="margin-top:8px; min-height:22px;"></div>
     </div>
-    <div class="canvas-container">
-      <canvas id="drawCanvas" width="400" height="180"></canvas>
-      <div class="canvas-actions">
-        <button onclick="signaturePad.clear()"><i class="fa fa-eraser"></i> Borrar dibujo</button>
-      </div>
-    </div>
     <button class="next-btn" onclick="nextWord()">${currentWord < ch.words.length - 1 ? 'Siguiente palabra' : 'Terminar capítulo'}</button>
     <div style="margin-top:10px; text-align:right; color:#888;">Palabra ${currentWord+1} de ${ch.words.length}</div>
   `;
   setTimeout(() => {
-    const canvas = document.getElementById('drawCanvas');
-    signaturePad = new SignaturePad(canvas, { minWidth: 1, maxWidth: 2 });
     const sel = document.getElementById('meaningSel');
     sel.onchange = () => {
       const feedback = document.getElementById('vocabFeedback');
@@ -731,7 +723,7 @@ function renderMatchSection() {
   let html = `<form id='matchForm'><table style='margin:auto; border-spacing:12px 8px;'>
     <tr><th style='text-align:left;'>Inicios</th><th>Finales</th></tr>`;
   pairs.forEach((p, i) => {
-    html += `<tr><td style='background:#e3f2fd; padding:8px; border-radius:6px;'>${p.start}</td><td><select id='matchSel${i}' style='padding:6px; border-radius:5px;'><option value=''>Selecciona...</option>${ends.map((end, j) => `<option value='${end}'>${end}</option>`).join('')}</select></td></tr>`;
+    html += `<tr><td style='background:#e3f2fd; padding:8px; border-radius:6px;'>${p.start}</td><td><select id='matchSel${i}' style='font-size:1.2em; padding:10px; border-radius:7px; min-width:220px; margin:10px 0;'><option value=''>Selecciona...</option>${ends.map((end, j) => `<option value='${end}'>${end}</option>`).join('')}</select></td></tr>`;
   });
   html += `</table></form>
   <div id='matchFeedback' style='margin-top:20px;'></div>
