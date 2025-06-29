@@ -32,6 +32,7 @@
     <div class="main-nav" style="display:flex; justify-content:center; gap:15px; margin-bottom:20px;">
       <button id="vocabTabBtn" class="main-tab-btn active">Vocabulario</button>
       <button id="readingTabBtn" class="main-tab-btn">Comprensión lectora</button>
+      <button id="matchTabBtn" class="main-tab-btn">Unir oraciones</button>
     </div>
     <div id="vocabMain">
       <div class="chapter-nav" id="chapterNav"></div>
@@ -41,6 +42,10 @@
     <div id="readingMain" style="display:none;">
       <div class="chapter-nav" id="readingChapterNav"></div>
       <div id="readingSection"></div>
+    </div>
+    <div id="matchMain" style="display:none;">
+      <div class="chapter-nav" id="matchChapterNav"></div>
+      <div id="matchSection"></div>
     </div>
     <div id="errorMsg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
     <div style="text-align:center; margin-top:30px; color:#aaa; font-size:0.9em;">Hecho con ❤️ para aprender inglés</div>
@@ -287,6 +292,20 @@ const readingQuestions = [
   ],
 ];
 
+const matchSentences = [
+  [ // Capítulo 1
+    { start: 'Mulan lives', end: 'in a little village.' },
+    { start: "Mulan's father is", end: 'old and ill.' },
+    { start: 'At home Mulan is making', end: 'some cloth.' },
+    { start: 'A crowd of people is looking at', end: 'a big army.' },
+    { start: 'The Emperor needs', end: 'a big army.' },
+    { start: 'Mulan must think of', end: 'a plan.' },
+    { start: 'Mulan follows', end: 'Sun Ying.' },
+    { start: 'At home Mulan is making', end: 'some cloth.' },
+  ],
+  // Puedes agregar más capítulos aquí
+];
+
 let currentChapter = 0;
 let currentWord = 0;
 let signaturePad;
@@ -361,22 +380,38 @@ function nextWord() {
 // --- Navegación principal ---
 const vocabTabBtn = document.getElementById('vocabTabBtn');
 const readingTabBtn = document.getElementById('readingTabBtn');
+const matchTabBtn = document.getElementById('matchTabBtn');
 const vocabMain = document.getElementById('vocabMain');
 const readingMain = document.getElementById('readingMain');
+const matchMain = document.getElementById('matchMain');
 
 vocabTabBtn.onclick = () => {
   vocabTabBtn.classList.add('active');
   readingTabBtn.classList.remove('active');
+  matchTabBtn.classList.remove('active');
   vocabMain.style.display = '';
   readingMain.style.display = 'none';
+  matchMain.style.display = 'none';
 };
 readingTabBtn.onclick = () => {
   vocabTabBtn.classList.remove('active');
   readingTabBtn.classList.add('active');
+  matchTabBtn.classList.remove('active');
   vocabMain.style.display = 'none';
   readingMain.style.display = '';
+  matchMain.style.display = 'none';
   renderReadingChapterNav();
   renderReadingSection();
+};
+matchTabBtn.onclick = () => {
+  vocabTabBtn.classList.remove('active');
+  readingTabBtn.classList.remove('active');
+  matchTabBtn.classList.add('active');
+  vocabMain.style.display = 'none';
+  readingMain.style.display = 'none';
+  matchMain.style.display = '';
+  renderMatchChapterNav();
+  renderMatchSection();
 };
 
 // --- Comprensión lectora ---
@@ -435,6 +470,59 @@ function renderReadingSection() {
     currentReadingQ++;
     renderReadingSection();
   };
+}
+
+// --- Unir oraciones (drag & drop) ---
+let currentMatchChapter = 0;
+let matchPairs = [];
+let matchResults = [];
+
+function renderMatchChapterNav() {
+  const nav = document.getElementById('matchChapterNav');
+  nav.innerHTML = '';
+  chapters.forEach((ch, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'chapter-btn' + (idx === currentMatchChapter ? ' active' : '');
+    btn.textContent = ch.name;
+    btn.onclick = () => { currentMatchChapter = idx; renderMatchSection(); renderMatchChapterNav(); };
+    nav.appendChild(btn);
+  });
+}
+
+function shuffleArray(arr) {
+  return arr.map(v => [Math.random(), v]).sort().map(a => a[1]);
+}
+
+function renderMatchSection() {
+  const section = document.getElementById('matchSection');
+  const pairs = matchSentences[currentMatchChapter] || [];
+  const ends = shuffleArray(pairs.map((p) => p.end));
+  matchResults = Array(pairs.length).fill(null);
+  let html = `<form id='matchForm'><table style='margin:auto; border-spacing:12px 8px;'>
+    <tr><th style='text-align:left;'>Inicios</th><th>Finales</th></tr>`;
+  pairs.forEach((p, i) => {
+    html += `<tr><td style='background:#e3f2fd; padding:8px; border-radius:6px;'>${p.start}</td><td><select id='matchSel${i}' style='padding:6px; border-radius:5px;'><option value=''>Selecciona...</option>${ends.map((end, j) => `<option value='${end}'>${end}</option>`).join('')}</select></td></tr>`;
+  });
+  html += `</table></form>
+  <div id='matchFeedback' style='margin-top:20px;'></div>
+  <button class='next-btn' onclick='checkMatchResults()' style='margin-top:20px;'>Corregir</button>
+  <button class='next-btn' onclick='renderMatchSection();return false;' style='margin-top:20px; background:#aaa;'>Resetear</button>`;
+  section.innerHTML = html;
+}
+
+function checkMatchResults() {
+  const pairs = matchSentences[currentMatchChapter] || [];
+  let correct = 0;
+  for (let i = 0; i < pairs.length; i++) {
+    const sel = document.getElementById('matchSel'+i);
+    if (sel && sel.value === pairs[i].end) correct++;
+  }
+  const feedback = document.getElementById('matchFeedback');
+  if (correct === pairs.length) {
+    feedback.innerHTML = `<span style='color:green; font-weight:bold;'>¡Todo correcto! 🎉</span>`;
+  } else {
+    feedback.innerHTML = `<span style='color:#d32f2f; font-weight:bold;'>${correct} de ${pairs.length} correctos. Intenta de nuevo.</span>`;
+  }
 }
 
 window.onload = () => {
