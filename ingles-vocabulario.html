@@ -21,14 +21,27 @@
     .next-btn { background: #2196f3; color: #fff; border: none; border-radius: 5px; padding: 8px 18px; cursor: pointer; font-size: 1em; }
     .study-box { background: #e3f2fd; border-radius: 8px; padding: 10px 15px; margin-bottom: 15px; }
     .hidden { display: none; }
+    .main-nav { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; }
+    .main-tab-btn { background: #e0e0e0; border: none; border-radius: 5px; padding: 8px 16px; cursor: pointer; font-weight: bold; }
+    .main-tab-btn.active { background: #4caf50; color: #fff; }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>Inglés - Vocabulario Interactivo</h1>
-    <div class="chapter-nav" id="chapterNav"></div>
-    <div id="studyMode" class="study-box"></div>
-    <div class="vocab-section" id="vocabSection"></div>
+    <div class="main-nav" style="display:flex; justify-content:center; gap:15px; margin-bottom:20px;">
+      <button id="vocabTabBtn" class="main-tab-btn active">Vocabulario</button>
+      <button id="readingTabBtn" class="main-tab-btn">Comprensión lectora</button>
+    </div>
+    <div id="vocabMain">
+      <div class="chapter-nav" id="chapterNav"></div>
+      <div id="studyMode" class="study-box"></div>
+      <div class="vocab-section" id="vocabSection"></div>
+    </div>
+    <div id="readingMain" style="display:none;">
+      <div class="chapter-nav" id="readingChapterNav"></div>
+      <div id="readingSection"></div>
+    </div>
     <div id="errorMsg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
     <div style="text-align:center; margin-top:30px; color:#aaa; font-size:0.9em;">Hecho con ❤️ para aprender inglés</div>
   </div>
@@ -198,6 +211,38 @@ const chapters = [
   },
 ];
 
+// --- Preguntas de comprensión lectora por capítulo ---
+const readingQuestions = [
+  [ // Capítulo 1
+    {
+      question: 'Where does Mulan live?',
+      options: ['In a big city', 'In a little village', "In the Emperor's palace"],
+      answer: 1
+    },
+    {
+      question: 'Who is old and ill?',
+      options: ['Mulan', "Mulan's father", 'The Emperor'],
+      answer: 1
+    },
+    {
+      question: 'What does Mulan make at home?',
+      options: ['Cloth', 'Food', 'Shoes'],
+      answer: 0
+    },
+    {
+      question: 'Who needs a big army?',
+      options: ['Mulan', 'The Emperor', "Mulan's brother"],
+      answer: 1
+    },
+    {
+      question: 'Who must think of a plan?',
+      options: ['Mulan', 'The Emperor', 'The crowd'],
+      answer: 0
+    },
+  ],
+  // Puedes agregar más arrays para los otros capítulos
+];
+
 let currentChapter = 0;
 let currentWord = 0;
 let signaturePad;
@@ -267,6 +312,85 @@ function nextWord() {
     currentWord = 0;
     renderVocab();
   }
+}
+
+// --- Navegación principal ---
+const vocabTabBtn = document.getElementById('vocabTabBtn');
+const readingTabBtn = document.getElementById('readingTabBtn');
+const vocabMain = document.getElementById('vocabMain');
+const readingMain = document.getElementById('readingMain');
+
+vocabTabBtn.onclick = () => {
+  vocabTabBtn.classList.add('active');
+  readingTabBtn.classList.remove('active');
+  vocabMain.style.display = '';
+  readingMain.style.display = 'none';
+};
+readingTabBtn.onclick = () => {
+  vocabTabBtn.classList.remove('active');
+  readingTabBtn.classList.add('active');
+  vocabMain.style.display = 'none';
+  readingMain.style.display = '';
+  renderReadingChapterNav();
+  renderReadingSection();
+};
+
+// --- Comprensión lectora ---
+let currentReadingChapter = 0;
+let currentReadingQ = 0;
+let readingScore = 0;
+
+function renderReadingChapterNav() {
+  const nav = document.getElementById('readingChapterNav');
+  nav.innerHTML = '';
+  chapters.forEach((ch, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'chapter-btn' + (idx === currentReadingChapter ? ' active' : '');
+    btn.textContent = ch.name;
+    btn.onclick = () => { currentReadingChapter = idx; currentReadingQ = 0; readingScore = 0; renderReadingSection(); renderReadingChapterNav(); };
+    nav.appendChild(btn);
+  });
+}
+
+function renderReadingSection() {
+  const section = document.getElementById('readingSection');
+  const qs = readingQuestions[currentReadingChapter] || [];
+  if (currentReadingQ >= qs.length) {
+    section.innerHTML = `<div style='font-size:1.2em; text-align:center; margin:30px 0;'>¡Terminaste!<br>Puntaje: <b>${readingScore} / ${qs.length}</b></div>
+    <button onclick='currentReadingQ=0;readingScore=0;renderReadingSection()' class='next-btn'>Repetir capítulo</button>`;
+    return;
+  }
+  const q = qs[currentReadingQ];
+  section.innerHTML = `
+    <div style='font-size:1.1em; margin-bottom:10px;'><b>Pregunta ${currentReadingQ+1}:</b> ${q.question}</div>
+    <div id='readingOpts'></div>
+    <div id='readingFeedback' style='margin:10px 0; min-height:24px;'></div>
+    <button id='nextReadingBtn' class='next-btn' style='display:none;'>Siguiente</button>
+    <div style='margin-top:10px; text-align:right; color:#888;'>${currentReadingQ+1} de ${qs.length}</div>
+  `;
+  const optsDiv = document.getElementById('readingOpts');
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.className = 'chapter-btn';
+    btn.style.margin = '6px 0';
+    btn.style.display = 'block';
+    btn.onclick = () => {
+      if (i === q.answer) {
+        document.getElementById('readingFeedback').textContent = '¡Correcto!';
+        readingScore++;
+      } else {
+        document.getElementById('readingFeedback').textContent = 'Incorrecto. La respuesta correcta es: ' + q.options[q.answer];
+      }
+      Array.from(optsDiv.children).forEach(b => b.disabled = true);
+      document.getElementById('nextReadingBtn').style.display = '';
+    };
+    optsDiv.appendChild(btn);
+  });
+  document.getElementById('nextReadingBtn').onclick = () => {
+    currentReadingQ++;
+    renderReadingSection();
+  };
 }
 
 window.onload = () => {
