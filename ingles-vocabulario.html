@@ -27,13 +27,15 @@
   <div class="container">
     <h1>Inglés - Vocabulario Interactivo</h1>
     <div class="chapter-nav" id="chapterNav"></div>
-    <div id="studyMode" class="study-box hidden"></div>
+    <div id="studyMode" class="study-box"></div>
     <div class="vocab-section" id="vocabSection"></div>
+    <div id="errorMsg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
     <div style="text-align:center; margin-top:30px; color:#aaa; font-size:0.9em;">Hecho con ❤️ para aprender inglés</div>
   </div>
   <!-- Signature Pad -->
   <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
   <script>
+try {
 // --- Datos de vocabulario y pistas ---
 const chapters = [
   {
@@ -189,7 +191,7 @@ const chapters = [
       'to make hair tidy with a brush',
       'an exciting or unusual experience',
       'to make something clear or easy to understand',
-      'to become someone's wife or husband',
+      'to become someone\'s wife or husband',
       'a married man',
       'a marriage ceremony',
     ]
@@ -270,6 +272,10 @@ function nextWord() {
 window.onload = () => {
   renderVocab();
 };
+} catch (e) {
+  document.getElementById('errorMsg').style.display = 'block';
+  document.getElementById('errorMsg').textContent = 'Error en el código: ' + e.message;
+}
   </script>
 </body>
 </html> 
