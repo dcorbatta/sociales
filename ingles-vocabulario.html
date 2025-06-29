@@ -214,33 +214,77 @@ const chapters = [
 // --- Preguntas de comprensión lectora por capítulo ---
 const readingQuestions = [
   [ // Capítulo 1
-    {
-      question: 'Where does Mulan live?',
-      options: ['In a big city', 'In a little village', "In the Emperor's palace"],
-      answer: 1
-    },
-    {
-      question: 'Who is old and ill?',
-      options: ['Mulan', "Mulan's father", 'The Emperor'],
-      answer: 1
-    },
-    {
-      question: 'What does Mulan make at home?',
-      options: ['Cloth', 'Food', 'Shoes'],
-      answer: 0
-    },
-    {
-      question: 'Who needs a big army?',
-      options: ['Mulan', 'The Emperor', "Mulan's brother"],
-      answer: 1
-    },
-    {
-      question: 'Who must think of a plan?',
-      options: ['Mulan', 'The Emperor', 'The crowd'],
-      answer: 0
-    },
+    { question: 'Where does Mulan live?', options: ['In a big city', 'In a little village', "In the Emperor's palace"], answer: 1 },
+    { question: 'Who is old and ill?', options: ['Mulan', "Mulan's father", 'The Emperor'], answer: 1 },
+    { question: 'What does Mulan make at home?', options: ['Cloth', 'Food', 'Shoes'], answer: 0 },
+    { question: 'Who needs a big army?', options: ['Mulan', 'The Emperor', "Mulan's brother"], answer: 1 },
+    { question: 'Who must think of a plan?', options: ['Mulan', 'The Emperor', 'The crowd'], answer: 0 },
+    { question: 'Who is Mulan\'s enemy?', options: ['The Emperor', 'The army', "The enemy soldiers"], answer: 2 },
+    { question: 'What does a crowd of people do?', options: ['Look at something', 'Fight', 'Sell cloth'], answer: 0 },
+    { question: 'Who does Mulan follow?', options: ['Her father', 'Sun Ying', 'The Emperor'], answer: 1 },
+    { question: 'What does Mulan\'s father do?', options: ['He is a soldier', 'He is old and ill', 'He is the Emperor'], answer: 1 },
+    { question: 'What does Mulan shout?', options: ['Her plan', 'Her name', 'Nothing'], answer: 0 },
   ],
-  // Puedes agregar más arrays para los otros capítulos
+  [ // Capítulo 2
+    { question: "Why can't Mulan's brother join the army?", options: ["He is too young", "He is too old", "He is the Emperor"], answer: 0 },
+    { question: "What does Mulan's father give her before she leaves?", options: ["A horse", "Some money", "A sword"], answer: 1 },
+    { question: "Who does Mulan tell her secret to?", options: ["The Emperor", "Sun Ying", "Her brother"], answer: 1 },
+    { question: 'What does Mulan\'s family do before she leaves?', options: ["Says goodbye", 'Goes to the market', 'Fights'], answer: 0 },
+    { question: 'What does Mulan buy at the market?', options: ['A horse', 'A saddle', 'Both'], answer: 2 },
+    { question: 'Who is clever?', options: ['Mulan', 'The Emperor', 'Xiong'], answer: 0 },
+    { question: 'Who whispers to Mulan?', options: ['Sun Ying', 'Her father', 'The Emperor'], answer: 0 },
+    { question: 'What does Mulan want to save?', options: ['Her family name', 'The Emperor', 'The market'], answer: 0 },
+    { question: 'Who is brave?', options: ['Mulan', 'Her brother', 'The Emperor'], answer: 0 },
+    { question: 'What does Mulan wear?', options: ["Soldier's clothes", 'A dress', 'A hat'], answer: 0 },
+  ],
+  [ // Capítulo 3
+    { question: "Where do the soldiers sleep?", options: ["In a palace", "In a tent", "In a boat"], answer: 1 },
+    { question: "What do the soldiers need in the winter?", options: ["Snow", "Light", "Fire"], answer: 2 },
+    { question: "Who is the leader of the army?", options: ["The Emperor", "The general", "Mulan"], answer: 1 },
+    { question: 'What do the soldiers walk through?', options: ['Snow', 'Sand', 'Water'], answer: 0 },
+    { question: 'What do the soldiers use to see at night?', options: ['A tent', 'A light', 'A river'], answer: 1 },
+    { question: 'Who fights in the battle?', options: ['Mulan', 'The general', 'Both'], answer: 2 },
+    { question: 'Who welcomes Mulan?', options: ['The Emperor', 'The general', 'The soldiers'], answer: 2 },
+    { question: 'What is next to Mulan?', options: ['Her horse', 'The general', 'The Emperor'], answer: 0 },
+    { question: 'Who wins the battle?', options: ['The enemy', 'The Chinese army', 'The Emperor'], answer: 1 },
+    { question: 'Who is a hero?', options: ['Mulan', 'The general', 'The Emperor'], answer: 0 },
+  ],
+  [ // Capítulo 4
+    { question: "What does Mulan become?", options: ["A minister", "A general", "A traveller"], answer: 1 },
+    { question: "What does the Emperor send to Mulan?", options: ["A message", "A horse", "A bow"], answer: 0 },
+    { question: "What does Mulan chase out of China?", options: ["The Emperor", "The enemy", "The minister"], answer: 1 },
+    { question: 'Who is famous?', options: ['Mulan', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'What does the Emperor give to Mulan?', options: ['A palace', 'A horse', 'A message'], answer: 1 },
+    { question: 'Who is safe?', options: ['Mulan', 'The enemy', 'The minister'], answer: 0 },
+    { question: 'Who leads the army?', options: ['Mulan', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'Who became a general?', options: ['Mulan', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'What does the general do?', options: ['Leads the army', 'Sends a message', 'Chases the enemy'], answer: 0 },
+    { question: 'Who is the minister?', options: ['A government official', 'A soldier', 'A traveller'], answer: 0 },
+  ],
+  [ // Capítulo 5
+    { question: "What do Mulan's parents make for her when she returns?", options: ["A journey", "A feast", "A gate"], answer: 1 },
+    { question: "What do people do when they see Mulan?", options: ["Cheer", "Cry", "Sleep"], answer: 0 },
+    { question: "What does Xiong use to welcome Mulan?", options: ["Firecrackers", "A horse", "A message"], answer: 0 },
+    { question: 'What is a traveller?', options: ['A person who goes from place to place', 'A soldier', 'A minister'], answer: 0 },
+    { question: 'What is a feast?', options: ['A big meal', 'A journey', 'A message'], answer: 0 },
+    { question: 'Where is the gate?', options: ['At the entrance', 'In the palace', 'In the market'], answer: 0 },
+    { question: 'Who has a long journey?', options: ['Mulan', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'Who cheers for Mulan?', options: ['The people', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'What do firecrackers do?', options: ['Make noise', 'Give food', 'Open the gate'], answer: 0 },
+    { question: 'Who is at the feast?', options: ["Mulan's family", 'The Emperor', 'The minister'], answer: 0 },
+  ],
+  [ // Capítulo 6
+    { question: "What does Mulan do before her wedding?", options: ["Brush her hair", "Go on an adventure", "Fight in a battle"], answer: 0 },
+    { question: "Who does Ye Ming love?", options: ["The Emperor", "Mulan", "Sun Ying"], answer: 1 },
+    { question: "What is the big event at the end of the story?", options: ["A wedding", "A battle", "A journey"], answer: 0 },
+    { question: 'Who is Mulan\'s husband?', options: ['Ye Ming', 'The Emperor', 'Sun Ying'], answer: 0 },
+    { question: 'What is an adventure?', options: ['An exciting experience', 'A wedding', 'A message'], answer: 0 },
+    { question: 'Who explains things to Mulan?', options: ['Ye Ming', 'Her parents', 'The Emperor'], answer: 1 },
+    { question: 'What is a wedding?', options: ['A marriage ceremony', 'A battle', 'A journey'], answer: 0 },
+    { question: 'Who brushes Mulan\'s hair?', options: ['Mulan', 'Her mother', 'Ye Ming'], answer: 0 },
+    { question: 'Who is at the wedding?', options: ['Mulan and Ye Ming', 'The Emperor', 'The minister'], answer: 0 },
+    { question: 'What does Mulan do after the wedding?', options: ['Goes home', 'Fights', 'Travels'], answer: 0 },
+  ],
 ];
 
 let currentChapter = 0;
