@@ -33,6 +33,7 @@
       <button id="vocabTabBtn" class="main-tab-btn active">Vocabulario</button>
       <button id="readingTabBtn" class="main-tab-btn">Comprensión lectora</button>
       <button id="matchTabBtn" class="main-tab-btn">Unir oraciones</button>
+      <button id="mistakeTabBtn" class="main-tab-btn">Corregir errores</button>
     </div>
     <div id="vocabMain">
       <div class="chapter-nav" id="chapterNav"></div>
@@ -46,6 +47,10 @@
     <div id="matchMain" style="display:none;">
       <div class="chapter-nav" id="matchChapterNav"></div>
       <div id="matchSection"></div>
+    </div>
+    <div id="mistakeMain" style="display:none;">
+      <div class="chapter-nav" id="mistakeChapterNav"></div>
+      <div id="mistakeSection"></div>
     </div>
     <div id="errorMsg" style="color:red; text-align:center; display:none; margin-top:20px;"></div>
     <div style="text-align:center; margin-top:30px; color:#aaa; font-size:0.9em;">Hecho con ❤️ para aprender inglés</div>
@@ -425,6 +430,81 @@ const matchSentences = [
   ],
 ];
 
+const mistakeWords = [
+  [ // Capítulo 1
+    { phrase: 'Mulan lives in a <b style="color:#d32f2f">big city</b>.', answer: 'little village' },
+    { phrase: "Mulan's father is <b style=\"color:#d32f2f\">young and strong</b>.", answer: 'old and ill' },
+    { phrase: 'At home Mulan is making <b style="color:#d32f2f">shoes</b>.', answer: 'some cloth' },
+    { phrase: 'The Emperor needs a <b style="color:#d32f2f">small army</b>.', answer: 'big army' },
+    { phrase: 'Mulan must think of a <b style="color:#d32f2f">party</b>.', answer: 'plan' },
+    { phrase: 'Mulan shouts her <b style="color:#d32f2f">name</b>.', answer: 'plan' },
+    { phrase: 'A crowd of people is looking at a <b style="color:#d32f2f">dog</b>.', answer: 'Mulan' },
+    { phrase: 'Mulan follows the <b style="color:#d32f2f">Emperor</b>.', answer: 'Sun Ying' },
+    { phrase: 'The <b style="color:#d32f2f">enemy</b> is Mulan\'s friend.', answer: 'Emperor' },
+    { phrase: 'Mulan sells <b style="color:#d32f2f">food</b> at the market.', answer: 'cloth' },
+  ],
+  [ // Capítulo 2
+    { phrase: "Mulan's family <b style=\"color:#d32f2f\">cries</b> when she leaves.", answer: 'says goodbye' },
+    { phrase: 'Mulan buys a <b style="color:#d32f2f">car</b> at the market.', answer: 'horse' },
+    { phrase: 'Mulan tells her secret to <b style="color:#d32f2f">the Emperor</b>.', answer: 'Sun Ying' },
+    { phrase: 'Mulan wears <b style="color:#d32f2f">a dress</b>.', answer: "soldier's clothes" },
+    { phrase: 'Mulan is <b style="color:#d32f2f">afraid</b>.', answer: 'brave' },
+    { phrase: 'Mulan wants to <b style="color:#d32f2f">fight</b> her family.', answer: 'save her family name' },
+    { phrase: "Mulan's father gives her <b style=\"color:#d32f2f\">a book</b>.", answer: 'some money' },
+    { phrase: 'Mulan <b style="color:#d32f2f">shouts</b> her secret.', answer: 'whispers' },
+    { phrase: 'Mulan is <b style="color:#d32f2f">weak</b>.', answer: 'strong' },
+    { phrase: "Mulan's brother is <b style=\"color:#d32f2f\">old</b>.", answer: 'young' },
+  ],
+  [ // Capítulo 3
+    { phrase: 'For <b style="color:#d32f2f">five</b> days Mulan rides across rivers and over hills.', answer: 'two' },
+    { phrase: 'Mulan finds thousands of soldiers next to the <b style="color:#d32f2f">Red</b> River.', answer: 'Yellow' },
+    { phrase: 'Ye Ming gives Mulan a <b style="color:#d32f2f">cold</b> drink.', answer: 'hot' },
+    { phrase: 'The soldiers <b style="color:#d32f2f">know</b> Mulan\'s secret.', answer: "don't" },
+    { phrase: 'The general of the Chinese army <b style="color:#d32f2f">whispers</b> to the soldiers.', answer: 'talks' },
+    { phrase: 'Mulan fights at the <b style="color:#d32f2f">back</b> of the army.', answer: 'front' },
+    { phrase: 'An enemy soldier wants to kill <b style="color:#d32f2f">Ye Ming</b>.', answer: 'Mulan' },
+    { phrase: 'Ye Ming is now the <b style="color:#d32f2f">hero</b> of the army.', answer: 'Mulan' },
+    { phrase: 'The <b style="color:#d32f2f">tent</b> is made of metal.', answer: 'cloth' },
+    { phrase: 'The soldiers walk through the <b style="color:#d32f2f">desert</b>.', answer: 'snow' },
+  ],
+  [ // Capítulo 4
+    { phrase: 'Mulan becomes a <b style="color:#d32f2f">traveller</b>.', answer: 'general' },
+    { phrase: 'The Emperor sends a <b style="color:#d32f2f">horse</b> to Mulan.', answer: 'message' },
+    { phrase: 'Mulan chases the <b style="color:#d32f2f">minister</b> out of China.', answer: 'enemy' },
+    { phrase: 'Mulan is <b style="color:#d32f2f">unknown</b>.', answer: 'famous' },
+    { phrase: 'The Emperor gives Mulan a <b style="color:#d32f2f">palace</b>.', answer: 'horse' },
+    { phrase: 'Mulan is <b style="color:#d32f2f">in danger</b>.', answer: 'safe' },
+    { phrase: 'Mulan <b style="color:#d32f2f">follows</b> the army.', answer: 'leads' },
+    { phrase: 'The <b style="color:#d32f2f">soldier</b> is a government official.', answer: 'minister' },
+    { phrase: 'The <b style="color:#d32f2f">bow</b> is for music.', answer: 'arrows' },
+    { phrase: 'Mulan <b style="color:#d32f2f">loses</b> the battle.', answer: 'wins' },
+  ],
+  [ // Capítulo 5
+    { phrase: "Mulan's parents <b style=\"color:#d32f2f\">cry</b> for her when she returns.", answer: 'make a feast' },
+    { phrase: 'People <b style="color:#d32f2f">sleep</b> when they see Mulan.', answer: 'cheer' },
+    { phrase: 'Xiong uses <b style="color:#d32f2f">a horse</b> to welcome Mulan.', answer: 'firecrackers' },
+    { phrase: 'A traveller is a <b style="color:#d32f2f">soldier</b>.', answer: 'person who goes from place to place' },
+    { phrase: 'A feast is a <b style="color:#d32f2f">journey</b>.', answer: 'big meal' },
+    { phrase: 'The gate is <b style="color:#d32f2f">in the palace</b>.', answer: 'at the entrance' },
+    { phrase: 'Mulan has a <b style="color:#d32f2f">short</b> journey.', answer: 'long' },
+    { phrase: 'Mulan is at the <b style="color:#d32f2f">market</b>.', answer: 'gate' },
+    { phrase: 'Firecrackers <b style="color:#d32f2f">give food</b>.', answer: 'make noise' },
+    { phrase: 'The <b style="color:#d32f2f">Emperor</b> is at the feast.', answer: "Mulan's family" },
+  ],
+  [ // Capítulo 6
+    { phrase: 'Before her wedding, Mulan <b style="color:#d32f2f">runs</b>.', answer: 'brushes her hair' },
+    { phrase: 'Ye Ming <b style="color:#d32f2f">hates</b> Mulan.', answer: 'loves' },
+    { phrase: 'The big event is a <b style="color:#d32f2f">battle</b>.', answer: 'wedding' },
+    { phrase: "Mulan's husband is <b style=\"color:#d32f2f\">the Emperor</b>.", answer: 'Ye Ming' },
+    { phrase: 'An adventure is a <b style="color:#d32f2f">wedding</b>.', answer: 'exciting experience' },
+    { phrase: "Mulan's parents <b style=\"color:#d32f2f\">fight</b> with her.", answer: 'explain things' },
+    { phrase: 'A wedding is a <b style="color:#d32f2f">battle</b>.', answer: 'marriage ceremony' },
+    { phrase: 'After the wedding, Mulan <b style="color:#d32f2f">travels</b>.', answer: 'goes home' },
+    { phrase: 'Ye Ming is a <b style="color:#d32f2f">soldier</b>.', answer: 'husband' },
+    { phrase: 'Mulan <b style="color:#d32f2f">forgets</b> her adventure.', answer: 'remembers' },
+  ],
+];
+
 let currentChapter = 0;
 let currentWord = 0;
 let signaturePad;
@@ -512,25 +592,31 @@ function nextWord() {
 const vocabTabBtn = document.getElementById('vocabTabBtn');
 const readingTabBtn = document.getElementById('readingTabBtn');
 const matchTabBtn = document.getElementById('matchTabBtn');
+const mistakeTabBtn = document.getElementById('mistakeTabBtn');
 const vocabMain = document.getElementById('vocabMain');
 const readingMain = document.getElementById('readingMain');
 const matchMain = document.getElementById('matchMain');
+const mistakeMain = document.getElementById('mistakeMain');
 
 vocabTabBtn.onclick = () => {
   vocabTabBtn.classList.add('active');
   readingTabBtn.classList.remove('active');
   matchTabBtn.classList.remove('active');
+  mistakeTabBtn.classList.remove('active');
   vocabMain.style.display = '';
   readingMain.style.display = 'none';
   matchMain.style.display = 'none';
+  mistakeMain.style.display = 'none';
 };
 readingTabBtn.onclick = () => {
   vocabTabBtn.classList.remove('active');
   readingTabBtn.classList.add('active');
   matchTabBtn.classList.remove('active');
+  mistakeTabBtn.classList.remove('active');
   vocabMain.style.display = 'none';
   readingMain.style.display = '';
   matchMain.style.display = 'none';
+  mistakeMain.style.display = 'none';
   renderReadingChapterNav();
   renderReadingSection();
 };
@@ -538,11 +624,24 @@ matchTabBtn.onclick = () => {
   vocabTabBtn.classList.remove('active');
   readingTabBtn.classList.remove('active');
   matchTabBtn.classList.add('active');
+  mistakeTabBtn.classList.remove('active');
   vocabMain.style.display = 'none';
   readingMain.style.display = 'none';
   matchMain.style.display = '';
   renderMatchChapterNav();
   renderMatchSection();
+};
+mistakeTabBtn.onclick = () => {
+  vocabTabBtn.classList.remove('active');
+  readingTabBtn.classList.remove('active');
+  matchTabBtn.classList.remove('active');
+  mistakeTabBtn.classList.add('active');
+  vocabMain.style.display = 'none';
+  readingMain.style.display = 'none';
+  matchMain.style.display = 'none';
+  mistakeMain.style.display = '';
+  renderMistakeChapterNav();
+  renderMistakeSection();
 };
 
 // --- Comprensión lectora ---
@@ -654,6 +753,67 @@ function checkMatchResults() {
   } else {
     feedback.innerHTML = `<span style='color:#d32f2f; font-weight:bold;'>${correct} de ${pairs.length} correctos. Intenta de nuevo.</span>`;
   }
+}
+
+// --- Corregir errores (palabra) ---
+let currentMistakeWordChapter = 0;
+let currentMistakeWordIdx = 0;
+
+function renderMistakeChapterNav() {
+  const nav = document.getElementById('mistakeChapterNav');
+  nav.innerHTML = '';
+  chapters.forEach((ch, idx) => {
+    const btn = document.createElement('button');
+    btn.className = 'chapter-btn' + (idx === currentMistakeWordChapter ? ' active' : '');
+    btn.textContent = ch.name;
+    btn.onclick = () => { currentMistakeWordChapter = idx; currentMistakeWordIdx = 0; renderMistakeSection(); renderMistakeChapterNav(); };
+    nav.appendChild(btn);
+  });
+}
+
+function normalizeText(str) {
+  return str.toLowerCase().replace(/\s+/g, ' ').trim();
+}
+
+function renderMistakeSection() {
+  const section = document.getElementById('mistakeSection');
+  const sentences = mistakeWords[currentMistakeWordChapter] || [];
+  if (currentMistakeWordIdx >= sentences.length) {
+    section.innerHTML = `<div style='font-size:1.2em; text-align:center; margin:30px 0;'>¡Terminaste!<br></div>
+    <button onclick='currentMistakeWordIdx=0;renderMistakeSection()' class='next-btn'>Repetir capítulo</button>`;
+    return;
+  }
+  const s = sentences[currentMistakeWordIdx];
+  section.innerHTML = `
+    <div style='font-size:1.1em; margin-bottom:10px;'><b>Corrige la palabra:</b></div>
+    <div style='background:#fffde7; padding:10px 12px; border-radius:7px; margin-bottom:10px;'>${s.phrase}</div>
+    <input id='mistakeInput' type='text' style='width:60%; padding:8px; border-radius:6px; border:1px solid #bbb; font-size:1em;' placeholder='Palabra correcta'>
+    <div id='mistakeFeedback' style='margin:10px 0; min-height:24px;'></div>
+    <button class='next-btn' id='mistakeCheckBtn'>Comprobar</button>
+    <button class='next-btn' id='mistakeNextBtn' style='display:none; background:#aaa;'>Siguiente</button>
+    <div style='margin-top:10px; text-align:right; color:#888;'>Frase ${currentMistakeWordIdx+1} de ${sentences.length}</div>
+  `;
+  const input = document.getElementById('mistakeInput');
+  const checkBtn = document.getElementById('mistakeCheckBtn');
+  const nextBtn = document.getElementById('mistakeNextBtn');
+  function checkMistake() {
+    const feedback = document.getElementById('mistakeFeedback');
+    if (normalizeText(input.value) === normalizeText(s.answer)) {
+      feedback.innerHTML = '<span style="color:green; font-weight:bold;">¡Correcto!</span>';
+      nextBtn.style.display = '';
+      input.disabled = true;
+      checkBtn.disabled = true;
+    } else {
+      feedback.innerHTML = `<span style='color:#d32f2f; font-weight:bold;'>Incorrecto.</span> <span style='font-size:0.95em;'>Respuesta: <i>${s.answer}</i></span>`;
+      nextBtn.style.display = 'none';
+    }
+  }
+  checkBtn.onclick = checkMistake;
+  input.onblur = function() { if (input.value.trim() !== '') checkMistake(); };
+  nextBtn.onclick = () => {
+    currentMistakeWordIdx++;
+    renderMistakeSection();
+  };
 }
 
 window.onload = () => {
