@@ -5,21 +5,106 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Aventuras de PDL (Práctica del Lenguaje)</title>
   <link rel="stylesheet" href="styles.css">
+  <style>
+    .game-section { display: none; margin: 30px auto; max-width: 600px; background: #f9f9ff; border-radius: 12px; box-shadow: 0 2px 8px #0001; padding: 24px; }
+    .game-section.active { display: block; }
+    .game-title { font-size: 1.5rem; margin-bottom: 10px; }
+    .game-instructions { color: #444; margin-bottom: 18px; }
+    .game-feedback { margin-top: 12px; font-weight: bold; }
+    .game-btn { background: #4caf50; color: white; border: none; border-radius: 6px; padding: 8px 18px; font-size: 1rem; cursor: pointer; margin: 8px 0; }
+    .game-btn:disabled { background: #bbb; }
+    .stars { color: gold; font-size: 1.3em; }
+    .visual-option { display: inline-block; margin: 8px; padding: 10px; border: 2px solid #ccc; border-radius: 8px; background: #fff; cursor: pointer; transition: border 0.2s; }
+    .visual-option.selected { border: 2px solid #4caf50; background: #e8f5e9; }
+    .visual-option img { max-width: 60px; max-height: 60px; display: block; margin: 0 auto 6px; }
+    .progress-bar { height: 16px; background: #eee; border-radius: 8px; margin: 20px 0; overflow: hidden; }
+    .progress-fill { height: 100%; background: #4caf50; width: 0%; transition: width 0.4s; }
+    .motivacion { color: #1976d2; font-weight: bold; margin: 18px 0; }
+  </style>
 </head>
 <body>
   <header>
     <h1>Aventuras de PDL (Práctica del Lenguaje)</h1>
-    <p>¡Hola Gio! Aquí podrás practicar el lenguaje con actividades interactivas pensadas especialmente para vos.</p>
+    <p>¡Hola Gio! Aquí podrás practicar el lenguaje con juegos visuales y actividades interactivas pensadas especialmente para vos.</p>
     <nav>
       <a href="index.html">Volver al inicio</a>
     </nav>
   </header>
   <main>
-    <section id="ejercicios">
-      <h2>Ejercicios interactivos</h2>
-      <p>Pronto aparecerán aquí actividades divertidas para practicar el lenguaje.</p>
-      <!-- Aquí se agregarán los ejercicios -->
+    <nav id="nav-ejercicios" style="text-align:center; margin-bottom: 18px;"></nav>
+    <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    <div id="motivacion" class="motivacion">¡Vamos Gio! Cada juego te acerca a ser un experto en el lenguaje.</div>
+    <!-- SECUENCIA DE MINI-JUEGOS -->
+    <section id="juego-sustantivos" class="game-section active">
+      <div class="game-title">1. ¿Qué es un sustantivo?</div>
+      <div class="game-instructions">Elige todas las palabras que sean sustantivos. Haz clic sobre ellas.</div>
+      <div id="sustantivos-opciones" style="margin-bottom: 16px;"></div>
+      <button class="game-btn" id="btn-siguiente-1" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-1"></div>
+    </section>
+    <section id="juego-clasificacion-sustantivos" class="game-section">
+      <div class="game-title">2. Clasifica los sustantivos</div>
+      <div class="game-instructions">Arrastra cada palabra a la categoría correcta: común, propio, concreto, abstracto, individual o colectivo.</div>
+      <div id="clasificacion-sustantivos-juego"></div>
+      <button class="game-btn" id="btn-siguiente-2" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-2"></div>
+    </section>
+    <section id="juego-colectivos" class="game-section">
+      <div class="game-title">3. Sustantivos colectivos</div>
+      <div class="game-instructions">Une cada sustantivo individual con su colectivo correspondiente. Haz clic para emparejar.</div>
+      <div id="colectivos-juego"></div>
+      <button class="game-btn" id="btn-siguiente-3" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-3"></div>
+    </section>
+    <section id="juego-adjetivos" class="game-section">
+      <div class="game-title">4. ¿Qué es un adjetivo?</div>
+      <div class="game-instructions">Elige los adjetivos entre las palabras. Haz clic sobre ellos.</div>
+      <div id="adjetivos-opciones"></div>
+      <button class="game-btn" id="btn-siguiente-4" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-4"></div>
+    </section>
+    <section id="juego-pronombres" class="game-section">
+      <div class="game-title">5. Pronombres personales</div>
+      <div class="game-instructions">Selecciona los pronombres personales en la lista.</div>
+      <div id="pronombres-opciones"></div>
+      <button class="game-btn" id="btn-siguiente-5" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-5"></div>
+    </section>
+    <section id="juego-sinonimos" class="game-section">
+      <div class="game-title">6. Sinónimos y antónimos</div>
+      <div class="game-instructions">Empareja cada palabra con su sinónimo y su antónimo.</div>
+      <div id="sinonimos-juego"></div>
+      <button class="game-btn" id="btn-siguiente-6" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-6"></div>
+    </section>
+    <section id="juego-nominal" class="game-section">
+      <div class="game-title">7. Construcción nominal y modificadores</div>
+      <div class="game-instructions">Subraya el núcleo y los modificadores en los grupos nominales.</div>
+      <div id="nominal-juego"></div>
+      <button class="game-btn" id="btn-siguiente-7" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-7"></div>
+    </section>
+    <section id="juego-genero-numero" class="game-section">
+      <div class="game-title">8. Género y número</div>
+      <div class="game-instructions">Clasifica las palabras según su género (masculino/femenino) y número (singular/plural).</div>
+      <div id="genero-numero-juego"></div>
+      <button class="game-btn" id="btn-siguiente-8" disabled>Siguiente</button>
+      <div class="game-feedback" id="feedback-8"></div>
+    </section>
+    <section id="juego-comprension" class="game-section">
+      <div class="game-title">9. Comprensión lectora</div>
+      <div class="game-instructions">Lee el texto y responde las preguntas.</div>
+      <div id="comprension-lectura"></div>
+      <button class="game-btn" id="btn-finalizar" disabled>Finalizar</button>
+      <div class="game-feedback" id="feedback-final"></div>
+    </section>
+    <section id="pantalla-final" class="game-section">
+      <div class="game-title">¡Felicitaciones, Gio!</div>
+      <div class="game-instructions">Completaste todas las actividades. ¡Eres un experto en el lenguaje!</div>
+      <div id="resumen-logros"></div>
+      <a href="index.html" class="game-btn">Volver al inicio</a>
     </section>
   </main>
+  <script src="aventuras-pdl.js"></script>
 </body>
 </html> 
