@@ -184,5 +184,85 @@
         </ol>
       </div>
     </section>
+    <section id="juego-detective" style="margin-top: 3em;">
+        <h2 style="color:#ff9800;">Juego: ¡Detective de especies!</h2>
+        <p style="text-align:center; font-size:1.1em; background:#e0f7fa; border-radius:10px; padding:0.7em 1em; max-width:600px; margin:1em auto 2em auto; box-shadow:0 2px 8px #b2dfdb;">
+          Arrastra cada animal o planta a la caja con el nombre de su especie. ¡Si aciertas, se quedará allí! Si te equivocas, vuelve a intentarlo.<br>
+          <b>¿Cuántos puedes acertar?</b>
+        </p>
+        <div id="juego-dragdrop" style="display:flex; flex-direction:column; align-items:center; gap:2em;">
+          <div id="imagenes-detective" style="display:flex; flex-wrap:wrap; gap:1.5em; justify-content:center; margin-bottom:2em;">
+            <img src="imagenes-naturales/detective/carpincho1.png" alt="Carpincho 1" class="draggable" draggable="true" data-especie="carpincho" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/carpincho2.png" alt="Carpincho 2" class="draggable" draggable="true" data-especie="carpincho" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/yaguarete1.png" alt="Yaguareté 1" class="draggable" draggable="true" data-especie="yaguarete" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/yaguarete2.png" alt="Yaguareté 2" class="draggable" draggable="true" data-especie="yaguarete" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/tala1.png" alt="Tala 1" class="draggable" draggable="true" data-especie="tala" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/tala2.png" alt="Tala 2" class="draggable" draggable="true" data-especie="tala" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/armadillo.png" alt="Armadillo" class="draggable" draggable="true" data-especie="armadillo" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+            <img src="imagenes-naturales/detective/cactus.png" alt="Cactus" class="draggable" draggable="true" data-especie="cactus" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;">
+          </div>
+          <div id="cajas-especies" style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center;">
+            <div class="dropzone" data-especie="carpincho" style="width:160px; min-height:130px; background:#fffbe7; border:3px dashed #228B22; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:bold; font-size:1.1em; color:#228B22; box-shadow:0 2px 8px #b2dfdb;">Carpincho</div>
+            <div class="dropzone" data-especie="yaguarete" style="width:160px; min-height:130px; background:#fffbe7; border:3px dashed #ff9800; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:bold; font-size:1.1em; color:#ff9800; box-shadow:0 2px 8px #ffe0b2;">Yaguareté</div>
+            <div class="dropzone" data-especie="tala" style="width:160px; min-height:130px; background:#e8f6ef; border:3px dashed #43a047; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:bold; font-size:1.1em; color:#43a047; box-shadow:0 2px 8px #b2dfdb;">Tala</div>
+            <div class="dropzone" data-especie="armadillo" style="width:160px; min-height:130px; background:#f9fbe7; border:3px dashed #795548; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:bold; font-size:1.1em; color:#795548; box-shadow:0 2px 8px #d7ccc8;">Armadillo</div>
+            <div class="dropzone" data-especie="cactus" style="width:160px; min-height:130px; background:#e0f7fa; border:3px dashed #00bcd4; border-radius:14px; display:flex; flex-direction:column; align-items:center; justify-content:center; font-weight:bold; font-size:1.1em; color:#00bcd4; box-shadow:0 2px 8px #b2ebf2;">Cactus</div>
+          </div>
+          <div id="feedback-juego" style="margin-top:2em; font-size:1.2em; font-weight:bold; color:#228B22; min-height:2em;"></div>
+          <button onclick="reiniciarJuegoDetective()" style="margin-top:1.5em; background:#ff9800; color:#fff; font-size:1.1em; font-weight:bold; padding:0.7em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #ffe0b2; cursor:pointer;">Reiniciar juego</button>
+        </div>
+        <script>
+        // Drag & Drop nativo para el juego de detective
+        const draggables = document.querySelectorAll('.draggable');
+        const dropzones = document.querySelectorAll('.dropzone');
+        let dragging = null;
+        draggables.forEach(img => {
+          img.addEventListener('dragstart', e => {
+            dragging = img;
+            setTimeout(() => img.style.opacity = '0.5', 0);
+          });
+          img.addEventListener('dragend', e => {
+            dragging = null;
+            img.style.opacity = '1';
+          });
+        });
+        dropzones.forEach(zone => {
+          zone.addEventListener('dragover', e => {
+            e.preventDefault();
+            zone.style.background = '#c8e6c9';
+          });
+          zone.addEventListener('dragleave', e => {
+            zone.style.background = '';
+          });
+          zone.addEventListener('drop', e => {
+            e.preventDefault();
+            zone.style.background = '';
+            if (dragging && dragging.dataset.especie === zone.dataset.especie) {
+              zone.appendChild(dragging);
+              dragging.setAttribute('draggable', 'false');
+              dragging.style.border = '3px solid #43a047';
+              mostrarFeedback('¡Muy bien! Lo lograste.', true);
+            } else if (dragging) {
+              mostrarFeedback('Intenta de nuevo. Observa bien la especie.', false);
+            }
+          });
+        });
+        function mostrarFeedback(msg, exito) {
+          const fb = document.getElementById('feedback-juego');
+          fb.textContent = msg;
+          fb.style.color = exito ? '#228B22' : '#d32f2f';
+        }
+        function reiniciarJuegoDetective() {
+          const zonaImgs = document.getElementById('imagenes-detective');
+          const imgs = document.querySelectorAll('.draggable');
+          imgs.forEach(img => {
+            img.setAttribute('draggable', 'true');
+            img.style.border = '3px solid #000';
+            zonaImgs.appendChild(img);
+          });
+          mostrarFeedback('', true);
+        }
+        </script>
+      </section>
 </body>
 </html> 
