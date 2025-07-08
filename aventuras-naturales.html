@@ -5,10 +5,155 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aventuras en Ciencias Naturales</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+        background: linear-gradient(135deg, #e8f6ef 0%, #f9fbe7 100%);
+        font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', Arial, sans-serif;
+        font-size: 1.2em;
+        color: #222;
+        margin: 0;
+        padding: 0;
+      }
+      h1, h2, h3 {
+        color: #228B22;
+        text-align: center;
+        margin-top: 1.2em;
+        margin-bottom: 0.5em;
+        font-weight: bold;
+        letter-spacing: 1px;
+      }
+      h2 {
+        font-size: 2em;
+        background: #fffbe7;
+        border-radius: 12px;
+        padding: 0.3em 0.5em;
+        box-shadow: 0 2px 8px #d0e6d0;
+        display: inline-block;
+      }
+      h3 {
+        font-size: 1.3em;
+        color: #ff9800;
+        margin-top: 1.5em;
+      }
+      .volver-inicio {
+        display: block;
+        width: fit-content;
+        margin: 2em auto 1em auto;
+        background: #228B22;
+        color: #fff;
+        font-size: 1.2em;
+        font-weight: bold;
+        padding: 0.7em 2em;
+        border-radius: 30px;
+        text-decoration: none;
+        box-shadow: 0 2px 8px #b2dfdb;
+        letter-spacing: 1px;
+        transition: background 0.2s;
+      }
+      .volver-inicio:hover {
+        background: #43a047;
+      }
+      .niveles-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 2em;
+        margin: 2em 0;
+      }
+      .tarjeta-nivel {
+        background: #fff;
+        border-radius: 18px;
+        box-shadow: 0 4px 16px #b2dfdb;
+        padding: 1.2em 1.2em 1.5em 1.2em;
+        max-width: 320px;
+        min-width: 220px;
+        text-align: center;
+        transition: transform 0.2s;
+      }
+      .tarjeta-nivel:hover {
+        transform: scale(1.04);
+        box-shadow: 0 8px 24px #a5d6a7;
+      }
+      .tarjeta-nivel img {
+        margin: 0.5em 0 0.7em 0;
+        background: #fff;
+        border: 3px solid #000;
+        border-radius: 12px;
+        max-width: 200px;
+        max-height: 180px;
+        box-shadow: 0 2px 8px #e0e0e0;
+      }
+      .tarjeta-nivel strong {
+        color: #228B22;
+        font-size: 1.1em;
+      }
+      .tarjeta-nivel em {
+        color: #888;
+        font-size: 0.95em;
+      }
+      .mermaid {
+        background: #fffbe7;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #d0e6d0;
+        padding: 1em;
+        margin: 2em auto;
+        max-width: 600px;
+      }
+      ul { list-style: none; padding: 0; }
+      @media (max-width: 700px) {
+        .niveles-grid { flex-direction: column; align-items: center; }
+        .tarjeta-nivel { max-width: 95vw; }
+      }
+    </style>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
 </head>
 <body>
     <h1>Aventuras en Ciencias Naturales</h1>
-    <p>¡Bienvenido a la sección de Ciencias Naturales! Pronto encontrarás actividades y recursos aquí.</p>
-    <a href="index.html">Volver al inicio</a>
+    <a href="index.html" class="volver-inicio">⬅ Volver al inicio</a>
+    <section id="niveles-organizacion" style="margin-top: 2em;">
+      <h2>Niveles de organización de los seres vivos</h2>
+      <p style="text-align:center; font-size:1.1em; background:#fffbe7; border-radius:10px; padding:0.7em 1em; max-width:600px; margin:1em auto 2em auto; box-shadow:0 2px 8px #d0e6d0;">
+        <strong>¿Qué es un ecosistema?</strong><br>
+        Un ecosistema es el lugar donde viven muchos seres vivos (animales, plantas, bacterias, etc.) y se relacionan entre sí y con el ambiente (luz, agua, suelo).
+      </p>
+      <h3>Niveles de organización</h3>
+      <div class="niveles-grid">
+        <div class="tarjeta-nivel">
+          <strong>Individuo</strong><br>
+          <img src="imagenes-naturales/individuo.png" alt="Armadillo solo">
+          <div style="margin:0.5em 0 0.2em 0;">Un solo ser vivo.<br><em>(Ejemplo: un armadillo)</em></div>
+        </div>
+        <div class="tarjeta-nivel">
+          <strong>Población</strong><br>
+          <img src="imagenes-naturales/poblacion.png" alt="Grupo de carpinchos">
+          <div style="margin:0.5em 0 0.2em 0;">Varios individuos de la misma especie juntos.<br><em>(Ejemplo: varios carpinchos)</em></div>
+        </div>
+        <div class="tarjeta-nivel">
+          <strong>Comunidad</strong><br>
+          <img src="imagenes-naturales/comunidad.png" alt="Bosque comunidad">
+          <div style="margin:0.5em 0 0.2em 0;">Diferentes especies viviendo juntas.<br><em>(Ejemplo: bosque con animales y plantas)</em></div>
+        </div>
+        <div class="tarjeta-nivel">
+          <strong>Ecosistema</strong><br>
+          <img src="imagenes-naturales/ecosistema.png" alt="Ecosistema completo">
+          <div style="margin:0.5em 0 0.2em 0;">Animales, plantas, agua, suelo y sol.<br><em>(Ejemplo: paisaje completo)</em></div>
+        </div>
+      </div>
+      <h3>Cuadro sinóptico visual</h3>
+      <div class="mermaid">
+        graph TD
+          A["Ecosistema"]
+          A --> B["Comunidad"]
+          B --> C["Población"]
+          C --> D["Individuo"]
+          B --> E["Otra población"]
+          B --> F["Otra población"]
+          A --> G["Ambiente (luz, agua, suelo)"]
+      </div>
+      <p style="font-size: 1.1em; color: #228B22; text-align:center;"><strong>¡Pronto agregaremos juegos y más imágenes!</strong></p>
+    </section>
 </body>
 </html> 
