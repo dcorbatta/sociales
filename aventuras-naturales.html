@@ -211,6 +211,8 @@
           <div id="feedback-juego" style="margin-top:2em; font-size:1.2em; font-weight:bold; color:#228B22; min-height:2em;"></div>
           <button onclick="reiniciarJuegoDetective()" style="margin-top:1.5em; background:#ff9800; color:#fff; font-size:1.1em; font-weight:bold; padding:0.7em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #ffe0b2; cursor:pointer;">Reiniciar juego</button>
         </div>
+        <audio id="sonido-exito" src="imagenes-naturales/detective/exito.mp3" preload="auto"></audio>
+        <audio id="sonido-error" src="imagenes-naturales/detective/error.mp3" preload="auto"></audio>
         <script>
         // Drag & Drop nativo para el juego de detective
         const draggables = document.querySelectorAll('.draggable');
@@ -241,8 +243,12 @@
               zone.appendChild(dragging);
               dragging.setAttribute('draggable', 'false');
               dragging.style.border = '3px solid #43a047';
+              animarExito(dragging);
+              reproducirSonido('exito');
               mostrarFeedback('¡Muy bien! Lo lograste.', true);
             } else if (dragging) {
+              animarError(dragging);
+              reproducirSonido('error');
               mostrarFeedback('Intenta de nuevo. Observa bien la especie.', false);
             }
           });
@@ -258,11 +264,52 @@
           imgs.forEach(img => {
             img.setAttribute('draggable', 'true');
             img.style.border = '3px solid #000';
+            img.classList.remove('anim-exito', 'anim-error');
             zonaImgs.appendChild(img);
           });
           mostrarFeedback('', true);
         }
+        function reproducirSonido(tipo) {
+          const audio = document.getElementById('sonido-' + tipo);
+          if (audio) {
+            audio.currentTime = 0;
+            audio.play();
+          }
+        }
+        function animarExito(elemento) {
+          elemento.classList.remove('anim-error');
+          elemento.classList.add('anim-exito');
+          setTimeout(() => elemento.classList.remove('anim-exito'), 700);
+        }
+        function animarError(elemento) {
+          elemento.classList.remove('anim-exito');
+          elemento.classList.add('anim-error');
+          setTimeout(() => elemento.classList.remove('anim-error'), 700);
+        }
         </script>
+        <style>
+        .anim-exito {
+          animation: bounce 0.7s;
+        }
+        @keyframes bounce {
+          0% { transform: scale(1); }
+          30% { transform: scale(1.2); }
+          50% { transform: scale(0.95); }
+          70% { transform: scale(1.1); }
+          100% { transform: scale(1); }
+        }
+        .anim-error {
+          animation: shake 0.7s;
+        }
+        @keyframes shake {
+          0% { transform: translateX(0); }
+          20% { transform: translateX(-10px); }
+          40% { transform: translateX(10px); }
+          60% { transform: translateX(-10px); }
+          80% { transform: translateX(10px); }
+          100% { transform: translateX(0); }
+        }
+        </style>
       </section>
 </body>
 </html> 
