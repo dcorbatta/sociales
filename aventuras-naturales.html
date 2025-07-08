@@ -124,17 +124,22 @@
         <div class="tarjeta-nivel">
           <strong>Individuo</strong><br>
           <img src="imagenes-naturales/individuo.png" alt="Armadillo solo">
-          <div style="margin:0.5em 0 0.2em 0;">Un solo ser vivo.<br><em>(Ejemplo: un armadillo)</em></div>
+          <div style="margin:0.5em 0 0.2em 0;">Un solo ser vivo.<br><em>(Ejemplo: un armadillo o un árbol)</em></div>
+        </div>
+        <div class="tarjeta-nivel">
+          <strong>Especie</strong><br>
+          <img src="imagenes-naturales/especie.png" alt="Grupo de la misma especie">
+          <div style="margin:0.5em 0 0.2em 0;">Grupo de seres vivos que pueden tener crías entre sí y dejar descendencia fértil.<br>Los miembros de una especie no pueden tener crías fértiles con miembros de otras especies (aislamiento reproductivo).<br><em>(Ejemplo: todos los yaguaretés, todos los árboles de tala)</em></div>
         </div>
         <div class="tarjeta-nivel">
           <strong>Población</strong><br>
           <img src="imagenes-naturales/poblacion.png" alt="Grupo de carpinchos">
-          <div style="margin:0.5em 0 0.2em 0;">Varios individuos de la misma especie juntos.<br><em>(Ejemplo: varios carpinchos)</em></div>
+          <div style="margin:0.5em 0 0.2em 0;">Varios individuos de la misma especie juntos en un lugar y tiempo.<br><em>(Ejemplo: varios carpinchos en un río, o muchos árboles de tala en un bosque)</em></div>
         </div>
         <div class="tarjeta-nivel">
           <strong>Comunidad</strong><br>
           <img src="imagenes-naturales/comunidad.png" alt="Bosque comunidad">
-          <div style="margin:0.5em 0 0.2em 0;">Diferentes especies viviendo juntas.<br><em>(Ejemplo: bosque con animales y plantas)</em></div>
+          <div style="margin:0.5em 0 0.2em 0;">Diferentes especies (animales y plantas) viviendo juntas e interactuando.<br><em>(Ejemplo: bosque con árboles, pájaros, insectos, hongos, etc.)</em></div>
         </div>
         <div class="tarjeta-nivel">
           <strong>Ecosistema</strong><br>
@@ -142,16 +147,41 @@
           <div style="margin:0.5em 0 0.2em 0;">Animales, plantas, agua, suelo y sol.<br><em>(Ejemplo: paisaje completo)</em></div>
         </div>
       </div>
+      <div style="max-width: 600px; margin: 2em auto 1em auto; background: #e0f7fa; border-left: 8px solid #228B22; border-radius: 12px; box-shadow: 0 2px 8px #b2dfdb; padding: 1.2em 1.5em;">
+        <strong style="color:#228B22; font-size:1.1em;">Dato curioso 🐾</strong><br>
+        Cada <b>yaguareté</b> es un individuo único, con su propio patrón de manchas en el pelaje, que lo distingue de los demás. Su comportamiento, como la caza y el cuidado de sus crías, varía de un individuo a otro.
+      </div>
+      <h3>Para pensar y resolver</h3>
+      <div style="max-width: 600px; margin: 1em auto 2em auto; background: #fffbe7; border-left: 8px solid #ff9800; border-radius: 12px; box-shadow: 0 2px 8px #ffe0b2; padding: 1.2em 1.5em;">
+        <ol style="font-size:1.08em;">
+          <li><b>Dibuja</b> en tu carpeta:
+            <ul>
+              <li>Un individuo y una población de la misma especie.</li>
+              <li>Una comunidad con animales y plantas.</li>
+            </ul>
+          </li>
+          <li><b>Responde</b>:
+            <ul>
+              <li>¿Qué diferencia hay entre dos individuos de la misma especie y dos individuos de especies diferentes?</li>
+              <li>¿Por qué una población puede estar formada por árboles y no solo por animales?</li>
+              <li>¿Dirías que un hormiguero es una población o una especie? Justifica tu respuesta.</li>
+              <li><b>NUEVA:</b> Imagina un ecosistema inventado. ¿Qué animales, plantas y ambientes tendría? Haz un dibujo y ponle nombre.</li>
+              <li><b>NUEVA:</b> Observa una plaza o parque. ¿Qué poblaciones y comunidades puedes encontrar allí?</li>
+            </ul>
+          </li>
+        </ol>
+      </div>
       <h3>Cuadro sinóptico visual</h3>
       <div class="mermaid">
         graph TD
           A["Ecosistema"]
           A --> B["Comunidad"]
           B --> C["Población"]
-          C --> D["Individuo"]
-          B --> E["Otra población"]
+          C --> D["Especie"]
+          D --> E["Individuo"]
           B --> F["Otra población"]
-          A --> G["Ambiente (luz, agua, suelo)"]
+          B --> G["Otra población"]
+          A --> H["Ambiente (luz, agua, suelo)"]
       </div>
       <p style="font-size: 1.1em; color: #228B22; text-align:center;"><strong>¡Pronto agregaremos juegos y más imágenes!</strong></p>
     </section>
