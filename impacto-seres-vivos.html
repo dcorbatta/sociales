@@ -102,6 +102,82 @@
     </div>
   </section>
 
+  <section>
+    <h2>Cuadro sinóptico: ¿Cómo impactan los seres vivos el ambiente?</h2>
+    <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #ffe0b2; padding:1em; margin:2em auto; max-width:600px;">
+      graph TD
+        A["Seres vivos"] --> B["Modifican el ambiente"]
+        A --> C["Alteran relaciones"]
+        A --> D["Permiten nuevas comunidades"]
+        B --> E["Ejemplo: Castor"]
+        C --> F["Ejemplo: Pez invasor"]
+        D --> G["Ejemplo: Musgos"]
+    </div>
+  </section>
+
+  <section>
+    <h2>Tabla comparativa de ejemplos</h2>
+    <div style="overflow-x:auto;">
+      <table class="tabla-ejemplos" style="width:100%; border-collapse:collapse; background:#fff; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; font-size:1.15em;">
+        <thead style="background:#e0f7fa;">
+          <tr>
+            <th style="padding:0.7em;">Acción/Impacto</th>
+            <th style="padding:0.7em;">Ejemplo</th>
+            <th style="padding:0.7em;">¿Qué cambia?</th>
+            <th style="padding:0.7em;">¿A quién afecta?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fffbe7;"><td style="padding:0.7em;">Modifica el ambiente</td><td style="padding:0.7em; font-size:1.3em;">🦫 Castor</td><td style="padding:0.7em;">Construye represa</td><td style="padding:0.7em;">Agua, peces, árboles</td></tr>
+          <tr style="background:#fff;"><td style="padding:0.7em;">Altera relaciones</td><td style="padding:0.7em; font-size:1.3em;">🐟 Pez invasor</td><td style="padding:0.7em;">Se come larvas y peces</td><td style="padding:0.7em;">Otras especies, cadena</td></tr>
+          <tr style="background:#fffbe7;"><td style="padding:0.7em;">Permite nuevas comunidades</td><td style="padding:0.7em; font-size:1.3em;">🌱 Musgos</td><td style="padding:0.7em;">Forma suelo fértil</td><td style="padding:0.7em;">Otras plantas, animales</td></tr>
+          <tr style="background:#fff;"><td style="padding:0.7em;">Recupera ambientes</td><td style="padding:0.7em; font-size:1.3em;">🦠🌱 Bacterias/algas</td><td style="padding:0.7em;">Mejoran el agua</td><td style="padding:0.7em;">Peces, insectos, plantas</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <style>
+      .tabla-ejemplos th, .tabla-ejemplos td { border: 2px solid #b2dfdb; }
+      .tabla-ejemplos tr:hover { background: #e0f7fa !important; }
+    </style>
+  </section>
+
+  <section>
+    <h2>Línea de tiempo visual: Recuperación del ambiente</h2>
+    <div style="display:flex; align-items:center; justify-content:center; gap:1em; margin:2em 0;">
+      <div style="text-align:center;">Agua sucia<br>🟤</div>
+      <div style="font-size:2em;">→</div>
+      <div style="text-align:center;">Bacterias y algas<br>🦠🌱</div>
+      <div style="font-size:2em;">→</div>
+      <div style="text-align:center;">Insectos<br>🐛</div>
+      <div style="font-size:2em;">→</div>
+      <div style="text-align:center;">Plantas<br>🌿</div>
+      <div style="font-size:2em;">→</div>
+      <div style="text-align:center;">Peces<br>🐟</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Tarjetas de repaso rápido</h2>
+    <div style="display:flex; flex-wrap:wrap; gap:1.5em; justify-content:center; margin:2em 0;">
+      <div style="background:#fffbe7; border:2px solid #43a047; border-radius:12px; padding:1em; width:180px; text-align:center; box-shadow:0 2px 8px #b2dfdb;">
+        <div style="font-size:2em;">🦫</div>
+        <b>¿Qué hace el castor?</b><br>Construye represas y cambia el ambiente.
+      </div>
+      <div style="background:#fffbe7; border:2px solid #43a047; border-radius:12px; padding:1em; width:180px; text-align:center; box-shadow:0 2px 8px #b2dfdb;">
+        <div style="font-size:2em;">🌱</div>
+        <b>¿Por qué los musgos son importantes?</b><br>Permiten que otras especies vivan.
+      </div>
+      <div style="background:#fffbe7; border:2px solid #43a047; border-radius:12px; padding:1em; width:180px; text-align:center; box-shadow:0 2px 8px #b2dfdb;">
+        <div style="font-size:2em;">🐟</div>
+        <b>¿Qué pasa si llega un pez nuevo?</b><br>Pueden desaparecer otras especies.
+      </div>
+    </div>
+  </section>
+
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
   <script>
     // Juego interactivo: ¿Quién modifica el ambiente?
     const personajes = [
