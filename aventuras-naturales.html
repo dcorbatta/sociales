@@ -581,5 +581,358 @@ document.addEventListener('DOMContentLoaded', () => {
   100% { transform: translateX(0); }
 }
 </style>
+<!-- INICIO TRIVIA NATURALES -->
+<section class="teoria-section trivia-naturales-section" id="trivia-naturales-section">
+  <h2 class="trivia-naturales-title">Trivia: ¡Poné a prueba lo que aprendiste!</h2>
+  <div id="trivia-naturales-container">
+    <div id="trivia-naturales-question" class="trivia-naturales-question"></div>
+    <div id="trivia-naturales-options" class="trivia-naturales-options"></div>
+    <div id="trivia-naturales-feedback" class="trivia-naturales-feedback"></div>
+    <button id="trivia-naturales-next" class="trivia-naturales-btn" style="display:none;">Siguiente pregunta</button>
+    <button id="trivia-naturales-restart" class="trivia-naturales-btn" style="display:none;">Reiniciar trivia</button>
+  </div>
+</section>
+<!-- FIN TRIVIA NATURALES -->
+
+<style>
+.trivia-naturales-section {
+  max-width: 700px;
+  margin: 3em auto 2em auto;
+  background: #fffbe7;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px #b2dfdb;
+  padding: 32px 24px 28px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.trivia-naturales-title {
+  color: #228B22;
+  text-align: center;
+  margin-bottom: 1.2em;
+  font-size: 2em;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+.trivia-naturales-question {
+  font-size: 1.25em;
+  font-weight: bold;
+  color: #222;
+  margin-bottom: 1.2em;
+  text-align: center;
+}
+.trivia-naturales-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.trivia-naturales-btn, .trivia-naturales-options button {
+  background: linear-gradient(90deg, #43a047 0%, #228B22 100%);
+  color: #fff;
+  font-size: 1.1em;
+  font-weight: bold;
+  padding: 0.7em 2em;
+  border: none;
+  border-radius: 30px;
+  box-shadow: 0 2px 8px #b2dfdb;
+  letter-spacing: 1px;
+  margin: 0.3em 0;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.trivia-naturales-btn:hover, .trivia-naturales-options button:hover:not(:disabled) {
+  background: linear-gradient(90deg, #66bb6a 0%, #43a047 100%);
+  transform: scale(1.04);
+}
+.trivia-naturales-options button:disabled {
+  background: #e0e0e0;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+.trivia-naturales-feedback {
+  min-height: 2em;
+  font-size: 1.15em;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 1em;
+  margin-top: 0.5em;
+  border-radius: 10px;
+  padding: 0.5em 1em;
+  transition: background 0.2s, color 0.2s;
+}
+.trivia-naturales-feedback.correcto {
+  background: #e8f6ef;
+  color: #228B22;
+  border: 2px solid #43a047;
+}
+.trivia-naturales-feedback.incorrecto {
+  background: #ffebee;
+  color: #d32f2f;
+  border: 2px solid #d32f2f;
+}
+@media (max-width: 700px) {
+  .trivia-naturales-section {
+    max-width: 98vw;
+    padding: 18px 4vw 18px 4vw;
+  }
+  .trivia-naturales-title {
+    font-size: 1.3em;
+  }
+  .trivia-naturales-question {
+    font-size: 1.05em;
+  }
+  .trivia-naturales-btn, .trivia-naturales-options button {
+    font-size: 1em;
+    padding: 0.7em 1em;
+  }
+}
+</style>
+
+<script>
+// Preguntas de trivia de naturales (alineadas con el libro, con feedback explicativo)
+const triviaNaturalesQuestions = [
+  {
+    question: "¿Qué es un individuo?",
+    options: [
+      "Un grupo de especies diferentes",
+      "Un solo ser vivo capaz de sobrevivir por sí mismo",
+      "Un conjunto de poblaciones",
+      "Un ambiente con animales y plantas"
+    ],
+    answer: "Un solo ser vivo capaz de sobrevivir por sí mismo",
+    feedback: "Un individuo es un solo ser vivo, como un armadillo o un árbol, que puede sobrevivir por sí mismo."
+  },
+  {
+    question: "¿Cuál de estos es un ejemplo de individuo?",
+    options: [
+      "Una manada de leones",
+      "Un armadillo buscando alimento solo",
+      "Un bosque de talas",
+      "Un grupo de carpinchos"
+    ],
+    answer: "Un armadillo buscando alimento solo",
+    feedback: "El armadillo de nueve bandas es un ejemplo de individuo porque vive y busca alimento solo."
+  },
+  {
+    question: "¿Qué es una especie?",
+    options: [
+      "Un grupo de individuos que pueden tener crías fértiles entre sí",
+      "Un conjunto de comunidades",
+      "Un solo animal o planta",
+      "Un ambiente con agua y luz"
+    ],
+    answer: "Un grupo de individuos que pueden tener crías fértiles entre sí",
+    feedback: "Una especie es un grupo cuyos miembros pueden reproducirse entre sí y tener descendencia fértil."
+  },
+  {
+    question: "¿Qué es una población?",
+    options: [
+      "Un solo individuo",
+      "Un grupo de individuos de la misma especie en un lugar y tiempo",
+      "Un conjunto de especies diferentes",
+      "Un grupo de ecosistemas"
+    ],
+    answer: "Un grupo de individuos de la misma especie en un lugar y tiempo",
+    feedback: "Una población es un conjunto de individuos de la misma especie que viven juntos en un lugar y tiempo determinados."
+  },
+  {
+    question: "¿Cuál de estos es un ejemplo de población?",
+    options: [
+      "Un yaguareté",
+      "Un bosque con zorros, maras y coirones",
+      "Un grupo de carpinchos que viven juntos en Entre Ríos",
+      "Un solo árbol de tala"
+    ],
+    answer: "Un grupo de carpinchos que viven juntos en Entre Ríos",
+    feedback: "Una población es un grupo de la misma especie, como los carpinchos que viven juntos en un área."
+  },
+  {
+    question: "¿Qué es una comunidad?",
+    options: [
+      "Un grupo de individuos de la misma especie",
+      "Un conjunto de poblaciones de distintas especies que viven juntas",
+      "Un solo ecosistema",
+      "Un grupo de armadillos"
+    ],
+    answer: "Un conjunto de poblaciones de distintas especies que viven juntas",
+    feedback: "Una comunidad está formada por poblaciones de diferentes especies que viven e interactúan en el mismo lugar."
+  },
+  {
+    question: "¿Cuál de estos es un ejemplo de comunidad?",
+    options: [
+      "Un grupo de carpinchos",
+      "Un solo yaguareté",
+      "La estepa patagónica con maras, zorros y coirones",
+      "Un armadillo en su madriguera"
+    ],
+    answer: "La estepa patagónica con maras, zorros y coirones",
+    feedback: "Una comunidad incluye varias especies, como la estepa patagónica con diferentes animales y plantas."
+  },
+  {
+    question: "¿Qué característica permite reconocer a los miembros de una misma especie?",
+    options: [
+      "Viven en el mismo lugar",
+      "Pueden reproducirse entre sí y tener crías fértiles",
+      "Son del mismo color",
+      "Comen lo mismo"
+    ],
+    answer: "Pueden reproducirse entre sí y tener crías fértiles",
+    feedback: "Los miembros de una especie pueden reproducirse entre sí y tener descendencia fértil."
+  },
+  {
+    question: "¿Qué diferencia a una población de una comunidad?",
+    options: [
+      "La población tiene individuos de distintas especies",
+      "La comunidad tiene solo un individuo",
+      "La población es un grupo de la misma especie, la comunidad de distintas especies",
+      "No hay diferencia"
+    ],
+    answer: "La población es un grupo de la misma especie, la comunidad de distintas especies",
+    feedback: "La población es de una sola especie; la comunidad incluye varias especies que viven juntas."
+  },
+  {
+    question: "¿Qué es un ecosistema?",
+    options: [
+      "Un grupo de individuos de la misma especie",
+      "El conjunto de seres vivos y las características físicas del ambiente donde viven",
+      "Un solo animal en su madriguera",
+      "Un grupo de comunidades"
+    ],
+    answer: "El conjunto de seres vivos y las características físicas del ambiente donde viven",
+    feedback: "Un ecosistema incluye a los seres vivos y los factores físicos (luz, agua, suelo) del lugar donde viven."
+  },
+  {
+    question: "¿Cuál de estos es un ejemplo de especie?",
+    options: [
+      "Todos los carpinchos del mundo",
+      "Un grupo de árboles y arbustos",
+      "Un solo armadillo",
+      "Un bosque con zorros y maras"
+    ],
+    answer: "Todos los carpinchos del mundo",
+    feedback: "Una especie abarca a todos los individuos que pueden reproducirse entre sí, como todos los carpinchos."
+  },
+  {
+    question: "¿Qué ocurre si separas a un individuo de una población y lo pones en otro lugar?",
+    options: [
+      "Deja de ser de esa especie",
+      "Puede formar una nueva población si hay más individuos de su especie",
+      "Se convierte en comunidad",
+      "No puede sobrevivir"
+    ],
+    answer: "Puede formar una nueva población si hay más individuos de su especie",
+    feedback: "Si hay más individuos de la misma especie, pueden formar una nueva población en ese lugar."
+  },
+  {
+    question: "¿Qué tienen en común todos los individuos de una población?",
+    options: [
+      "Son de la misma especie",
+      "Viven en diferentes lugares",
+      "Comen lo mismo",
+      "Tienen el mismo tamaño"
+    ],
+    answer: "Son de la misma especie",
+    feedback: "Todos los miembros de una población pertenecen a la misma especie."
+  },
+  {
+    question: "¿Qué es necesario para que un grupo de animales sea considerado una población?",
+    options: [
+      "Que sean de la misma especie y vivan juntos en un lugar y tiempo",
+      "Que sean de diferentes especies",
+      "Que vivan en diferentes lugares",
+      "Que sean todos machos"
+    ],
+    answer: "Que sean de la misma especie y vivan juntos en un lugar y tiempo",
+    feedback: "Para ser una población, los animales deben ser de la misma especie y vivir juntos en el mismo lugar y tiempo."
+  },
+  {
+    question: "¿Qué relación hay entre comunidad y ecosistema?",
+    options: [
+      "La comunidad incluye solo animales",
+      "El ecosistema incluye la comunidad y el ambiente físico",
+      "Son lo mismo",
+      "La comunidad es más grande que el ecosistema"
+    ],
+    answer: "El ecosistema incluye la comunidad y el ambiente físico",
+    feedback: "El ecosistema está formado por la comunidad (seres vivos) y los factores físicos (luz, agua, suelo)."
+  }
+];
+
+let triviaNaturalesOrder = [];
+let currentTriviaNaturales = 0;
+let scoreNaturales = 0;
+
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+function startTriviaNaturales() {
+  triviaNaturalesOrder = shuffle([...Array(triviaNaturalesQuestions.length).keys()]);
+  currentTriviaNaturales = 0;
+  scoreNaturales = 0;
+  document.getElementById('trivia-naturales-feedback').textContent = '';
+  document.getElementById('trivia-naturales-feedback').className = 'trivia-naturales-feedback';
+  document.getElementById('trivia-naturales-restart').style.display = 'none';
+  showTriviaNaturalesQuestion();
+}
+
+function showTriviaNaturalesQuestion() {
+  if (currentTriviaNaturales >= triviaNaturalesOrder.length) {
+    document.getElementById('trivia-naturales-question').innerHTML = `¡Trivia terminada!<br>Puntaje: ${scoreNaturales} / ${triviaNaturalesQuestions.length}`;
+    document.getElementById('trivia-naturales-options').innerHTML = '';
+    document.getElementById('trivia-naturales-next').style.display = 'none';
+    document.getElementById('trivia-naturales-restart').style.display = 'inline-block';
+    return;
+  }
+  const qIdx = triviaNaturalesOrder[currentTriviaNaturales];
+  const q = triviaNaturalesQuestions[qIdx];
+  document.getElementById('trivia-naturales-question').textContent = q.question;
+  const shuffledOptions = shuffle([...q.options]);
+  const optionsDiv = document.getElementById('trivia-naturales-options');
+  optionsDiv.innerHTML = '';
+  shuffledOptions.forEach(option => {
+    const btn = document.createElement('button');
+    btn.textContent = option;
+    btn.className = 'trivia-naturales-btn';
+    btn.onclick = () => checkTriviaNaturalesAnswer(option, q.answer, q.feedback, btn);
+    optionsDiv.appendChild(btn);
+  });
+  document.getElementById('trivia-naturales-feedback').textContent = '';
+  document.getElementById('trivia-naturales-feedback').className = 'trivia-naturales-feedback';
+  document.getElementById('trivia-naturales-next').style.display = 'none';
+}
+
+function checkTriviaNaturalesAnswer(selected, correct, feedbackText, btn) {
+  const feedback = document.getElementById('trivia-naturales-feedback');
+  if (selected === correct) {
+    feedback.textContent = '¡Correcto! ' + feedbackText;
+    feedback.className = 'trivia-naturales-feedback correcto';
+    scoreNaturales++;
+  } else {
+    feedback.textContent = `Incorrecto. ${feedbackText}`;
+    feedback.className = 'trivia-naturales-feedback incorrecto';
+  }
+  // Deshabilitar botones
+  Array.from(document.getElementById('trivia-naturales-options').children).forEach(btn => btn.disabled = true);
+  document.getElementById('trivia-naturales-next').style.display = 'inline-block';
+}
+
+document.getElementById('trivia-naturales-next').onclick = function() {
+  currentTriviaNaturales++;
+  showTriviaNaturalesQuestion();
+};
+document.getElementById('trivia-naturales-restart').onclick = function() {
+  startTriviaNaturales();
+};
+
+document.addEventListener('DOMContentLoaded', startTriviaNaturales);
+</script>
 </body>
 </html> 
