@@ -32,7 +32,7 @@
   </section>
 
   <section>
-    <h2>1. Modificaciones del ambiente</h2>
+    <h2>Modificaciones del ambiente</h2>
     <p>
       Algunos seres vivos modifican el ambiente donde viven para adaptarlo a sus necesidades.
       <br>
@@ -44,7 +44,7 @@
   </section>
 
   <section>
-    <h2>2. Alteraciones de las relaciones</h2>
+    <h2>Alteraciones de las relaciones</h2>
     <p>
       Cuando una especie nueva llega a un ecosistema, puede modificar las relaciones entre los organismos que ya vivían allí.
       <br>
@@ -56,7 +56,7 @@
   </section>
 
   <section>
-    <h2>3. Ingenieros ambientales y colonizadores</h2>
+    <h2>Ingenieros ambientales y colonizadores</h2>
     <p>
       Algunas especies vegetales y animales pueden formar nuevas comunidades en un ambiente.
       <br>
@@ -68,7 +68,7 @@
   </section>
 
   <section>
-    <h2>4. Dato curioso</h2>
+    <h2>Dato curioso</h2>
     <div class="dato-curioso">
       <b>¿Sabías que…?</b><br>
       Algunos peces pueden vivir en las aguas residuales de una ciudad. Cuando el agua empieza a mejorar, aparecen insectos, plantas y más peces. ¡Las bacterias y algas también ayudan a recuperar el ambiente!
@@ -79,7 +79,7 @@
   </section>
 
   <section>
-    <h2>5. Juego: ¿Quién modifica el ambiente?</h2>
+    <h2>Juego: ¿Quién modifica el ambiente?</h2>
     <p>Haz clic en cada personaje y responde:</p>
     <div class="juego-opciones" id="juego-personajes">
       <!-- Personajes se llenan por JS -->
@@ -88,7 +88,7 @@
   </section>
 
   <section>
-    <h2>6. ¿Y nosotros?</h2>
+    <h2>¿Y nosotros?</h2>
     <p>
       Las personas también impactamos el ambiente. ¿Qué cosas podés hacer para que ese impacto sea positivo?
     </p>
@@ -173,7 +173,74 @@
       </div>
     </div>
   </section>
+  <section>
+    <h2>Modificaciones humanas</h2>
+    <h3>Modificaciones directas</h3>
+    <p>
+      Las personas también modificamos los ambientes. A veces esos cambios son tan grandes que afectan a muchas especies.<br>
+      <b>Ejemplo:</b> Deforestación, construcción de represas, canalización de ríos. Impactan de forma inmediata en el lugar.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/modificacion-directa.png" alt="Deforestación, represa y canalización de ríos">
+    </div>
+    <h3>Modificaciones indirectas</h3>
+    <p>
+      Otras actividades humanas impactan indirectamente, como la producción de gases por fábricas y autos, que provocan el calentamiento global.<br>
+      <b>Ejemplo:</b> El oso polar necesita hielo para vivir, pero el cambio climático reduce el hielo en el Ártico.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/oso-polar-calentamiento.png" alt="Oso polar y calentamiento global">
+    </div>
+  </section>
 
+  <section>
+    <h2>Especies invasoras</h2>
+    <p>
+      A veces el ser humano introduce especies en lugares donde no vivían. Si no tienen depredadores, se reproducen mucho y dañan el ambiente.<br>
+      <b>Ejemplo:</b> Los castores en Tierra del Fuego fueron llevados por el hombre. Allí no tienen depredadores, se reproducen mucho, destruyen bosques y modifican el curso del agua.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/castor-invasor.png" alt="Castor invasor en Tierra del Fuego">
+    </div>
+  </section>
+
+  <section>
+    <h2>Cuadro sinóptico: Impactos humanos y especies invasoras</h2>
+    <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #ffe0b2; padding:1em; margin:2em auto; max-width:600px;">
+      graph TD
+        A["Ser humano"] --> B["Modificaciones directas"]
+        A --> C["Modificaciones indirectas"]
+        A --> D["Introduce especies invasoras"]
+        B --> E["Deforestación, represas, ríos"]
+        C --> F["Calentamiento global"]
+        D --> G["Castor en Tierra del Fuego"]
+    </div>
+  </section>
+
+  <section>
+    <h2>Tabla de impactos humanos y especies invasoras</h2>
+    <div style="overflow-x:auto;">
+      <table class="tabla-ejemplos" style="width:100%; border-collapse:collapse; background:#fff; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; font-size:1.15em;">
+        <thead style="background:#e0f7fa;">
+          <tr>
+            <th style="padding:0.7em;">Acción/Impacto</th>
+            <th style="padding:0.7em;">Ejemplo</th>
+            <th style="padding:0.7em;">¿Qué cambia?</th>
+            <th style="padding:0.7em;">¿A quién afecta?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr style="background:#fffbe7;"><td style="padding:0.7em;">Modificación directa</td><td style="padding:0.7em; font-size:1.3em;">🪓🌲 Deforestación</td><td style="padding:0.7em;">Pierden su hábitat</td><td style="padding:0.7em;">Animales, plantas</td></tr>
+          <tr style="background:#fff;"><td style="padding:0.7em;">Modificación indirecta</td><td style="padding:0.7em; font-size:1.3em;">🏭🧊 Calentamiento global</td><td style="padding:0.7em;">Cambia el clima</td><td style="padding:0.7em;">Oso polar, especies sensibles</td></tr>
+          <tr style="background:#fffbe7;"><td style="padding:0.7em;">Especie invasora</td><td style="padding:0.7em; font-size:1.3em;">🦫 Castor en Tierra del Fuego</td><td style="padding:0.7em;">Destruye bosques, modifica agua</td><td style="padding:0.7em;">Bosques, animales nativos</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <style>
+      .tabla-ejemplos th, .tabla-ejemplos td { border: 2px solid #b2dfdb; }
+      .tabla-ejemplos tr:hover { background: #e0f7fa !important; }
+    </style>
+  </section>
   <script type="module">
     import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
     mermaid.initialize({ startOnLoad: true });
