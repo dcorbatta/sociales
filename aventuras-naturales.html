@@ -166,24 +166,7 @@
           B --> G["Otra población"]
           A --> H["Ambiente (luz, agua, suelo)"]
       </div>
-      <h3>¡Juega y aprende!</h3>
-      <div style="max-width: 600px; margin: 1em auto 2em auto; background: #fffbe7; border-left: 8px solid #ff9800; border-radius: 12px; box-shadow: 0 2px 8px #ffe0b2; padding: 1.2em 1.5em;">
-        <ol style="font-size:1.08em;">
-          <li><b>¡Detective de especies!</b><br>
-            Observa las imágenes de animales y plantas. ¿Puedes encontrar dos individuos que sean de la misma especie? ¿Qué detalles los hacen parecidos? ¿Y qué los hace únicos?
-          </li>
-          <li><b>Crea tu comunidad</b><br>
-            Dibuja una comunidad inventada. Elige al menos 3 especies diferentes (pueden ser animales, plantas o ambos) y dibuja cómo viven juntas. Ponles nombres divertidos.
-          </li>
-          <li><b>Construye un ecosistema loco</b><br>
-            Imagina un lugar fantástico (puede ser en la Tierra o en otro planeta). Dibuja qué animales, plantas y ambientes tendría. ¿Cómo se relacionan entre sí?
-          </li>
-          <li><b>Juego de roles</b><br>
-            Elige ser un individuo de una especie (por ejemplo, un carpincho, un árbol, un pájaro). Actúa o dibuja cómo sería tu día en una población, en una comunidad y en un ecosistema.
-          </li>
-        </ol>
-      </div>
-    </section>
+      
     <section id="juego-detective" style="margin-top: 3em;">
         <h2 style="color:#ff9800;">Juego: ¡Detective de especies!</h2>
         <p style="text-align:center; font-size:1.1em; background:#e0f7fa; border-radius:10px; padding:0.7em 1em; max-width:600px; margin:1em auto 2em auto; box-shadow:0 2px 8px #b2dfdb;">
@@ -463,19 +446,25 @@ function renderClasifica() {
     box.className = 'dropzone-clasifica';
     box.setAttribute('data-categoria', cat);
     box.style.width = '160px';
-    box.style.minHeight = '130px';
+    box.style.minHeight = '180px';
     box.style.background = '#fffbe7';
     box.style.border = '3px dashed #43a047';
     box.style.borderRadius = '14px';
     box.style.display = 'flex';
     box.style.flexDirection = 'column';
     box.style.alignItems = 'center';
-    box.style.justifyContent = 'center';
+    box.style.justifyContent = 'flex-start';
     box.style.fontWeight = 'bold';
     box.style.fontSize = '1.1em';
     box.style.color = '#43a047';
     box.style.boxShadow = '0 2px 8px #b2dfdb';
-    box.innerHTML = `<div style='font-size:1em; color:#888; margin-bottom:0.3em;'>${instrucciones[cat] || ''}</div><span class="nombre-categoria" style="opacity:0;">${cat}</span><span class="explicacion-categoria" style="opacity:0; font-size:0.95em; color:#888;"></span>`;
+    box.style.textAlign = 'center';
+    box.innerHTML = `
+      <div style='font-size:1em; color:#888; margin-bottom:0.3em;'>${instrucciones[cat] || ''}</div>
+      <div class="clasifica-img-container" style="width:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-start;"></div>
+      <span class="nombre-categoria" style="opacity:0; display:block; margin-top:0.5em; width:100%; text-align:center;"></span>
+      <span class="explicacion-categoria" style="opacity:0; font-size:0.95em; color:#888; display:block; margin-top:0.2em; width:100%; text-align:center;"></span>
+    `;
     catsCont.appendChild(box);
   });
   addDnDClasifica();
@@ -504,9 +493,13 @@ function addDnDClasifica() {
       e.preventDefault();
       zone.style.background = '';
       if (dragging && dragging.dataset.categoria === zone.dataset.categoria) {
-        zone.appendChild(dragging);
+        // Mover la imagen al contenedor centrado
+        const imgContainer = zone.querySelector('.clasifica-img-container');
+        imgContainer.innerHTML = '';
+        imgContainer.appendChild(dragging);
         dragging.setAttribute('draggable', 'false');
         dragging.style.border = '3px solid #43a047';
+        zone.querySelector('.nombre-categoria').textContent = dragging.dataset.categoria;
         zone.querySelector('.nombre-categoria').style.opacity = 1;
         zone.querySelector('.explicacion-categoria').textContent = dragging.dataset.explicacion;
         zone.querySelector('.explicacion-categoria').style.opacity = 1;
