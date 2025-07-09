@@ -917,15 +917,16 @@ function checkTriviaNaturalesAnswer(selected, correct, feedbackText, btn) {
   document.getElementById('trivia-naturales-next').style.display = 'inline-block';
 }
 
-document.getElementById('trivia-naturales-next').onclick = function() {
-  currentTriviaNaturales++;
-  showTriviaNaturalesQuestion();
-};
-document.getElementById('trivia-naturales-restart').onclick = function() {
+document.addEventListener('DOMContentLoaded', function() {
   startTriviaNaturales();
-};
-
-document.addEventListener('DOMContentLoaded', startTriviaNaturales);
+  document.getElementById('trivia-naturales-next').onclick = function() {
+    currentTriviaNaturales++;
+    showTriviaNaturalesQuestion();
+  };
+  document.getElementById('trivia-naturales-restart').onclick = function() {
+    startTriviaNaturales();
+  };
+});
 </script>
 </body>
 </html> 
