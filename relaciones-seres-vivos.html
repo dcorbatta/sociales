@@ -27,35 +27,80 @@
     <section class="relaciones-section">
       <h2>¿Cómo se relacionan los seres vivos en un ecosistema?</h2>
       <p>En un ecosistema, los seres vivos interactúan de muchas formas. Estas relaciones pueden ser entre individuos de la misma especie (intraespecíficas) o de especies diferentes (interespecíficas).</p>
+      <!-- Diagrama visual de tipos de relaciones -->
+      <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; padding:1em; margin:2em auto; max-width:600px;">
+        graph TD
+          A["Relaciones entre los seres vivos"]
+          A --> B["Intraespecíficas\n(misma especie)"]
+          A --> C["Interespecíficas\n(distintas especies)"]
+      </div>
+    </section>
+    <section class="relaciones-section">
+      <h2>Cuadro sinóptico: Tipos de relaciones</h2>
+      <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; padding:1em; margin:2em auto; max-width:600px;">
+        graph TD
+          A["Relaciones entre los seres vivos"]
+          A --> B["Intraespecíficas"]
+          B --> B1["Competencia\n(ej: ciervos)"]
+          B --> B2["Cooperación\n(ej: hormigas, abejas)"]
+          A --> C["Interespecíficas"]
+          C --> C1["Consumidor-recurso\n(ej: león y cebra)"]
+          C --> C2["Competencia\n(ej: ardillas nativas y exóticas)"]
+          C --> C3["Comensalismo\n(ej: pájaro y vaca)"]
+          C --> C4["Mutualismo\n(ej: abeja y flor)"]
+      </div>
     </section>
     <section class="relaciones-section">
       <h2>Relaciones intraespecíficas</h2>
-      <p>Ocurren entre individuos de la misma especie. Pueden ser de competencia (por alimento, pareja, refugio) o de cooperación (trabajo en grupo, defensa, jerarquías sociales).</p>
-      <div class="ejemplo">
-        <b>Ejemplo:</b> Los ciervos machos compiten entre sí durante la época de reproducción.<br>
-        <img class="relaciones-img" src="imagenes-naturales/ciervos.png" alt="Ciervos compitiendo">
+      <p>Ocurren entre individuos de la <b>misma especie</b>. Pueden ser:</p>
+      <ul>
+        <li><b>Competencia:</b> Los individuos compiten por alimento, pareja, refugio, etc.</li>
+        <li><b>Cooperación:</b> Los individuos trabajan juntos, se ayudan o se organizan en grupos.</li>
+      </ul>
+      <div style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center; margin:1.5em 0;">
+        <div style="flex:1; min-width:220px; background:#e3f2fd; border-radius:10px; padding:1em; text-align:center;">
+          <b>Competencia</b><br>
+          <img class="relaciones-img" src="imagenes-naturales/ciervos.png" alt="Ciervos compitiendo"><br>
+          <span style="font-size:0.98em; color:#1976d2;">Ejemplo: Ciervos machos luchan por reproducirse.</span>
+        </div>
+        <div style="flex:1; min-width:220px; background:#e3f2fd; border-radius:10px; padding:1em; text-align:center;">
+          <b>Cooperación</b><br>
+          <img class="relaciones-img" src="imagenes-naturales/hormigas.png" alt="Hormigas cooperando"><br>
+          <span style="font-size:0.98em; color:#1976d2;">Ejemplo: Hormigas trabajan juntas en la colonia.</span>
+        </div>
       </div>
       <div class="ejemplo">
-        <b>Ejemplo:</b> Las hormigas cooperan y se organizan en castas para trabajar en la colonia.<br>
-        <img class="relaciones-img" src="imagenes-naturales/hormigas.png" alt="Hormigas cooperando">
+        <b>¿Sabías?</b> Las abejas y hormigas tienen una organización social con división de tareas: algunas buscan comida, otras cuidan a las crías o defienden la colonia.
       </div>
     </section>
     <section class="relaciones-section">
       <h2>Relaciones interespecíficas</h2>
-      <p>Ocurren entre individuos de distintas especies. Incluyen:</p>
+      <p>Ocurren entre individuos de <b>distintas especies</b>. Pueden ser:</p>
       <ul>
-        <li><b>Consumidor-recurso:</b> Un organismo se alimenta de otro (herbivoría, depredación, parasitismo).</li>
-        <li><b>Competencia interespecífica:</b> Dos especies compiten por el mismo recurso.</li>
-        <li><b>Comensalismo:</b> Uno se beneficia y el otro no se perjudica ni beneficia.</li>
-        <li><b>Mutualismo:</b> Ambos se benefician.</li>
+        <li><b>Consumidor-recurso:</b> Un ser vivo se alimenta de otro. Ejemplo: un león caza una cebra, un parásito vive en otro animal.</li>
+        <li><b>Competencia interespecífica:</b> Dos especies compiten por el mismo recurso. Ejemplo: ardillas nativas y exóticas.</li>
+        <li><b>Comensalismo:</b> Uno se beneficia y el otro no se perjudica ni beneficia. Ejemplo: pájaro que come parásitos de una vaca.</li>
+        <li><b>Mutualismo:</b> Ambos se benefician. Ejemplo: abeja poliniza una flor y recibe néctar.</li>
       </ul>
-      <div class="ejemplo">
-        <b>Ejemplo:</b> Un pájaro se alimenta de parásitos en la piel de una vaca (comensalismo).<br>
-        <img class="relaciones-img" src="imagenes-naturales/comensalismo.png" alt="Pájaro y vaca">
+      <div style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center; margin:1.5em 0;">
+        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+          <b>Consumidor-recurso</b><br>
+          <img class="relaciones-img" src="imagenes-naturales/leon-cebra.png" alt="León y cebra"><br>
+          <span style="font-size:0.98em; color:#d32f2f;">Ejemplo: El león caza a la cebra.</span>
+        </div>
+        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+          <b>Comensalismo</b><br>
+          <img class="relaciones-img" src="imagenes-naturales/comensalismo.png" alt="Pájaro y vaca"><br>
+          <span style="font-size:0.98em; color:#1976d2;">Ejemplo: El pájaro come parásitos de la vaca.</span>
+        </div>
+        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+          <b>Mutualismo</b><br>
+          <img class="relaciones-img" src="imagenes-naturales/mutualismo.png" alt="Abeja y flor"><br>
+          <span style="font-size:0.98em; color:#388e3c;">Ejemplo: La abeja poliniza la flor y recibe néctar.</span>
+        </div>
       </div>
       <div class="ejemplo">
-        <b>Ejemplo:</b> Una abeja poliniza una flor (mutualismo).<br>
-        <img class="relaciones-img" src="imagenes-naturales/mutualismo.png" alt="Abeja y flor">
+        <b>¿Sabías?</b> Cuando una especie exótica llega a un lugar, puede competir con las especies nativas y causar problemas en el ecosistema.
       </div>
     </section>
     <section class="relaciones-section">
@@ -64,5 +109,9 @@
       <div style="text-align:center; color:#888;">(Próximamente: juego interactivo para identificar relaciones)</div>
     </section>
   </main>
+  <script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true });
+</script>
 </body>
 </html> 
