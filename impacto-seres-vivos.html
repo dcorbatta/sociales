@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Impacto de los seres vivos</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: linear-gradient(135deg, #e8f6ef 0%, #f9fbe7 100%); font-family: 'Comic Sans MS', Arial, sans-serif; color: #222; }
+    h1, h2, h3 { color: #ff9800; text-align: center; }
+    section { max-width: 800px; margin: 2em auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px #b2dfdb; padding: 2em; }
+    .ilustracion { display: flex; justify-content: center; margin: 1.5em 0; }
+    .ilustracion img { max-width: 320px; border: 3px solid #000; border-radius: 12px; background: #fff; }
+    .dato-curioso { background: #e0f7fa; border-left: 8px solid #228B22; border-radius: 12px; box-shadow: 0 2px 8px #b2dfdb; padding: 1.2em 1.5em; margin: 2em 0; }
+    .juego-opciones { display: flex; flex-wrap: wrap; gap: 1.5em; justify-content: center; margin: 2em 0; }
+    .juego-personaje { background: #fffbe7; border: 2px solid #ff9800; border-radius: 12px; padding: 1em; text-align: center; width: 140px; cursor: pointer; transition: box-shadow 0.2s; }
+    .juego-personaje img { width: 80px; height: 80px; object-fit: contain; margin-bottom: 0.5em; }
+    .juego-personaje.selected { box-shadow: 0 0 0 4px #43a047; }
+    .juego-respuesta { margin-top: 1em; font-size: 1.1em; color: #228B22; min-height: 2em; }
+    .acciones-positivas { background: #fffbe7; border-left: 8px solid #43a047; border-radius: 12px; box-shadow: 0 2px 8px #b2dfdb; padding: 1.2em 1.5em; margin: 2em 0; }
+    ul { margin-left: 1.5em; }
+  </style>
+</head>
+<body>
+  <a href="ciencias-naturales.html" class="volver-inicio" style="display:block; width:fit-content; margin:2em auto 1em auto; background:#228B22; color:#fff; font-size:1.2em; font-weight:bold; padding:0.7em 2em; border-radius:30px; text-decoration:none; box-shadow:0 2px 8px #b2dfdb; letter-spacing:1px; transition:background 0.2s;">⬅ Volver a Ciencias Naturales</a>
+  <h1>Impacto de los seres vivos</h1>
+  <section>
+    <h2>Introducción</h2>
+    <p>
+      Los individuos de una especie no solo se relacionan entre sí, sino también con otras especies de la comunidad y con el ambiente en el que habitan. Sus actividades modifican constantemente esos espacios y también influyen en todo el ecosistema.
+    </p>
+  </section>
+
+  <section>
+    <h2>1. Modificaciones del ambiente</h2>
+    <p>
+      Algunos seres vivos modifican el ambiente donde viven para adaptarlo a sus necesidades.
+      <br>
+      <b>Ejemplo:</b> El castor construye represas que interrumpen el cauce del agua, modifica el ecosistema y puede alterar el ambiente que antes existía. Se lo llama <b>ingeniero del ecosistema</b>.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/castor-represa.png" alt="Castor construyendo una represa">
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Alteraciones de las relaciones</h2>
+    <p>
+      Cuando una especie nueva llega a un ecosistema, puede modificar las relaciones entre los organismos que ya vivían allí.
+      <br>
+      <b>Ejemplo:</b> Un pez exótico introducido en una laguna se alimenta de larvas de insectos y peces pequeños. Esto puede hacer que desaparezcan otras especies e impacta en toda la cadena alimentaria.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/pez-invasor-cadena.png" alt="Pez invasor y cadena alimentaria alterada">
+    </div>
+  </section>
+
+  <section>
+    <h2>3. Ingenieros ambientales y colonizadores</h2>
+    <p>
+      Algunas especies vegetales y animales pueden formar nuevas comunidades en un ambiente.
+      <br>
+      <b>Ejemplo:</b> Los musgos son de las primeras plantas en aparecer en ambientes difíciles. Permiten que luego se instalen otras especies al formar suelo fértil y mejorar las condiciones de luz y humedad.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/musgos-colonizadores.png" alt="Musgos y otras plantas colonizando">
+    </div>
+  </section>
+
+  <section>
+    <h2>4. Dato curioso</h2>
+    <div class="dato-curioso">
+      <b>¿Sabías que…?</b><br>
+      Algunos peces pueden vivir en las aguas residuales de una ciudad. Cuando el agua empieza a mejorar, aparecen insectos, plantas y más peces. ¡Las bacterias y algas también ayudan a recuperar el ambiente!
+      <div class="ilustracion">
+        <img src="imagenes-naturales/pecera-recuperacion.png" alt="Pecera con proceso de recuperación">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>5. Juego: ¿Quién modifica el ambiente?</h2>
+    <p>Haz clic en cada personaje y responde:</p>
+    <div class="juego-opciones" id="juego-personajes">
+      <!-- Personajes se llenan por JS -->
+    </div>
+    <div class="juego-respuesta" id="juego-respuesta"></div>
+  </section>
+
+  <section>
+    <h2>6. ¿Y nosotros?</h2>
+    <p>
+      Las personas también impactamos el ambiente. ¿Qué cosas podés hacer para que ese impacto sea positivo?
+    </p>
+    <div class="acciones-positivas">
+      <ul>
+        <li>Plantar árboles 🌳</li>
+        <li>No arrojar basura 🗑️</li>
+        <li>Cuidar el agua 💧</li>
+        <li>Proteger animales 🐢</li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    // Juego interactivo: ¿Quién modifica el ambiente?
+    const personajes = [
+      {
+        nombre: 'Castor',
+        img: 'imagenes-naturales/castor.png',
+        preguntas: [
+          {q: '¿Modifica el ambiente?', a: 'Sí. Construye represas y cambia el ecosistema.'},
+          {q: '¿Cambia las relaciones entre especies?', a: 'Sí. Altera el hábitat de otros animales.'},
+          {q: '¿Ayuda a otros a vivir?', a: 'Sí. Puede crear nuevos hábitats para algunas especies.'}
+        ]
+      },
+      {
+        nombre: 'Musgo',
+        img: 'imagenes-naturales/musgo.png',
+        preguntas: [
+          {q: '¿Modifica el ambiente?', a: 'Sí. Forma suelo fértil y mejora el ambiente.'},
+          {q: '¿Cambia las relaciones entre especies?', a: 'Sí. Permite que otras plantas crezcan.'},
+          {q: '¿Ayuda a otros a vivir?', a: 'Sí. Hace posible que otras especies se instalen.'}
+        ]
+      },
+      {
+        nombre: 'Pez invasor',
+        img: 'imagenes-naturales/pez-invasor.png',
+        preguntas: [
+          {q: '¿Modifica el ambiente?', a: 'Sí. Cambia la cadena alimentaria.'},
+          {q: '¿Cambia las relaciones entre especies?', a: 'Sí. Puede hacer desaparecer otras especies.'},
+          {q: '¿Ayuda a otros a vivir?', a: 'No. Generalmente perjudica a otras especies.'}
+        ]
+      },
+      {
+        nombre: 'Ser humano',
+        img: 'imagenes-naturales/humano.png',
+        preguntas: [
+          {q: '¿Modifica el ambiente?', a: 'Sí. Puede modificarlo mucho, para bien o para mal.'},
+          {q: '¿Cambia las relaciones entre especies?', a: 'Sí. Puede afectar a muchas especies.'},
+          {q: '¿Ayuda a otros a vivir?', a: 'Sí, si cuida el ambiente. No, si lo daña.'}
+        ]
+      },
+      {
+        nombre: 'Árbol',
+        img: 'imagenes-naturales/arbol.png',
+        preguntas: [
+          {q: '¿Modifica el ambiente?', a: 'Sí. Da sombra, oxígeno y cambia el suelo.'},
+          {q: '¿Cambia las relaciones entre especies?', a: 'Sí. Da refugio y alimento a otros.'},
+          {q: '¿Ayuda a otros a vivir?', a: 'Sí. Es fundamental para muchas especies.'}
+        ]
+      }
+    ];
+
+    const juegoCont = document.getElementById('juego-personajes');
+    const respuestaCont = document.getElementById('juego-respuesta');
+    personajes.forEach((p, idx) => {
+      const div = document.createElement('div');
+      div.className = 'juego-personaje';
+      div.innerHTML = `<img src="${p.img}" alt="${p.nombre}"><div>${p.nombre}</div>`;
+      div.onclick = () => {
+        document.querySelectorAll('.juego-personaje').forEach(el => el.classList.remove('selected'));
+        div.classList.add('selected');
+        respuestaCont.innerHTML = p.preguntas.map(qp => `<b>${qp.q}</b> <br>${qp.a}`).join('<br><br>');
+      };
+      juegoCont.appendChild(div);
+    });
+  </script>
+</body>
+</html> 
