@@ -6,12 +6,92 @@
   <title>Relaciones entre los seres vivos</title>
   <link rel="stylesheet" href="styles.css">
   <style>
-    body { background: #f7fafd; font-family: 'Comic Neue', Arial, sans-serif; color: #222; }
-    .relaciones-section { background: #fff; border-radius: 12px; box-shadow: 0 2px 8px #0001; margin: 24px auto; max-width: 700px; padding: 28px; }
-    .relaciones-section h2 { color: #1976d2; margin-top: 0; }
-    .ejemplo { background: #e3f2fd; border-left: 4px solid #1976d2; padding: 8px 16px; margin: 12px 0; border-radius: 6px; }
-    .relaciones-img { max-width: 80px; max-height: 80px; vertical-align: middle; margin: 0 8px; border-radius: 8px; }
-    ul { margin-bottom: 0; }
+    body {
+      background: linear-gradient(135deg, #e8f6ef 0%, #f9fbe7 100%);
+      font-family: 'Comic Neue', Arial, sans-serif;
+      color: #222;
+      margin: 0;
+      padding: 0;
+    }
+    .relaciones-section {
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 4px 16px #b2dfdb;
+      margin: 32px auto;
+      max-width: 700px;
+      padding: 32px 24px;
+    }
+    .relaciones-section h2 {
+      color: #1976d2;
+      margin-top: 0;
+    }
+    .ejemplo, .sabias {
+      background: #e3f2fd;
+      border-left: 8px solid #1976d2;
+      padding: 1em 1.5em;
+      margin: 1.2em 0;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #b2dfdb;
+      font-size: 1.08em;
+    }
+    .sabias {
+      background: #fffbe7;
+      border-left: 8px solid #ff9800;
+      color: #795548;
+    }
+    .relaciones-img {
+      max-width: 180px;
+      max-height: 140px;
+      display: block;
+      margin: 0.7em auto 0.5em auto;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px #e0e0e0;
+      background: #fff;
+      border: 3px solid #000;
+    }
+    .relaciones-tarjetas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      justify-content: center;
+      margin: 1.5em 0;
+    }
+    .tarjeta-relacion {
+      flex: 1;
+      min-width: 220px;
+      background: #e3f2fd;
+      border-radius: 14px;
+      padding: 1em;
+      text-align: center;
+      box-shadow: 0 2px 8px #b2dfdb;
+      margin-bottom: 1em;
+    }
+    .tarjeta-relacion.inter {
+      background: #fffbe7;
+    }
+    .volver-inicio {
+      display: block;
+      margin: 2em auto 0 auto;
+      background: #228B22;
+      color: #fff;
+      font-size: 1.1em;
+      font-weight: bold;
+      padding: 0.7em 2em;
+      border-radius: 30px;
+      text-decoration: none;
+      box-shadow: 0 2px 8px #b2dfdb;
+      letter-spacing: 1px;
+      transition: background 0.2s;
+      width: fit-content;
+    }
+    .volver-inicio:hover {
+      background: #43a047;
+    }
+    @media (max-width: 700px) {
+      .relaciones-section { max-width: 98vw; padding: 18px 4vw; }
+      .relaciones-tarjetas { flex-direction: column; gap: 1em; }
+      .relaciones-img { max-width: 98vw; }
+    }
   </style>
 </head>
 <body>
@@ -20,98 +100,145 @@
     <h1>Relaciones entre los seres vivos</h1>
     <nav style="margin-bottom: 18px;">
       <a href="index.html" class="game-btn">Volver al inicio</a>
-      <!-- Aquí se pueden agregar más enlaces a otros temas -->
     </nav>
   </header>
   <main>
     <section class="relaciones-section">
       <h2>¿Cómo se relacionan los seres vivos en un ecosistema?</h2>
       <p>En un ecosistema, los seres vivos interactúan de muchas formas. Estas relaciones pueden ser entre individuos de la misma especie (intraespecíficas) o de especies diferentes (interespecíficas).</p>
-      <!-- Diagrama visual de tipos de relaciones -->
-      <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; padding:1em; margin:2em auto; max-width:600px;">
-        graph TD
-          A["Relaciones entre los seres vivos"]
-          A --> B["Intraespecíficas\n(misma especie)"]
-          A --> C["Interespecíficas\n(distintas especies)"]
-      </div>
+      <img src="imagenes-naturales/diagrama-relaciones.png" class="relaciones-img" alt="Diagrama de tipos de relaciones entre los seres vivos" title="Un diagrama colorido y sencillo que muestre dos ramas: una con animales de la misma especie interactuando (intraespecíficas) y otra con animales de diferentes especies interactuando (interespecíficas), estilo libro infantil.">
     </section>
     <section class="relaciones-section">
       <h2>Cuadro sinóptico: Tipos de relaciones</h2>
-      <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; padding:1em; margin:2em auto; max-width:600px;">
-        graph TD
-          A["Relaciones entre los seres vivos"]
-          A --> B["Intraespecíficas"]
-          B --> B1["Competencia\n(ej: ciervos)"]
-          B --> B2["Cooperación\n(ej: hormigas, abejas)"]
-          A --> C["Interespecíficas"]
-          C --> C1["Consumidor-recurso\n(ej: león y cebra)"]
-          C --> C2["Competencia\n(ej: ardillas nativas y exóticas)"]
-          C --> C3["Comensalismo\n(ej: pájaro y vaca)"]
-          C --> C4["Mutualismo\n(ej: abeja y flor)"]
+      <div class="cuadro-sinoptico">
+        <div class="cs-nivel cs-principal">Relaciones entre los seres vivos
+          <div class="cs-rama">
+            <div class="cs-nivel cs-intra">Intraespecíficas
+              <div class="cs-rama">
+                <div class="cs-nivel cs-final">Competencia<br><span class="cs-ej">(ej: ciervos)</span></div>
+                <div class="cs-nivel cs-final">Cooperación<br><span class="cs-ej">(ej: hormigas, abejas)</span></div>
+              </div>
+            </div>
+            <div class="cs-nivel cs-inter">Interespecíficas
+              <div class="cs-rama">
+                <div class="cs-nivel cs-final">Consumidor-recurso<br><span class="cs-ej">(ej: león y cebra)</span></div>
+                <div class="cs-nivel cs-final">Competencia<br><span class="cs-ej">(ej: ardillas nativas y exóticas)</span></div>
+                <div class="cs-nivel cs-final">Comensalismo<br><span class="cs-ej">(ej: pájaro y vaca)</span></div>
+                <div class="cs-nivel cs-final">Mutualismo<br><span class="cs-ej">(ej: abeja y flor)</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <style>
+      .cuadro-sinoptico {
+        display: flex;
+        justify-content: center;
+        margin: 2em 0 1em 0;
+        font-family: 'Comic Neue', Arial, sans-serif;
+      }
+      .cs-nivel {
+        background: #fffbe7;
+        border: 2px solid #43a047;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px #b2dfdb;
+        padding: 0.7em 1.2em;
+        margin: 0.5em auto;
+        text-align: center;
+        font-weight: bold;
+        color: #228B22;
+        min-width: 120px;
+        position: relative;
+      }
+      .cs-principal {
+        font-size: 1.15em;
+        color: #1976d2;
+        border-color: #1976d2;
+      }
+      .cs-intra { border-color: #43a047; color: #43a047; margin-top: 1em; }
+      .cs-inter { border-color: #ff9800; color: #ff9800; margin-top: 1em; }
+      .cs-final { font-size: 0.98em; background: #e3f2fd; border-color: #90caf9; color: #1976d2; margin-top: 0.7em; }
+      .cs-inter .cs-final { background: #fffbe7; border-color: #ffd54f; color: #ff9800; }
+      .cs-ej { font-weight: normal; color: #888; font-size: 0.93em; }
+      .cs-rama {
+        display: flex;
+        justify-content: center;
+        gap: 1.2em;
+        margin-top: 0.5em;
+        flex-wrap: wrap;
+      }
+      @media (max-width: 700px) {
+        .cuadro-sinoptico { flex-direction: column; align-items: center; }
+        .cs-rama { flex-direction: column; gap: 0.5em; }
+        .cs-nivel { min-width: 90px; font-size: 0.98em; }
+      }
+      </style>
     </section>
     <section class="relaciones-section">
       <h2>Relaciones intraespecíficas</h2>
       <p>Ocurren entre individuos de la <b>misma especie</b>. Pueden ser:</p>
-      <ul>
-        <li><b>Competencia:</b> Los individuos compiten por alimento, pareja, refugio, etc.</li>
-        <li><b>Cooperación:</b> Los individuos trabajan juntos, se ayudan o se organizan en grupos.</li>
-      </ul>
-      <div style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center; margin:1.5em 0;">
-        <div style="flex:1; min-width:220px; background:#e3f2fd; border-radius:10px; padding:1em; text-align:center;">
+      <div class="relaciones-tarjetas">
+        <div class="tarjeta-relacion">
           <b>Competencia</b><br>
-          <img class="relaciones-img" src="imagenes-naturales/ciervos.png" alt="Ciervos compitiendo"><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#1976d2; font-weight:normal;">Los individuos compiten por alimento, pareja, refugio, etc.</span>
+          <img src="imagenes-naturales/competencia-ciervos.png" class="relaciones-img" alt="Dos ciervos machos peleando con sus astas" title="Dos ciervos machos peleando con sus astas en un bosque, compitiendo por una hembra, estilo ilustración para niños.">
           <span style="font-size:0.98em; color:#1976d2;">Ejemplo: Ciervos machos luchan por reproducirse.</span>
         </div>
-        <div style="flex:1; min-width:220px; background:#e3f2fd; border-radius:10px; padding:1em; text-align:center;">
+        <div class="tarjeta-relacion">
           <b>Cooperación</b><br>
-          <img class="relaciones-img" src="imagenes-naturales/hormigas.png" alt="Hormigas cooperando"><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#1976d2; font-weight:normal;">Los individuos trabajan juntos, se ayudan o se organizan en grupos.</span>
+          <img src="imagenes-naturales/cooperacion-hormigas.png" class="relaciones-img" alt="Hormigas trabajando juntas" title="Un grupo de hormigas trabajando juntas para llevar comida a su hormiguero, con caras felices, estilo dibujo animado infantil.">
           <span style="font-size:0.98em; color:#1976d2;">Ejemplo: Hormigas trabajan juntas en la colonia.</span>
         </div>
       </div>
-      <div class="ejemplo">
+      <div class="sabias">
+        <img src="imagenes-naturales/abejas-organizadas.png" class="relaciones-img" alt="Abejas organizadas en la colmena" title="Una colmena de abejas donde cada abeja tiene un trabajo diferente (una cuida crías, otra recolecta polen, otra defiende la entrada), todo en un estilo colorido y amigable para niños." style="max-width:120px; float:left; margin-right:1em;">
         <b>¿Sabías?</b> Las abejas y hormigas tienen una organización social con división de tareas: algunas buscan comida, otras cuidan a las crías o defienden la colonia.
+        <div style="clear:both;"></div>
       </div>
     </section>
     <section class="relaciones-section">
       <h2>Relaciones interespecíficas</h2>
       <p>Ocurren entre individuos de <b>distintas especies</b>. Pueden ser:</p>
-      <ul>
-        <li><b>Consumidor-recurso:</b> Un ser vivo se alimenta de otro. Ejemplo: un león caza una cebra, un parásito vive en otro animal.</li>
-        <li><b>Competencia interespecífica:</b> Dos especies compiten por el mismo recurso. Ejemplo: ardillas nativas y exóticas.</li>
-        <li><b>Comensalismo:</b> Uno se beneficia y el otro no se perjudica ni beneficia. Ejemplo: pájaro que come parásitos de una vaca.</li>
-        <li><b>Mutualismo:</b> Ambos se benefician. Ejemplo: abeja poliniza una flor y recibe néctar.</li>
-      </ul>
-      <div style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center; margin:1.5em 0;">
-        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+      <div class="relaciones-tarjetas">
+        <div class="tarjeta-relacion inter">
           <b>Consumidor-recurso</b><br>
-          <img class="relaciones-img" src="imagenes-naturales/leon-cebra.png" alt="León y cebra"><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#d32f2f; font-weight:normal;">Un ser vivo se alimenta de otro. Ejemplo: un león caza una cebra, un parásito vive en otro animal.</span>
+          <img src="imagenes-naturales/depredacion-leon-cebra.png" class="relaciones-img" alt="León cazando una cebra" title="Un león cazando una cebra en la sabana, pero sin mostrar violencia, solo la escena de persecución, estilo cuento infantil.">
           <span style="font-size:0.98em; color:#d32f2f;">Ejemplo: El león caza a la cebra.</span>
         </div>
-        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+        <div class="tarjeta-relacion inter">
+          <b>Competencia interespecífica</b><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#d32f2f; font-weight:normal;">Dos especies compiten por el mismo recurso. Ejemplo: ardillas nativas y exóticas.</span>
+          <img src="imagenes-naturales/competencia-ardillas.png" class="relaciones-img" alt="Dos ardillas compitiendo por una nuez" title="Dos ardillas diferentes (una nativa y una exótica) compitiendo por una nuez en un árbol, con expresiones de esfuerzo, estilo ilustración educativa.">
+          <span style="font-size:0.98em; color:#d32f2f;">Ejemplo: Ardillas nativas y exóticas compiten por el mismo recurso.</span>
+        </div>
+        <div class="tarjeta-relacion inter">
           <b>Comensalismo</b><br>
-          <img class="relaciones-img" src="imagenes-naturales/comensalismo.png" alt="Pájaro y vaca"><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#1976d2; font-weight:normal;">Uno se beneficia y el otro no se perjudica ni beneficia. Ejemplo: pájaro que come parásitos de una vaca.</span>
+          <img src="imagenes-naturales/comensalismo-pajaro-vaca.png" class="relaciones-img" alt="Pájaro sobre una vaca comiendo parásitos" title="Un pájaro posado sobre una vaca, comiendo parásitos de su piel, ambos tranquilos y contentos, en un campo verde, estilo libro para niños.">
           <span style="font-size:0.98em; color:#1976d2;">Ejemplo: El pájaro come parásitos de la vaca.</span>
         </div>
-        <div style="flex:1; min-width:220px; background:#fffbe7; border-radius:10px; padding:1em; text-align:center;">
+        <div class="tarjeta-relacion inter">
           <b>Mutualismo</b><br>
-          <img class="relaciones-img" src="imagenes-naturales/mutualismo.png" alt="Abeja y flor"><br>
+          <span style="display:block; margin:0.5em 0 0.7em 0; color:#388e3c; font-weight:normal;">Ambos se benefician. Ejemplo: abeja poliniza una flor y recibe néctar.</span>
+          <img src="imagenes-naturales/mutualismo-abeja-flor.png" class="relaciones-img" alt="Abeja y flor" title="Una abeja y una flor: la abeja toma néctar y la flor recibe polen, ambas sonrientes, con fondo de jardín colorido, estilo dibujo animado.">
           <span style="font-size:0.98em; color:#388e3c;">Ejemplo: La abeja poliniza la flor y recibe néctar.</span>
         </div>
       </div>
-      <div class="ejemplo">
+      <div class="sabias">
+        <img src="imagenes-naturales/especies-exoticas.png" class="relaciones-img" alt="Ardilla exótica y nativa en un árbol" title="Una ardilla de vientre rojo (exótica) y una ardilla nativa en un árbol, mostrando que compiten por el mismo espacio, estilo educativo y amigable." style="max-width:120px; float:left; margin-right:1em;">
         <b>¿Sabías?</b> Cuando una especie exótica llega a un lugar, puede competir con las especies nativas y causar problemas en el ecosistema.
+        <div style="clear:both;"></div>
       </div>
     </section>
     <section class="relaciones-section">
       <h2>¡A practicar!</h2>
-      <!-- Aquí irá un juego o trivia sobre tipos de relaciones -->
-      <div style="text-align:center; color:#888;">(Próximamente: juego interactivo para identificar relaciones)</div>
+      <div class="ejemplo" style="text-align:center;">
+        <img src="imagenes-naturales/ninos-naturaleza.png" class="relaciones-img" alt="Niños observando la naturaleza" title="Un grupo de niños y niñas observando animales y plantas en la naturaleza, tomando notas y dibujando, estilo ilustración de libro escolar.">
+        <div style="margin-top:0.7em;">Dibuja una escena donde se vea una relación entre seres vivos. ¿Qué está pasando? ¿Puedes inventar una relación nueva entre dos animales o plantas?</div>
+      </div>
     </section>
   </main>
-  <script type="module">
-import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
-mermaid.initialize({ startOnLoad: true });
-</script>
 </body>
 </html> 
