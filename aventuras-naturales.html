@@ -311,5 +311,275 @@
         }
         </style>
       </section>
+<!-- JUEGO 1: Ordena los niveles -->
+<section id="juego-ordena-niveles" style="margin-top: 3em;">
+  <h2 style="color:#ff9800;">Juego: Ordena los niveles</h2>
+  <p style="text-align:center; font-size:1.1em; background:#e0f7fa; border-radius:10px; padding:0.7em 1em; max-width:600px; margin:1em auto 2em auto; box-shadow:0 2px 8px #b2dfdb;">
+    Arrastra las tarjetas para ordenarlas de menor a mayor. Cuando aciertes, se revelará el nombre del nivel.<br>
+    <b>¿Puedes lograr la secuencia correcta?</b>
+  </p>
+  <div id="ordena-niveles-container" style="display:flex; flex-wrap:wrap; gap:1.5em; justify-content:center; margin-bottom:2em;"></div>
+  <div id="feedback-ordena" style="margin-top:1em; font-size:1.2em; font-weight:bold; color:#228B22; min-height:2em;"></div>
+  <button onclick="reiniciarOrdenaNiveles()" style="margin-top:1.5em; background:#ff9800; color:#fff; font-size:1.1em; font-weight:bold; padding:0.7em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #ffe0b2; cursor:pointer;">Reiniciar juego</button>
+</section>
+
+<!-- JUEGO 2: Clasifica y explica -->
+<section id="juego-clasifica" style="margin-top: 3em;">
+  <h2 style="color:#43a047;">Juego: Clasifica y explica</h2>
+  <p style="text-align:center; font-size:1.1em; background:#fffbe7; border-radius:10px; padding:0.7em 1em; max-width:600px; margin:1em auto 2em auto; box-shadow:0 2px 8px #ffe0b2;">
+    Arrastra cada imagen a la caja correcta. Si aciertas, descubrirás el nombre de la categoría y una breve explicación.<br>
+    <b>¿Cuántos puedes clasificar bien?</b>
+  </p>
+  <div id="clasifica-imagenes" style="display:flex; flex-wrap:wrap; gap:1.5em; justify-content:center; margin-bottom:2em;"></div>
+  <div id="clasifica-categorias" style="display:flex; flex-wrap:wrap; gap:2em; justify-content:center;"></div>
+  <div id="feedback-clasifica" style="margin-top:1em; font-size:1.2em; font-weight:bold; color:#228B22; min-height:2em;"></div>
+  <button onclick="reiniciarClasifica()" style="margin-top:1.5em; background:#43a047; color:#fff; font-size:1.1em; font-weight:bold; padding:0.7em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #b2dfdb; cursor:pointer;">Reiniciar juego</button>
+</section>
+
+<audio id="sonido-exito" src="imagenes-naturales/detective/exito.mp3" preload="auto"></audio>
+<audio id="sonido-error" src="imagenes-naturales/detective/error.mp3" preload="auto"></audio>
+
+<script>
+// --- JUEGO 1: Ordena los niveles ---
+const nivelesData = [
+  {img: 'imagenes-naturales/individuo.png', nombre: 'Individuo'},
+  {img: 'imagenes-naturales/especie.png', nombre: 'Especie'},
+  {img: 'imagenes-naturales/poblacion.png', nombre: 'Población'},
+  {img: 'imagenes-naturales/comunidad.png', nombre: 'Comunidad'},
+  {img: 'imagenes-naturales/ecosistema.png', nombre: 'Ecosistema'}
+];
+let ordenActual = [];
+function mezclarArray(arr) {
+  return arr.map(v => [Math.random(), v]).sort().map(a => a[1]);
+}
+function renderOrdenaNiveles() {
+  const cont = document.getElementById('ordena-niveles-container');
+  cont.innerHTML = '';
+  ordenActual.forEach((nivel, idx) => {
+    const card = document.createElement('div');
+    card.className = 'card-nivel draggable-ordena';
+    card.setAttribute('draggable', 'true');
+    card.setAttribute('data-idx', idx);
+    card.innerHTML = `<img src="${nivel.img}" alt="${nivel.nombre}" style="width:110px; height:110px; background:#fff; border:3px solid #000; border-radius:12px; box-shadow:0 2px 8px #e0e0e0;"><div class="nombre-nivel" style="margin-top:0.5em; font-weight:bold; font-size:1.1em; color:#228B22; opacity:0;">${nivel.nombre}</div>`;
+    cont.appendChild(card);
+  });
+  addDnDOrdena();
+}
+function addDnDOrdena() {
+  let dragSrc = null;
+  document.querySelectorAll('.draggable-ordena').forEach(card => {
+    card.addEventListener('dragstart', e => {
+      dragSrc = card;
+      setTimeout(() => card.style.opacity = '0.5', 0);
+    });
+    card.addEventListener('dragend', e => {
+      dragSrc = null;
+      card.style.opacity = '1';
+    });
+    card.addEventListener('dragover', e => e.preventDefault());
+    card.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc && dragSrc !== card) {
+        const idx1 = +dragSrc.dataset.idx;
+        const idx2 = +card.dataset.idx;
+        [ordenActual[idx1], ordenActual[idx2]] = [ordenActual[idx2], ordenActual[idx1]];
+        renderOrdenaNiveles();
+        checkOrdenaNiveles();
+      }
+    });
+  });
+}
+function checkOrdenaNiveles() {
+  let correcto = true;
+  for (let i = 0; i < nivelesData.length; i++) {
+    if (ordenActual[i].nombre !== nivelesData[i].nombre) correcto = false;
+  }
+  if (correcto) {
+    document.querySelectorAll('.nombre-nivel').forEach(el => {
+      el.style.opacity = 1;
+      el.classList.add('anim-exito');
+    });
+    reproducirSonido('exito');
+    mostrarFeedbackOrdena('¡Secuencia correcta! ¡Muy bien!', true);
+  } else {
+    document.querySelectorAll('.nombre-nivel').forEach(el => el.style.opacity = 0);
+    mostrarFeedbackOrdena('Sigue intentando. ¡Puedes lograrlo!', false);
+  }
+}
+function mostrarFeedbackOrdena(msg, exito) {
+  const fb = document.getElementById('feedback-ordena');
+  fb.textContent = msg;
+  fb.style.color = exito ? '#228B22' : '#d32f2f';
+}
+function reiniciarOrdenaNiveles() {
+  ordenActual = mezclarArray([...nivelesData]);
+  renderOrdenaNiveles();
+  mostrarFeedbackOrdena('', true);
+}
+// --- JUEGO 2: Clasifica y explica ---
+const clasificaData = [
+  {img: 'imagenes-naturales/individuo.png', categoria: 'Individuo', explicacion: 'Un solo ser vivo.'},
+  {img: 'imagenes-naturales/especie.png', categoria: 'Especie', explicacion: 'Grupo de seres vivos que pueden tener crías entre sí.'},
+  {img: 'imagenes-naturales/poblacion.png', categoria: 'Población', explicacion: 'Varios individuos de la misma especie juntos.'},
+  {img: 'imagenes-naturales/comunidad.png', categoria: 'Comunidad', explicacion: 'Diferentes especies viviendo juntas.'},
+  {img: 'imagenes-naturales/ecosistema.png', categoria: 'Ecosistema', explicacion: 'Animales, plantas, agua, suelo y sol.'},
+  {img: 'imagenes-naturales/detective/tala1.png', categoria: 'Individuo', explicacion: 'Un solo árbol.'},
+  {img: 'imagenes-naturales/detective/carpincho1.png', categoria: 'Individuo', explicacion: 'Un solo carpincho.'},
+  {img: 'imagenes-naturales/detective/carpincho2.png', categoria: 'Población', explicacion: 'Varios carpinchos juntos.'},
+  {img: 'imagenes-naturales/detective/yaguarete1.png', categoria: 'Especie', explicacion: 'Dos yaguaretés de la misma especie.'},
+  {img: 'imagenes-naturales/detective/comunidad.png', categoria: 'Comunidad', explicacion: 'Animales y plantas diferentes juntos.'}
+];
+const categoriasClasifica = ['Individuo', 'Especie', 'Población', 'Comunidad', 'Ecosistema'];
+function renderClasifica() {
+  const imgsCont = document.getElementById('clasifica-imagenes');
+  imgsCont.innerHTML = '';
+  mezclarArray([...clasificaData]).forEach((item, idx) => {
+    const img = document.createElement('img');
+    img.src = item.img;
+    img.alt = item.categoria;
+    img.className = 'draggable-clasifica';
+    img.setAttribute('draggable', 'true');
+    img.setAttribute('data-categoria', item.categoria);
+    img.setAttribute('data-explicacion', item.explicacion);
+    img.style.width = '110px';
+    img.style.height = '110px';
+    img.style.background = '#fff';
+    img.style.border = '3px solid #000';
+    img.style.borderRadius = '12px';
+    img.style.boxShadow = '0 2px 8px #e0e0e0';
+    imgsCont.appendChild(img);
+  });
+  const catsCont = document.getElementById('clasifica-categorias');
+  catsCont.innerHTML = '';
+  const instrucciones = {
+    'Individuo': '🦔 Un solo ser vivo',
+    'Especie': '🐾 Mismos pero no juntos',
+    'Población': '🦔🦔 Varios iguales juntos',
+    'Comunidad': '🌳🐦 Diferentes especies juntas',
+    'Ecosistema': '🌎 Todo el ambiente'
+  };
+  categoriasClasifica.forEach(cat => {
+    const box = document.createElement('div');
+    box.className = 'dropzone-clasifica';
+    box.setAttribute('data-categoria', cat);
+    box.style.width = '160px';
+    box.style.minHeight = '130px';
+    box.style.background = '#fffbe7';
+    box.style.border = '3px dashed #43a047';
+    box.style.borderRadius = '14px';
+    box.style.display = 'flex';
+    box.style.flexDirection = 'column';
+    box.style.alignItems = 'center';
+    box.style.justifyContent = 'center';
+    box.style.fontWeight = 'bold';
+    box.style.fontSize = '1.1em';
+    box.style.color = '#43a047';
+    box.style.boxShadow = '0 2px 8px #b2dfdb';
+    box.innerHTML = `<div style='font-size:1em; color:#888; margin-bottom:0.3em;'>${instrucciones[cat] || ''}</div><span class="nombre-categoria" style="opacity:0;">${cat}</span><span class="explicacion-categoria" style="opacity:0; font-size:0.95em; color:#888;"></span>`;
+    catsCont.appendChild(box);
+  });
+  addDnDClasifica();
+}
+function addDnDClasifica() {
+  let dragging = null;
+  document.querySelectorAll('.draggable-clasifica').forEach(img => {
+    img.addEventListener('dragstart', e => {
+      dragging = img;
+      setTimeout(() => img.style.opacity = '0.5', 0);
+    });
+    img.addEventListener('dragend', e => {
+      dragging = null;
+      img.style.opacity = '1';
+    });
+  });
+  document.querySelectorAll('.dropzone-clasifica').forEach(zone => {
+    zone.addEventListener('dragover', e => {
+      e.preventDefault();
+      zone.style.background = '#c8e6c9';
+    });
+    zone.addEventListener('dragleave', e => {
+      zone.style.background = '';
+    });
+    zone.addEventListener('drop', e => {
+      e.preventDefault();
+      zone.style.background = '';
+      if (dragging && dragging.dataset.categoria === zone.dataset.categoria) {
+        zone.appendChild(dragging);
+        dragging.setAttribute('draggable', 'false');
+        dragging.style.border = '3px solid #43a047';
+        zone.querySelector('.nombre-categoria').style.opacity = 1;
+        zone.querySelector('.explicacion-categoria').textContent = dragging.dataset.explicacion;
+        zone.querySelector('.explicacion-categoria').style.opacity = 1;
+        zone.classList.add('anim-exito');
+        reproducirSonido('exito');
+        mostrarFeedbackClasifica('¡Correcto! Descubriste la categoría.', true);
+      } else if (dragging) {
+        animarError(dragging);
+        reproducirSonido('error');
+        mostrarFeedbackClasifica('Intenta de nuevo. Observa bien la imagen.', false);
+      }
+    });
+  });
+}
+function mostrarFeedbackClasifica(msg, exito) {
+  const fb = document.getElementById('feedback-clasifica');
+  fb.textContent = msg;
+  fb.style.color = exito ? '#228B22' : '#d32f2f';
+}
+function reiniciarClasifica() {
+  renderClasifica();
+  mostrarFeedbackClasifica('', true);
+}
+// --- Animaciones y sonidos reutilizados ---
+function reproducirSonido(tipo) {
+  const audio = document.getElementById('sonido-' + tipo);
+  if (audio) {
+    audio.currentTime = 0;
+    audio.play();
+  }
+}
+function animarError(elemento) {
+  elemento.classList.remove('anim-exito');
+  elemento.classList.add('anim-error');
+  setTimeout(() => elemento.classList.remove('anim-error'), 700);
+}
+// --- Inicialización ---
+document.addEventListener('DOMContentLoaded', () => {
+  reiniciarOrdenaNiveles();
+  reiniciarClasifica();
+});
+</script>
+<style>
+.card-nivel, .draggable-clasifica {
+  cursor: grab;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #b2dfdb;
+  padding: 0.5em;
+  text-align: center;
+  transition: transform 0.2s;
+}
+.card-nivel.anim-exito, .dropzone-clasifica.anim-exito {
+  animation: bounce 0.7s;
+}
+@keyframes bounce {
+  0% { transform: scale(1); }
+  30% { transform: scale(1.2); }
+  50% { transform: scale(0.95); }
+  70% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+.anim-error {
+  animation: shake 0.7s;
+}
+@keyframes shake {
+  0% { transform: translateX(0); }
+  20% { transform: translateX(-10px); }
+  40% { transform: translateX(10px); }
+  60% { transform: translateX(-10px); }
+  80% { transform: translateX(10px); }
+  100% { transform: translateX(0); }
+}
+</style>
 </body>
 </html> 
