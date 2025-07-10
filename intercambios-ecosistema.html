@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intercambios en el ecosistema</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: linear-gradient(135deg, #e8f6ef 0%, #f9fbe7 100%); font-family: 'Comic Sans MS', Arial, sans-serif; color: #222; }
+    h1, h2, h3 { color: #388e3c; text-align: center; }
+    section { max-width: 800px; margin: 2em auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px #b2dfdb; padding: 2em; }
+    .ilustracion { display: flex; justify-content: center; margin: 1.5em 0; }
+    .ilustracion img { max-width: 320px; border: 3px solid #000; border-radius: 12px; background: #fff; }
+    .actividad { background: #e0f7fa; border-left: 8px solid #388e3c; border-radius: 12px; box-shadow: 0 2px 8px #b2dfdb; padding: 1.2em 1.5em; margin: 2em 0; }
+    .mapa-ecosistema { background: #fffbe7; border-radius: 12px; box-shadow: 0 2px 8px #ffe0b2; padding: 1em; margin: 2em auto; max-width: 600px; }
+    .ciclo-animado { display: flex; align-items: center; justify-content: center; gap: 1em; margin: 2em 0; }
+    .ciclo-animado div { text-align: center; }
+    .quiz { background: #fffbe7; border-radius: 12px; box-shadow: 0 2px 8px #ffe0b2; padding: 1.2em 1.5em; margin: 2em 0; }
+    .quiz label { display: block; margin: 0.7em 0; }
+    .quiz .respuesta { color: #388e3c; font-weight: bold; margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <a href="ciencias-naturales.html" class="volver-inicio" style="display:block; width:fit-content; margin:2em auto 1em auto; background:#388e3c; color:#fff; font-size:1.2em; font-weight:bold; padding:0.7em 2em; border-radius:30px; text-decoration:none; box-shadow:0 2px 8px #b2dfdb; letter-spacing:1px; transition:background 0.2s;">⬅ Volver a Ciencias Naturales</a>
+  <h1>Intercambios en el ecosistema</h1>
+
+  <section>
+    <h2>¿Por qué son importantes los intercambios?</h2>
+    <p>
+      Los seres vivos no habitan los ambientes de forma aislada. Interactúan entre sí y con los elementos no vivos (factores abióticos). Gracias a estas interacciones se mantiene el equilibrio del ecosistema.
+    </p>
+  </section>
+
+  <section>
+    <h2>Interacciones en el medio</h2>
+    <p>
+      Todos los organismos necesitan energía, nutrientes, refugio y condiciones adecuadas para vivir. Todo esto lo obtienen del ambiente y de otros seres vivos.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/interacciones-medio.png" alt="Interacciones en el medio">
+    </div>
+  </section>
+
+  <section>
+    <h2>Interacciones entre seres vivos</h2>
+    <p>
+      <b>Ejemplo:</b> Las plantas usan la luz solar para hacer fotosíntesis. Luego, los herbívoros se alimentan de las plantas, los carnívoros se alimentan de los herbívoros y, cuando mueren, los descomponedores transforman sus restos y devuelven nutrientes al suelo. <br>
+      <b>Esto forma un ciclo continuo de materiales y energía.</b>
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/ciclo-materia-energia.png" alt="Ciclo de materia y energía">
+    </div>
+  </section>
+
+  <section>
+    <h2>Interacciones con factores abióticos</h2>
+    <p>
+      Las plantas brindan sombra y refugio, modifican el suelo y retienen agua. Todos los seres vivos respiran, generando intercambio de gases como oxígeno y dióxido de carbono. Algunos organismos mueven el agua o el aire, modificando su temperatura o composición.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/interacciones-abioticos.png" alt="Interacciones con factores abióticos">
+    </div>
+  </section>
+
+  <section>
+    <h2>Concepto clave</h2>
+    <div class="actividad">
+      <b>Los ecosistemas funcionan como sistemas abiertos:</b> hay un intercambio constante entre los factores bióticos (seres vivos) y abióticos (suelo, agua, aire, temperatura, luz).
+    </div>
+  </section>
+
+  <section>
+    <h2>Cuadro sinóptico: Intercambios en el ecosistema</h2>
+    <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #ffe0b2; padding:1em; margin:2em auto; max-width:600px;">
+      graph TD
+        A["Ecosistema (sistema abierto)"]
+        A --> B["Factores bióticos (seres vivos)"]
+        A --> C["Factores abióticos (agua, suelo, aire, luz, temperatura)"]
+        B --> D["Interacciones entre seres vivos"]
+        D --> E["Plantas hacen fotosíntesis"]
+        D --> F["Herbívoros comen plantas"]
+        D --> G["Carnívoros comen herbívoros"]
+        D --> H["Descomponedores reciclan materia"]
+        B --> I["Interacciones con abióticos"]
+        I --> J["Respiran (intercambio de gases)"]
+        I --> K["Usan agua y minerales"]
+        I --> L["Modifican el suelo y el ambiente"]
+        C --> M["Proveen energía y condiciones"]
+        M --> N["Luz solar para plantas"]
+        M --> O["Agua para todos"]
+        M --> P["Temperatura y aire"]
+    </div>
+  </section>
+  <script type="module">
+    import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+    mermaid.initialize({ startOnLoad: true });
+  </script>
+
+  <section>
+    <h2>Actividades para pensar y crear</h2>
+    <div class="actividad">
+      <ul>
+        <li><b>Pensá:</b> ¿Qué animales, plantas o factores abióticos hay en el lugar donde vivís? Hacé una lista con nombres de cada uno.</li>
+        <li><b>Explicá:</b> ¿Cómo se relacionan esos seres vivos entre sí y con el ambiente?</li>
+        <li><b>Dibujá:</b> Un ecosistema con esas interacciones.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mapa interactivo de un ecosistema</h2>
+    <div class="mapa-ecosistema">
+      <b>Arrastra los elementos para mostrar cómo se relacionan:</b>
+      <div style="display:flex; flex-wrap:wrap; gap:1em; justify-content:center; margin-top:1em;">
+        <img src="imagenes-naturales/sol.png" alt="Sol" draggable="true" style="width:70px;">
+        <img src="imagenes-naturales/agua.png" alt="Agua" draggable="true" style="width:70px;">
+        <img src="imagenes-naturales/planta.png" alt="Planta" draggable="true" style="width:70px;">
+        <img src="imagenes-naturales/herbivoro.png" alt="Herbívoro" draggable="true" style="width:70px;">
+        <img src="imagenes-naturales/carnivoro.png" alt="Carnívoro" draggable="true" style="width:70px;">
+        <img src="imagenes-naturales/hongo.png" alt="Hongo" draggable="true" style="width:70px;">
+      </div>
+      <!-- Aquí podrías agregar lógica JS para relaciones si lo deseas -->
+    </div>
+  </section>
+
+  <section>
+    <h2>Animación del ciclo de materia y energía</h2>
+    <div class="ciclo-animado">
+      <div>☀️<br>Sol</div>
+      <div style="font-size:2em;">→</div>
+      <div>🌱<br>Planta</div>
+      <div style="font-size:2em;">→</div>
+      <div>🐛<br>Herbívoro</div>
+      <div style="font-size:2em;">→</div>
+      <div>🦁<br>Carnívoro</div>
+      <div style="font-size:2em;">→</div>
+      <div>🍄<br>Descomponedor</div>
+      <div style="font-size:2em;">→</div>
+      <div>🌱<br>Suelo</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mini quiz</h2>
+    <div class="quiz" id="quiz-ecosistema">
+      <label>¿Qué es un sistema abierto?
+        <select id="q1">
+          <option value="">Selecciona una respuesta</option>
+          <option value="cerrado">Un sistema donde nada entra ni sale</option>
+          <option value="abierto">Un sistema donde hay intercambio con el ambiente</option>
+        </select>
+      </label>
+      <label>¿Qué pasaría si desaparecen las plantas?
+        <select id="q2">
+          <option value="">Selecciona una respuesta</option>
+          <option value="nada">Nada, todo sigue igual</option>
+          <option value="afecta">Afecta a todos los seres vivos y al ambiente</option>
+        </select>
+      </label>
+      <div class="respuesta" id="quiz-respuesta"></div>
+      <button onclick="corregirQuiz()" style="margin-top:1em; background:#388e3c; color:#fff; font-size:1.1em; font-weight:bold; padding:0.5em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #b2dfdb; cursor:pointer;">Corregir</button>
+    </div>
+    <script>
+      function corregirQuiz() {
+        let r1 = document.getElementById('q1').value;
+        let r2 = document.getElementById('q2').value;
+        let msg = '';
+        if (r1 === 'abierto' && r2 === 'afecta') {
+          msg = '¡Muy bien! Entendiste los conceptos clave del ecosistema.';
+        } else {
+          msg = 'Revisa las respuestas y vuelve a intentarlo.';
+        }
+        document.getElementById('quiz-respuesta').textContent = msg;
+      }
+    </script>
+  </section>
+
+  <section>
+    <h2>Actividad para dibujar</h2>
+    <div class="actividad">
+      <b>Dibujá un ecosistema donde todos se ayuden entre sí.</b>
+      <br>Piensa en cómo se relacionan los animales, plantas, agua, sol y aire.
+    </div>
+  </section>
+</body>
+</html> 
