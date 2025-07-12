@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adaptaciones al ambiente</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    body { background: linear-gradient(135deg, #e8f6ef 0%, #f9fbe7 100%); font-family: 'Comic Sans MS', Arial, sans-serif; color: #222; }
+    h1, h2, h3 { color: #ff9800; text-align: center; }
+    section { max-width: 800px; margin: 2em auto; background: #fff; border-radius: 16px; box-shadow: 0 2px 12px #b2dfdb; padding: 2em; }
+    .ilustracion { display: flex; justify-content: center; margin: 1.5em 0; }
+    .ilustracion img { max-width: 320px; border: 3px solid #000; border-radius: 12px; background: #fff; }
+    .actividad { background: #e0f7fa; border-left: 8px solid #ff9800; border-radius: 12px; box-shadow: 0 2px 8px #b2dfdb; padding: 1.2em 1.5em; margin: 2em 0; }
+    .tabla-adaptaciones { width:100%; border-collapse:collapse; background:#fff; border-radius:12px; box-shadow:0 2px 8px #b2dfdb; font-size:1.1em; }
+    .tabla-adaptaciones th, .tabla-adaptaciones td { border: 2px solid #b2dfdb; padding:0.7em; }
+    .tabla-adaptaciones tr:nth-child(even) { background:#fffbe7; }
+    .tabla-adaptaciones tr:hover { background: #e0f7fa !important; }
+    .quiz { background: #fffbe7; border-radius: 12px; box-shadow: 0 2px 8px #ffe0b2; padding: 1.2em 1.5em; margin: 2em 0; }
+    .quiz label { display: block; margin: 0.7em 0; }
+    .quiz .respuesta { color: #ff9800; font-weight: bold; margin-top: 1em; }
+  </style>
+</head>
+<body>
+  <a href="ciencias-naturales.html" class="volver-inicio" style="display:block; width:fit-content; margin:2em auto 1em auto; background:#ff9800; color:#fff; font-size:1.2em; font-weight:bold; padding:0.7em 2em; border-radius:30px; text-decoration:none; box-shadow:0 2px 8px #b2dfdb; letter-spacing:1px; transition:background 0.2s;">⬅ Volver a Ciencias Naturales</a>
+  <h1>Adaptaciones al ambiente</h1>
+
+  <section>
+    <h2>¿Qué es una adaptación?</h2>
+    <p>
+      Los seres vivos y el medio donde viven conforman un ambiente. Las adaptaciones son características ventajosas que les permiten ajustarse al ambiente donde viven y sobrevivir. Estas características se transmiten de generación en generación.
+    </p>
+  </section>
+
+  <section>
+    <h2>¿Cómo surgen las adaptaciones?</h2>
+    <p>
+      En los individuos de una especie surgen distintas características por azar a lo largo del tiempo. Si estas características dan ventaja, se transmiten a la descendencia y se vuelven comunes en la especie.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/cactus.png" alt="Cactus en el desierto">
+    </div>
+  </section>
+
+  <section>
+    <h2>Clasificación de las adaptaciones</h2>
+    <h3>Adaptaciones morfológicas</h3>
+    <p>
+      Son las características físicas de los seres vivos, como la forma del cuerpo, aletas, garras, caparazón, hojas, etc. Ejemplo: tortuga marina, armadillo, cactus.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/tortuga-marina.png" alt="Tortuga marina">
+      <img src="imagenes-naturales/armadillo.png" alt="Armadillo cavando" style="margin-left:1em;">
+    </div>
+    <h3>Adaptaciones fisiológicas</h3>
+    <p>
+      Son funciones biológicas internas que ayudan a sobrevivir. Ejemplo: glándulas de cocodrilo, hibernación.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/cocodrilo.png" alt="Cocodrilo con glándulas">
+    </div>
+    <h3>Adaptaciones etológicas</h3>
+    <p>
+      Son comportamientos que ayudan a sobrevivir, como migraciones, camuflaje, cortejos, danzas. Ejemplo: migración del chorlito, camaleón camuflado.
+    </p>
+    <div class="ilustracion">
+      <img src="imagenes-naturales/chorlito-migrador.png" alt="Chorlito migrador">
+      <img src="imagenes-naturales/camaleon-camuflaje.png" alt="Camaleón camuflado" style="margin-left:1em;">
+    </div>
+  </section>
+
+  <section>
+    <h2>Cuadro sinóptico: Tipos de adaptaciones</h2>
+    <div class="mermaid" style="background:#fffbe7; border-radius:12px; box-shadow:0 2px 8px #ffe0b2; padding:1em; margin:2em auto; max-width:600px;">
+      graph TD
+        A["Adaptaciones al ambiente"]
+        A --> B["Morfológicas"]
+        B --> B1["Cactus (hojas pequeñas)"]
+        B --> B2["Tortuga marina (aletas)"]
+        B --> B3["Armadillo (garras)"]
+        A --> C["Fisiológicas"]
+        C --> C1["Cocodrilo (glándulas salinas)"]
+        C --> C2["Hibernación"]
+        A --> D["Etológicas"]
+        D --> D1["Migración (chorlito)"]
+        D --> D2["Camuflaje"]
+    </div>
+    <script type="module">
+      import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+      mermaid.initialize({ startOnLoad: true });
+    </script>
+  </section>
+
+  <section>
+    <h2>Tabla comparativa de adaptaciones</h2>
+    <div style="overflow-x:auto;">
+      <table class="tabla-adaptaciones">
+        <thead style="background:#e0f7fa;">
+          <tr>
+            <th>Tipo de adaptación</th>
+            <th>Ejemplo</th>
+            <th>¿Para qué sirve?</th>
+            <th>Ambiente</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Morfológica</td><td>Cactus</td><td>Retener agua, evitar sol</td><td>Desierto</td></tr>
+          <tr><td>Morfológica</td><td>Tortuga marina</td><td>Nadar, protegerse</td><td>Mar</td></tr>
+          <tr><td>Morfológica</td><td>Armadillo</td><td>Cavar, vivir bajo tierra</td><td>Subterráneo</td></tr>
+          <tr><td>Fisiológica</td><td>Cocodrilo</td><td>Eliminar exceso de sal</td><td>Agua dulce/salada</td></tr>
+          <tr><td>Fisiológica</td><td>Hibernación</td><td>Sobrevivir al frío</td><td>Frío</td></tr>
+          <tr><td>Etológica</td><td>Migración</td><td>Buscar alimento/clima</td><td>Variado</td></tr>
+          <tr><td>Etológica</td><td>Camuflaje</td><td>Evitar ser comido</td><td>Variado</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Mini-quiz visual</h2>
+    <div class="quiz" id="quiz-adaptaciones">
+      <label>¿Qué tipo de adaptación es la del cactus?
+        <select id="q1">
+          <option value="">Selecciona una respuesta</option>
+          <option value="morfo">Morfológica</option>
+          <option value="fisio">Fisiológica</option>
+          <option value="etologica">Etológica</option>
+        </select>
+      </label>
+      <label>¿Qué tipo de adaptación es la migración del chorlito?
+        <select id="q2">
+          <option value="">Selecciona una respuesta</option>
+          <option value="morfo">Morfológica</option>
+          <option value="fisio">Fisiológica</option>
+          <option value="etologica">Etológica</option>
+        </select>
+      </label>
+      <label>¿Qué tipo de adaptación es la hibernación?
+        <select id="q3">
+          <option value="">Selecciona una respuesta</option>
+          <option value="morfo">Morfológica</option>
+          <option value="fisio">Fisiológica</option>
+          <option value="etologica">Etológica</option>
+        </select>
+      </label>
+      <div class="respuesta" id="quiz-respuesta"></div>
+      <button onclick="corregirQuizAdaptaciones()" style="margin-top:1em; background:#ff9800; color:#fff; font-size:1.1em; font-weight:bold; padding:0.5em 2em; border:none; border-radius:30px; box-shadow:0 2px 8px #b2dfdb; cursor:pointer;">Corregir</button>
+    </div>
+    <script>
+      function corregirQuizAdaptaciones() {
+        let r1 = document.getElementById('q1').value;
+        let r2 = document.getElementById('q2').value;
+        let r3 = document.getElementById('q3').value;
+        let msg = '';
+        if (r1 === 'morfo' && r2 === 'etologica' && r3 === 'fisio') {
+          msg = '¡Muy bien! Entendiste los tipos de adaptaciones.';
+        } else {
+          msg = 'Revisa las respuestas y vuelve a intentarlo.';
+        }
+        document.getElementById('quiz-respuesta').textContent = msg;
+      }
+    </script>
+  </section>
+
+  <section>
+    <h2>Actividad creativa</h2>
+    <div class="actividad">
+      <b>Dibuja un ser vivo inventado y explica sus adaptaciones para sobrevivir en un ambiente extremo.</b>
+    </div>
+  </section>
+</body>
+</html> 
