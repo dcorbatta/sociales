@@ -1,0 +1,67 @@
+[
+  {
+    "pregunta": "¿Qué tipo de organismos son los productores?",
+    "opciones": [
+      "Organismos heterótrofos",
+      "Organismos descomponedores",
+      "Organismos autótrofos",
+      "Organismos consumidores"
+    ],
+    "correcta": 2,
+    "tip": "Son los que fabrican su propio alimento mediante la fotosíntesis.",
+    "insight": "Los productores no necesitan comer a otros para sobrevivir.",
+    "explicacion": "¡Correcto! Los organismos autótrofos como las plantas son productores porque generan su propio alimento."
+  },
+  {
+    "pregunta": "¿Qué hacen los organismos heterótrofos?",
+    "opciones": [
+      "Producen su alimento",
+      "Se alimentan de otros organismos",
+      "Descomponen la materia inorgánica",
+      "Realizan fotosíntesis"
+    ],
+    "correcta": 1,
+    "tip": "No producen su propio alimento.",
+    "insight": "Los heterótrofos dependen de otros seres vivos para alimentarse.",
+    "explicacion": "¡Exacto! Los heterótrofos se alimentan de otros organismos porque no pueden fabricar su propio alimento."
+  },
+  {
+    "pregunta": "¿Qué función cumplen los descomponedores en una red trófica?",
+    "opciones": [
+      "Se alimentan de productores vivos",
+      "Cazan a otros animales",
+      "Transforman restos orgánicos en nutrientes",
+      "Compiten por el alimento"
+    ],
+    "correcta": 2,
+    "tip": "Su tarea es reciclar la materia orgánica.",
+    "insight": "No cazan ni son autótrofos.",
+    "explicacion": "¡Correcto! Los descomponedores como los hongos transforman restos de seres vivos en sustancias aprovechables nuevamente."
+  },
+  {
+    "pregunta": "¿Qué característica tienen los animales carnívoros?",
+    "opciones": [
+      "Tienen sistema digestivo corto y dientes especializados",
+      "Se alimentan de plantas exclusivamente",
+      "No poseen colmillos",
+      "Son siempre rumiantes"
+    ],
+    "correcta": 0,
+    "tip": "Piensa en lo que necesitan para cazar y digerir carne.",
+    "insight": "Su cuerpo está adaptado para la caza.",
+    "explicacion": "¡Muy bien! Los carnívoros poseen colmillos y un sistema digestivo corto que los ayuda a digerir carne eficientemente."
+  },
+  {
+    "pregunta": "¿Qué adaptaciones presentan los herbívoros como la vaca?",
+    "opciones": [
+      "Sistema digestivo corto",
+      "Dientes caninos grandes",
+      "Mandíbula especializada y rumia",
+      "Colmillos afilados"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en cómo trituran el pasto y lo digieren.",
+    "insight": "Los herbívoros no cazan, necesitan triturar vegetales.",
+    "explicacion": "¡Correcto! Las vacas tienen una mandíbula especial, muelas grandes y rumian para digerir mejor el pasto."
+  }
+]

@@ -115,6 +115,29 @@
       </table>
     </div>
   </section>
+  <div id="quiz-container"></div>
+  <script src="quiz-module.js"></script>
+  <script>
+    fetch('quiz_adaptaciones_ambiente.json')
+      .then(r => r.json())
+      .then(allQuestions => {
+        const selected = [];
+        const used = new Set();
+        while (selected.length < 5 && used.size < allQuestions.length) {
+          const idx = Math.floor(Math.random() * allQuestions.length);
+          if (!used.has(idx)) {
+            selected.push(allQuestions[idx]);
+            used.add(idx);
+          }
+        }
+        initQuiz(selected, {
+          containerId: 'quiz-container',
+          maxAttempts: 2,
+          sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
+          sonidoError: 'imagenes-naturales/sonido-error.mp3'
+        });
+      });
+  </script>
 <!-- 
   <section>
     <h2>Mini-quiz visual</h2>

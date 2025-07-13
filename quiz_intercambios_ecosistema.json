@@ -1,0 +1,54 @@
+[
+  {
+    "pregunta": "¿Qué hacen los seres vivos en un ecosistema con los factores bióticos y abióticos?",
+    "opciones": [
+      "Los ignoran",
+      "Interactúan con ellos",
+      "Los destruyen",
+      "Los separan"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en cómo se relacionan los seres vivos con el ambiente y otros organismos.",
+    "insight": "Los seres vivos no están aislados, siempre están interactuando.",
+    "explicacion": "¡Correcto! Los seres vivos interactúan con los factores bióticos y abióticos, manteniendo el equilibrio del ecosistema."
+  },
+  {
+    "pregunta": "¿Qué necesitan obtener los organismos del medio?",
+    "opciones": [
+      "Luz y sombra",
+      "Nutrientes, agua, refugio y energía",
+      "Solo calor",
+      "Oxígeno y sal"
+    ],
+    "correcta": 1,
+    "tip": "Son cosas básicas para sobrevivir.",
+    "insight": "No basta con solo uno de estos factores.",
+    "explicacion": "¡Muy bien! Todos los organismos necesitan obtener energía, nutrientes, agua y refugio para sobrevivir."
+  },
+  {
+    "pregunta": "¿Qué proceso permite a las plantas transformar dióxido de carbono en alimento?",
+    "opciones": [
+      "Evapotranspiración",
+      "Fotosíntesis",
+      "Respiración celular",
+      "Fermentación"
+    ],
+    "correcta": 1,
+    "tip": "Es un proceso que ocurre gracias a la luz solar.",
+    "insight": "Este proceso es clave para que las plantas obtengan energía.",
+    "explicacion": "¡Correcto! La fotosíntesis permite a las plantas producir su alimento usando luz solar, dióxido de carbono y agua."
+  },
+  {
+    "pregunta": "¿Qué hacen los sistemas abiertos con la materia y energía?",
+    "opciones": [
+      "Los conservan sin cambios",
+      "Intercambian materia y energía con el entorno",
+      "Los destruyen",
+      "Los convierten en oxígeno"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en lo que entra y sale de un ecosistema.",
+    "insight": "Los ecosistemas no están cerrados, siempre hay intercambio.",
+    "explicacion": "¡Muy bien! Los sistemas abiertos, como los ecosistemas, intercambian constantemente materia y energía con el entorno."
+  }
+]

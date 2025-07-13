@@ -1,0 +1,67 @@
+[
+  {
+    "pregunta": "¿Qué sucede si una especie no puede reproducirse con otra?",
+    "opciones": [
+      "Forman una comunidad",
+      "Se forma una nueva especie",
+      "Hay aislamiento reproductivo",
+      "Viven en ecosistemas separados"
+    ],
+    "correcta": 2,
+    "tip": "Busca el concepto relacionado con la reproducción.",
+    "insight": "Esto es clave para definir una especie.",
+    "explicacion": "¡Correcto! Si no pueden reproducirse entre sí, hay un aislamiento reproductivo y pertenecen a especies distintas."
+  },
+  {
+    "pregunta": "¿Qué hacen los leones en una manada?",
+    "opciones": [
+      "Compiten entre sí",
+      "Se pelean por la comida",
+      "Se cuidan entre ellos y a sus crías",
+      "Viven solos"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en cómo viven en grupo.",
+    "insight": "La manada tiene un comportamiento cooperativo.",
+    "explicacion": "¡Bien! Los leones viven en manadas y cuidan a sus crías y otros miembros del grupo."
+  },
+  {
+    "pregunta": "¿Qué es un talar?",
+    "opciones": [
+      "Un grupo de árboles y animales",
+      "Una población de ejemplares de tala",
+      "Una comunidad de plantas y hongos",
+      "Un conjunto de arbustos"
+    ],
+    "correcta": 1,
+    "tip": "Fíjate que todos son de la misma especie.",
+    "insight": "No hay mezcla de especies en una población.",
+    "explicacion": "¡Exacto! Un talar es una población conformada por ejemplares de tala, una misma especie."
+  },
+  {
+    "pregunta": "¿Cómo se relacionan las comunidades y el ambiente?",
+    "opciones": [
+      "Viven separadas",
+      "Solo comparten el agua",
+      "Se relacionan y forman un ecosistema",
+      "Compiten por el espacio"
+    ],
+    "correcta": 2,
+    "tip": "Un ecosistema incluye seres vivos y ambiente.",
+    "insight": "Las comunidades no están aisladas del entorno.",
+    "explicacion": "¡Correcto! Las comunidades se relacionan entre sí y con su ambiente, formando un ecosistema."
+  },
+  {
+    "pregunta": "¿Qué representa la imagen con etiquetas de 'individuo', 'población' y 'comunidad'?",
+    "opciones": [
+      "Las etapas de la vida de un animal",
+      "Niveles de organización de un ambiente",
+      "Diferentes tipos de climas",
+      "Zonas protegidas de la naturaleza"
+    ],
+    "correcta": 1,
+    "tip": "Relaciona con cómo se agrupan los seres vivos.",
+    "insight": "No muestra cambios climáticos.",
+    "explicacion": "¡Muy bien! Esa imagen representa cómo se organizan los seres vivos: desde el individuo hasta la comunidad."
+  }
+]

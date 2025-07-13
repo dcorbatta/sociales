@@ -152,6 +152,29 @@
     </div>
   </div>
   -->
+  <div id="quiz-container"></div>
+  <script src="quiz-module.js"></script>
+  <script>
+    fetch('quiz_cadenas_y_redes_troficas.json')
+      .then(r => r.json())
+      .then(allQuestions => {
+        const selected = [];
+        const used = new Set();
+        while (selected.length < 5 && used.size < allQuestions.length) {
+          const idx = Math.floor(Math.random() * allQuestions.length);
+          if (!used.has(idx)) {
+            selected.push(allQuestions[idx]);
+            used.add(idx);
+          }
+        }
+        initQuiz(selected, {
+          containerId: 'quiz-container',
+          maxAttempts: 2,
+          sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
+          sonidoError: 'imagenes-naturales/sonido-error.mp3'
+        });
+      });
+  </script>
   <a href="ciencias-naturales.html" class="volver-inicio">⬅ Volver a Ciencias Naturales</a>
 </body>
 </html> 

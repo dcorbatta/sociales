@@ -1,0 +1,67 @@
+[
+  {
+    "pregunta": "¿Qué representa una cadena trófica?",
+    "opciones": [
+      "Una lista de animales salvajes",
+      "El orden de los ecosistemas en la naturaleza",
+      "El recorrido de la energía y materia entre productores y consumidores",
+      "Una red de caminos entre hábitats"
+    ],
+    "correcta": 2,
+    "tip": "Está relacionada con cómo se transfiere la energía al alimentarse.",
+    "insight": "La cadena trófica muestra cómo se alimentan unos de otros.",
+    "explicacion": "¡Correcto! La cadena trófica representa el recorrido de la materia y la energía desde los productores hacia los distintos niveles de consumidores."
+  },
+  {
+    "pregunta": "¿Cuál es el primer nivel de una cadena trófica?",
+    "opciones": [
+      "Consumidor primario",
+      "Descomponedor",
+      "Consumidor secundario",
+      "Productor"
+    ],
+    "correcta": 3,
+    "tip": "Piensa en quién produce su propio alimento.",
+    "insight": "La base siempre comienza con quienes hacen fotosíntesis.",
+    "explicacion": "¡Muy bien! El primer nivel trófico es ocupado por los productores, como las plantas."
+  },
+  {
+    "pregunta": "¿Qué función cumplen los descomponedores en una red trófica?",
+    "opciones": [
+      "Producen su alimento",
+      "Comen animales carnívoros",
+      "Transforman restos de seres vivos en nutrientes",
+      "Ocupan el último nivel trófico"
+    ],
+    "correcta": 2,
+    "tip": "Intervienen cuando los organismos mueren.",
+    "insight": "Son clave para que la materia se recicle.",
+    "explicacion": "¡Correcto! Los descomponedores transforman la materia orgánica de los restos en nutrientes que vuelven al ecosistema."
+  },
+  {
+    "pregunta": "¿Qué diferencia a una red trófica de una cadena trófica?",
+    "opciones": [
+      "Las cadenas tienen más animales",
+      "Las redes muestran varias cadenas interconectadas",
+      "Las cadenas no tienen descomponedores",
+      "Las redes no incluyen consumidores"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en conexiones múltiples.",
+    "insight": "Las redes son más complejas que una sola cadena.",
+    "explicacion": "¡Bien hecho! Las redes tróficas muestran cómo se conectan múltiples cadenas alimentarias entre varios organismos."
+  },
+  {
+    "pregunta": "¿Qué podría pasar si desaparece un organismo de una red trófica?",
+    "opciones": [
+      "El ecosistema mejora",
+      "No ocurre ningún cambio",
+      "Puede afectar a todos los niveles tróficos relacionados",
+      "La cadena se vuelve más fuerte"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en la dependencia entre especies.",
+    "insight": "Todos están conectados; si uno falta, otros pueden verse afectados.",
+    "explicacion": "¡Correcto! La desaparición de un organismo puede alterar la red trófica completa y afectar la supervivencia de otras especies."
+  }
+]

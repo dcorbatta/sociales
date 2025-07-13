@@ -1,0 +1,288 @@
+[
+  {
+    "pregunta": "¿Qué incluye el ambiente físico del ecosistema?",
+    "opciones": [
+      "Solo árboles y flores",
+      "Solo los animales",
+      "Luz, relieve, clima y agua",
+      "Únicamente las plantas"
+    ],
+    "correcta": 2,
+    "tip": "No solo es lo que ves, también es lo que sientes.",
+    "insight": "El ambiente físico no son solo cosas vivas.",
+    "explicacion": "¡Correcto! El ambiente físico incluye luz, relieve, clima, agua y otros elementos no vivos del ecosistema."
+  },
+  {
+    "pregunta": "¿Qué hacen los individuos cuando aún no pueden sobrevivir solos?",
+    "opciones": [
+      "Forman comunidades",
+      "Reciben cuidados de otros hasta crecer",
+      "Se separan del grupo",
+      "Mueren rápidamente"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en las crías de animales.",
+    "insight": "Los animales no nacen siempre listos para sobrevivir.",
+    "explicacion": "¡Muy bien! Algunos individuos, como las crías, necesitan cuidados hasta poder sobrevivir por sí mismos."
+  },
+  {
+    "pregunta": "¿Qué tipo de relación se da entre organismos de la misma especie?",
+    "opciones": [
+      "Interespecífica",
+      "Intraespecífica",
+      "Social",
+      "Mutualista"
+    ],
+    "correcta": 1,
+    "tip": "Busca la que ocurre dentro de una misma especie.",
+    "insight": "La palabra 'intra' indica que es dentro de un mismo grupo.",
+    "explicacion": "¡Correcto! Las relaciones intraespecíficas ocurren entre individuos de la misma especie."
+  },
+  {
+    "pregunta": "¿Qué sucede en la competencia intraespecífica?",
+    "opciones": [
+      "Los individuos colaboran entre sí",
+      "Un individuo se beneficia y otro se perjudica",
+      "Ambos organismos ganan",
+      "Todos obtienen alimento suficiente"
+    ],
+    "correcta": 1,
+    "tip": "Hay una lucha por recursos o pareja.",
+    "insight": "La competencia siempre tiene un perdedor.",
+    "explicacion": "¡Exacto! En la competencia intraespecífica un individuo obtiene un recurso y otro se ve perjudicado."
+  },
+  {
+    "pregunta": "¿Qué ejemplo muestra cooperación intraespecífica?",
+    "opciones": [
+      "Cervatillos luchando por una hembra",
+      "Abejas obreras recolectando néctar para la reina",
+      "Zorros compitiendo por alimento",
+      "Ciervos alejando a otros machos"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en trabajo en grupo.",
+    "insight": "En la cooperación, todos se benefician.",
+    "explicacion": "¡Muy bien! Las abejas obreras cooperan para sostener a la colonia y alimentar a la reina."
+  },
+  {
+    "pregunta": "¿Qué tipo de relación inter específica ocurre cuando uno se alimenta y el otro es dañado?",
+    "opciones": [
+      "Mutualismo",
+      "Comensalismo",
+      "Consumidor-recurso",
+      "Competencia intraespecífica"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en predadores, herbívoros o parásitos.",
+    "insight": "Uno gana y el otro pierde.",
+    "explicacion": "¡Correcto! En la relación consumidor-recurso, como el parasitismo o la predación, un organismo se alimenta perjudicando al otro."
+  },
+  {
+    "pregunta": "¿Qué caracteriza al comensalismo?",
+    "opciones": [
+      "Ambos organismos se benefician",
+      "Uno se beneficia y el otro no se ve afectado",
+      "Ambos se perjudican",
+      "Uno se alimenta del otro causándole daño"
+    ],
+    "correcta": 1,
+    "tip": "Busca el que no perjudica al otro.",
+    "insight": "El comensal se aprovecha sin causar daño.",
+    "explicacion": "¡Bien hecho! En el comensalismo, uno de los organismos obtiene un beneficio sin afectar al otro."
+  },
+  {
+    "pregunta": "¿Qué son las adaptaciones en los seres vivos?",
+    "opciones": [
+      "Cambios que dañan a los individuos",
+      "Características que permiten ajustarse al ambiente",
+      "Conductas agresivas para defenderse",
+      "Estrategias para competir con otras especies"
+    ],
+    "correcta": 1,
+    "tip": "Las adaptaciones ayudan a sobrevivir en distintos ambientes.",
+    "insight": "Las adaptaciones no son algo negativo, sino ventajoso.",
+    "explicacion": "¡Correcto! Las adaptaciones son características ventajosas que permiten a los seres vivos ajustarse a su ambiente."
+  },
+  {
+    "pregunta": "¿Qué tipo de adaptación permite regular la temperatura corporal o la salinidad?",
+    "opciones": [
+      "Etológica",
+      "Fisiológica",
+      "Morfológica",
+      "Ambiental"
+    ],
+    "correcta": 1,
+    "tip": "Está relacionada con las funciones internas del cuerpo.",
+    "insight": "Este tipo de adaptación no se ve fácilmente a simple vista.",
+    "explicacion": "¡Exacto! Las adaptaciones fisiológicas están vinculadas a funciones internas como la regulación de temperatura o salinidad."
+  },
+  {
+    "pregunta": "¿Cuál de estas es una adaptación morfológica?",
+    "opciones": [
+      "Migración del chorlo cabezón",
+      "Aletas de las tortugas marinas",
+      "Excreción de sal por glándulas",
+      "Cambio de temperatura corporal"
+    ],
+    "correcta": 1,
+    "tip": "Es una característica física visible.",
+    "insight": "Las morfológicas se notan en el cuerpo del animal.",
+    "explicacion": "¡Bien hecho! Las aletas son un ejemplo de adaptación morfológica que permite a las tortugas nadar mejor."
+  },
+  {
+    "pregunta": "¿Qué adaptación permite a un animal actuar como si fuera otro más amenazante?",
+    "opciones": [
+      "Morfológica",
+      "Fisiológica",
+      "Etológica",
+      "Visual"
+    ],
+    "correcta": 2,
+    "tip": "Es un tipo de comportamiento defensivo.",
+    "insight": "Las etológicas tienen que ver con lo que hace el animal, no con su cuerpo o funciones internas.",
+    "explicacion": "¡Correcto! Las adaptaciones etológicas incluyen comportamientos como aparentar ser más peligroso para evitar ataques."
+  },
+  {
+    "pregunta": "¿Qué tipo de adaptación es la migración del chorlo cabezón?",
+    "opciones": [
+      "Morfológica",
+      "Etológica",
+      "Fisiológica",
+      "Sensorial"
+    ],
+    "correcta": 1,
+    "tip": "La migración es un comportamiento que implica movimiento.",
+    "insight": "No se trata de una parte del cuerpo ni de una función interna.",
+    "explicacion": "¡Muy bien! La migración es una adaptación etológica porque implica un comportamiento de desplazamiento estacional."
+  },
+  {
+    "pregunta": "¿Qué es un ingeniero del ecosistema?",
+    "opciones": [
+      "Un humano que cuida la naturaleza",
+      "Un animal que transforma su ambiente",
+      "Una máquina para medir el clima",
+      "Un tipo de biólogo"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en un castor o un animal que modifica su entorno.",
+    "insight": "Los ingenieros del ecosistema no son humanos ni máquinas.",
+    "explicacion": "¡Correcto! Un ingeniero del ecosistema es un ser vivo que modifica su ambiente, como el castor que construye diques."
+  },
+  {
+    "pregunta": "¿Qué sucede cuando se introducen especies exóticas en un ambiente?",
+    "opciones": [
+      "Mejoran el ecosistema",
+      "Lo hacen más diverso y equilibrado",
+      "Pueden volverse invasoras y dañar especies locales",
+      "Desaparecen rápido por no adaptarse"
+    ],
+    "correcta": 2,
+    "tip": "Recuerda lo que pasó con los castores en Tierra del Fuego.",
+    "insight": "Las especies exóticas pueden alterar el equilibrio natural.",
+    "explicacion": "¡Exacto! Las especies exóticas pueden convertirse en invasoras y competir con las autóctonas, dañando el ecosistema."
+  },
+  {
+    "pregunta": "¿Qué tipo de impacto ocurre cuando se contamina el agua con productos tóxicos?",
+    "opciones": [
+      "Impacto directo",
+      "Impacto visual",
+      "Impacto humano",
+      "Impacto indirecto"
+    ],
+    "correcta": 0,
+    "tip": "Piensa si el daño ocurre de manera inmediata.",
+    "insight": "Los impactos directos se producen por contacto o alteración directa del ambiente.",
+    "explicacion": "¡Correcto! La contaminación con productos tóxicos es un impacto directo porque afecta el ambiente sin intermediarios."
+  },
+  {
+    "pregunta": "¿Qué es un impacto ambiental indirecto?",
+    "opciones": [
+      "Uno que afecta a los humanos",
+      "El que se ve con el tiempo por cambios en cadena",
+      "Una transformación positiva del ambiente",
+      "Un cambio en el clima solamente"
+    ],
+    "correcta": 1,
+    "tip": "No es inmediato, se da en pasos o etapas.",
+    "insight": "El impacto indirecto se produce por consecuencias acumuladas.",
+    "explicacion": "¡Muy bien! El impacto indirecto se da cuando una acción genera efectos que alteran el ambiente de forma gradual."
+  },
+  {
+    "pregunta": "¿Qué tipo de alteración genera el ser humano al talar un bosque?",
+    "opciones": [
+      "Alteración positiva",
+      "Modificación natural",
+      "Modificación humana directa",
+      "Modificación biológica"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en lo que hacen las personas al usar recursos.",
+    "insight": "Las acciones humanas sobre el ambiente muchas veces son directas.",
+    "explicacion": "¡Correcto! Talar un bosque es una modificación humana directa que cambia el ecosistema."
+  },
+  {
+    "pregunta": "¿Qué hacen los seres vivos constantemente en su ambiente?",
+    "opciones": [
+      "Lo contaminan",
+      "Lo destruyen",
+      "Lo modifican",
+      "Lo ignoran"
+    ],
+    "correcta": 2,
+    "tip": "Estas modificaciones pueden ser físicas o biológicas.",
+    "insight": "Los seres vivos no solo habitan, también transforman su ambiente.",
+    "explicacion": "¡Correcto! Los seres vivos modifican su ambiente de diferentes maneras al interactuar con él."
+  },
+  {
+    "pregunta": "¿Qué son los ingenieros del ecosistema?",
+    "opciones": [
+      "Seres humanos que cuidan el ambiente",
+      "Animales que modifican su entorno creando nuevas condiciones",
+      "Robots que estudian ecosistemas",
+      "Personas que siembran árboles"
+    ],
+    "correcta": 1,
+    "tip": "Algunos animales cambian el lugar donde viven y ayudan a otros.",
+    "insight": "No se trata de humanos ni máquinas, sino de algunos animales.",
+    "explicacion": "¡Exacto! Los ingenieros del ecosistema son seres vivos que transforman el ambiente creando nuevas condiciones para otras especies."
+  },
+  {
+    "pregunta": "¿Qué impacto tiene el castor en Tierra del Fuego?",
+    "opciones": [
+      "Es beneficioso para el ecosistema",
+      "Es una especie nativa que cuida los ríos",
+      "Es una especie invasora que modifica negativamente",
+      "Ayuda a mantener el equilibrio"
+    ],
+    "correcta": 2,
+    "tip": "Fue introducido por el ser humano.",
+    "insight": "El castor no pertenece naturalmente a esa región.",
+    "explicacion": "¡Correcto! El castor fue introducido en Tierra del Fuego y se convirtió en una especie invasora que alteró el ecosistema local."
+  },
+  {
+    "pregunta": "¿Cuál es una consecuencia de introducir especies exóticas?",
+    "opciones": [
+      "Mejoran la biodiversidad local",
+      "Compiten con las especies autóctonas",
+      "Aumentan la cantidad de recursos",
+      "Ayudan a preservar el ecosistema"
+    ],
+    "correcta": 1,
+    "tip": "No siempre se adaptan sin problemas.",
+    "insight": "Pueden perjudicar a las especies que ya vivían ahí.",
+    "explicacion": "¡Exacto! Las especies exóticas pueden volverse invasoras y competir con las especies autóctonas por alimento y espacio."
+  },
+  {
+    "pregunta": "¿Qué tipo de modificación puede tener el ser humano sobre el ambiente?",
+    "opciones": [
+      "Solo modificaciones beneficiosas",
+      "Solo contaminación",
+      "Modificaciones directas e indirectas",
+      "Ninguna, el ambiente se adapta"
+    ],
+    "correcta": 2,
+    "tip": "No todas las acciones humanas impactan igual.",
+    "insight": "Algunas se notan enseguida, otras con el tiempo.",
+    "explicacion": "¡Correcto! Las modificaciones humanas pueden ser directas (como la tala) o indirectas (como el calentamiento global)."
+  }
+]
