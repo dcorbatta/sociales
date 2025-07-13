@@ -120,6 +120,16 @@
     .volver-inicio:hover {
       background: #43a047;
     }
+    .trivia-menu { display: flex; flex-wrap: wrap; gap: 2em; justify-content: center; margin: 2em 0; }
+    .trivia-btn { font-size: 1.2em; padding: 1.2em 2.5em; border-radius: 18px; font-weight: bold; color: #fff; border: none; cursor: pointer; box-shadow: 0 2px 8px #b2dfdb; margin-bottom: 1em; transition: background 0.2s; }
+    .trivia-btn.relaciones { background: #1976d2; }
+    .trivia-btn.adaptaciones { background: #43a047; }
+    .trivia-btn.impacto { background: #ff9800; }
+    .trivia-btn.intercambios { background: #8d6e63; }
+    .trivia-btn.alimentarias { background: #388e3c; }
+    .trivia-btn.cadenas { background: #ce93d8; color: #222; }
+    .volver-menu { display: block; margin: 2em auto 0 auto; background: #1976d2; color: #fff; font-size: 1.1em; font-weight: bold; padding: 0.7em 2em; border-radius: 30px; text-decoration: none; box-shadow: 0 2px 8px #b2dfdb; letter-spacing: 1px; transition: background 0.2s; width: fit-content; text-align: center; }
+    .volver-menu:hover { background: #43a047; color: #fff; }
     @media (max-width: 700px) {
       .trivia-section { max-width: 98vw; padding: 18px 4vw; }
       .trivia-title { font-size: 1.3em; }
@@ -134,214 +144,66 @@
   <section class="trivia-section">
     <h1 class="trivia-title">¡Trivia de Ciencias Naturales!</h1>
     <p>Responde preguntas sobre todos los temas que aprendiste: <b>niveles de organización</b>, <b>relaciones entre los seres vivos</b> y más. ¡Gana puntos y conviértete en un experto!</p>
-    <!-- Aquí irá la lógica y el contenido de la trivia gamificada -->
-    <div id="trivia-container">
-      <!-- Pregunta, opciones, feedback y botones se generarán aquí con JS -->
+    <div id="trivia-menu" class="trivia-menu">
+      <button class="trivia-btn relaciones" data-json="quiz_relaciones_seres_vivos.json">🤝 Relaciones entre los seres vivos</button>
+      <button class="trivia-btn adaptaciones" data-json="quiz_adaptaciones_ambiente.json">🦎 Adaptaciones al ambiente</button>
+      <button class="trivia-btn impacto" data-json="quiz_impacto_seres_vivos.json">🌍 Impacto de los seres vivos</button>
+      <button class="trivia-btn intercambios" data-json="quiz_intercambios_ecosistema.json">🔄 Intercambios en el ecosistema</button>
+      <button class="trivia-btn alimentarias" data-json="quiz_relaciones_alimentarias.json">🍽️ Relaciones alimentarias</button>
+      <button class="trivia-btn cadenas" data-json="quiz_cadenas_y_redes_troficas.json">🕸️ Cadenas y redes tróficas</button>
     </div>
-    <!-- Puedes agregar aquí medallas, puntaje, barra de progreso, etc. -->
-  </section>
-  <!-- <script src="trivia-ciencias-naturales.js"></script> -->
-  <!-- Aquí irá el script de la trivia -->
-  <script>
-    // Bloques de preguntas por tema
-    const bloquesTrivia = [
-      {
-        tema: "Niveles de organización",
-        preguntas: [
-          {
-            pregunta: "¿Qué es un individuo?",
-            opciones: [
-              "Un solo ser vivo capaz de sobrevivir por sí mismo",
-              "Un grupo de especies diferentes",
-              "Un conjunto de poblaciones",
-              "Un ambiente con animales y plantas"
-            ],
-            respuesta: "Un solo ser vivo capaz de sobrevivir por sí mismo",
-            feedback: "¡Correcto! Un individuo es un solo ser vivo, como un armadillo o un árbol, que puede sobrevivir por sí mismo."
-          },
-          {
-            pregunta: "¿Qué es una población?",
-            opciones: [
-              "Un solo individuo",
-              "Un grupo de individuos de la misma especie en un lugar y tiempo",
-              "Un conjunto de especies diferentes",
-              "Un grupo de ecosistemas"
-            ],
-            respuesta: "Un grupo de individuos de la misma especie en un lugar y tiempo",
-            feedback: "¡Muy bien! Una población es un conjunto de individuos de la misma especie que viven juntos en un lugar y tiempo determinados."
-          },
-          {
-            pregunta: "¿Cuál es el orden correcto de los niveles de organización, del más simple al más complejo?",
-            opciones: [
-              "Célula, tejido, órgano, sistema, organismo",
-              "Tejido, célula, órgano, sistema, organismo",
-              "Órgano, célula, tejido, sistema, organismo",
-              "Sistema, órgano, tejido, célula, organismo"
-            ],
-            respuesta: "Célula, tejido, órgano, sistema, organismo",
-            feedback: "¡Correcto! El orden es: célula → tejido → órgano → sistema → organismo."
-          },
-          {
-            pregunta: "¿Qué es una comunidad?",
-            opciones: [
-              "Un grupo de individuos de la misma especie",
-              "Un conjunto de poblaciones de distintas especies que viven juntas",
-              "Un solo ecosistema",
-              "Un grupo de armadillos"
-            ],
-            respuesta: "Un conjunto de poblaciones de distintas especies que viven juntas",
-            feedback: "¡Muy bien! Una comunidad está formada por poblaciones de diferentes especies que viven e interactúan en el mismo lugar."
-          },
-          {
-            pregunta: "¿Qué es un ecosistema?",
-            opciones: [
-              "Un grupo de individuos de la misma especie",
-              "El conjunto de seres vivos y las características físicas del ambiente donde viven",
-              "Un solo animal en su madriguera",
-              "Un grupo de comunidades"
-            ],
-            respuesta: "El conjunto de seres vivos y las características físicas del ambiente donde viven",
-            feedback: "¡Correcto! Un ecosistema incluye a los seres vivos y los factores físicos (luz, agua, suelo) del lugar donde viven."
-          }
-        ]
-      },
-      {
-        tema: "Relaciones entre los seres vivos",
-        preguntas: [
-          {
-            pregunta: "¿Cuál de estas opciones es una relación interespecífica?",
-            opciones: [
-              "Competencia entre dos ciervos machos",
-              "Cooperación entre hormigas de la misma colonia",
-              "Un pájaro comiendo parásitos de una vaca",
-              "Dos abejas recolectando polen juntas"
-            ],
-            respuesta: "Un pájaro comiendo parásitos de una vaca",
-            feedback: "¡Muy bien! Esa es una relación entre individuos de distintas especies (comensalismo)."
-          },
-          {
-            pregunta: "¿Qué es la competencia intraespecífica?",
-            opciones: [
-              "Competencia entre individuos de la misma especie",
-              "Competencia entre especies diferentes",
-              "Cooperación entre especies diferentes",
-              "Un animal que se alimenta de otro"
-            ],
-            respuesta: "Competencia entre individuos de la misma especie",
-            feedback: "¡Correcto! La competencia intraespecífica ocurre entre individuos de la misma especie."
-          },
-          {
-            pregunta: "¿Qué es el mutualismo?",
-            opciones: [
-              "Una relación donde ambos se benefician",
-              "Una relación donde uno se beneficia y el otro no",
-              "Una relación de competencia",
-              "Un animal que se alimenta de otro"
-            ],
-            respuesta: "Una relación donde ambos se benefician",
-            feedback: "¡Muy bien! En el mutualismo, ambos organismos se benefician."
-          },
-          {
-            pregunta: "¿Cuál es un ejemplo de cooperación intraespecífica?",
-            opciones: [
-              "Hormigas trabajando juntas para llevar comida",
-              "Un león cazando una cebra",
-              "Un pájaro comiendo parásitos de una vaca",
-              "Ardillas compitiendo por una nuez"
-            ],
-            respuesta: "Hormigas trabajando juntas para llevar comida",
-            feedback: "¡Correcto! Las hormigas cooperan entre sí para lograr un objetivo común."
-          },
-          {
-            pregunta: "¿Qué ocurre en el comensalismo?",
-            opciones: [
-              "Uno se beneficia y el otro no se perjudica ni beneficia",
-              "Ambos se benefician",
-              "Uno se beneficia y el otro se perjudica",
-              "Ambos se perjudican"
-            ],
-            respuesta: "Uno se beneficia y el otro no se perjudica ni beneficia",
-            feedback: "¡Muy bien! En el comensalismo, uno se beneficia y el otro no se ve afectado."
-          }
-        ]
+    <div id="quiz-container"></div>
+    <script src="quiz-module.js"></script>
+    <script>
+      const menu = document.getElementById('trivia-menu');
+      const quizContainer = document.getElementById('quiz-container');
+      let lastQuiz = null;
+      function showMenu() {
+        menu.style.display = 'flex';
+        quizContainer.innerHTML = '';
       }
-    ];
-
-    let bloqueActual = 0;
-    let indiceActual = 0;
-    let puntajes = Array(bloquesTrivia.length).fill(0);
-
-    function mostrarPregunta() {
-      const cont = document.getElementById('trivia-container');
-      const bloque = bloquesTrivia[bloqueActual];
-      if (indiceActual === 0) {
-        cont.innerHTML = `<div class='trivia-block-title'>${bloque.tema}</div>`;
+      function startQuiz(jsonFile) {
+        menu.style.display = 'none';
+        fetch(jsonFile)
+          .then(r => r.json())
+          .then(allQuestions => {
+            const selected = [];
+            const used = new Set();
+            while (selected.length < 5 && used.size < allQuestions.length) {
+              const idx = Math.floor(Math.random() * allQuestions.length);
+              if (!used.has(idx)) {
+                selected.push(allQuestions[idx]);
+                used.add(idx);
+              }
+            }
+            quizContainer.innerHTML = '';
+            initQuiz(selected, {
+              containerId: 'quiz-container',
+              maxAttempts: 2,
+              sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
+              sonidoError: 'imagenes-naturales/sonido-error.mp3'
+            });
+            // Agregar botón para volver al menú al terminar
+            const observer = new MutationObserver(() => {
+              if (quizContainer.querySelector('.quiz-final')) {
+                if (!quizContainer.querySelector('.volver-menu')) {
+                  const volver = document.createElement('a');
+                  volver.className = 'volver-menu';
+                  volver.textContent = '⬅ Volver al menú de secciones';
+                  volver.href = '#';
+                  volver.onclick = (e) => { e.preventDefault(); showMenu(); };
+                  quizContainer.appendChild(volver);
+                }
+              }
+            });
+            observer.observe(quizContainer, { childList: true, subtree: true });
+          });
       }
-      if (indiceActual >= bloque.preguntas.length) {
-        cont.innerHTML += `<div class='trivia-card'><h3 style='color:#43a047;'>¡Terminaste el bloque de <span style='color:#1976d2;'>${bloque.tema}</span>!</h3><p style='font-size:1.1em;'>Puntaje: <b>${puntajes[bloqueActual]} / ${bloque.preguntas.length}</b></p></div>`;
-        if (bloqueActual < bloquesTrivia.length - 1) {
-          cont.innerHTML += `<button class='trivia-btn orange' onclick='siguienteBloque()'>Siguiente tema</button>`;
-        } else {
-          const total = puntajes.reduce((a,b)=>a+b,0);
-          const totalPreg = bloquesTrivia.reduce((a,b)=>a+b.preguntas.length,0);
-          cont.innerHTML += `<div class='trivia-card' style='background:#fffbe7; border-color:#ff9800;'><h2 style='color:#ff9800;'>¡Trivia terminada!</h2><p style='font-size:1.2em;'>Puntaje total: <b>${total} / ${totalPreg}</b></p><button class='trivia-btn orange' onclick='reiniciarTrivia()'>Jugar de nuevo</button></div>`;
-        }
-        return;
-      }
-      const q = bloque.preguntas[indiceActual];
-      let opcionesHtml = '';
-      q.opciones.forEach(op => {
-        opcionesHtml += `<button class='trivia-btn' onclick='verificarRespuesta(this, \"${op.replace(/\"/g, '&quot;')}\")'>${op}</button>`;
+      menu.querySelectorAll('button').forEach(btn => {
+        btn.onclick = () => startQuiz(btn.dataset.json);
       });
-      cont.innerHTML += `
-        <div class='trivia-card'>
-          <h3 style='margin-bottom:1em; color:#228B22;'>${q.pregunta}</h3>
-          <div class='trivia-options'>${opcionesHtml}</div>
-          <div id='trivia-feedback' class='trivia-feedback'></div>
-          <button id='siguiente-btn' class='trivia-btn orange' style='display:none; margin-top:1em;'>Siguiente</button>
-        </div>
-      `;
-    }
-
-    window.verificarRespuesta = function(btn, seleccionada) {
-      const bloque = bloquesTrivia[bloqueActual];
-      const q = bloque.preguntas[indiceActual];
-      const feedbackDiv = document.getElementById('trivia-feedback');
-      const botones = document.querySelectorAll('.trivia-btn');
-      botones.forEach(b => b.disabled = true);
-      if (seleccionada === q.respuesta) {
-        feedbackDiv.textContent = q.feedback;
-        feedbackDiv.className = 'trivia-feedback correcto';
-        puntajes[bloqueActual]++;
-      } else {
-        feedbackDiv.textContent = `Incorrecto. ${q.feedback}`;
-        feedbackDiv.className = 'trivia-feedback incorrecto';
-      }
-      document.getElementById('siguiente-btn').style.display = 'inline-block';
-      document.getElementById('siguiente-btn').onclick = function() {
-        indiceActual++;
-        document.getElementById('trivia-container').innerHTML = `<div class='trivia-block-title'>${bloque.tema}</div>`;
-        mostrarPregunta();
-      };
-    };
-
-    window.siguienteBloque = function() {
-      bloqueActual++;
-      indiceActual = 0;
-      document.getElementById('trivia-container').innerHTML = '';
-      mostrarPregunta();
-    };
-
-    window.reiniciarTrivia = function() {
-      bloqueActual = 0;
-      indiceActual = 0;
-      puntajes = Array(bloquesTrivia.length).fill(0);
-      document.getElementById('trivia-container').innerHTML = '';
-      mostrarPregunta();
-    };
-
-    // Iniciar trivia al cargar
-    mostrarPregunta();
-  </script>
+      showMenu();
+    </script>
+  </section>
 </body>
 </html> 
