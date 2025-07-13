@@ -50,17 +50,91 @@
   <div class="section actividad">
     <div class="actividad-title">🕸️ Diagrama interactivo: Explora la red trófica</div>
     <p>Haz clic en un animal para ver qué come y quién se lo come.</p>
-    <div style="text-align:center;">
-      <!-- Aquí irá el diagrama interactivo en el futuro -->
-      <img src="imagenes-naturales/red-trofica.png" alt="Red trófica interactiva" class="img-sugerida">
-      <p style="color:#888; font-size:0.95em;">(Próximamente interactivo)</p>
+    <div id="red-trofica-interactiva" style="display:flex; flex-direction:column; align-items:center;">
+      <svg id="red-trofica-svg" width="700" height="350" style="overflow:visible;">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="3" orient="auto" markerUnits="strokeWidth">
+            <path d="M0,0 L0,6 L9,3 z" fill="#888" />
+          </marker>
+        </defs>
+        <!-- Organismos (imágenes locales) -->
+        <image href="imagenes-naturales/pasto.png" x="40" y="150" width="80" height="80" data-org="pasto" style="cursor:pointer;" />
+        <image href="imagenes-naturales/grillo.png" x="170" y="90" width="80" height="80" data-org="grillo" style="cursor:pointer;" />
+        <image href="imagenes-naturales/raton.png" x="320" y="40" width="80" height="80" data-org="raton" style="cursor:pointer;" />
+        <image href="imagenes-naturales/sapo.png" x="320" y="180" width="80" height="80" data-org="sapo" style="cursor:pointer;" />
+        <image href="imagenes-naturales/serpiente.png" x="470" y="110" width="80" height="80" data-org="serpiente" style="cursor:pointer;" />
+        <image href="imagenes-naturales/lechuza.png" x="600" y="40" width="80" height="80" data-org="lechuza" style="cursor:pointer;" />
+        <image href="imagenes-naturales/hongo.png" x="600" y="220" width="80" height="80" data-org="hongo" style="cursor:pointer;" />
+        <!-- Flechas encima de las imágenes -->
+        <g id="flechas-encima">
+          <line x1="120" y1="190" x2="170" y2="130" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="pasto" data-to="grillo" />
+          <line x1="250" y1="110" x2="320" y2="70" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="grillo" data-to="raton" />
+          <line x1="250" y1="150" x2="320" y2="210" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="grillo" data-to="sapo" />
+          <line x1="400" y1="70" x2="470" y2="130" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="raton" data-to="serpiente" />
+          <line x1="400" y1="210" x2="470" y2="150" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="sapo" data-to="serpiente" />
+          <line x1="550" y1="130" x2="600" y2="80" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="serpiente" data-to="lechuza" />
+          <line x1="550" y1="170" x2="600" y2="260" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="serpiente" data-to="hongo" />
+          <line x1="640" y1="80" x2="640" y2="220" stroke="#888" stroke-width="3" marker-end="url(#arrow)" data-from="lechuza" data-to="hongo" />
+        </g>
+      </svg>
+      <div id="info-organismo" style="margin-top:1.5em; min-height:60px; font-size:1.1em;"></div>
     </div>
+    <script>
+      // Relaciones de la red trófica
+      const relaciones = {
+        pasto: { come: [], predadores: ["grillo"] },
+        grillo: { come: ["pasto"], predadores: ["raton", "sapo"] },
+        raton: { come: ["grillo"], predadores: ["serpiente"] },
+        sapo: { come: ["grillo"], predadores: ["serpiente"] },
+        serpiente: { come: ["raton", "sapo"], predadores: ["lechuza", "hongo"] },
+        lechuza: { come: ["serpiente"], predadores: ["hongo"] },
+        hongo: { come: ["serpiente", "lechuza"], predadores: [] }
+      };
+      const info = {
+        pasto: "<b>Pasto:</b> Productor. Fabrica su alimento con la luz del sol.",
+        grillo: "<b>Grillo:</b> Consumidor primario. Se alimenta de pasto.",
+        raton: "<b>Ratón:</b> Consumidor secundario. Se alimenta de grillos.",
+        sapo: "<b>Sapo:</b> Consumidor secundario. Se alimenta de grillos.",
+        serpiente: "<b>Serpiente:</b> Consumidor terciario. Se alimenta de ratones y sapos.",
+        lechuza: "<b>Lechuza:</b> Superpredador. Se alimenta de serpientes.",
+        hongo: "<b>Hongo:</b> Descomponedor. Transforma restos de animales en nutrientes para el suelo."
+      };
+      // Selección y resaltado
+      const svg = document.getElementById('red-trofica-svg');
+      const flechas = svg.querySelectorAll('line');
+      const imgs = svg.querySelectorAll('image');
+      imgs.forEach(img => {
+        img.addEventListener('click', () => {
+          // Reset
+          imgs.forEach(i => i.setAttribute('filter', ''));
+          flechas.forEach(f => f.setAttribute('stroke', '#888'));
+          // Resalta seleccionado
+          img.setAttribute('filter', 'drop-shadow(0 0 8px #ff9800)');
+          const org = img.getAttribute('data-org');
+          // Resalta flechas de lo que come
+          relaciones[org].come.forEach(c => {
+            flechas.forEach(f => {
+              if(f.getAttribute('data-from') === c && f.getAttribute('data-to') === org) f.setAttribute('stroke', '#43a047');
+            });
+          });
+          // Resalta flechas de sus predadores
+          relaciones[org].predadores.forEach(p => {
+            flechas.forEach(f => {
+              if(f.getAttribute('data-from') === org && f.getAttribute('data-to') === p) f.setAttribute('stroke', '#1976d2');
+            });
+          });
+          // Muestra info
+          document.getElementById('info-organismo').innerHTML = info[org];
+        });
+      });
+    </script>
   </div>
+  <!---
   <div class="section actividad">
     <div class="actividad-title">🐦 Animación: Flechas de energía</div>
     <p>Observa cómo la energía fluye desde el productor hasta los consumidores y descomponedores.</p>
     <div style="text-align:center;">
-      <!-- Aquí irá la animación tipo historieta -->
+
       <img src="imagenes-naturales/cadena-trofica-ejemplo.png" alt="Animación flechas de energía" class="img-sugerida">
       <p style="color:#888; font-size:0.95em;">(Próximamente animación)</p>
     </div>
@@ -69,7 +143,7 @@
     <div class="actividad-title">🐌 Juego: Arma tu propia cadena trófica</div>
     <p>Arrastra y ordena las tarjetas para construir una cadena desde el sol hasta un descomponedor.</p>
     <div style="text-align:center;">
-      <!-- Aquí irá el juego de armado de tarjetas -->
+
       <img src="imagenes-naturales/tarjeta-pasto.png" alt="Tarjeta pasto" class="img-sugerida" style="max-width:90px;">
       <img src="imagenes-naturales/tarjeta-grillo.png" alt="Tarjeta grillo" class="img-sugerida" style="max-width:90px;">
       <img src="imagenes-naturales/tarjeta-sapo.png" alt="Tarjeta sapo" class="img-sugerida" style="max-width:90px;">
@@ -77,6 +151,7 @@
       <img src="imagenes-naturales/tarjeta-hongo.png" alt="Tarjeta hongo" class="img-sugerida" style="max-width:90px;">
     </div>
   </div>
+  -->
   <a href="ciencias-naturales.html" class="volver-inicio">⬅ Volver a Ciencias Naturales</a>
 </body>
 </html> 
