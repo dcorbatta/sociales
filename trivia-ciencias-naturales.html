@@ -177,22 +177,33 @@
               }
             }
             quizContainer.innerHTML = '';
+            // Botón volver arriba del quiz
+            const volver = document.createElement('a');
+            volver.className = 'volver-menu';
+            volver.textContent = '⬅ Volver al menú de secciones';
+            volver.href = '#';
+            volver.onclick = (e) => { e.preventDefault(); showMenu(); };
+            quizContainer.appendChild(volver);
+            // Quiz
+            const quizDiv = document.createElement('div');
+            quizDiv.id = 'quiz-inner-container';
+            quizContainer.appendChild(quizDiv);
             initQuiz(selected, {
-              containerId: 'quiz-container',
+              containerId: 'quiz-inner-container',
               maxAttempts: 2,
               sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
               sonidoError: 'imagenes-naturales/sonido-error.mp3'
             });
-            // Agregar botón para volver al menú al terminar
+            // Botón volver también al final
             const observer = new MutationObserver(() => {
               if (quizContainer.querySelector('.quiz-final')) {
-                if (!quizContainer.querySelector('.volver-menu')) {
-                  const volver = document.createElement('a');
-                  volver.className = 'volver-menu';
-                  volver.textContent = '⬅ Volver al menú de secciones';
-                  volver.href = '#';
-                  volver.onclick = (e) => { e.preventDefault(); showMenu(); };
-                  quizContainer.appendChild(volver);
+                if (!quizContainer.querySelector('.volver-menu:last-child')) {
+                  const volver2 = document.createElement('a');
+                  volver2.className = 'volver-menu';
+                  volver2.textContent = '⬅ Volver al menú de secciones';
+                  volver2.href = '#';
+                  volver2.onclick = (e) => { e.preventDefault(); showMenu(); };
+                  quizContainer.appendChild(volver2);
                 }
               }
             });
