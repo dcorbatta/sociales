@@ -931,30 +931,26 @@ document.addEventListener('DOMContentLoaded', function() {
   <div id="quiz-container"></div>
   <script src="quiz-module.js"></script>
   <script>
-    const quizData = [
-      {
-        pregunta: "¿Cuál es el nivel más pequeño de organización en un ecosistema?",
-        opciones: ["Comunidad", "Individuo", "Ecosistema", "Población"],
-        correcta: 1,
-        tip: "Piensa en un solo ser vivo, como un armadillo solo.",
-        insight: "El nivel más pequeño es el individuo, un solo ser vivo.",
-        explicacion: "¡Muy bien! El individuo es un solo ser vivo, como un armadillo, y es el nivel más pequeño de organización."
-      },
-      {
-        pregunta: "¿Qué es una especie?",
-        opciones: ["Un grupo de seres vivos que pueden tener crías entre sí", "Un solo animal", "Un ecosistema", "Un grupo de plantas y animales diferentes"],
-        correcta: 0,
-        tip: "Recuerda que los miembros de una especie pueden reproducirse entre sí.",
-        insight: "Una especie es un grupo de seres vivos que pueden tener crías fértiles entre sí.",
-        explicacion: "¡Correcto! Una especie es un grupo de seres vivos muy parecidos que pueden tener crías fértiles entre sí."
-      }
-    ];
-    initQuiz(quizData, {
-      containerId: 'quiz-container',
-      maxAttempts: 2,
-      sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
-      sonidoError: 'imagenes-naturales/sonido-error.mp3'
-    });
+    fetch('quiz-aventuras-naturales.json')
+      .then(r => r.json())
+      .then(allQuestions => {
+        // Seleccionar 5 preguntas random
+        const selected = [];
+        const used = new Set();
+        while (selected.length < 5 && used.size < allQuestions.length) {
+          const idx = Math.floor(Math.random() * allQuestions.length);
+          if (!used.has(idx)) {
+            selected.push(allQuestions[idx]);
+            used.add(idx);
+          }
+        }
+        initQuiz(selected, {
+          containerId: 'quiz-container',
+          maxAttempts: 2,
+          sonidoAcierto: 'imagenes-naturales/sonido-acierto.mp3',
+          sonidoError: 'imagenes-naturales/sonido-error.mp3'
+        });
+      });
   </script>
 </body>
 </html> 

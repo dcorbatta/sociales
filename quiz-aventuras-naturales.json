@@ -1,0 +1,249 @@
+[
+  {
+    "pregunta": "¿Qué es un ecosistema?",
+    "opciones": [
+      "El conjunto de animales en un lugar",
+      "El lugar donde viven los seres humanos",
+      "El conjunto de seres vivos, el ambiente físico y sus relaciones",
+      "Una selva o un bosque"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en todo lo que incluye el ambiente: no solo seres vivos.",
+    "insight": "¡Casi! No solo se trata de animales o plantas, también del lugar y las relaciones entre ellos.",
+    "explicacion": "¡Correcto! Un ecosistema comprende los seres vivos, las características del ambiente físico y las relaciones entre ellos."
+  },
+  {
+    "pregunta": "¿Qué es un individuo?",
+    "opciones": [
+      "Un grupo de animales iguales",
+      "Un ser vivo que puede vivir por sí solo",
+      "Una especie vegetal",
+      "Un conjunto de células"
+    ],
+    "correcta": 1,
+    "tip": "Busca quién puede sobrevivir por sí mismo.",
+    "insight": "No es un grupo, sino uno solo que puede vivir por su cuenta.",
+    "explicacion": "¡Exacto! Un individuo es un ser vivo, como un animal o una planta, que puede sobrevivir por sí mismo en un ambiente determinado."
+  },
+  {
+    "pregunta": "¿Cuál de estos animales suele vivir de forma solitaria?",
+    "opciones": [
+      "León",
+      "Armadillo de nueve bandas",
+      "Yaguareté",
+      "Hormiga"
+    ],
+    "correcta": 1,
+    "tip": "Busca al que se esconde en su madriguera.",
+    "insight": "Revisa cuál se refugia solo y busca alimento sin grupo.",
+    "explicacion": "¡Bien! El armadillo de nueve bandas lleva una vida solitaria, buscando alimento y refugiándose de manera individual."
+  },
+  {
+    "pregunta": "¿Qué animal se caracteriza por tener un patrón de manchas único?",
+    "opciones": [
+      "León",
+      "Zorro",
+      "Yaguareté",
+      "Carpincho"
+    ],
+    "correcta": 2,
+    "tip": "Sus manchas lo hacen diferente a los demás.",
+    "insight": "Cada uno tiene un pelaje distinto. No todos los animales tienen eso.",
+    "explicacion": "¡Correcto! Cada yaguareté es único, su patrón de manchas lo diferencia de los demás y su comportamiento también."
+  },
+  {
+    "pregunta": "¿Qué es una especie?",
+    "opciones": [
+      "Un grupo de animales que viven juntos",
+      "Individuos diferentes que comparten un espacio",
+      "Organismos que pueden reproducirse entre sí y dejar descendencia fértil",
+      "Una planta común en un bosque"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en los que pueden tener crías fértiles entre ellos.",
+    "insight": "No todos los grupos pueden reproducirse entre sí con crías fértiles.",
+    "explicacion": "¡Exacto! Una especie está formada por organismos que pueden reproducirse entre sí y tener descendencia fértil."
+  },
+  {
+    "pregunta": "¿Qué es una población?",
+    "opciones": [
+      "Un grupo de especies diferentes",
+      "Un conjunto de individuos de la misma especie en una zona",
+      "Una comunidad de animales y plantas",
+      "Un grupo de árboles con frutas"
+    ],
+    "correcta": 1,
+    "tip": "Son individuos iguales en un mismo lugar.",
+    "insight": "Una población no incluye diferentes especies.",
+    "explicacion": "¡Correcto! Una población está formada por individuos de la misma especie que viven en el mismo lugar al mismo tiempo."
+  },
+  {
+    "pregunta": "¿Qué es una comunidad?",
+    "opciones": [
+      "Un grupo de humanos que viven juntos",
+      "Varios ecosistemas mezclados",
+      "Conjunto de poblaciones de distintas especies que interactúan",
+      "Una población de árboles"
+    ],
+    "correcta": 2,
+    "tip": "Involucra varias especies diferentes viviendo e interactuando juntas.",
+    "insight": "Una comunidad no es una sola especie.",
+    "explicacion": "¡Muy bien! Una comunidad está formada por poblaciones de diferentes especies que viven en el mismo lugar y se relacionan entre sí."
+  },
+  {
+    "pregunta": "¿Qué características comparten los individuos de una misma especie?",
+    "opciones": [
+      "Se alimentan igual",
+      "Tienen el mismo tamaño",
+      "Pueden reproducirse entre sí y tener crías fértiles",
+      "Viven en el mismo lugar"
+    ],
+    "correcta": 2,
+    "tip": "No se trata solo de cómo lucen o dónde viven.",
+    "insight": "La clave está en la capacidad de reproducirse con éxito.",
+    "explicacion": "¡Bien hecho! Los individuos de una misma especie pueden reproducirse entre sí y tener descendencia fértil."
+  },
+  {
+    "pregunta": "¿Qué diferencia a una comunidad de una población?",
+    "opciones": [
+      "La comunidad incluye diferentes especies",
+      "La comunidad es más grande",
+      "La población tiene más árboles",
+      "La población tiene más agua"
+    ],
+    "correcta": 0,
+    "tip": "Piensa en si hay una o varias especies.",
+    "insight": "Una población es de una sola especie.",
+    "explicacion": "¡Correcto! Una comunidad está formada por varias poblaciones de distintas especies que viven juntas."
+  },
+  {
+    "pregunta": "¿Qué significa que los individuos estén conectados aunque no se muevan?",
+    "opciones": [
+      "Que se comunican por sonidos",
+      "Que forman una población aunque estén unidos",
+      "Que comparten raíces",
+      "Que son del mismo ecosistema"
+    ],
+    "correcta": 1,
+    "tip": "Algunos no necesitan moverse para formar una población.",
+    "insight": "Pueden estar conectados y aún así ser muchos individuos.",
+    "explicacion": "¡Exacto! Algunos organismos, como los corales o esponjas, están unidos pero son varios individuos."
+  },
+  {
+    "pregunta": "¿Cuál de estas opciones representa un ejemplo de población?",
+    "opciones": [
+      "Un grupo de carpinchos en Entre Ríos",
+      "Un bosque con árboles y animales",
+      "Una familia de leones y cebras",
+      "Un lago con peces y algas"
+    ],
+    "correcta": 0,
+    "tip": "Busca un grupo de la misma especie.",
+    "insight": "Una población no mezcla especies distintas.",
+    "explicacion": "¡Muy bien! Una población es un grupo de individuos de la misma especie en una zona determinada."
+  },
+  {
+    "pregunta": "¿Qué nombre recibe el conjunto de poblaciones en un mismo ambiente?",
+    "opciones": [
+      "Ecosistema",
+      "Especie",
+      "Comunidad",
+      "Individuo"
+    ],
+    "correcta": 2,
+    "tip": "Incluye distintas especies que viven juntas.",
+    "insight": "No se trata solo del lugar, sino de los seres vivos que lo habitan.",
+    "explicacion": "¡Exacto! Una comunidad está formada por distintas poblaciones de seres vivos que interactúan."
+  },
+  {
+    "pregunta": "¿Qué sucede si una especie no puede reproducirse con otra?",
+    "opciones": [
+      "Forman una comunidad",
+      "Se forma una nueva especie",
+      "Hay aislamiento reproductivo",
+      "Viven en ecosistemas separados"
+    ],
+    "correcta": 2,
+    "tip": "Busca el concepto relacionado con la reproducción.",
+    "insight": "Esto es clave para definir una especie.",
+    "explicacion": "¡Correcto! Si no pueden reproducirse entre sí, hay un aislamiento reproductivo y pertenecen a especies distintas."
+  },
+  {
+    "pregunta": "¿Qué hacen los leones en una manada?",
+    "opciones": [
+      "Compiten entre sí",
+      "Se pelean por la comida",
+      "Se cuidan entre ellos y a sus crías",
+      "Viven solos"
+    ],
+    "correcta": 2,
+    "tip": "Piensa en cómo viven en grupo.",
+    "insight": "La manada tiene un comportamiento cooperativo.",
+    "explicacion": "¡Bien! Los leones viven en manadas y cuidan a sus crías y otros miembros del grupo."
+  },
+  {
+    "pregunta": "¿Qué es un talar?",
+    "opciones": [
+      "Un grupo de árboles y animales",
+      "Una población de ejemplares de tala",
+      "Una comunidad de plantas y hongos",
+      "Un conjunto de arbustos"
+    ],
+    "correcta": 1,
+    "tip": "Fíjate que todos son de la misma especie.",
+    "insight": "No hay mezcla de especies en una población.",
+    "explicacion": "¡Exacto! Un talar es una población conformada por ejemplares de tala, una misma especie."
+  },
+  {
+    "pregunta": "¿Cómo se relacionan las comunidades y el ambiente?",
+    "opciones": [
+      "Viven separadas",
+      "Solo comparten el agua",
+      "Se relacionan y forman un ecosistema",
+      "Compiten por el espacio"
+    ],
+    "correcta": 2,
+    "tip": "Un ecosistema incluye seres vivos y ambiente.",
+    "insight": "Las comunidades no están aisladas del entorno.",
+    "explicacion": "¡Correcto! Las comunidades se relacionan entre sí y con su ambiente, formando un ecosistema."
+  },
+  {
+    "pregunta": "¿Qué representa la imagen con etiquetas de 'individuo', 'población' y 'comunidad'?",
+    "opciones": [
+      "Las etapas de la vida de un animal",
+      "Niveles de organización de un ambiente",
+      "Diferentes tipos de climas",
+      "Zonas protegidas de la naturaleza"
+    ],
+    "correcta": 1,
+    "tip": "Relaciona con cómo se agrupan los seres vivos.",
+    "insight": "No muestra cambios climáticos.",
+    "explicacion": "¡Muy bien! Esa imagen representa cómo se organizan los seres vivos: desde el individuo hasta la comunidad."
+  },
+  {
+    "pregunta": "¿Qué incluye el ambiente físico del ecosistema?",
+    "opciones": [
+      "Solo árboles y flores",
+      "Solo los animales",
+      "Luz, relieve, clima y agua",
+      "Únicamente las plantas"
+    ],
+    "correcta": 2,
+    "tip": "No solo es lo que ves, también es lo que sientes.",
+    "insight": "El ambiente físico no son solo cosas vivas.",
+    "explicacion": "¡Correcto! El ambiente físico incluye luz, relieve, clima, agua y otros elementos no vivos del ecosistema."
+  },
+  {
+    "pregunta": "¿Qué hacen los individuos cuando aún no pueden sobrevivir solos?",
+    "opciones": [
+      "Forman comunidades",
+      "Reciben cuidados de otros hasta crecer",
+      "Se separan del grupo",
+      "Mueren rápidamente"
+    ],
+    "correcta": 1,
+    "tip": "Piensa en las crías de animales.",
+    "insight": "Los animales no nacen siempre listos para sobrevivir.",
+    "explicacion": "¡Muy bien! Algunos individuos, como las crías, necesitan cuidados hasta poder sobrevivir por sí mismos."
+  }
+] 
