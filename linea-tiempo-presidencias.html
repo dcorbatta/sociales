@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Línea de Tiempo - Presidencias Históricas Argentinas</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Comic Sans MS', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .header::before {
+            content: '🏛️';
+            font-size: 4rem;
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            opacity: 0.3;
+        }
+
+        .header::after {
+            content: '📚';
+            font-size: 4rem;
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            opacity: 0.3;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            margin: 20px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px dashed #e17055;
+        }
+
+        .intro-box h2 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .intro-box p {
+            color: #636e72;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 6px;
+            background: linear-gradient(to bottom, #74b9ff, #0984e3);
+            transform: translateX(-50%);
+            border-radius: 3px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 60px;
+            width: 100%;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content {
+            margin-left: 0;
+            margin-right: 55%;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content {
+            margin-left: 55%;
+            margin-right: 0;
+            text-align: left;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            right: -20px;
+            border-left: 20px solid #74b9ff;
+            border-right: none;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            left: -20px;
+            border-right: 20px solid #0984e3;
+            border-left: none;
+        }
+
+        .timeline-content {
+            background: white;
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+            border-color: #74b9ff;
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            width: 0;
+            height: 0;
+            border-top: 20px solid transparent;
+            border-bottom: 20px solid transparent;
+        }
+
+        .timeline-date {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1rem;
+            display: inline-block;
+            margin-bottom: 15px;
+            box-shadow: 0 4px 15px rgba(116, 185, 255, 0.3);
+        }
+
+        .timeline-title {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: #2d3436;
+            margin-bottom: 15px;
+            border-bottom: 3px solid #74b9ff;
+            padding-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .timeline-description {
+            color: #636e72;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .timeline-highlights {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            border-left: 5px solid #74b9ff;
+            margin-bottom: 15px;
+        }
+
+        .timeline-highlights h4 {
+            color: #74b9ff;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .timeline-highlights ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .timeline-highlights li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        .timeline-highlights li::before {
+            content: '✨';
+            position: absolute;
+            left: 0;
+            font-size: 1rem;
+        }
+
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 20px;
+            width: 25px;
+            height: 25px;
+            background: white;
+            border: 5px solid #74b9ff;
+            border-radius: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .war-section {
+            background: linear-gradient(135deg, #ff7675, #e17055);
+            color: white;
+            margin: 40px 20px;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #d63031;
+        }
+
+        .war-section h3 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .war-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            text-align: left;
+        }
+
+        .war-content div {
+            background: rgba(255,255,255,0.15);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .war-content h4 {
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            color: #ffeaa7;
+        }
+
+        .war-content p {
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        .fun-fact {
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7);
+            color: white;
+            margin: 20px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #5f3dc4;
+        }
+
+        .fun-fact h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .fun-fact p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 30px;
+            color: #636e72;
+            border-top: 3px solid #74b9ff;
+        }
+
+        .footer h3 {
+            color: #2d3436;
+            margin-bottom: 15px;
+            font-size: 1.4rem;
+        }
+
+        .footer p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content,
+            .timeline-item:nth-child(even) .timeline-content {
+                margin-left: 60px;
+                margin-right: 0;
+                text-align: left;
+            }
+            
+            .timeline-item:nth-child(odd) .timeline-content::before,
+            .timeline-item:nth-child(even) .timeline-content::before {
+                left: -20px;
+                border-right: 20px solid #74b9ff;
+                border-left: none;
+            }
+            
+            .timeline-marker {
+                left: 30px;
+            }
+            
+            .war-content {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🏛️ Presidencias Históricas Argentinas</h1>
+            <p>¡Conoce cómo se construyó nuestro país! 🇦🇷</p>
+        </div>
+
+        <div class="intro-box">
+            <h2>🤔 ¿Qué son las "Presidencias Históricas"?</h2>
+            <p>Entre 1862 y 1880, tres presidentes muy importantes gobernaron Argentina y la transformaron completamente. ¡Fueron como los "constructores" de nuestro país! 🏗️</p>
+        </div>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">1862 - 1868</div>
+                    <div class="timeline-title">👑 Bartolomé Mitre</div>
+                    <div class="timeline-description">
+                        ¡Fue el primer presidente de una Argentina unificada! Mitre tenía la difícil tarea de crear un país moderno y organizado.
+                    </div>
+                    <div class="timeline-highlights">
+                        <h4>🎯 ¿Qué logró?</h4>
+                        <ul>
+                            <li>Creó las primeras leyes comerciales para todo el país</li>
+                            <li>Formó un ejército nacional profesional y unificado</li>
+                            <li>Unió todas las fuerzas militares de las provincias</li>
+                            <li>Lideró el Partido Nacionalista</li>
+                        </ul>
+                    </div>
+                    <div class="timeline-highlights">
+                        <h4>💡 Dato curioso</h4>
+                        <p>En 1865, Mitre tuvo que dejar la capital para comandar el ejército contra Paraguay. ¡Su vicepresidente Marcos Paz falleció y tuvo que regresar!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">1865 - 1870</div>
+                    <div class="timeline-title">⚔️ Guerra de la Triple Alianza</div>
+                    <div class="timeline-description">
+                        Argentina, Uruguay y Brasil se unieron para enfrentar a Paraguay en una guerra larga y difícil.
+                    </div>
+                    <div class="timeline-highlights">
+                        <h4>🎯 ¿Qué pasó?</h4>
+                        <ul>
+                            <li>Argentina se organizó mejor militarmente</li>
+                            <li>Ganamos los territorios de Misiones y Formosa</li>
+                            <li>¡Fue la primera guerra que se fotografió!</li>
+                            <li>Argentina se convirtió en un país más fuerte</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">1868 - 1874</div>
+                    <div class="timeline-title">📚 Domingo F. Sarmiento</div>
+                    <div class="timeline-description">
+                        ¡Conocido como el "Maestro de América"! Sarmiento creía que la educación era la clave para hacer grande a Argentina.
+                    </div>
+                    <div class="timeline-highlights">
+                        <h4>🎓 Revolución educativa</h4>
+                        <ul>
+                            <li>Hizo el primer censo nacional (1869) - ¡71% no sabía leer!</li>
+                            <li>Construyó más de 800 escuelas primarias</li>
+                            <li>Creó institutos para formar maestros</li>
+                            <li>Fundó el Colegio Militar y la Facultad de Ciencias</li>
+                            <li>¡Los estudiantes pasaron de 30,000 a 100,000!</li>
+                        </ul>
+                        <div class="timeline-highlights">
+                            <h4>🏗️ Obras importantes</h4>
+                            <ul>
+                                <li>Construyó más trenes y caminos</li>
+                                <li>Tendido de líneas de telégrafo</li>
+                                <li>Nuevos puertos en San Pedro y Zárate</li>
+                                <li>Mejoró la salud y limpieza de Buenos Aires</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                    <div class="timeline-date">1874 - 1880</div>
+                    <div class="timeline-title">💼 Nicolás Avellaneda</div>
+                    <div class="timeline-description">
+                        Su presidencia fue difícil por una crisis económica mundial, pero logró que Argentina creciera económicamente.
+                    </div>
+                    <div class="timeline-highlights">
+                        <h4>⚠️ Problemas que enfrentó</h4>
+                        <ul>
+                            <li>Crisis económica mundial en 1873</li>
+                            <li>Los productos que vendíamos bajaron de precio</li>
+                            <li>Los productos que comprábamos subieron de precio</li>
+                            <li>Argentina tenía deudas que pagar</li>
+                        </ul>
+                        <div class="timeline-highlights">
+                            <h4>✅ Soluciones que implementó</h4>
+                            <ul>
+                                <li>Dejó de comprar productos del exterior</li>
+                                <li>Redujo el número de empleados del gobierno</li>
+                                <li>Bajó los salarios</li>
+                                <li>Creó la Dirección de Inmigración (1876)</li>
+                                <li>Ayudó a que los inmigrantes tuvieran tierras</li>
+                                <li>Las universidades pudieron organizarse solas</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="war-section">
+            <h3>⚔️ Guerra de la Triple Alianza (1865-1870)</h3>
+            <div class="war-content">
+                <div>
+                    <h4>🚨 ¿Por qué empezó la guerra?</h4>
+                    <p>En 1864, un general uruguayo derrocó al presidente de su país. El presidente de Paraguay, Francisco Solano López, pidió permiso para que sus soldados cruzaran por Corrientes para ayudar al presidente uruguayo. Mitre dijo que NO, y Paraguay le declaró la guerra a Argentina.</p>
+                </div>
+                <div>
+                    <h4>🤝 ¿Cómo se formó la alianza?</h4>
+                    <p>Argentina, Uruguay y Brasil se unieron para formar la "Triple Alianza" y luchar contra Paraguay. En 1870, ganaron la guerra. ¡Esta guerra ayudó a que Argentina tuviera un ejército más fuerte y organizado!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="fun-fact">
+            <h3>📸 ¡Dato súper interesante!</h3>
+            <p>La Guerra de la Triple Alianza fue una de las primeras guerras en ser fotografiadas. Un fotógrafo estadounidense llamado George Thomas Bate tomaba las fotos desde su estudio en Montevideo. ¡Las imágenes se vendían en Buenos Aires y Montevideo!</p>
+        </div>
+
+        <div class="footer">
+            <h3>🎯 ¿Por qué son tan importantes estas presidencias?</h3>
+            <p>Estas "presidencias históricas" transformaron completamente Argentina. Construyeron las bases de nuestro país moderno: crearon escuelas, leyes, ejército, trenes, puertos y muchas cosas más. ¡Gracias a ellos, Argentina se convirtió en un país unido, educado y fuerte!</p>
+        </div>
+    </div>
+</body>
+</html>
