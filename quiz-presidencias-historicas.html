@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🧠 Quiz: Presidencias Históricas - Aventuras Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .quiz-container {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .quiz-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff9800, #ffb74d);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .quiz-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .quiz-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .quiz-instructions {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .quiz-instructions h3 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .quiz-instructions ul {
+            color: #1565c0;
+            padding-left: 20px;
+        }
+        
+        .quiz-instructions li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .question-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 3px solid #ff9800;
+        }
+        
+        .question-text {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .answer-option {
+            background: #f5f5f5;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            font-size: 1rem;
+        }
+        
+        .answer-option:hover {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            transform: translateY(-2px);
+        }
+        
+        .answer-option.selected {
+            background: #2196f3;
+            color: white;
+            border-color: #1976d2;
+        }
+        
+        .answer-option.correct {
+            background: #4caf50;
+            color: white;
+            border-color: #388e3c;
+        }
+        
+        .answer-option.incorrect {
+            background: #f44336;
+            color: white;
+            border-color: #d32f2f;
+        }
+        
+        .feedback {
+            background: #e8f5e8;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 5px solid #4caf50;
+            display: none;
+        }
+        
+        .feedback h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .feedback p {
+            color: #2e7d32;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .quiz-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .quiz-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .quiz-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .quiz-btn.submit {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+        
+        .quiz-btn.next {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
+        }
+        
+        .quiz-btn.restart {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+        }
+        
+        .progress-bar {
+            background: #f5f5f5;
+            border-radius: 10px;
+            height: 20px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 2px solid #ddd;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            height: 100%;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .progress-text {
+            text-align: center;
+            color: #666;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .results-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 3px solid #4caf50;
+            display: none;
+            text-align: center;
+        }
+        
+        .results-container h2 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+        
+        .score-display {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #4caf50;
+            margin: 20px 0;
+        }
+        
+        .score-message {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+        
+        .results-summary {
+            background: #f5f5f5;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .results-summary h3 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .results-summary ul {
+            color: #666;
+            padding-left: 20px;
+            text-align: left;
+        }
+        
+        .results-summary li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.home {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .nav-btn.back {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+        
+        .emergency-exit {
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background: #ffebee;
+            border-radius: 10px;
+            border: 2px solid #f44336;
+        }
+        
+        .emergency-exit p {
+            color: #c62828;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        
+        .emergency-exit button {
+            background: #f44336;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .answers-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quiz-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav" style="margin: 20px 0; text-align: center;">
+        <a href="index.html" style="font-weight: bold; margin: 0 15px;">🌟 Aventuras Sociales</a>
+        <a href="aventuras-matematicas/index.html" style="font-weight: bold; margin: 0 15px;">🧮 Aventuras Matemáticas</a>
+        <a href="aventuras-pdl.html" style="font-weight: bold; margin: 0 15px;">📖 Aventuras de PDL</a>
+        <a href="ciencias-naturales.html" style="font-weight: bold; margin: 0 15px;">🔬 Aventuras en Ciencias Naturales</a>
+    </nav>
+
+    <div class="container">
+        <div class="quiz-container">
+            <div class="quiz-header">
+                <h1>🧠 Quiz: Presidencias Históricas</h1>
+                <div class="subtitle">¡Pon a prueba todo lo que aprendiste sobre Mitre, Sarmiento y Avellaneda!</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">
+                    🎯 10 preguntas para convertirte en un experto en presidencias históricas
+                </p>
+            </div>
+
+            <div class="quiz-instructions">
+                <h3>📋 Instrucciones del Quiz</h3>
+                <ul>
+                    <li>Lee cada pregunta cuidadosamente</li>
+                    <li>Elige la respuesta que crees correcta</li>
+                    <li>Haz clic en "Ver Respuesta" para ver si acertaste</li>
+                    <li>Lee la explicación para aprender más</li>
+                    <li>Haz clic en "Siguiente" para continuar</li>
+                    <li>¡Al final verás tu puntuación total!</li>
+                </ul>
+            </div>
+
+            <div class="progress-text">
+                Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestions">10</span>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+
+            <div id="questionContainer" class="question-container">
+                <div class="question-text" id="questionText">
+                    ¿Quién fue el primer presidente después de que Argentina se unificara?
+                </div>
+                
+                <div class="answers-grid" id="answersGrid">
+                    <div class="answer-option" data-correct="true">Bartolomé Mitre</div>
+                    <div class="answer-option" data-correct="false">Domingo F. Sarmiento</div>
+                    <div class="answer-option" data-correct="false">Nicolás Avellaneda</div>
+                    <div class="answer-option" data-correct="false">Juan Manuel de Rosas</div>
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="quiz-btn submit" id="submitBtn">✅ Ver Respuesta</button>
+                </div>
+            </div>
+
+            <div id="feedback" class="feedback">
+                <h4>🎉 ¡Excelente respuesta!</h4>
+                <p>Bartolomé Mitre fue el primer presidente después de que Argentina se unificara. Tuvo la difícil tarea de construir un país desde cero después de estar dividido por 10 años.</p>
+                
+                <div class="quiz-controls">
+                    <button class="quiz-btn next" id="nextBtn">➡️ Siguiente Pregunta</button>
+                </div>
+            </div>
+
+            <div id="resultsContainer" class="results-container">
+                <h2>🏆 ¡Quiz Completado!</h2>
+                <div class="score-display" id="finalScore">8/10</div>
+                <div class="score-message" id="scoreMessage">¡Muy buen trabajo! Eres un experto en presidencias históricas.</div>
+                
+                <div class="results-summary">
+                    <h3>📊 Resumen de tu desempeño:</h3>
+                    <ul>
+                        <li><strong>Preguntas correctas:</strong> <span id="correctAnswers">8</span></li>
+                        <li><strong>Preguntas incorrectas:</strong> <span id="incorrectAnswers">2</span></li>
+                        <li><strong>Porcentaje de acierto:</strong> <span id="percentage">80%</span></li>
+                        <li><strong>Nivel alcanzado:</strong> <span id="level">Experto</span></li>
+                    </ul>
+                </div>
+                
+                <div class="quiz-controls">
+                    <button class="quiz-btn restart" onclick="restartQuiz()">🔄 Jugar de Nuevo</button>
+                </div>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="index.html" class="nav-btn home">🏠 Volver al Inicio</a>
+                <a href="historia-presidencias-sarmiento-avellaneda.html" class="nav-btn back">⬅️ Volver a Sarmiento y Avellaneda</a>
+            </div>
+
+            <!-- Botón de emergencia para salir del quiz -->
+            <div class="emergency-exit">
+                <p>🚨 ¿Se bloqueó el quiz?</p>
+                <button onclick="window.location.href='index.html'">
+                    🔄 Reiniciar Página
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Preguntas del quiz
+        const questions = [
+            {
+                question: "¿Quién fue el primer presidente después de que Argentina se unificara?",
+                answers: [
+                    { text: "Bartolomé Mitre", correct: true },
+                    { text: "Domingo F. Sarmiento", correct: false },
+                    { text: "Nicolás Avellaneda", correct: false },
+                    { text: "Juan Manuel de Rosas", correct: false }
+                ],
+                feedback: "🎉 ¡Excelente respuesta! Bartolomé Mitre fue el primer presidente después de que Argentina se unificara. Tuvo la difícil tarea de construir un país desde cero después de estar dividido por 10 años."
+            },
+            {
+                question: "¿Cuál era el lema de Sarmiento sobre la educación?",
+                answers: [
+                    { text: "La educación es la clave del progreso", correct: true },
+                    { text: "La educación es un derecho", correct: false },
+                    { text: "La educación es obligatoria", correct: false },
+                    { text: "La educación es gratuita", correct: false }
+                ],
+                feedback: "🎉 ¡Correcto! Sarmiento creía firmemente que 'La educación es la clave del progreso'. Por eso dedicó su presidencia a abrir más de 800 escuelas primarias en todo el país."
+            },
+            {
+                question: "¿Qué descubrió el primer censo nacional de 1869?",
+                answers: [
+                    { text: "Que muchos argentinos no sabían leer ni escribir", correct: true },
+                    { text: "Que Argentina tenía muchos habitantes", correct: false },
+                    { text: "Que Buenos Aires era la ciudad más grande", correct: false },
+                    { text: "Que había muchos inmigrantes", correct: false }
+                ],
+                feedback: "🎉 ¡Perfecto! El censo de 1869 descubrió que el 71% de los argentinos no sabían leer ni escribir. Esto confirmó que Sarmiento tenía razón sobre la necesidad de una revolución educativa."
+            },
+            {
+                question: "¿Cuántas escuelas primarias abrió Sarmiento durante su presidencia?",
+                answers: [
+                    { text: "Más de 800 escuelas", correct: true },
+                    { text: "Más de 500 escuelas", correct: false },
+                    { text: "Más de 1000 escuelas", correct: false },
+                    { text: "Más de 300 escuelas", correct: false }
+                ],
+                feedback: "🎉 ¡Excelente! Sarmiento abrió más de 800 escuelas primarias en todo el país. Era como construir una escuela en cada pueblo para que todos los niños pudieran estudiar."
+            },
+            {
+                question: "¿Qué epidemia sufrió Buenos Aires durante la presidencia de Sarmiento?",
+                answers: [
+                    { text: "Fiebre amarilla", correct: true },
+                    { text: "Cólera", correct: false },
+                    { text: "Viruela", correct: false },
+                    { text: "Tifus", correct: false }
+                ],
+                feedback: "🎉 ¡Correcto! En 1871, Buenos Aires sufrió una epidemia de fiebre amarilla que mató a muchas personas. Esto llevó a Sarmiento a modernizar la ciudad para evitar futuras enfermedades."
+            },
+            {
+                question: "¿Qué crisis económica afectó a Argentina durante la presidencia de Avellaneda?",
+                answers: [
+                    { text: "La crisis económica mundial de 1873", correct: true },
+                    { text: "La crisis de 1869", correct: false },
+                    { text: "La crisis de 1875", correct: false },
+                    { text: "La crisis de 1878", correct: false }
+                ],
+                feedback: "🎉 ¡Perfecto! En 1873 hubo una crisis económica mundial que afectó a todo el mundo. Los productos argentinos se vendían más baratos y las importaciones costaban más caras."
+            },
+            {
+                question: "¿Qué medidas tomó Avellaneda para ahorrar dinero del Estado?",
+                answers: [
+                    { text: "Reducir empleados y bajar salarios públicos", correct: true },
+                    { text: "Aumentar impuestos", correct: false },
+                    { text: "Pedir préstamos al exterior", correct: false },
+                    { text: "Vender tierras públicas", correct: false }
+                ],
+                feedback: "🎉 ¡Excelente! Avellaneda tomó medidas difíciles: redujo el personal del Estado, bajó los salarios públicos y cerró algunas importaciones para ahorrar dinero."
+            },
+            {
+                question: "¿Qué creó Avellaneda para ayudar a los inmigrantes?",
+                answers: [
+                    { text: "Una oficina de inmigración", correct: true },
+                    { text: "Un banco para inmigrantes", correct: false },
+                    { text: "Un hospital para inmigrantes", correct: false },
+                    { text: "Una escuela para inmigrantes", correct: false }
+                ],
+                feedback: "🎉 ¡Correcto! Avellaneda creó la primera oficina de inmigración para ayudar a los extranjeros que llegaban a Argentina. Les facilitaba conseguir tierras y papeles necesarios."
+            },
+            {
+                question: "¿Por qué se llaman 'presidencias históricas' a Mitre, Sarmiento y Avellaneda?",
+                answers: [
+                    { text: "Porque cambiaron Argentina para siempre", correct: true },
+                    { text: "Porque fueron presidentes por mucho tiempo", correct: false },
+                    { text: "Porque ganaron muchas guerras", correct: false },
+                    { text: "Porque fueron muy populares", correct: false }
+                ],
+                feedback: "🎉 ¡Perfecto! Se llaman 'presidencias históricas' porque estos tres presidentes transformaron completamente Argentina: la unificaron, crearon el sistema educativo y sentaron las bases del país moderno."
+            },
+            {
+                question: "¿Cuántos años duró el período de las presidencias históricas en total?",
+                answers: [
+                    { text: "18 años (1862-1880)", correct: true },
+                    { text: "12 años (1862-1874)", correct: false },
+                    { text: "24 años (1862-1886)", correct: false },
+                    { text: "15 años (1865-1880)", correct: false }
+                ],
+                feedback: "🎉 ¡Excelente! El período de las presidencias históricas duró 18 años completos: Mitre (1862-1868), Sarmiento (1868-1874) y Avellaneda (1874-1880). ¡Fue una época de transformación continua!"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let selectedAnswer = null;
+
+        // Elementos del DOM
+        const questionContainer = document.getElementById('questionContainer');
+        const feedback = document.getElementById('feedback');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const questionText = document.getElementById('questionText');
+        const answersGrid = document.getElementById('answersGrid');
+        const submitBtn = document.getElementById('submitBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentQuestionSpan = document.getElementById('currentQuestion');
+        const totalQuestionsSpan = document.getElementById('totalQuestions');
+        const progressFill = document.getElementById('progressFill');
+
+        // Inicializar el quiz
+        function initQuiz() {
+            if (!questionContainer || !feedback || !resultsContainer || !questionText || !answersGrid || !submitBtn || !nextBtn || !currentQuestionSpan || !totalQuestionsSpan || !progressFill) {
+                console.error('No se encontraron todos los elementos necesarios');
+                return;
+            }
+
+            totalQuestionsSpan.textContent = questions.length;
+            showQuestion();
+            
+            // Event listeners
+            submitBtn.addEventListener('click', checkAnswer);
+            nextBtn.addEventListener('click', nextQuestion);
+        }
+
+        // Mostrar pregunta
+        function showQuestion() {
+            if (!questionText || !answersGrid || !currentQuestionSpan || !progressFill) return;
+
+            const question = questions[currentQuestionIndex];
+            questionText.textContent = question.question;
+            currentQuestionSpan.textContent = currentQuestionIndex + 1;
+            
+            // Actualizar progreso
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            progressFill.style.width = progress + '%';
+            
+            // Limpiar respuestas anteriores
+            answersGrid.innerHTML = '';
+            selectedAnswer = null;
+            
+            // Crear opciones de respuesta
+            question.answers.forEach((answer, index) => {
+                const answerDiv = document.createElement('div');
+                answerDiv.className = 'answer-option';
+                answerDiv.textContent = answer.text;
+                answerDiv.dataset.correct = answer.correct;
+                
+                answerDiv.addEventListener('click', () => selectAnswer(answerDiv, index));
+                answersGrid.appendChild(answerDiv);
+            });
+            
+            // Mostrar/ocultar elementos
+            questionContainer.style.display = 'block';
+            feedback.style.display = 'none';
+            resultsContainer.style.display = 'none';
+            submitBtn.style.display = 'inline-block';
+            nextBtn.style.display = 'none';
+        }
+
+        // Seleccionar respuesta
+        function selectAnswer(answerDiv, index) {
+            // Deseleccionar respuesta anterior
+            const previousSelected = answersGrid.querySelector('.selected');
+            if (previousSelected) {
+                previousSelected.classList.remove('selected');
+            }
+            
+            // Seleccionar nueva respuesta
+            answerDiv.classList.add('selected');
+            selectedAnswer = index;
+        }
+
+        // Verificar respuesta
+        function checkAnswer() {
+            if (selectedAnswer === null) {
+                alert('Por favor, selecciona una respuesta antes de continuar.');
+                return;
+            }
+
+            if (!feedback || !submitBtn || !nextBtn) return;
+
+            const question = questions[currentQuestionIndex];
+            const selectedAnswerDiv = answersGrid.children[selectedAnswer];
+            const isCorrect = question.answers[selectedAnswer].correct;
+            
+            if (isCorrect) {
+                score++;
+                selectedAnswerDiv.classList.add('correct');
+            } else {
+                selectedAnswerDiv.classList.add('incorrect');
+                // Mostrar respuesta correcta
+                question.answers.forEach((answer, index) => {
+                    if (answer.correct) {
+                        answersGrid.children[index].classList.add('correct');
+                    }
+                });
+            }
+            
+            // Mostrar feedback
+            const feedbackText = feedback.querySelector('p');
+            if (feedbackText) {
+                feedbackText.textContent = question.feedback;
+            }
+            
+            feedback.style.display = 'block';
+            submitBtn.style.display = 'none';
+            nextBtn.style.display = 'inline-block';
+        }
+
+        // Siguiente pregunta
+        function nextQuestion() {
+            currentQuestionIndex++;
+            
+            if (currentQuestionIndex < questions.length) {
+                showQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        // Mostrar resultados
+        function showResults() {
+            if (!questionContainer || !feedback || !resultsContainer) return;
+
+            questionContainer.style.display = 'none';
+            feedback.style.display = 'none';
+            resultsContainer.style.display = 'block';
+            
+            const percentage = Math.round((score / questions.length) * 100);
+            const finalScoreSpan = document.getElementById('finalScore');
+            const correctAnswersSpan = document.getElementById('correctAnswers');
+            const incorrectAnswersSpan = document.getElementById('incorrectAnswers');
+            const percentageSpan = document.getElementById('percentage');
+            const levelSpan = document.getElementById('level');
+            const scoreMessageSpan = document.getElementById('scoreMessage');
+            
+            if (finalScoreSpan) finalScoreSpan.textContent = score + '/' + questions.length;
+            if (correctAnswersSpan) correctAnswersSpan.textContent = score;
+            if (incorrectAnswersSpan) incorrectAnswersSpan.textContent = questions.length - score;
+            if (percentageSpan) percentageSpan.textContent = percentage + '%';
+            
+            // Determinar nivel
+            let level, message;
+            if (percentage >= 90) {
+                level = "¡SÚPER EXPERTO!";
+                message = "¡Increíble! Eres un verdadero experto en presidencias históricas. ¡Argentina está orgullosa de ti!";
+            } else if (percentage >= 80) {
+                level = "Experto";
+                message = "¡Muy buen trabajo! Eres un experto en presidencias históricas. ¡Solo te faltan algunos detalles!";
+            } else if (percentage >= 70) {
+                level = "Bueno";
+                message = "¡Buen trabajo! Tienes un buen conocimiento de las presidencias históricas. ¡Sigue estudiando!";
+            } else if (percentage >= 60) {
+                level = "Regular";
+                message = "¡No está mal! Tienes conocimientos básicos, pero puedes mejorar mucho más. ¡No te rindas!";
+            } else {
+                level = "Principiante";
+                message = "¡No te preocupes! Todos empezamos desde abajo. ¡Revisa el material y vuelve a intentarlo!";
+            }
+            
+            if (levelSpan) levelSpan.textContent = level;
+            if (scoreMessageSpan) scoreMessageSpan.textContent = message;
+        }
+
+        // Reiniciar quiz
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            selectedAnswer = null;
+            showQuestion();
+        }
+
+        // Inicializar cuando se carga la página
+        document.addEventListener('DOMContentLoaded', function() {
+            const initTimeout = setTimeout(() => {
+                console.warn('Timeout de inicialización alcanzado');
+                if (document.getElementById('questionContainer').style.display !== 'none') {
+                    alert('Hubo un problema al cargar el quiz. Por favor, recarga la página.');
+                }
+            }, 5000);
+            
+            try {
+                if (submitBtn && nextBtn) {
+                    submitBtn.addEventListener('click', checkAnswer);
+                    nextBtn.addEventListener('click', nextQuestion);
+                }
+                initQuiz();
+                clearTimeout(initTimeout);
+            } catch (error) {
+                console.error('Error en la inicialización:', error);
+                clearTimeout(initTimeout);
+                alert('Error al cargar el quiz. Por favor, recarga la página.');
+            }
+        });
+    </script>
+</body>
+</html>

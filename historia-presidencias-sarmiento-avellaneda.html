@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 Sarmiento y Avellaneda - Aventuras Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .historia-content {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .historia-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #4caf50, #66bb6a);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .historia-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .historia-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .presidents-overview {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .presidents-overview h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+        
+        .overview-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid #4caf50;
+        }
+        
+        .overview-card h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .overview-card .president-avatar {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+        
+        .overview-card p {
+            color: #666;
+            line-height: 1.4;
+        }
+        
+        .sarmiento-section {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .sarmiento-section h3 {
+            color: #1565c0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sarmiento-profile {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .sarmiento-profile h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .sarmiento-profile p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .sarmiento-profile ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .sarmiento-profile li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .census-section {
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .census-section h3 {
+            color: #e65100;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .census-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .census-info h4 {
+            color: #e65100;
+            margin-bottom: 15px;
+        }
+        
+        .census-info p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .census-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .stat-item {
+            background: #fff3e0;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid #ff9800;
+        }
+        
+        .stat-item .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+        
+        .stat-item .stat-label {
+            color: #e65100;
+            font-weight: bold;
+        }
+        
+        .education-revolution {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .education-revolution h3 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .education-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #9c27b0;
+        }
+        
+        .education-item h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        .education-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .buenos-aires-modernization {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #009688;
+        }
+        
+        .buenos-aires-modernization h3 {
+            color: #00695c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .modernization-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .modernization-info h4 {
+            color: #00695c;
+            margin-bottom: 15px;
+        }
+        
+        .modernization-info p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .modernization-info ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .modernization-info li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .avellaneda-section {
+            background: linear-gradient(135deg, #fce4ec, #f8bbd9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #e91e63;
+        }
+        
+        .avellaneda-section h3 {
+            color: #ad1457;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .avellaneda-profile {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 20px 0;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .avellaneda-profile h4 {
+            color: #ad1457;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .avellaneda-profile p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .avellaneda-profile ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .avellaneda-profile li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .economic-crisis {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #f44336;
+        }
+        
+        .economic-crisis h3 {
+            color: #c62828;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .crisis-explanation {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .crisis-explanation h4 {
+            color: #c62828;
+            margin-bottom: 15px;
+        }
+        
+        .crisis-explanation p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .crisis-effects {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .effect-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #f44336;
+        }
+        
+        .effect-item h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+        
+        .effect-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .savings-measures {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #f44336;
+        }
+        
+        .savings-measures h4 {
+            color: #c62828;
+            margin-bottom: 15px;
+        }
+        
+        .savings-measures ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .savings-measures li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .immigration-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .immigration-section h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .immigration-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .immigration-info h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .immigration-info p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .immigration-info ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .immigration-info li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .legacy-section {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .legacy-section h3 {
+            color: #f57f17;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .legacy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .legacy-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ffc107;
+        }
+        
+        .legacy-item h4 {
+            color: #f57f17;
+            margin-bottom: 10px;
+        }
+        
+        .legacy-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.back {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
+        }
+        
+        .nav-btn.quiz {
+            background: linear-gradient(135deg, #ff9800, #f57c00);
+            color: white;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #e1f5fe, #b3e5fc);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #03a9f4;
+        }
+        
+        .fun-facts h3 {
+            color: #0277bd;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fun-facts ul {
+            color: #0277bd;
+            padding-left: 20px;
+        }
+        
+        .fun-facts li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .education-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .crisis-effects {
+                grid-template-columns: 1fr;
+            }
+            
+            .legacy-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav" style="margin: 20px 0; text-align: center;">
+        <a href="index.html" style="font-weight: bold; margin: 0 15px;">🌟 Aventuras Sociales</a>
+        <a href="aventuras-matematicas/index.html" style="font-weight: bold; margin: 0 15px;">🧮 Aventuras Matemáticas</a>
+        <a href="aventuras-pdl.html" style="font-weight: bold; margin: 0 15px;">📖 Aventuras de PDL</a>
+        <a href="ciencias-naturales.html" style="font-weight: bold; margin: 0 15px;">🔬 Aventuras en Ciencias Naturales</a>
+    </nav>
+
+    <div class="container">
+        <div class="historia-content">
+            <div class="historia-header">
+                <h1>🎓 Sarmiento y Avellaneda</h1>
+                <div class="subtitle">Página 2: La revolución educativa y la modernización (1868-1880)</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">
+                    📚 Página 2 de 2 - Continuando la transformación de Argentina
+                </p>
+            </div>
+
+            <div class="fun-facts">
+                <h3>💡 ¿Sabías que...?</h3>
+                <ul>
+                    <li>Sarmiento fue maestro, periodista, escritor y militar antes de ser presidente</li>
+                    <li>El primer censo nacional descubrió que muchos argentinos no sabían leer ni escribir</li>
+                    <li>Sarmiento abrió más de 800 escuelas primarias durante su presidencia</li>
+                    <li>Avellaneda continuó el trabajo educativo de Sarmiento</li>
+                    <li>Durante la presidencia de Avellaneda hubo una crisis económica mundial</li>
+                    <li>Se creó la primera oficina de inmigración para ayudar a los extranjeros</li>
+                </ul>
+            </div>
+
+            <div class="presidents-overview">
+                <h3>👥 ¿Quiénes fueron estos dos presidentes?</h3>
+                <div class="overview-grid">
+                    <div class="overview-card">
+                        <div class="president-avatar">👨‍🏫</div>
+                        <h4>Domingo F. Sarmiento</h4>
+                        <p><strong>Período:</strong> 1868-1874<br>
+                        <strong>Duración:</strong> 6 años<br>
+                        <strong>Especialidad:</strong> Educación</p>
+                    </div>
+                    
+                    <div class="overview-card">
+                        <div class="president-avatar">👨‍💼</div>
+                        <h4>Nicolás Avellaneda</h4>
+                        <p><strong>Período:</strong> 1874-1880<br>
+                        <strong>Duración:</strong> 6 años<br>
+                        <strong>Especialidad:</strong> Administración</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="sarmiento-section">
+                <h3>👨‍🏫 Domingo F. Sarmiento (1868-1874)</h3>
+                <div class="sarmiento-profile">
+                    <h4>🌟 ¿Quién era Sarmiento?</h4>
+                    <p>Sarmiento era un hombre muy especial: ¡era maestro, periodista, escritor y militar! Antes de ser presidente, ya había sido gobernador de San Juan. Su lema era: <strong>"La educación es la clave del progreso"</strong>.</p>
+                    
+                    <h4>🎯 ¿Cuál era su objetivo?</h4>
+                    <p>Sarmiento creía que para que Argentina fuera un país grande y fuerte, todos sus habitantes tenían que saber leer y escribir. Era como decir: "Un país educado es un país exitoso".</p>
+                    
+                    <h4>🏆 ¿Qué logros tuvo?</h4>
+                    <ul>
+                        <li><strong>Revolución educativa:</strong> Cambió completamente la educación en Argentina</li>
+                        <li><strong>Escuelas:</strong> Abrió más de 800 escuelas primarias</li>
+                        <li><strong>Maestros:</strong> Creó lugares para formar a los docentes</li>
+                        <li><strong>Colegios especiales:</strong> Fundó el Colegio Militar</li>
+                        <li><strong>Modernización:</strong> Hizo Buenos Aires más moderna</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="census-section">
+                <h3>📊 El Primer Censo Nacional (1869)</h3>
+                <div class="census-info">
+                    <h4>🔍 ¿Qué es un censo?</h4>
+                    <p>Un censo es como contar a todas las personas que viven en un país. Es como hacer una lista gigante de todos los habitantes, con información sobre su edad, dónde viven, qué trabajo tienen, y si saben leer y escribir.</p>
+                    
+                    <h4>📈 ¿Qué descubrió el censo?</h4>
+                    <p>El censo de 1869 fue una sorpresa muy grande. Descubrió que <strong>muchísimos argentinos no sabían leer ni escribir</strong>. Esto confirmó que Sarmiento tenía razón: Argentina necesitaba una revolución educativa urgente.</p>
+                    
+                    <div class="census-stats">
+                        <div class="stat-item">
+                            <div class="stat-number">1.8M</div>
+                            <div class="stat-label">Habitantes</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">71%</div>
+                            <div class="stat-label">Analfabetos</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-number">29%</div>
+                            <div class="stat-label">Alfabetizados</div>
+                        </div>
+                    </div>
+                    
+                    <h4>🎯 ¿Para qué sirvió el censo?</h4>
+                    <p>El censo fue como una "foto" del país que permitió a Sarmiento planificar exactamente dónde abrir escuelas, cuántos maestros necesitaba, y cómo organizar la educación en todo Argentina.</p>
+                </div>
+            </div>
+
+            <div class="education-revolution">
+                <h3>🏫 ¡La Revolución Educativa de Sarmiento!</h3>
+                <p>Sarmiento cambió completamente la educación en Argentina. ¡Fue como una revolución!</p>
+                
+                <div class="education-grid">
+                    <div class="education-item">
+                        <h4>🏫 Escuelas Primarias</h4>
+                        <p>Abrió más de 800 escuelas primarias en todo el país. ¡Era como construir una escuela en cada pueblo!</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>👨‍🏫 Formación de Maestros</h4>
+                        <p>Creó lugares especiales para formar a los maestros. Sin buenos maestros, no puede haber buena educación.</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>🎖️ Colegio Militar</h4>
+                        <p>Fundó el Colegio Militar para formar a los futuros oficiales del ejército argentino.</p>
+                    </div>
+                    
+                    <div class="education-item">
+                        <h4>📚 Filosofía Educativa</h4>
+                        <p>Su lema era: "La educación es la clave del progreso". Creía que un país educado es un país exitoso.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="buenos-aires-modernization">
+                <h3>🏙️ Sarmiento Modernizó Buenos Aires</h3>
+                <div class="modernization-info">
+                    <h4>🚨 El Problema: La Fiebre Amarilla</h4>
+                    <p>En 1871, Buenos Aires sufrió una epidemia de fiebre amarilla que mató a muchas personas. Sarmiento se dio cuenta de que la ciudad necesitaba ser más limpia y moderna para evitar estas enfermedades.</p>
+                    
+                    <h4>🔧 ¿Qué mejoras hizo?</h4>
+                    <ul>
+                        <li><strong>Más trenes:</strong> Extendió la red ferroviaria para conectar mejor la ciudad</li>
+                        <li><strong>Telégrafo:</strong> Instaló el telégrafo (como WhatsApp antiguo) para comunicaciones rápidas</li>
+                        <li><strong>Puertos nuevos:</strong> Mejoró los puertos para el comercio</li>
+                        <li><strong>Ciudad más limpia:</strong> Implementó mejoras sanitarias</li>
+                        <li><strong>Calles pavimentadas:</strong> Hizo las calles más transitables</li>
+                    </ul>
+                    
+                    <h4>🌟 ¿Por qué fue importante?</h4>
+                    <p>Buenos Aires se convirtió en una ciudad más moderna, limpia y organizada. Esto atrajo más comercio, más inmigrantes y más desarrollo económico.</p>
+                </div>
+            </div>
+
+            <div class="avellaneda-section">
+                <h3>👨‍💼 Nicolás Avellaneda (1874-1880)</h3>
+                <div class="avellaneda-profile">
+                    <h4>🌟 ¿Quién era Avellaneda?</h4>
+                    <p>Avellaneda era el ministro de Sarmiento antes de ser presidente. Esto significa que ya conocía bien cómo funcionaba el gobierno y podía continuar el trabajo que Sarmiento había empezado.</p>
+                    
+                    <h4>🤝 ¿Cómo trabajó en equipo?</h4>
+                    <p>Avellaneda no empezó desde cero. Continuó y mejoró muchas de las políticas que Sarmiento había implementado. Era como cuando un equipo de fútbol cambia de entrenador, pero el nuevo entrenador mantiene las mismas tácticas que funcionaban bien.</p>
+                    
+                    <h4>🎓 ¿Qué hizo en educación?</h4>
+                    <ul>
+                        <li><strong>Universidades:</strong> Les dio más libertad para decidir qué enseñar</li>
+                        <li><strong>Autonomía:</strong> Las universidades podían organizarse como quisieran</li>
+                        <li><strong>Continuidad:</strong> Siguió apoyando la revolución educativa de Sarmiento</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="economic-crisis">
+                <h3>💰 La Crisis Económica Mundial (1873)</h3>
+                <div class="crisis-explanation">
+                    <h4>🌍 ¿Qué pasó en el mundo?</h4>
+                    <p>En 1873, hubo una crisis económica muy grande que afectó a todo el mundo. Era como si de repente todo el mundo tuviera problemas de dinero al mismo tiempo.</p>
+                    
+                    <h4>📉 ¿Cómo afectó a Argentina?</h4>
+                    <p>La crisis mundial tuvo efectos muy fuertes en Argentina:</p>
+                    
+                    <div class="crisis-effects">
+                        <div class="effect-item">
+                            <h4>📦 Productos Argentinos</h4>
+                            <p>Los productos que Argentina vendía al exterior (como cuero, lana, carne) se vendían más baratos. Era como si Argentina ganara menos dinero.</p>
+                        </div>
+                        
+                        <div class="effect-item">
+                            <h4>🛒 Compras del Exterior</h4>
+                            <p>Las cosas que Argentina compraba del exterior (como máquinas, telas, herramientas) costaban más caras. Era como si Argentina tuviera que gastar más dinero.</p>
+                        </div>
+                        
+                        <div class="effect-item">
+                            <h4>💸 Problemas de Dinero</h4>
+                            <p>Argentina tenía problemas para pagar sus deudas y mantener el gobierno funcionando. Era como si la familia no tuviera suficiente dinero para pagar las cuentas.</p>
+                        </div>
+                    </div>
+                    
+                    <h4>🔧 ¿Qué medidas tomó Avellaneda?</h4>
+                    <p>Para ahorrar dinero del Estado, Avellaneda tomó medidas muy difíciles:</p>
+                    
+                    <div class="savings-measures">
+                        <h4>💡 Medidas de Ahorro:</h4>
+                        <ul>
+                            <li><strong>Importaciones:</strong> Cerró algunas compras del exterior para gastar menos</li>
+                            <li><strong>Empleados:</strong> Redujo el personal del Estado (despidió a algunos empleados)</li>
+                            <li><strong>Salarios:</strong> Bajó los sueldos de los empleados públicos</li>
+                            <li><strong>Gastos:</strong> Redujo todos los gastos innecesarios del gobierno</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="immigration-section">
+                <h3>🌍 Avellaneda Ayudó a los Inmigrantes</h3>
+                <div class="immigration-info">
+                    <h4>🌟 ¿Por qué era importante la inmigración?</h4>
+                    <p>Argentina necesitaba más gente para trabajar la tierra, construir ciudades y hacer crecer la economía. Los inmigrantes europeos traían conocimientos, habilidades y ganas de trabajar.</p>
+                    
+                    <h4>🏢 ¿Qué creó Avellaneda?</h4>
+                    <ul>
+                        <li><strong>Oficina de inmigración:</strong> Un lugar especial para ayudar a los extranjeros que llegaban</li>
+                        <li><strong>Información:</strong> Les explicaba cómo era Argentina y qué oportunidades tenían</li>
+                        <li><strong>Ayuda con tierras:</strong> Les facilitaba conseguir tierras para trabajar</li>
+                        <li><strong>Documentación:</strong> Les ayudaba con los papeles necesarios</li>
+                    </ul>
+                    
+                    <h4>🇪🇺 ¿De dónde venían los inmigrantes?</h4>
+                    <p>La mayoría venía de Europa: italianos, españoles, alemanes, franceses y otros. Estos inmigrantes trajeron sus costumbres, comidas, música y tradiciones, que hoy forman parte de la cultura argentina.</p>
+                    
+                    <h4>🌱 ¿Qué lograron los inmigrantes?</h4>
+                    <p>Los inmigrantes ayudaron a:</p>
+                    <ul>
+                        <li>Poblar regiones vacías de Argentina</li>
+                        <li>Desarrollar la agricultura y la ganadería</li>
+                        <li>Construir ciudades y pueblos</li>
+                        <li>Crear industrias y comercios</li>
+                        <li>Enriquecer la cultura argentina</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="legacy-section">
+                <h3>🏆 El Legado de las Presidencias Históricas</h3>
+                <p>Mitre, Sarmiento y Avellaneda trabajaron en equipo para transformar Argentina. ¡Su legado sigue vivo hoy!</p>
+                
+                <div class="legacy-grid">
+                    <div class="legacy-item">
+                        <h4>🏗️ Estado Nacional</h4>
+                        <p>Argentina se consolidó como un país unificado y organizado, con leyes nacionales que todos respetan.</p>
+                    </div>
+                    
+                    <div class="legacy-item">
+                        <h4>🎓 Sistema Educativo</h4>
+                        <p>Se estableció un sistema educativo nacional que hoy permite que todos los niños argentinos vayan a la escuela.</p>
+                    </div>
+                    
+                    <div class="legacy-item">
+                        <h4>🏙️ Infraestructura</h4>
+                        <p>Se modernizaron las ciudades y se creó una red de transporte que conecta todo el país.</p>
+                    </div>
+                    
+                    <div class="legacy-item">
+                        <h4>🌍 Inmigración</h4>
+                        <p>Se establecieron políticas de inmigración que hicieron de Argentina un país multicultural y diverso.</p>
+                    </div>
+                    
+                    <div class="legacy-item">
+                        <h4>⚖️ Sistema Político</h4>
+                        <p>Se creó un sistema político estable que permitió que Argentina creciera y se desarrollara.</p>
+                    </div>
+                    
+                    <div class="legacy-item">
+                        <h4>🤝 Unificación</h4>
+                        <p>Se logró que Buenos Aires y las provincias se unieran definitivamente, formando una sola nación.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fun-facts">
+                <h3>🎯 Conceptos Clave para Recordar</h3>
+                <ul>
+                    <li><strong>Revolución educativa:</strong> Cambio masivo en la educación argentina</li>
+                    <li><strong>Censo nacional:</strong> Contar a todas las personas del país</li>
+                    <li><strong>Analfabetismo:</strong> Personas que no saben leer ni escribir</li>
+                    <li><strong>Crisis económica:</strong> Problema de dinero que afecta a todo el mundo</li>
+                    <li><strong>Inmigración:</strong> Llegada de personas de otros países</li>
+                    <li><strong>Modernización:</strong> Hacer las cosas más modernas y eficientes</li>
+                    <li><strong>Legado:</strong> Lo que queda después de que alguien hace algo importante</li>
+                    <li><strong>Trabajo en equipo:</strong> Cuando varias personas trabajan juntas para lograr algo</li>
+                </ul>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="historia-presidencia-mitre.html" class="nav-btn back">⬅️ Anterior: Presidencia de Mitre</a>
+                <a href="quiz-presidencias-historicas.html" class="nav-btn quiz">🧠 ¡Jugar Quiz de Presidencias Históricas! 🎮</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Agregar efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.overview-card, .education-item, .effect-item, .legacy-item');
+            
+            // Animación al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.6s ease';
+                observer.observe(element);
+            });
+            
+            // Efectos en las tarjetas de visión general
+            const overviewCards = document.querySelectorAll('.overview-card');
+            overviewCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Efectos en los elementos educativos
+            const educationItems = document.querySelectorAll('.education-item');
+            educationItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 8px 25px rgba(156, 39, 176, 0.3)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // Efectos en los elementos de crisis
+            const effectItems = document.querySelectorAll('.effect-item');
+            effectItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 25px rgba(244, 67, 54, 0.3)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // Efectos en los elementos de legado
+            const legacyItems = document.querySelectorAll('.legacy-item');
+            legacyItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 8px 25px rgba(255, 193, 7, 0.3)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

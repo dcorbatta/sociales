@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔥 Otra Década de Enfrentamientos - Aventuras Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .historia-content {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .historia-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #ff5722, #ff8a65);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .historia-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .historia-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .timeline-overview {
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .timeline-overview h3 {
+            color: #e65100;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline-years {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .year-marker {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ff9800;
+        }
+        
+        .year-marker .year {
+            background: #ff9800;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .year-marker h4 {
+            color: #e65100;
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+        
+        .year-marker p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+        
+        .comparison-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .comparison-card.buenos-aires {
+            border-color: #4caf50;
+        }
+        
+        .comparison-card.confederacion {
+            border-color: #2196f3;
+        }
+        
+        .comparison-card h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .comparison-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .comparison-card ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .comparison-card li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .railway-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .railway-section h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .railway-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .railway-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #4caf50;
+        }
+        
+        .railway-item h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .railway-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .railway-item .highlight {
+            background: #e8f5e8;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: bold;
+            color: #2e7d32;
+        }
+        
+        .political-division {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .political-division h3 {
+            color: #1565c0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .political-groups {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .political-group {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .political-group h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .political-group p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .political-group ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .political-group li {
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        
+        .economic-solutions {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .economic-solutions h3 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .solution-steps {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .solution-step {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #9c27b0;
+            position: relative;
+        }
+        
+        .solution-step::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #9c27b0;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .solution-step h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        .solution-step p {
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .provincial-realities {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #009688;
+        }
+        
+        .provincial-realities h3 {
+            color: #00695c;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .realities-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .reality-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .reality-card h4 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .reality-card.litoral h4 {
+            color: #2e7d32;
+        }
+        
+        .reality-card.interior h4 {
+            color: #c62828;
+        }
+        
+        .reality-card p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+        
+        .reality-card ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .reality-card li {
+            margin-bottom: 5px;
+            line-height: 1.3;
+        }
+        
+        .consequences-section {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #f44336;
+        }
+        
+        .consequences-section h3 {
+            color: #c62828;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .consequences-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .consequence-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #f44336;
+        }
+        
+        .consequence-item h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+        }
+        
+        .consequence-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.back {
+            background: linear-gradient(135deg, #2196f3, #1976d2);
+            color: white;
+        }
+        
+        .nav-btn.quiz {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            color: white;
+            animation: glow 2s infinite alternate;
+        }
+        
+        .nav-btn.home {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .fun-facts h3 {
+            color: #f57f17;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fun-facts ul {
+            color: #f57f17;
+            padding-left: 20px;
+        }
+        
+        .fun-facts li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .comparison-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .timeline-years {
+                flex-direction: column;
+            }
+            
+            .political-groups {
+                grid-template-columns: 1fr;
+            }
+            
+            .realities-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .consequences-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav" style="margin: 20px 0; text-align: center;">
+        <a href="index.html" style="font-weight: bold; margin: 0 15px;">🌟 Aventuras Sociales</a>
+        <a href="aventuras-matematicas/index.html" style="font-weight: bold; margin: 0 15px;">🧮 Aventuras Matemáticas</a>
+        <a href="aventuras-pdl.html" style="font-weight: bold; margin: 0 15px;">📖 Aventuras de PDL</a>
+        <a href="ciencias-naturales.html" style="font-weight: bold; margin: 0 15px;">🔬 Aventuras en Ciencias Naturales</a>
+    </nav>
+
+    <div class="container">
+        <div class="historia-content">
+            <div class="historia-header">
+                <h1>🔥 Otra Década de Enfrentamientos</h1>
+                <div class="subtitle">Página 4: Los 10 años de división nacional (1853-1862)</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">
+                    📚 Página 4 de 4 - Cuando Argentina estuvo dividida por 10 años completos
+                </p>
+            </div>
+
+            <div class="fun-facts">
+                <h3>💡 ¿Sabías que...?</h3>
+                <ul>
+                    <li>Argentina estuvo dividida en dos Estados durante 10 años completos</li>
+                    <li>Buenos Aires construyó el primer ferrocarril del país en 1857</li>
+                    <li>La Confederación inventó la "Ley de Derechos Diferenciales" para atraer comercio</li>
+                    <li>Rosario creció mucho porque los barcos europeos comenzaron a llegar allí</li>
+                    <li>Las provincias del Interior no tenían productos para exportar a Europa</li>
+                </ul>
+            </div>
+
+            <div class="timeline-overview">
+                <h3>⏰ Los 10 Años de División (1853-1862)</h3>
+                <p>Después de sancionar la Constitución, Argentina estuvo dividida en dos partes que no se hablaban durante una década completa. Es como si tu escuela estuviera dividida en dos grupos que no se hablan durante todo el año escolar.</p>
+                
+                <div class="timeline-years">
+                    <div class="year-marker">
+                        <div class="year">1853</div>
+                        <h4>Constitución</h4>
+                        <p>Se sanciona la Constitución. Buenos Aires se separa.</p>
+                    </div>
+                    
+                    <div class="year-marker">
+                        <div class="year">1854</div>
+                        <h4>Constitución Bonaerense</h4>
+                        <p>Buenos Aires crea sus propias reglas.</p>
+                    </div>
+                    
+                    <div class="year-marker">
+                        <div class="year">1857</div>
+                        <h4>Primer Ferrocarril</h4>
+                        <p>Buenos Aires inaugura el primer tren del país.</p>
+                    </div>
+                    
+                    <div class="year-marker">
+                        <div class="year">1862</div>
+                        <h4>Unificación</h4>
+                        <p>Finalmente se unifica el país.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="comparison-section">
+                <div class="comparison-card buenos-aires">
+                    <h3>🏙️ Estado de Buenos Aires (¡Le fue muy bien!)</h3>
+                    <p>Buenos Aires se convirtió en un "país separado" y le fue económicamente muy bien:</p>
+                    <ul>
+                        <li><strong>Producción ganadera:</strong> Aumentó mucho, tenía muchas vacas y ovejas</li>
+                        <li><strong>Exportaciones:</strong> Vendía productos a Europa y ganaba mucho dinero</li>
+                        <li><strong>Puerto moderno:</strong> Construyó un puerto más grande y eficiente</li>
+                        <li><strong>Aduana Taylor:</strong> Edificio moderno para controlar el comercio</li>
+                        <li><strong>Primer ferrocarril:</strong> ¡Fue el primero en tener trenes!</li>
+                    </ul>
+                    <p><strong>Resultado:</strong> Buenos Aires se desarrolló y creció económicamente.</p>
+                </div>
+                
+                <div class="comparison-card confederacion">
+                    <h3>🏛️ Confederación Argentina (¡Le fue mal!)</h3>
+                    <p>El resto de las provincias tenían muchos problemas:</p>
+                    <ul>
+                        <li><strong>Falta de dinero:</strong> No tenían recursos suficientes</li>
+                        <li><strong>Sin control del puerto:</strong> Buenos Aires controlaba el comercio</li>
+                        <li><strong>No podían construir:</strong> Sin dinero para caminos, escuelas, hospitales</li>
+                        <li><strong>Comercio limitado:</strong> Dependían de impuestos provinciales</li>
+                        <li><strong>Desarrollo atrasado:</strong> Todo estaba muy retrasado</li>
+                    </ul>
+                    <p><strong>Resultado:</strong> La Confederación no pudo desarrollarse.</p>
+                </div>
+            </div>
+
+            <div class="railway-section">
+                <h3>🚂 ¡Hito Histórico! El Primer Ferrocarril de Argentina</h3>
+                <p>El 30 de agosto de 1857, Buenos Aires hizo algo increíble: inauguró el primer tren del país. ¡Fue un momento histórico!</p>
+                
+                <div class="railway-info">
+                    <div class="railway-item">
+                        <h4>📅 Fecha</h4>
+                        <p><span class="highlight">30 de agosto de 1857</span></p>
+                    </div>
+                    
+                    <div class="railway-item">
+                        <h4>🚂 Nombre</h4>
+                        <p><span class="highlight">Ferrocarril del Oeste</span></p>
+                    </div>
+                    
+                    <div class="railway-item">
+                        <h4>📍 Recorrido</h4>
+                        <p>Desde <span class="highlight">Tribunales</span> hasta <span class="highlight">Floresta</span></p>
+                    </div>
+                    
+                    <div class="railway-item">
+                        <h4>🚂 Locomotora</h4>
+                        <p><span class="highlight">"La Porteña"</span></p>
+                    </div>
+                    
+                    <div class="railway-item">
+                        <h4>⚡ Velocidad</h4>
+                        <p><span class="highlight">25 km/h</span><br>(¡como una bicicleta rápida!)</p>
+                    </div>
+                    
+                    <div class="railway-item">
+                        <h4>🏆 Importancia</h4>
+                        <p>Fue la <span class="highlight">primera línea férrea</span> de todo el país</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="political-division">
+                <h3>⚖️ ¿Quiénes eran los líderes de Buenos Aires?</h3>
+                <p>En Buenos Aires había dos grupos políticos que pensaban diferente sobre qué hacer:</p>
+                
+                <div class="political-groups">
+                    <div class="political-group">
+                        <h4>🗽 Autonomistas (Alsina)</h4>
+                        <p><strong>¿Qué querían?</strong></p>
+                        <ul>
+                            <li>Que Buenos Aires fuera completamente independiente</li>
+                            <li>Mantener la soberanía porteña</li>
+                            <li>Desarrollar Buenos Aires por separado</li>
+                            <li>No unirse al resto del país</li>
+                        </ul>
+                        <p><strong>Lema:</strong> "¡Buenos Aires por su cuenta!"</p>
+                    </div>
+                    
+                    <div class="political-group">
+                        <h4>🏛️ Nacionalistas (Mitre)</h4>
+                        <p><strong>¿Qué querían?</strong></p>
+                        <ul>
+                            <li>Unirse a la Confederación</li>
+                            <li>Pero imponer los intereses de Buenos Aires</li>
+                            <li>Ser líderes del país unificado</li>
+                            <li>Mandar desde Buenos Aires</li>
+                        </ul>
+                        <p><strong>Lema:</strong> "¡Unidos, pero mandando nosotros!"</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="economic-solutions">
+                <h3>💡 ¿Cómo solucionó la Confederación el problema del dinero?</h3>
+                <p>La Confederación inventó una solución inteligente para atraer comercio a sus puertos:</p>
+                
+                <div class="solution-steps">
+                    <div class="solution-step">
+                        <h4>📋 Problema Identificado</h4>
+                        <p>La Confederación no tenía dinero porque Buenos Aires controlaba el puerto principal donde llegaban todos los barcos con mercancías.</p>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <h4>💡 Solución Inventada</h4>
+                        <p><strong>Ley de Derechos Diferenciales:</strong> Poner un impuesto especial a productos europeos que llegaran desde Buenos Aires.</p>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <h4>🔄 ¿Cómo funcionaba?</h4>
+                        <p>Si un barco europeo descargaba en Buenos Aires, tenía que pagar un impuesto extra. Si descargaba en puertos confederados, no pagaba ese impuesto.</p>
+                    </div>
+                    
+                    <div class="solution-step">
+                        <h4>✅ Resultado</h4>
+                        <p>Los comerciantes europeos comenzaron a preferir descargar en puertos confederados como Rosario, que creció muchísimo.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="provincial-realities">
+                <h3>🌍 ¿Todas las provincias eran iguales?</h3>
+                <p>No, había dos grupos de provincias con realidades muy diferentes:</p>
+                
+                <div class="realities-grid">
+                    <div class="reality-card litoral">
+                        <h4>🏖️ Provincias del Litoral (cerca del río)</h4>
+                        <p><strong>¿Qué tenían?</strong></p>
+                        <ul>
+                            <li>Productos ganaderos para exportar (vacas, ovejas)</li>
+                            <li>Acceso a puertos y comercio internacional</li>
+                            <li>Desarrollo económico relativo</li>
+                            <li>Se beneficiaban de la Ley de Derechos Diferenciales</li>
+                        </ul>
+                        <p><strong>Resultado:</strong> Les iba relativamente bien.</p>
+                    </div>
+                    
+                    <div class="reality-card interior">
+                        <h4>🏔️ Provincias del Interior (lejos del río)</h4>
+                        <p><strong>¿Qué tenían?</strong></p>
+                        <ul>
+                            <li>No tenían productos para exportar a Europa</li>
+                            <li>Estaban aisladas del comercio internacional</li>
+                            <li>Economía de subsistencia</li>
+                            <li>No se beneficiaban de la política comercial</li>
+                        </ul>
+                        <p><strong>Resultado:</strong> Les iba muy mal económicamente.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consequences-section">
+                <h3>📊 ¿Qué consecuencias tuvo estar divididos por 10 años?</h3>
+                <p>Estar divididos causó muchos problemas para Argentina:</p>
+                
+                <div class="consequences-grid">
+                    <div class="consequence-item">
+                        <h4>💰 Problemas de Dinero</h4>
+                        <p>Desarrollo económico muy desigual. Buenos Aires progresaba mientras la Confederación se quedaba atrás.</p>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h4>⚖️ Problemas Políticos</h4>
+                        <p>No había unidad nacional. Los líderes se peleaban entre sí y no se podía consolidar el país.</p>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h4>🌍 Problemas Sociales</h4>
+                        <p>Diferentes niveles de desarrollo entre provincias. Algunas progresaban, otras se quedaban atrás.</p>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h4>🚧 Problemas de Desarrollo</h4>
+                        <p>No se podían hacer obras nacionales. Cada parte hacía lo suyo por separado.</p>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h4>🏛️ Falta de Proyecto Nacional</h4>
+                        <p>No había un plan común para todo el país. Cada parte pensaba diferente.</p>
+                    </div>
+                    
+                    <div class="consequence-item">
+                        <h4>⏰ Pérdida de Tiempo</h4>
+                        <p>10 años perdidos que se podrían haber usado para desarrollar el país unido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fun-facts">
+                <h3>🎯 Conceptos Clave para Recordar</h3>
+                <ul>
+                    <li><strong>Década de enfrentamientos:</strong> Los 10 años que Argentina estuvo dividida</li>
+                    <li><strong>Desarrollo desigual:</strong> Cuando algunas regiones progresan más que otras</li>
+                    <li><strong>Ley de Derechos Diferenciales:</strong> Impuesto especial para atraer comercio a puertos confederados</li>
+                    <li><strong>Ferrocarril del Oeste:</strong> El primer tren de Argentina, inaugurado en 1857</li>
+                    <li><strong>Provincias del Litoral:</strong> Las provincias cerca del río que podían exportar</li>
+                    <li><strong>Provincias del Interior:</strong> Las provincias lejos del río sin acceso al comercio</li>
+                    <li><strong>Autonomistas:</strong> Querían que Buenos Aires fuera independiente</li>
+                    <li><strong>Nacionalistas:</strong> Querían unirse al país pero mandando desde Buenos Aires</li>
+                </ul>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="historia-confederacion-buenos-aires.html" class="nav-btn back">⬅️ Anterior: Confederación vs. Buenos Aires</a>
+                <a href="quiz-historia-estado.html" class="nav-btn quiz">🧠 ¡Jugar Quiz de Historia! 🎮</a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="index.html" class="nav-btn home">🏠 Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Agregar efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.comparison-card, .year-marker, .railway-item, .political-group, .solution-step, .reality-card, .consequence-item');
+            
+            // Animación al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.6s ease';
+                observer.observe(element);
+            });
+            
+            // Efectos en las tarjetas de comparación
+            const comparisonCards = document.querySelectorAll('.comparison-card');
+            comparisonCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Efectos en los marcadores de año
+            const yearMarkers = document.querySelectorAll('.year-marker');
+            yearMarkers.forEach(marker => {
+                marker.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 8px 25px rgba(255, 152, 0, 0.3)';
+                });
+                
+                marker.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // Efectos en los elementos del ferrocarril
+            const railwayItems = document.querySelectorAll('.railway-item');
+            railwayItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 8px 25px rgba(76, 175, 80, 0.3)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

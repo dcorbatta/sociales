@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cuadro Sinóptico: Formación de Argentina como País</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            color: white;
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .timeline {
+            padding: 40px;
+            position: relative;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+            transform: translateX(-50%);
+        }
+        
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .timeline-item:nth-child(odd) {
+            flex-direction: row;
+        }
+        
+        .timeline-item:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+        
+        .timeline-content {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid;
+            width: 45%;
+            position: relative;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-content {
+            border-color: #ff6b6b;
+            margin-right: 5%;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-content {
+            border-color: #4ecdc4;
+            margin-left: 5%;
+        }
+        
+        .timeline-marker {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: white;
+            border: 4px solid;
+            z-index: 2;
+        }
+        
+        .timeline-item:nth-child(odd) .timeline-marker {
+            border-color: #ff6b6b;
+        }
+        
+        .timeline-item:nth-child(even) .timeline-marker {
+            border-color: #4ecdc4;
+        }
+        
+        .timeline-content h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline-content ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .timeline-content li {
+            margin-bottom: 8px;
+            padding-left: 25px;
+            position: relative;
+            line-height: 1.5;
+        }
+        
+        .timeline-content li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #666;
+        }
+        
+        .timeline-content li.positive::before {
+            background: #4caf50;
+        }
+        
+        .timeline-content li.negative::before {
+            background: #f44336;
+        }
+        
+        .timeline-content li.neutral::before {
+            background: #2196f3;
+        }
+        
+        .timeline-content li.warning::before {
+            background: #ff9800;
+        }
+        
+        .timeline-content li.info::before {
+            background: #9c27b0;
+        }
+        
+        .timeline-content ul ul {
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .timeline-content ul ul li {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+            padding-left: 15px;
+        }
+        
+        .timeline-content ul ul li::before {
+            width: 6px;
+            height: 6px;
+            top: 6px;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, #fff3e0, #ffcc80);
+            border: 3px solid #ff9800;
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .highlight-box h3 {
+            color: #e65100;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .highlight-box p {
+            font-size: 1.1rem;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .comparison-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 3px solid;
+        }
+        
+        .comparison-card.left {
+            border-color: #4caf50;
+        }
+        
+        .comparison-card.right {
+            border-color: #f44336;
+        }
+        
+        .comparison-card h4 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        
+        .footer {
+            background: #f8f9fa;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid #dee2e6;
+        }
+        
+        .footer p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+        
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+            
+            .timeline-item {
+                flex-direction: column !important;
+                align-items: flex-start;
+                margin-left: 40px;
+            }
+            
+            .timeline-content {
+                width: 100%;
+                margin: 0 !important;
+            }
+            
+            .timeline-marker {
+                left: 20px;
+                transform: translate(-50%, -50%);
+            }
+            
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🇦🇷 FORMACIÓN DE ARGENTINA COMO PAÍS</h1>
+            <p>Cuadro Sinóptico: Del caos provincial a la unificación nacional (1829-1862)</p>
+            <p style="font-size: 1rem; margin-top: 10px; opacity: 0.8;">📚 Línea de tiempo completa con 18 fases históricas</p>
+        </div>
+        
+        <div class="timeline">
+            <!-- FASE 1: ANTES (1829-1852) -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🏛️ ANTES (1829-1852)</h3>
+                    <ul>
+                        <li class="negative">Cada provincia hacía lo que quería</li>
+                        <li class="neutral">Rosas era el "jefe" desde Buenos Aires</li>
+                        <li class="negative">No había reglas para todos</li>
+                        <li class="warning">Caos político y económico</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 2: BATALLA DE CASEROS (1852) -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>⚔️ BATALLA DE CASEROS (1852)</h3>
+                    <ul>
+                        <li class="positive">Urquiza vence a Buenos Aires</li>
+                        <li class="info">Dice: "¡Necesitamos organizarnos!"</li>
+                        <li class="neutral">Fin del gobierno de Rosas</li>
+                        <li class="positive">Oportunidad de cambio</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 3: ACUERDO DE SAN NICOLÁS -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>📋 ACUERDO DE SAN NICOLÁS</h3>
+                    <ul>
+                        <li class="positive">Los gobernadores se ponen de acuerdo</li>
+                        <li class="neutral">Urquiza será el líder temporal</li>
+                        <li class="positive">Prometen hacer un Congreso</li>
+                        <li class="info">Primer paso hacia la organización</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 4: BUENOS AIRES NO QUIERE -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>😠 BUENOS AIRES NO QUIERE</h3>
+                    <ul>
+                        <li class="negative">Dice: "¡No me gusta este plan!"</li>
+                        <li class="warning">Se queja de la representación</li>
+                        <li class="negative">No quiere compartir el dinero</li>
+                        <li class="neutral">Mitre defiende estas ideas</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 5: BUENOS AIRES SE VA -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🚨 BUENOS AIRES SE VA</h3>
+                    <ul>
+                        <li class="warning">11 de septiembre de 1852</li>
+                        <li class="negative">Hay un levantamiento</li>
+                        <li class="negative">Se declara Estado autónomo</li>
+                        <li class="warning">Primera división del país</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 6: SE CREA LA CONSTITUCIÓN (1853) -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>📜 CONSTITUCIÓN DE 1853</h3>
+                    <ul>
+                        <li class="positive">Congreso en Santa Fe (sin Buenos Aires)</li>
+                        <li class="positive">Constitución aprobada el 1° de mayo</li>
+                        <li class="info">Se inspiran en Alberdi y Estados Unidos</li>
+                        <li class="positive">País representativo, republicano y federal</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 7: CONFEDERACIÓN ARGENTINA -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🏛️ CONFEDERACIÓN ARGENTINA</h3>
+                    <ul>
+                        <li class="neutral">Urquiza es presidente</li>
+                        <li class="info">Gobierno en Paraná</li>
+                        <li class="negative">Problemas de dinero</li>
+                        <li class="warning">Conflictos con otras provincias</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+
+            
+            <!-- FASE 8: ARGENTINA SE DIVIDE EN DOS -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🌍 ARGENTINA SE DIVIDE EN DOS</h3>
+                    <ul>
+                        <li class="warning">Estado de Buenos Aires (Capital: BA)</li>
+                        <li class="neutral">Gobernador: Valentín Alsina</li>
+                        <li class="warning">Confederación Argentina (Capital: Paraná)</li>
+                        <li class="neutral">Presidente: Urquiza</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 9: ¿QUIÉN PROGRESÓ? -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>📈 ¿QUIÉN PROGRESÓ?</h3>
+                    <ul>
+                        <li class="positive">Buenos Aires: Muchas vacas y ovejas</li>
+                        <li class="positive">Buenos Aires: Vendía a Europa</li>
+                        <li class="negative">Confederación: Sin dinero suficiente</li>
+                        <li class="negative">Confederación: Sin control del puerto</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 10: HITO HISTÓRICO - FERROCARRIL -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🚂 ¡HITO HISTÓRICO!</h3>
+                    <ul>
+                        <li class="positive">30 de agosto de 1857</li>
+                        <li class="positive">Primer tren: Ferrocarril del Oeste</li>
+                        <li class="info">Recorrido: Tribunales → Floresta</li>
+                        <li class="info">Locomotora: "La Porteña"</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 11: PENSAMIENTOS POLÍTICOS -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>⚖️ ¿QUÉ PENSABAN EN BUENOS AIRES?</h3>
+                    <ul>
+                        <li class="neutral">🗽 Autonomistas (Alsina): Querían que Buenos Aires fuera completamente independiente</li>
+                        <li class="info">🏛️ Nacionalistas (Mitre): Querían unirse al resto del país pero mandando desde Buenos Aires</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 12: LEY DE DERECHOS DIFERENCIALES -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>💡 LEY DE DERECHOS DIFERENCIALES (1856)</h3>
+                    <ul>
+                        <li class="info">📅 Aprobada por la Confederación para atraer comercio</li>
+                        <li class="warning">💸 Impuesto del 25% a productos de Buenos Aires</li>
+                        <li class="neutral">🎯 Objetivo: Desviar comercio hacia otros puertos</li>
+                        <li class="positive">🚢 Los barcos europeos van a Rosario y Paraná</li>
+                        <li class="positive">🏙️ Rosario se convierte en puerto importante</li>
+                        <li class="positive">📈 Paraná crece como centro comercial</li>
+                        <li class="negative">😠 Buenos Aires se enoja mucho</li>
+                        <li class="warning">⚔️ Aumenta la tensión entre ambos</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 13: DIFERENCIAS ENTRE PROVINCIAS -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🌍 ¿TODAS LAS PROVINCIAS ERAN IGUALES?</h3>
+                    <ul>
+                        <li class="positive">🏖️ LITORAL:
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li class="positive">Tenían vacas y ovejas</li>
+                                <li class="positive">Podían vender a Europa</li>
+                            </ul>
+                        </li>
+                        <li class="negative">🏔️ INTERIOR:
+                            <ul style="margin-left: 20px; margin-top: 5px;">
+                                <li class="negative">No tenían nada para exportar</li>
+                                <li class="negative">Estaban aisladas</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+
+            
+            <!-- FASE 14: BATALLA DE CEPEDA (1859) -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>⚔️ BATALLA DE CEPEDA (1859)</h3>
+                    <ul>
+                        <li class="warning">📅 23 de octubre de 1859</li>
+                        <li class="neutral">📍 Lugar: Arroyo Cepeda, Santa Fe</li>
+                        <li class="negative">👑 Urquiza vence a Buenos Aires</li>
+                        <li class="info">🎯 Resultado: Buenos Aires debe aceptar la Constitución</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 15: PACTO DE SAN JOSÉ DE FLORES -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🤝 PACTO DE SAN JOSÉ DE FLORES</h3>
+                    <ul>
+                        <li class="info">📅 Firmado el 11 de noviembre de 1859</li>
+                        <li class="neutral">📋 Buenos Aires acepta la Constitución de 1853</li>
+                        <li class="warning">⚠️ Pero con modificaciones y reservas</li>
+                        <li class="positive">✅ Fin temporal de la guerra civil</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 16: BATALLA DE PAVÓN (1861) - ¡HITO CLAVE! -->
+            <div class="timeline-item">
+                <div class="timeline-content" style="border-color: #ff5722; box-shadow: 0 15px 40px rgba(255, 87, 34, 0.3);">
+                    <h3>⚔️ BATALLA DE PAVÓN (1861) - ¡HITO CLAVE!</h3>
+                    <ul>
+                        <li class="negative">😠 Buenos Aires no cumple el pacto</li>
+                        <li class="warning">📅 17 de septiembre de 1861</li>
+                        <li class="warning">📍 Lugar: Pavón, Santa Fe</li>
+                        <li class="info">👑 Mitre vence a Urquiza</li>
+                        <li class="positive">🎯 Resultado: Fin definitivo de la Confederación</li>
+                        <li class="positive">🌟 Comienza la unificación nacional</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker" style="border-color: #ff5722;"></div>
+            </div>
+            
+
+            
+            <!-- FASE 17: FINAL DE LA DIVISIÓN -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🎯 FINAL DE LA DIVISIÓN</h3>
+                    <ul>
+                        <li class="positive">1862: Mitre es presidente</li>
+                        <li class="positive">Buenos Aires es la capital</li>
+                        <li class="positive">Argentina se unifica</li>
+                        <li class="info">Fin de 10 años de división</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+            
+            <!-- FASE 18: CONSECUENCIAS DE LA UNIFICACIÓN -->
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🌟 CONSECUENCIAS DE LA UNIFICACIÓN</h3>
+                    <ul>
+                        <li class="positive">🏛️ Se consolida el Estado nacional</li>
+                        <li class="positive">📚 Comienza la era de la educación</li>
+                        <li class="positive">🚂 Se expanden los ferrocarriles</li>
+                        <li class="info">🌍 Argentina se convierte en potencia regional</li>
+                    </ul>
+                </div>
+                <div class="timeline-marker"></div>
+            </div>
+        </div>
+        
+        <!-- HITO HISTÓRICO -->
+        <div class="highlight-box">
+            <h3>🚂 ¡HITO HISTÓRICO!</h3>
+            <p><strong>30 de agosto de 1857:</strong> Primer tren de Argentina - Ferrocarril del Oeste</p>
+            <p>Recorrido: Tribunales → Floresta | Locomotora: "La Porteña" | Velocidad: 25 km/h</p>
+        </div>
+        
+        <!-- COMPARACIÓN: BUENOS AIRES vs CONFEDERACIÓN -->
+        <div class="comparison-grid">
+            <div class="comparison-card left">
+                <h4>🏙️ ESTADO DE BUENOS AIRES (¡LE FUE MUY BIEN!)</h4>
+                <ul>
+                    <li class="positive">Muchas vacas y ovejas para exportar</li>
+                    <li class="positive">Vendía productos a Europa</li>
+                    <li class="positive">Puerto moderno y eficiente</li>
+                    <li class="positive">¡Primer ferrocarril del país!</li>
+                    <li class="positive">Desarrollo económico acelerado</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-card right">
+                <h4>🏛️ CONFEDERACIÓN ARGENTINA (¡LE FUE MAL!)</h4>
+                <ul>
+                    <li class="negative">No tenía dinero suficiente</li>
+                    <li class="negative">No controlaba el puerto principal</li>
+                    <li class="negative">No podía construir obras</li>
+                    <li class="negative">Comercio limitado</li>
+                    <li class="negative">Dependía de Buenos Aires</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- COMPARACIÓN: PROVINCIAS -->
+        <div class="comparison-grid">
+            <div class="comparison-card left">
+                <h4>🏖️ PROVINCIAS DEL LITORAL</h4>
+                <ul>
+                    <li class="positive">Tenían vacas y ovejas para vender</li>
+                    <li class="positive">Podían vender a Europa</li>
+                    <li class="positive">Les iba relativamente bien</li>
+                    <li class="positive">Se beneficiaban del comercio</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-card right">
+                <h4>🏔️ PROVINCIAS DEL INTERIOR</h4>
+                <ul>
+                    <li class="negative">No tenían nada para exportar</li>
+                    <li class="negative">Estaban aisladas</li>
+                    <li class="negative">Les iba muy mal</li>
+                    <li class="negative">No tenían beneficios</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- COMPARACIÓN: PENSAMIENTOS POLÍTICOS -->
+        <div class="comparison-grid">
+            <div class="comparison-card left">
+                <h4>🗽 AUTONOMISTAS (Alsina)</h4>
+                <ul>
+                    <li class="neutral">"¡Queremos ser independientes!"</li>
+                    <li class="neutral">"¡Buenos Aires por su cuenta!"</li>
+                    <li class="neutral">"¡Desarrollémonos solos!"</li>
+                </ul>
+            </div>
+            
+            <div class="comparison-card right">
+                <h4>🏛️ NACIONALISTAS (Mitre)</h4>
+                <ul>
+                    <li class="info">"¡Queremos unirnos al país!"</li>
+                    <li class="info">"¡Pero mandando desde aquí!"</li>
+                    <li class="info">"¡Seamos líderes del país!"</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- SOLUCIÓN DE LA CONFEDERACIÓN -->
+        <div class="highlight-box">
+            <h3>💡 SOLUCIÓN DE LA CONFEDERACIÓN</h3>
+            <p><strong>Ley de Derechos Diferenciales:</strong> Impuesto especial a productos desde Buenos Aires</p>
+            <p><strong>Resultado:</strong> Los barcos europeos van a otros puertos (¡Rosario crece mucho!)</p>
+        </div>
+        
+        <!-- CONCLUSIÓN FINAL -->
+        <div class="highlight-box" style="background: linear-gradient(135deg, #e8f5e8, #c8e6c9); border-color: #4caf50;">
+            <h3>🎯 CONCLUSIÓN FINAL</h3>
+            <p><strong>Argentina estuvo dividida por 10 años completos (1853-1862)</strong></p>
+            <ul style="text-align: left; margin-top: 15px;">
+                <li>✅ 1862: Mitre es presidente y Argentina se unifica</li>
+                <li>✅ Buenos Aires se convierte en la capital nacional</li>
+                <li>✅ Se consolida el Estado nacional unificado</li>
+                <li>✅ Fin de los conflictos entre provincias</li>
+                <li>✅ Comienza la era de la organización nacional</li>
+            </ul>
+        </div>
+        
+        <div class="footer">
+            <p>📚 Cuadro Sinóptico de Historia Argentina - Formación del Estado Nacional</p>
+            <p>🇦🇷 Del caos provincial a la unificación nacional (1829-1862)</p>
+            <p style="margin-top: 10px; font-size: 0.9rem; color: #888;">🕐 18 fases históricas que explican la formación de Argentina como país</p>
+        </div>
+    </div>
+</body>
+</html>

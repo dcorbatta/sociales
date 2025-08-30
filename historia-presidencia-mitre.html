@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚔️ Presidencia de Mitre - Aventuras Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .historia-content {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .historia-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2196f3, #42a5f5);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .historia-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .historia-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .president-profile {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #2196f3;
+        }
+        
+        .president-profile h3 {
+            color: #1565c0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 25px;
+            align-items: start;
+        }
+        
+        .profile-image {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .profile-image .president-avatar {
+            font-size: 8rem;
+            margin-bottom: 15px;
+            color: #2196f3;
+        }
+        
+        .profile-image h4 {
+            color: #1565c0;
+            margin-bottom: 10px;
+        }
+        
+        .profile-image p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .profile-info {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .profile-info h4 {
+            color: #1565c0;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .profile-info ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .profile-info li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .challenges-section {
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .challenges-section h3 {
+            color: #e65100;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .challenge-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #ff9800;
+        }
+        
+        .challenge-item h4 {
+            color: #e65100;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .challenge-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .war-section {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #f44336;
+        }
+        
+        .war-section h3 {
+            color: #c62828;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .war-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .war-event {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #f44336;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .war-event::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #f44336;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .war-event h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .war-event p {
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .war-results {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #f44336;
+        }
+        
+        .war-results h4 {
+            color: #c62828;
+            margin-bottom: 15px;
+        }
+        
+        .war-results ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .war-results li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .photography-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .photography-section h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .photography-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .photography-info h4 {
+            color: #2e7d32;
+            margin-bottom: 15px;
+        }
+        
+        .photography-info p {
+            color: #666;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        
+        .photography-info ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .photography-info li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .achievements-section {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .achievements-section h3 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .achievement-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #9c27b0;
+        }
+        
+        .achievement-item h4 {
+            color: #6a1b9a;
+            margin-bottom: 10px;
+        }
+        
+        .achievement-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.home {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .nav-btn.next {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ffc107;
+        }
+        
+        .fun-facts h3 {
+            color: #f57f17;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fun-facts ul {
+            color: #f57f17;
+            padding-left: 20px;
+        }
+        
+        .fun-facts li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .challenges-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav" style="margin: 20px 0; text-align: center;">
+        <a href="index.html" style="font-weight: bold; margin: 0 15px;">🌟 Aventuras Sociales</a>
+        <a href="aventuras-matematicas/index.html" style="font-weight: bold; margin: 0 15px;">🧮 Aventuras Matemáticas</a>
+        <a href="aventuras-pdl.html" style="font-weight: bold; margin: 0 15px;">📖 Aventuras de PDL</a>
+        <a href="ciencias-naturales.html" style="font-weight: bold; margin: 0 15px;">🔬 Aventuras en Ciencias Naturales</a>
+    </nav>
+
+    <div class="container">
+        <div class="historia-content">
+            <div class="historia-header">
+                <h1>⚔️ Presidencia de Bartolomé Mitre</h1>
+                <div class="subtitle">Página 1: El presidente que construyó el Estado nacional (1862-1868)</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">
+                    📚 Página 1 de 2 - Cuando Argentina finalmente se unificó
+                </p>
+            </div>
+
+            <div class="fun-facts">
+                <h3>💡 ¿Sabías que...?</h3>
+                <ul>
+                    <li>Mitre fue el primer presidente después de que Argentina se unificara</li>
+                    <li>Tuvo que construir un país desde cero después de estar dividido por 10 años</li>
+                    <li>Durante su presidencia estalló la Guerra de la Triple Alianza</li>
+                    <li>Fue la primera guerra en ser fotografiada en la historia</li>
+                    <li>Argentina ganó territorios nuevos (Misiones y Formosa) después de la guerra</li>
+                </ul>
+            </div>
+
+            <div class="president-profile">
+                <h3>👤 ¿Quién era Bartolomé Mitre?</h3>
+                <div class="profile-grid">
+                    <div class="profile-image">
+                        <div class="president-avatar">👨‍💼</div>
+                        <h4>Bartolomé Mitre</h4>
+                        <p><strong>Período:</strong> 1862-1868<br>
+                        <strong>Duración:</strong> 6 años<br>
+                        <strong>Desafío:</strong> Construir un país desde cero</p>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h4>🎯 ¿Cuál era su objetivo principal?</h4>
+                        <p>Después de que Argentina estuvo dividida por 10 años (como dos amigos que no se hablaban), Mitre tenía la difícil tarea de unificar todo el país y crear un Estado nacional que funcionara bien.</p>
+                        
+                        <h4>🏗️ ¿Qué tenía que construir?</h4>
+                        <ul>
+                            <li><strong>Un gobierno nacional:</strong> Que todas las provincias respetaran</li>
+                            <li><strong>Leyes nacionales:</strong> Reglas que valieran para todo el país</li>
+                            <li><strong>Un ejército unificado:</strong> Para proteger a toda Argentina</li>
+                            <li><strong>Un sistema político:</strong> Para que las elecciones funcionaran bien</li>
+                        </ul>
+                        
+                        <h4>🌟 ¿Por qué fue importante?</h4>
+                        <p>Mitre fue como el "arquitecto" que diseñó cómo iba a funcionar Argentina como país unido. Sin su trabajo, Argentina podría haber seguido dividida por muchos años más.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="challenges-section">
+                <h3>🚧 ¿Qué desafíos enfrentó Mitre?</h3>
+                <p>Construir un país desde cero no fue fácil. Mitre enfrentó muchos problemas:</p>
+                
+                <div class="challenges-grid">
+                    <div class="challenge-item">
+                        <h4>📜 Códigos Legales</h4>
+                        <p>Argentina no tenía leyes nacionales. Mitre tuvo que adoptar el Código Comercial de Buenos Aires y crear el Código Civil para que todo el país tuviera las mismas reglas.</p>
+                    </div>
+                    
+                    <div class="challenge-item">
+                        <h4>⚔️ Fuerzas Armadas</h4>
+                        <p>No había un ejército nacional unificado. Mitre creó fuerzas armadas modernas que protegieran a todo el país, no solo a Buenos Aires.</p>
+                    </div>
+                    
+                    <div class="challenge-item">
+                        <h4>🏛️ Organización Política</h4>
+                        <p>No había partidos políticos nacionales. Mitre organizó el Partido Nacionalista y formó alianzas para que las elecciones funcionaran bien.</p>
+                    </div>
+                    
+                    <div class="challenge-item">
+                        <h4>🤝 Unificación</h4>
+                        <p>Buenos Aires y las provincias no se llevaban bien. Mitre tuvo que convencer a todos de que era mejor estar unidos que separados.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="war-section">
+                <h3>⚔️ La Guerra de la Triple Alianza (1865-1870)</h3>
+                <p>Durante la presidencia de Mitre, estalló una guerra muy importante que cambió la historia de Argentina:</p>
+                
+                <div class="war-timeline">
+                    <div class="war-event">
+                        <h4>📅 1864 - El Problema en Uruguay</h4>
+                        <p>Venancio Flores derrocó al presidente de Uruguay. Paraguay, gobernado por Francisco Solano López, se enojó mucho con esto.</p>
+                    </div>
+                    
+                    <div class="war-event">
+                        <h4>🚫 1865 - Paraguay Pide Permiso</h4>
+                        <p>Paraguay pidió permiso a Mitre para cruzar por la provincia de Corrientes para ir a Uruguay. Mitre se negó porque no quería que Paraguay interfiriera en los asuntos de Uruguay.</p>
+                    </div>
+                    
+                    <div class="war-event">
+                        <h4>⚔️ 1865 - Paraguay Declara la Guerra</h4>
+                        <p>Como Mitre no le dio permiso, Paraguay declaró la guerra a Argentina. Esto fue muy grave porque Argentina no estaba preparada para una guerra.</p>
+                    </div>
+                    
+                    <div class="war-event">
+                        <h4>🤝 1865 - Se Forma la Triple Alianza</h4>
+                        <p>Argentina, Uruguay y Brasil se unieron para luchar contra Paraguay. Esta alianza se llamó "Triple Alianza" porque eran tres países juntos.</p>
+                    </div>
+                    
+                    <div class="war-event">
+                        <h4>👑 1865 - Mitre Deja la Presidencia</h4>
+                        <p>Mitre dejó la presidencia temporalmente para comandar los ejércitos argentinos. Su vicepresidente, Marcos Paz, asumió la presidencia mientras Mitre estaba en la guerra.</p>
+                    </div>
+                    
+                    <div class="war-event">
+                        <h4>🏠 1868 - Mitre Regresa</h4>
+                        <p>Mitre tuvo que regresar a la presidencia en 1868 porque Marcos Paz murió. La guerra continuó hasta 1870.</p>
+                    </div>
+                </div>
+                
+                <div class="war-results">
+                    <h4>🏆 ¿Qué pasó al final de la guerra?</h4>
+                    <ul>
+                        <li><strong>Argentina ganó:</strong> Se anexaron los territorios de Misiones y Formosa</li>
+                        <li><strong>Ejército nacional:</strong> Se organizó el Ejército Nacional Argentino</li>
+                        <li><strong>Fronteras consolidadas:</strong> Argentina definió mejor sus límites</li>
+                        <li><strong>Relaciones internacionales:</strong> Argentina se posicionó mejor en Sudamérica</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="photography-section">
+                <h3>📸 ¡Dato Curioso! Primera Guerra Fotografiada</h3>
+                <div class="photography-info">
+                    <h4>🌟 ¿Por qué es importante?</h4>
+                    <p>La Guerra de la Triple Alianza fue una de las primeras guerras en ser fotografiada en la historia. ¡Era como tener Instagram de la guerra!</p>
+                    
+                    <h4>📷 ¿Quién tomó las fotos?</h4>
+                    <ul>
+                        <li><strong>Fotógrafo:</strong> George Thomas Bate (estadounidense)</li>
+                        <li><strong>Estudio:</strong> Tenía un estudio en Montevideo, Uruguay</li>
+                        <li><strong>Comercialización:</strong> Vendía las fotos en Buenos Aires y Montevideo</li>
+                    </ul>
+                    
+                    <h4>💡 ¿Por qué es histórico?</h4>
+                    <p>Antes de esta guerra, solo había dibujos y pinturas de las guerras. Con las fotos, la gente podía ver exactamente qué pasaba en el campo de batalla. ¡Era como ver la guerra en tiempo real!</p>
+                    
+                    <h4>🔍 ¿Dónde ver las fotos?</h4>
+                    <p>El libro incluye un código QR que lleva a las fotografías de la guerra. ¡Es como tener una ventana al pasado!</p>
+                </div>
+            </div>
+
+            <div class="achievements-section">
+                <h3>🏆 ¿Qué logró Mitre como presidente?</h3>
+                <p>A pesar de todos los desafíos, Mitre logró cosas muy importantes:</p>
+                
+                <div class="achievements-grid">
+                    <div class="achievement-item">
+                        <h4>🏗️ Estado Nacional</h4>
+                        <p>Construyó las bases de un Estado nacional unificado que funcionara bien.</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <h4>📜 Códigos Legales</h4>
+                        <p>Creó las leyes nacionales que organizaron todo el país.</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <h4>⚔️ Ejército Unificado</h4>
+                        <p>Organizó un ejército nacional que protegiera a toda Argentina.</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <h4>🏛️ Sistema Político</h4>
+                        <p>Estableció un sistema político nacional que funcionara bien.</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <h4>🤝 Unificación</h4>
+                        <p>Logró que Buenos Aires y las provincias se unieran definitivamente.</p>
+                    </div>
+                    
+                    <div class="achievement-item">
+                        <h4>🌍 Territorios Nuevos</h4>
+                        <p>Argentina ganó nuevos territorios (Misiones y Formosa) después de la guerra.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="fun-facts">
+                <h3>🎯 Conceptos Clave para Recordar</h3>
+                <ul>
+                    <li><strong>Presidencia histórica:</strong> Período muy importante que cambió Argentina para siempre</li>
+                    <li><strong>Unificación:</strong> Juntar lo que estaba separado</li>
+                    <li><strong>Estado nacional:</strong> Un país organizado con leyes y gobierno comunes</li>
+                    <li><strong>Triple Alianza:</strong> Argentina, Uruguay y Brasil vs. Paraguay</li>
+                    <li><strong>Guerra fotografiada:</strong> Primera vez que se usaron fotos en una guerra</li>
+                    <li><strong>Códigos legales:</strong> Las reglas que organizan un país</li>
+                    <li><strong>Ejército nacional:</strong> Fuerzas armadas que protegen a todo el país</li>
+                </ul>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="index.html" class="nav-btn home">🏠 Volver al Inicio</a>
+                <a href="historia-presidencias-sarmiento-avellaneda.html" class="nav-btn next">🎓 Siguiente: Sarmiento y Avellaneda ➡️</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Agregar efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.challenge-item, .war-event, .achievement-item');
+            
+            // Animación al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.6s ease';
+                observer.observe(element);
+            });
+            
+            // Efectos en las tarjetas de desafíos
+            const challengeItems = document.querySelectorAll('.challenge-item');
+            challengeItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Efectos en los eventos de guerra
+            const warEvents = document.querySelectorAll('.war-event');
+            warEvents.forEach(event => {
+                event.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 25px rgba(244, 67, 54, 0.3)';
+                });
+                
+                event.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // Efectos en los logros
+            const achievementItems = document.querySelectorAll('.achievement-item');
+            achievementItems.forEach(item => {
+                item.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 8px 25px rgba(156, 39, 176, 0.3)';
+                });
+                
+                item.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
