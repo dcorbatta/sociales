@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚖️ Confederación vs. Buenos Aires - Aventuras Sociales</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        .historia-content {
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .historia-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: linear-gradient(135deg, #2196f3, #42a5f5);
+            border-radius: 15px;
+            color: white;
+        }
+        
+        .historia-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .historia-header .subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+        }
+        
+        .conflict-section {
+            background: linear-gradient(135deg, #ffebee, #ffcdd2);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #f44336;
+        }
+        
+        .conflict-section h3 {
+            color: #c62828;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conflict-section p {
+            color: #d32f2f;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .conflict-timeline {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .conflict-event {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #f44336;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .conflict-event::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 20px;
+            width: 16px;
+            height: 16px;
+            background: #f44336;
+            border-radius: 50%;
+            border: 3px solid white;
+        }
+        
+        .conflict-event h4 {
+            color: #c62828;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .conflict-event p {
+            color: #666;
+            line-height: 1.5;
+            margin: 0;
+        }
+        
+        .confederacion-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .confederacion-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .confederacion-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+        }
+        
+        .confederacion-card.confederacion {
+            border-color: #2196f3;
+        }
+        
+        .confederacion-card.buenos-aires {
+            border-color: #ff9800;
+        }
+        
+        .confederacion-card h3 {
+            color: #333;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .confederacion-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .confederacion-card ul {
+            color: #666;
+            padding-left: 20px;
+        }
+        
+        .confederacion-card li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        .problemas-section {
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #ff9800;
+        }
+        
+        .problemas-section h3 {
+            color: #e65100;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .problema-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 4px solid #ff9800;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .problema-icon {
+            font-size: 2.5rem;
+            color: #ff9800;
+        }
+        
+        .problema-text h4 {
+            color: #e65100;
+            margin-bottom: 5px;
+        }
+        
+        .problema-text p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .consecuencias-section {
+            background: linear-gradient(135deg, #e8f5e8, #c8e6c9);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #4caf50;
+        }
+        
+        .consecuencias-section h3 {
+            color: #2e7d32;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .consecuencias-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .consecuencia-item {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 2px solid #4caf50;
+        }
+        
+        .consecuencia-item h4 {
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+        
+        .consecuencia-item p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+        
+        .mapa-section {
+            background: linear-gradient(135deg, #f3e5f5, #e1bee7);
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #9c27b0;
+        }
+        
+        .mapa-section h3 {
+            color: #6a1b9a;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .mapa-visual {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+        
+        .mapa-simbolico {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        
+        .territorio {
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            min-width: 200px;
+        }
+        
+        .territorio.confederacion {
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            border: 3px solid #2196f3;
+        }
+        
+        .territorio.buenos-aires {
+            background: linear-gradient(135deg, #fff3e0, #ffecb3);
+            border: 3px solid #ff9800;
+        }
+        
+        .territorio h4 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+        
+        .territorio.confederacion h4 {
+            color: #1565c0;
+        }
+        
+        .territorio.buenos-aires h4 {
+            color: #e65100;
+        }
+        
+        .territorio p {
+            font-size: 0.9rem;
+            line-height: 1.3;
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+            gap: 20px;
+        }
+        
+        .nav-btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .nav-btn.back {
+            background: linear-gradient(135deg, #4caf50, #45a049);
+            color: white;
+        }
+        
+        .nav-btn.home {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+        }
+        
+        .nav-btn.quiz {
+            background: linear-gradient(135deg, #9c27b0, #7b1fa2);
+            color: white;
+            animation: glow 2s infinite alternate;
+        }
+        
+        .fun-facts {
+            background: linear-gradient(135deg, #e0f2f1, #b2dfdb);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 30px 0;
+            border-left: 5px solid #009688;
+        }
+        
+        .fun-facts h3 {
+            color: #00695c;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .fun-facts ul {
+            color: #00796b;
+            padding-left: 20px;
+        }
+        
+        .fun-facts li {
+            margin-bottom: 8px;
+            line-height: 1.4;
+        }
+        
+        @media (max-width: 768px) {
+            .confederacion-info {
+                grid-template-columns: 1fr;
+            }
+            
+            .consecuencias-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .mapa-simbolico {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="main-nav" style="margin: 20px 0; text-align: center;">
+        <a href="index.html" style="font-weight: bold; margin: 0 15px;">🌟 Aventuras Sociales</a>
+        <a href="aventuras-matematicas/index.html" style="font-weight: bold; margin: 0 15px;">🧮 Aventuras Matemáticas</a>
+        <a href="aventuras-pdl.html" style="font-weight: bold; margin: 0 15px;">📖 Aventuras de PDL</a>
+        <a href="ciencias-naturales.html" style="font-weight: bold; margin: 0 15px;">🔬 Aventuras en Ciencias Naturales</a>
+    </nav>
+
+    <div class="container">
+        <div class="historia-content">
+            <div class="historia-header">
+                <h1>⚖️ Confederación vs. Buenos Aires</h1>
+                <div class="subtitle">Página 3: Los conflictos que dividieron el país</div>
+                <p style="margin-top: 15px; font-size: 1.1rem; opacity: 0.9;">
+                    📚 Página 3 de 3 - Cuando Argentina se dividió en dos
+                </p>
+            </div>
+
+            <div class="fun-facts">
+                <h3>💡 ¿Sabías que...?</h3>
+                <ul>
+                    <li>Argentina estuvo dividida en dos Estados durante 10 años</li>
+                    <li>Buenos Aires tenía su propio gobierno y leyes</li>
+                    <li>La Confederación se estableció en Paraná, Entre Ríos</li>
+                    <li>Esta división causó problemas económicos y políticos</li>
+                </ul>
+            </div>
+
+            <div class="conflict-section">
+                <h3>🔥 El Gran Conflicto: ¿Por qué se separaron?</h3>
+                <p>Después de que se creó la Constitución en 1853, Argentina se dividió en dos partes que no se llevaban bien. Era como cuando dos amigos se pelean y no quieren jugar juntos.</p>
+                
+                <div class="conflict-timeline">
+                    <div class="conflict-event">
+                        <h4>😠 Buenos Aires se enoja</h4>
+                        <p>Buenos Aires no quiso participar en el Congreso Constituyente. Se sintió excluida y decidió ir por su cuenta.</p>
+                    </div>
+                    
+                    <div class="conflict-event">
+                        <h4>🚨 Levantamiento del 11 de septiembre</h4>
+                        <p>El 11 de septiembre de 1852, hubo una revuelta en Buenos Aires liderada por Mitre y Adolfo Alsina. La gente estaba muy enojada.</p>
+                    </div>
+                    
+                    <div class="conflict-event">
+                        <h4>🏛️ Buenos Aires se declara independiente</h4>
+                        <p>Buenos Aires dijo: "¡Nos vamos por nuestra cuenta!" y se convirtió en un Estado autónomo con su propio gobierno.</p>
+                    </div>
+                    
+                    <div class="conflict-event">
+                        <h4>👑 Valentín Alsina es gobernador</h4>
+                        <p>Valentín Alsina fue nombrado gobernador provisional de Buenos Aires. Ahora tenían su propio líder.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="confederacion-info">
+                <div class="confederacion-card confederacion">
+                    <h3>🏛️ La Confederación Argentina</h3>
+                    <p>Era como un "club de provincias" que seguía la Constitución de 1853:</p>
+                    <ul>
+                        <li><strong>Capital:</strong> Paraná (Entre Ríos)</li>
+                        <li><strong>Presidente:</strong> Justo José de Urquiza</li>
+                        <li><strong>Vicepresidente:</strong> Salvador María del Carril</li>
+                        <li><strong>Leyes:</strong> Seguía la Constitución Nacional</li>
+                        <li><strong>Problema:</strong> No tenía el dinero de Buenos Aires</li>
+                    </ul>
+                </div>
+                
+                <div class="confederacion-card buenos-aires">
+                    <h3>🏙️ El Estado de Buenos Aires</h3>
+                    <p>Buenos Aires se convirtió en un "país separado":</p>
+                    <ul>
+                        <li><strong>Capital:</strong> Buenos Aires</li>
+                        <li><strong>Gobernador:</strong> Valentín Alsina</li>
+                        <li><strong>Leyes:</strong> Tenía sus propias reglas</li>
+                        <li><strong>Ventaja:</strong> Controlaba el puerto y la aduana</li>
+                        <li><strong>Problema:</strong> Estaba aislado del resto del país</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="problemas-section">
+                <h3>⚠️ Los Problemas de la División</h3>
+                <p>Estar divididos causó muchos problemas para ambos lados:</p>
+                
+                <div class="problema-item">
+                    <div class="problema-icon">💰</div>
+                    <div class="problema-text">
+                        <h4>Problemas de Dinero</h4>
+                        <p>La Confederación no tenía suficiente dinero porque Buenos Aires controlaba el puerto donde llegaban los barcos con mercancías.</p>
+                    </div>
+                </div>
+                
+                <div class="problema-item">
+                    <div class="problema-icon">🏗️</div>
+                    <div class="problema-text">
+                        <h4>Falta de Obras</h4>
+                        <p>Sin dinero, la Confederación no podía construir caminos, escuelas ni hospitales. Todo estaba muy atrasado.</p>
+                    </div>
+                </div>
+                
+                <div class="problema-item">
+                    <div class="problema-icon">⚔️</div>
+                    <div class="problema-text">
+                        <h4>Conflictos Internos</h4>
+                        <p>Urquiza tenía problemas con otras provincias de la Confederación. Muchos no estaban de acuerdo con sus decisiones.</p>
+                    </div>
+                </div>
+                
+                <div class="problema-item">
+                    <div class="problema-icon">🌍</div>
+                    <div class="problema-text">
+                        <h4>Revoluciones</h4>
+                        <p>En el Norte y Cuyo surgieron movimientos revolucionarios que simpatizaban con las ideas de Buenos Aires.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="consecuencias-section">
+                <h3>📊 Las Consecuencias de la División</h3>
+                <p>Estar separados por 10 años tuvo consecuencias importantes:</p>
+                
+                <div class="consecuencias-grid">
+                    <div class="consecuencia-item">
+                        <h4>🌍 Dos Estados Separados</h4>
+                        <p>Argentina funcionaba como dos países diferentes, cada uno con sus propias leyes y gobierno.</p>
+                    </div>
+                    
+                    <div class="consecuencia-item">
+                        <h4>💰 Problemas Económicos</h4>
+                        <p>La Confederación no tenía recursos suficientes para desarrollarse y crecer.</p>
+                    </div>
+                    
+                    <div class="consecuencia-item">
+                        <h4>🏛️ Falta de Unidad</h4>
+                        <p>No había un proyecto nacional común. Cada parte pensaba diferente.</p>
+                    </div>
+                    
+                    <div class="consecuencia-item">
+                        <h4>🚧 Obstáculos al Desarrollo</h4>
+                        <p>La división impidió que Argentina se convirtiera en un país fuerte y unido.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mapa-section">
+                <h3>🗺️ ¿Cómo se veía Argentina dividida?</h3>
+                <p>Imagínate Argentina como un rompecabezas dividido en dos partes:</p>
+                
+                <div class="mapa-visual">
+                    <div class="mapa-simbolico">
+                        <div class="territorio confederacion">
+                            <h4>🏛️ Confederación Argentina</h4>
+                            <p>Capital: Paraná<br>
+                            Presidente: Urquiza<br>
+                            Seguía la Constitución<br>
+                            Sin acceso al puerto</p>
+                        </div>
+                        
+                        <div class="territorio buenos-aires">
+                            <h4>🏙️ Estado de Buenos Aires</h4>
+                            <p>Capital: Buenos Aires<br>
+                            Gobernador: Alsina<br>
+                            Sus propias leyes<br>
+                            Controlaba el puerto</p>
+                        </div>
+                    </div>
+                    
+                    <p style="margin-top: 20px; color: #666; font-style: italic;">
+                        <strong>Resultado:</strong> Dos "países" que no se hablaban, no comerciaban juntos y tenían diferentes ideas sobre cómo organizar Argentina.
+                    </p>
+                </div>
+            </div>
+
+            <div class="fun-facts">
+                <h3>🎯 Conceptos Clave para Recordar</h3>
+                <ul>
+                    <li><strong>Confederación Argentina:</strong> Las provincias que seguían la Constitución de 1853</li>
+                    <li><strong>Estado de Buenos Aires:</strong> Buenos Aires como territorio independiente</li>
+                    <li><strong>Autonomía:</strong> Capacidad de gobernarse a sí mismo</li>
+                    <li><strong>División:</strong> Separación en dos Estados independientes</li>
+                    <li><strong>Consecuencias:</strong> Los resultados de estar divididos</li>
+                </ul>
+            </div>
+
+            <div class="navigation-buttons">
+                <a href="historia-constitucion-1853.html" class="nav-btn back">⬅️ Anterior: La Constitución de 1853</a>
+                <a href="quiz-historia-estado.html" class="nav-btn quiz">🧠 ¡Jugar Quiz de Historia! 🎮</a>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="index.html" class="nav-btn home">🏠 Volver al Inicio</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Agregar efectos interactivos
+        document.addEventListener('DOMContentLoaded', function() {
+            const elements = document.querySelectorAll('.confederacion-card, .conflict-event, .problema-item, .consecuencia-item, .territorio');
+            
+            // Animación al hacer scroll
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            elements.forEach(element => {
+                element.style.opacity = '0';
+                element.style.transform = 'translateY(30px)';
+                element.style.transition = 'all 0.6s ease';
+                observer.observe(element);
+            });
+            
+            // Efectos en las tarjetas de confederación
+            const confederacionCards = document.querySelectorAll('.confederacion-card');
+            confederacionCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0) scale(1)';
+                });
+            });
+            
+            // Efectos en los eventos de conflicto
+            const conflictEvents = document.querySelectorAll('.conflict-event');
+            conflictEvents.forEach(event => {
+                event.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.boxShadow = '0 8px 25px rgba(244, 67, 54, 0.3)';
+                });
+                
+                event.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = '0 5px 15px rgba(0,0,0,0.1)';
+                });
+            });
+            
+            // Efectos en los territorios del mapa
+            const territorios = document.querySelectorAll('.territorio');
+            territorios.forEach(territorio => {
+                territorio.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.boxShadow = '0 10px 30px rgba(0,0,0,0.2)';
+                });
+                
+                territorio.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                    this.style.boxShadow = 'none';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
